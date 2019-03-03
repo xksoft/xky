@@ -27,7 +27,7 @@ namespace Xky.Platform
             InitializeComponent();
             var wc = new WindowChrome
             {
-                CaptionHeight = 40,
+                CaptionHeight = 30,
                 GlassFrameThickness = new Thickness(0),
                 CornerRadius = new CornerRadius(0),
                 UseAeroCaptionButtons = false,
