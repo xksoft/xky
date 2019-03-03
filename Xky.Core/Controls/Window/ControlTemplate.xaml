@@ -1,0 +1,23 @@
+﻿<ControlTemplate x:Key="BaseWindowControlTemplate" TargetType="{x:Type Window}">
+        <DockPanel LastChildFill="True">
+            <!--外边框-->
+            <Border Width="Auto" Height="Auto" DockPanel.Dock="Top"
+                    Background="#FF7097D0" CornerRadius="4,4,0,0" x:Name="borderTitle">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <!--最小化按钮-->
+                    <Button Content="Min" x:Name="btnMin" />
+                    <!--最大化按钮-->
+                    <Button Content="Max" x:Name="btnMax" />
+                    <!--关闭按钮-->
+                    <Button Content="Close" x:Name="btnClose" />
+                </StackPanel>
+            </Border>
+            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Width="Auto" Height="Auto" DockPanel.Dock="Top" CornerRadius="0,0,4,4">
+                <AdornerDecorator>
+                    <ContentPresenter />
+                </AdornerDecorator>
+            </Border>
+        </DockPanel>
+</ControlTemplate>

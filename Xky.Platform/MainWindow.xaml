@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:core="clr-namespace:Xky.Core;assembly=Xky.Core"
         mc:Ignorable="d"
 
         AllowsTransparency="True"
@@ -36,10 +37,10 @@
                 <Image Source="Resources/myico.png" Height="24" Width="24" Margin="10,0,0,0" />
                 <TextBlock x:Name="MyTitle" VerticalAlignment="Center" Margin="10,0,0,0" >侠客云开放平台(安卓版) 1.0</TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,1,0">
         
                 <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="btn_close" Margin="0,0,1,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                        Click="btn_close"  WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -152,6 +153,115 @@
                 </Button>
             </StackPanel>
         </Grid>
+        <!-- 内容主题 -->
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition />
+
+                <ColumnDefinition />
+
+
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Width="432" Grid.Column="0">
+                <core:MirrorScreen x:Name="Mirror" Height="768" Width="432" />
+                <Grid Margin="0,10,0,0" Height="30">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="10*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Back" Grid.Column="0" Click="Button_Click_2" />
+                    <Button Content="Home" Grid.Column="1" Margin="10,0,10,0" Click="Button_Click" />
+                    <Button Content="Menu" Grid.Column="2" Click="Button_Click_1" />
+                </Grid>
+            </StackPanel>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="150" />
+
+                    <RowDefinition />
+
+                </Grid.RowDefinitions>
+                <GroupBox Header="登录" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="480"
+                      Padding="10" Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="74*" />
+                            <ColumnDefinition Width="417*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"><Run Text="账号："/></TextBlock>
+                        <TextBox x:Name="text_account" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"
+                             Text="ncla@qq.com" />
+
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"><Run Text="密码："/></TextBlock>
+                        <PasswordBox x:Name="text_password" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"
+                                 Password="Xiake123" />
+                        <Button Content="登录" Grid.Row="2" Grid.Column="1" Width="100" VerticalAlignment="Center"
+                            HorizontalAlignment="Left" Height="18" Margin="0,12,0,22" Grid.RowSpan="2" x:Name="btn_login"
+                            Click="btn_login_Click" />
+
+                    </Grid>
+                </GroupBox>
+
+
+                <GroupBox Grid.Row="1" Header="设备列表">
+
+                    <ListBox ItemsSource="{Binding .}" SelectionChanged="ListBox_SelectionChanged" x:Name="listbox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="5*" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <TextBlock Text="{Binding id}" FontSize="16" HorizontalAlignment="left" Grid.Column="0" />
+                                    <TextBlock Text="{Binding sn}" FontSize="16" HorizontalAlignment="Center" Grid.Column="1" />
+                                    <TextBlock Text="{Binding name}" FontSize="16" HorizontalAlignment="Center" Grid.Column="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Width" Value="Auto" />
+
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                    </ListBox>
+                </GroupBox>
+
+            </Grid>
+
+
+        </Grid>
+
         <!-- 底部导航 -->
         <Grid Grid.Row="2">
             <Border BorderThickness="0,1,0,0" BorderBrush="Black" />
