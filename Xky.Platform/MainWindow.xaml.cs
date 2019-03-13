@@ -9,7 +9,8 @@ using System.Windows.Media;
 using System.Windows.Shell;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
-using Xky.Platform.Model;
+using Xky.Core.Model;
+
 using Color = System.Windows.Media.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 
@@ -94,9 +95,9 @@ namespace Xky.Platform
                         .Contains(deviceobject.GetValue("t_sn").ToString()))
                         devicelist.Add(new Device
                         {
-                            sn = deviceobject.GetValue("t_sn").ToString(),
-                            id = deviceobject.GetValue("t_id").ToString(),
-                            name = deviceobject.GetValue("t_name").ToString()
+                            Sn = deviceobject.GetValue("t_sn").ToString(),
+                            Id = Convert.ToInt32(deviceobject.GetValue("t_id").ToString()),
+                            Name = deviceobject.GetValue("t_name").ToString()
                         });
                 }
 
@@ -109,7 +110,7 @@ namespace Xky.Platform
             var device = listbox.SelectedItem;
             if (device != null)
             {
-                _client.Connect(((Device) device).sn, session);
+                _client.Connect(((Device) device).Sn, session);
                 Mirror.ShowLoading();
                 Mirror.SetClient(_client);
             }

@@ -83,7 +83,6 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Controls\Loading\LoadingIndicator.cs" />
-    <Compile Include="Controls\Window\MyWindow.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />
     <Compile Include="MirrorClient.cs" />
@@ -100,14 +99,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Loading\Colors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Loading\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\Loading\Styles\LoadingWave.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

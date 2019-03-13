@@ -233,11 +233,11 @@
                                     </Grid.ColumnDefinitions>
 
 
-                                    <TextBlock Text="{Binding id}" FontSize="16" HorizontalAlignment="left"
+                                    <TextBlock Text="{Binding Id}" FontSize="16" HorizontalAlignment="left"
                                                Grid.Column="0" />
-                                    <TextBlock Text="{Binding sn}" FontSize="16" HorizontalAlignment="Center"
+                                    <TextBlock Text="{Binding Sn}" FontSize="16" HorizontalAlignment="Center"
                                                Grid.Column="1" />
-                                    <TextBlock Text="{Binding name}" FontSize="16" HorizontalAlignment="Center"
+                                    <TextBlock Text="{Binding Name}" FontSize="16" HorizontalAlignment="Center"
                                                Grid.Column="2" />
                                 </Grid>
                             </DataTemplate>
