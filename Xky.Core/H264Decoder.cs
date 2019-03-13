@@ -8,8 +8,6 @@ namespace Xky.Core
 {
     internal unsafe class H264Decoder
     {
-        internal delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
-
         private const string LdLibraryPath = "LD_LIBRARY_PATH";
         private readonly AVCodecContext* _pCodecCtx;
         private readonly AVCodecParserContext* _pCodecParserCtx;
@@ -110,7 +108,7 @@ namespace Xky.Core
         internal static void RegisterFFmpegBinaries()
         {
             var current = Environment.CurrentDirectory;
-            var probe = Path.Combine("decoder");
+            var probe = Path.Combine(Environment.Is64BitProcess ? "x64" : "x86");
             while (current != null)
             {
                 var ffmpegDirectory = Path.Combine(current, probe);
@@ -149,6 +147,8 @@ namespace Xky.Core
 
         [DllImport("kernel32", SetLastError = true)]
         private static extern bool SetDllDirectory(string lpPathName);
+
+        internal delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
 
         private sealed class VideoFrameConverter : IDisposable
         {

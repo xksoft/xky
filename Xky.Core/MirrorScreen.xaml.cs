@@ -18,13 +18,12 @@ namespace Xky.Core
     /// </summary>
     public partial class MirrorScreen
     {
+        private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
+        private readonly Timer _fpsTimer = new Timer();
         private MirrorClient _client;
 
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
-
-        private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
-        private readonly Timer _fpsTimer=new Timer();
 
         public MirrorScreen()
         {
@@ -40,21 +39,12 @@ namespace Xky.Core
             Console.WriteLine(_fpsDictionary.Count);
             if (_fpsDictionary.ContainsKey(DateTime.Now.Second - 1))
             {
-
-                Dispatcher.Invoke(() =>
-                {
-                    FpsLabel.Content = "FPS:" + _fpsDictionary[DateTime.Now.Second - 1];
-                });
+                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[DateTime.Now.Second - 1]; });
                 _fpsDictionary.Remove(DateTime.Now.Second - 1);
-
-
             }
             else
             {
-                Dispatcher.Invoke(() =>
-                {
-                    FpsLabel.Content = "FPS:" + 0;
-                });
+                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + 0; });
             }
         }
 
@@ -73,13 +63,9 @@ namespace Xky.Core
             try
             {
                 if (_fpsDictionary.ContainsKey(DateTime.Now.Second))
-                {
                     _fpsDictionary[DateTime.Now.Second]++;
-                }
                 else
-                {
                     _fpsDictionary.Add(DateTime.Now.Second, 0);
-                }
 
 
                 Dispatcher.Invoke(() =>
