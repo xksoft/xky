@@ -8,7 +8,7 @@ namespace Xky.Core
 {
     internal unsafe class H264Decoder
     {
-        public delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
+        internal delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
 
         private const string LdLibraryPath = "LD_LIBRARY_PATH";
         private readonly AVCodecContext* _pCodecCtx;
@@ -16,7 +16,7 @@ namespace Xky.Core
         private readonly AVFrame* _pFrame;
         internal bool Firstpacket = true;
 
-        public H264Decoder()
+        internal H264Decoder()
         {
             try
             {
@@ -53,15 +53,8 @@ namespace Xky.Core
 
             var curPtr = (byte*) ffmpeg.av_malloc((ulong) h264Data.Length);
 
-//            if (h264Data.Length > 4)
-//            {
-//                h264Data[0] -= 100;
-//                h264Data[1] -= 100;
-//                h264Data[2] -= 100;
-//                h264Data[3] -= 100;
-//            }
-
             for (var i = 0; i < h264Data.Length; i++) curPtr[i] = h264Data[i];
+
             while (curSize > 0)
             {
                 AVPacket packet;
@@ -112,36 +105,23 @@ namespace Xky.Core
             ffmpeg.av_free(curPtr);
         }
 
-        public event DecodeBitmap OnDecodeBitmapSource;
+        internal event DecodeBitmap OnDecodeBitmapSource;
 
         internal static void RegisterFFmpegBinaries()
         {
-            switch (Environment.OSVersion.Platform)
+            var current = Environment.CurrentDirectory;
+            var probe = Path.Combine("decoder");
+            while (current != null)
             {
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                    var current = Environment.CurrentDirectory;
-                    var probe = Path.Combine("dll", "bin", Environment.Is64BitProcess ? "x64" : "x86");
-                    while (current != null)
-                    {
-                        var ffmpegDirectory = Path.Combine(current, probe);
-                        if (Directory.Exists(ffmpegDirectory))
-                        {
-                            Console.WriteLine($"dll binaries found in: {ffmpegDirectory}");
-                            RegisterLibrariesSearchPath(ffmpegDirectory);
-                            return;
-                        }
+                var ffmpegDirectory = Path.Combine(current, probe);
+                if (Directory.Exists(ffmpegDirectory))
+                {
+                    Console.WriteLine($"dll binaries found in: {ffmpegDirectory}");
+                    RegisterLibrariesSearchPath(ffmpegDirectory);
+                    return;
+                }
 
-                        current = Directory.GetParent(current)?.FullName;
-                    }
-
-                    break;
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                    var libraryPath = Environment.GetEnvironmentVariable(LdLibraryPath);
-                    RegisterLibrariesSearchPath(libraryPath);
-                    break;
+                current = Directory.GetParent(current)?.FullName;
             }
         }
 
@@ -178,7 +158,7 @@ namespace Xky.Core
             private readonly int_array4 _dstLinesize;
             private readonly SwsContext* _pConvertContext;
 
-            public VideoFrameConverter(Size sourceSize, AVPixelFormat sourcePixelFormat,
+            internal VideoFrameConverter(Size sourceSize, AVPixelFormat sourcePixelFormat,
                 Size destinationSize, AVPixelFormat destinationPixelFormat)
             {
                 _destinationSize = destinationSize;
@@ -206,7 +186,7 @@ namespace Xky.Core
                 ffmpeg.sws_freeContext(_pConvertContext);
             }
 
-            public AVFrame Convert(AVFrame sourceFrame)
+            internal AVFrame Convert(AVFrame sourceFrame)
             {
                 ffmpeg.sws_scale(_pConvertContext, sourceFrame.data, sourceFrame.linesize, 0, sourceFrame.height,
                     _dstData, _dstLinesize);

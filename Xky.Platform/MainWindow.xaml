@@ -14,7 +14,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         FontFamily="SimSun"
-        Title="MainWindow" Height="542" Width="836">
+        Title="MainWindow" Height="873" Width="1026">
 
 
     <Grid x:Name="MainGrid" Margin="10">
@@ -38,9 +38,9 @@
                 <TextBlock x:Name="MyTitle" VerticalAlignment="Center" Margin="10,0,0,0" >侠客云开放平台(安卓版) 1.0</TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,1,0">
-        
+
                 <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="btn_close"  WindowChrome.IsHitTestVisibleInChrome="True">
+                        Click="Btn_close"  WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -68,7 +68,7 @@
                     </Button.Style>
                 </Button>
                 <Button x:Name="BtnMax" Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="btn_max"  WindowChrome.IsHitTestVisibleInChrome="True">
+                        Click="Btn_max"  WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -96,7 +96,7 @@
                     </Button.Style>
                 </Button>
                 <Button x:Name="BtnRestore" Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="btn_max"  WindowChrome.IsHitTestVisibleInChrome="True" Visibility="Collapsed">
+                        Click="Btn_max"  WindowChrome.IsHitTestVisibleInChrome="True" Visibility="Collapsed">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -124,7 +124,7 @@
                     </Button.Style>
                 </Button>
                 <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="btn_min"  WindowChrome.IsHitTestVisibleInChrome="True">
+                        Click="Btn_min"  WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -163,7 +163,7 @@
 
 
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Width="432" Grid.Column="0">
+            <StackPanel Orientation="Vertical"  Grid.Column="0">
                 <core:MirrorScreen x:Name="Mirror" Height="768" Width="432" />
                 <Grid Margin="0,10,0,0" Height="30">
 
@@ -208,7 +208,7 @@
                                  Password="Xiake123" />
                         <Button Content="登录" Grid.Row="2" Grid.Column="1" Width="100" VerticalAlignment="Center"
                             HorizontalAlignment="Left" Height="18" Margin="0,12,0,22" Grid.RowSpan="2" x:Name="btn_login"
-                            Click="btn_login_Click" />
+                            Click="Btn_login_Click" />
 
                     </Grid>
                 </GroupBox>
@@ -271,7 +271,7 @@
                 <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">侠客云模块界面调试工具(安卓版) 1.0</TextBlock>
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-             
+
             </StackPanel>
         </Grid>
     </Grid>

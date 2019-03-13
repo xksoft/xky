@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Shell;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Platform.Model;
+using Color = System.Windows.Media.Color;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace Xky.Platform
 {
@@ -41,13 +35,34 @@ namespace Xky.Platform
             Deactivated += MainWindow_Deactivated;
             SizeChanged += MainWindow_OnSizeChanged;
             WindowChrome.SetWindowChrome(this, wc);
+
+            try
+            {
+                using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
+                {
+                    if (Math.Abs(graphics.DpiX - 96) > 0)
+                    {
+                        TextOptions.SetTextFormattingMode(this, TextFormattingMode.Ideal);
+                        FontFamily = new FontFamily("Microsoft Yahei");
+                    }
+                    else
+                    {
+                        TextOptions.SetTextFormattingMode(this, TextFormattingMode.Display);
+                        FontFamily = new FontFamily("SimSun");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
         string session = "";
         readonly MirrorClient _client = new MirrorClient();
         ObservableCollection<Device> devicelist = null;
 
-        private void btn_login_Click(object sender, RoutedEventArgs e)
+        private void Btn_login_Click(object sender, RoutedEventArgs e)
         {
             JObject obj = _client.Post("login",
                 JObject.Parse("{'key':'xky','account':'" + text_account.Text + "','password':'" +
@@ -93,10 +108,9 @@ namespace Xky.Platform
             object device = listbox.SelectedItem;
             if (device != null)
             {
-                _client.Connect(((Device)device).sn, session);
+                _client.Connect(((Device) device).sn, session);
                 Mirror.ShowLoading();
                 Mirror.SetClient(_client);
-
             }
         }
 
@@ -119,7 +133,6 @@ namespace Xky.Platform
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
         }
 
         #region 界面UI事件
@@ -156,18 +169,18 @@ namespace Xky.Platform
             }
         }
 
-        private void btn_close(object sender, RoutedEventArgs e)
+        private void Btn_close(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void btn_max(object sender, RoutedEventArgs e)
+        private void Btn_max(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
         }
 
 
-        private void btn_min(object sender, RoutedEventArgs e)
+        private void Btn_min(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }

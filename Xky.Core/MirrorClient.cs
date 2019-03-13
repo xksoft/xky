@@ -38,6 +38,7 @@ namespace Xky.Core
                 {
                     {"sn", device["t_sn"].ToString()},
                     {"action", "mirror"},
+                    {"v2", "true"},
                     {"hash", device["t_connection_hash"].ToString()}
                 },
                 Path = "/xky",

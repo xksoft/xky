@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,12 +23,39 @@ namespace Xky.Core
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
 
-        private readonly Dictionary<int, int> fpsDictionary = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
+        private readonly Timer _fpsTimer=new Timer();
 
         public MirrorScreen()
         {
             InitializeComponent();
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
+            _fpsTimer.Enabled = true;
+            _fpsTimer.Interval = 1000;
+            _fpsTimer.Elapsed += FpsTimer_Elapsed;
+        }
+
+        private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine(_fpsDictionary.Count);
+            if (_fpsDictionary.ContainsKey(DateTime.Now.Second - 1))
+            {
+
+                Dispatcher.Invoke(() =>
+                {
+                    FpsLabel.Content = "FPS:" + _fpsDictionary[DateTime.Now.Second - 1];
+                });
+                _fpsDictionary.Remove(DateTime.Now.Second - 1);
+
+
+            }
+            else
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    FpsLabel.Content = "FPS:" + 0;
+                });
+            }
         }
 
         public void SetClient(MirrorClient client)
@@ -44,25 +72,15 @@ namespace Xky.Core
         {
             try
             {
-                lock ("dic")
+                if (_fpsDictionary.ContainsKey(DateTime.Now.Second))
                 {
-                    if (fpsDictionary.ContainsKey(DateTime.Now.Second))
-                    {
-                        fpsDictionary[DateTime.Now.Second]++;
-                    }
-                    else
-                    {
-                        fpsDictionary.Add(DateTime.Now.Second, 0);
-                        if (fpsDictionary.ContainsKey(DateTime.Now.Second - 1))
-                        {
-                            Dispatcher.Invoke(() =>
-                            {
-                                FpsLabel.Content = "FPS:" + fpsDictionary[DateTime.Now.Second - 1];
-                            });
-                            fpsDictionary.Remove(DateTime.Now.Second - 1);
-                        }
-                    }
+                    _fpsDictionary[DateTime.Now.Second]++;
                 }
+                else
+                {
+                    _fpsDictionary.Add(DateTime.Now.Second, 0);
+                }
+
 
                 Dispatcher.Invoke(() =>
                 {
