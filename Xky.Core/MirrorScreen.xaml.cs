@@ -19,7 +19,7 @@ namespace Xky.Core
     public partial class MirrorScreen
     {
         private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
-        private readonly Timer _fpsTimer = new Timer();
+        internal readonly Timer FpsTimer = new Timer();
         private MirrorClient _client;
 
         private bool _isShow;
@@ -29,14 +29,13 @@ namespace Xky.Core
         {
             InitializeComponent();
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
-            _fpsTimer.Enabled = true;
-            _fpsTimer.Interval = 1000;
-            _fpsTimer.Elapsed += FpsTimer_Elapsed;
+            FpsTimer.Enabled = true;
+            FpsTimer.Interval = 1000;
+            FpsTimer.Elapsed += FpsTimer_Elapsed;
         }
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine(_fpsDictionary.Count);
             if (_fpsDictionary.ContainsKey(DateTime.Now.Second - 1))
             {
                 Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[DateTime.Now.Second - 1]; });
@@ -62,14 +61,16 @@ namespace Xky.Core
         {
             try
             {
-                if (_fpsDictionary.ContainsKey(DateTime.Now.Second))
-                    _fpsDictionary[DateTime.Now.Second]++;
-                else
-                    _fpsDictionary.Add(DateTime.Now.Second, 0);
-
-
                 Dispatcher.Invoke(() =>
                 {
+                    if (IsShowFps)
+                    {
+                        if (_fpsDictionary.ContainsKey(DateTime.Now.Second))
+                            _fpsDictionary[DateTime.Now.Second]++;
+                        else
+                            _fpsDictionary.Add(DateTime.Now.Second, 0);
+                    }
+
                     if (ScreenImage.Source == null)
                     {
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
@@ -94,13 +95,72 @@ namespace Xky.Core
             }
         }
 
+        #region 属性
+
+        public bool IsShowFps
+        {
+            get => (bool) GetValue(IsShowFpsProperty);
+            set => SetValue(IsShowFpsProperty, value);
+        }
+
+        public static readonly DependencyProperty IsShowFpsProperty =
+            DependencyProperty.Register("IsShowFps", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
+                (o, e) =>
+                {
+                    var li = (MirrorScreen) o;
+
+
+                    if ((bool) e.NewValue == false)
+                    {
+                        li.FpsTimer.Enabled = false;
+                        li.FpsLabel.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        li.FpsTimer.Enabled = true;
+                        li.FpsLabel.Visibility = Visibility.Visible;
+                    }
+                }));
+
+        public bool IsShowLog
+        {
+            get => (bool) GetValue(IsShowLogProperty);
+            set => SetValue(IsShowLogProperty, value);
+        }
+
+        public static readonly DependencyProperty IsShowLogProperty =
+            DependencyProperty.Register("IsShowLog", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
+                (o, e) =>
+                {
+                    var li = (MirrorScreen) o;
+
+                    li.LogPanel.Visibility = (bool) e.NewValue == false ? Visibility.Collapsed : Visibility.Visible;
+                }));
+
+        public bool IsShowArrow
+        {
+            get => (bool) GetValue(IsShowArrowProperty);
+            set => SetValue(IsShowArrowProperty, value);
+        }
+
+        public static readonly DependencyProperty IsShowArrowProperty =
+            DependencyProperty.Register("IsShowArrow", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
+                (o, e) => { }));
+
+        #endregion
+
+        #region 屏幕操作
 
         private void Image_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             var postion = e.GetPosition(ScreenImage);
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
+                if (IsShowArrow)
+                {
+                    Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
+                }
+
                 _client?.EmitEvent(
                     new JObject
                     {
@@ -110,7 +170,11 @@ namespace Xky.Core
             }
             else if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 0, 255, 0));
+                if (IsShowArrow)
+                {
+                    Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 0, 255, 0));
+                }
+
                 var json = new JObject
                 {
                     {"type", "mousedown"},
@@ -123,9 +187,12 @@ namespace Xky.Core
                 MyInput.Focus();
             }
 
-            Tap.Visibility = Visibility.Visible;
-            Tap.SetValue(Window.TopProperty, postion.Y - 15);
-            Tap.SetValue(Window.LeftProperty, postion.X - 15);
+            if (IsShowArrow)
+            {
+                Tap.Visibility = Visibility.Visible;
+                Tap.SetValue(Window.TopProperty, postion.Y - 15);
+                Tap.SetValue(Window.LeftProperty, postion.X - 15);
+            }
         }
 
         private void Image_OnMouseMove(object sender, MouseEventArgs e)
@@ -142,10 +209,12 @@ namespace Xky.Core
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     json.Add("zoom", true);
                 _client?.EmitEvent(json);
+                if (IsShowArrow)
+                {
+                    Tap.SetValue(Window.TopProperty, postion.Y - 15);
+                    Tap.SetValue(Window.LeftProperty, postion.X - 15);
+                }
             }
-
-            Tap.SetValue(Window.TopProperty, postion.Y - 15);
-            Tap.SetValue(Window.LeftProperty, postion.X - 15);
         }
 
         private void Image_OnMouseUp(object sender, MouseButtonEventArgs e)
@@ -160,8 +229,10 @@ namespace Xky.Core
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
             _client?.EmitEvent(json);
-
-            Tap.Visibility = Visibility.Collapsed;
+            if (IsShowArrow)
+            {
+                Tap.Visibility = Visibility.Collapsed;
+            }
         }
 
 
@@ -284,6 +355,7 @@ namespace Xky.Core
                 });
         }
 
+        #endregion
 
         #region  Loading和日志
 
@@ -341,22 +413,24 @@ namespace Xky.Core
 
         public void AddLabel(string msg, Color color)
         {
-            var label = new Label
+            if (IsShowLog)
             {
-                Content = msg,
-                Effect = new DropShadowEffect
+                var label = new Label
                 {
-                    Color = Colors.Black,
-                    Direction = 300,
-                    ShadowDepth = 1,
-                    BlurRadius = 0,
-                    Opacity = 1
-                },
-                Foreground = new SolidColorBrush(color)
-            };
-            label.FontFamily = new FontFamily("SimSun");
-            LogPanel.Children.Add(label);
-            HideLabel(label);
+                    Content = msg,
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Black,
+                        Direction = 300,
+                        ShadowDepth = 1,
+                        BlurRadius = 0,
+                        Opacity = 1
+                    },
+                    Foreground = new SolidColorBrush(color)
+                };
+                LogPanel.Children.Add(label);
+                HideLabel(label);
+            }
         }
 
         #endregion

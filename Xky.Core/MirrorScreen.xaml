@@ -34,7 +34,7 @@
                 <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
             </loading:LoadingIndicator.Effect>
         </loading:LoadingIndicator>
-        <Canvas>
+        <Canvas IsHitTestVisible="False">
             <Ellipse x:Name="Tap" Fill="#7E00FF00" Width="30" Height="30" IsHitTestVisible="False"
                      Visibility="Collapsed" />
         </Canvas>

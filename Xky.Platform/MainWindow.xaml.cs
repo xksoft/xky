@@ -186,5 +186,12 @@ namespace Xky.Platform
         }
 
         #endregion
+
+        private void Btn_login_Click2(object sender, RoutedEventArgs e)
+        {
+            Mirror.IsShowFps = !Mirror.IsShowFps;
+            Mirror.IsShowLog = !Mirror.IsShowLog;
+            Mirror.IsShowArrow = !Mirror.IsShowArrow;
+        }
     }
 }
