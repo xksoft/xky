@@ -4,13 +4,13 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Text.Tag
+namespace Xky.UI.Controls
 {
     public class TagPanel : WrapPanel
     {
-        private System.Windows.Controls.Button _addTagButton;
+        private Button _addTagButton;
 
         private bool _isInternalAction;
 
@@ -26,7 +26,7 @@ namespace Xky.UI.Controls.Text.Tag
             var collection = Interaction.GetBehaviors(this);
             collection.Add(behavior);
 
-            AddHandler(Text.Tag.Tag.ClosedEvent, new RoutedEventHandler(Tag_OnClosed));
+            AddHandler(Controls.Tag.ClosedEvent, new RoutedEventHandler(Tag_OnClosed));
         }
 
         private void Tag_OnClosed(object sender, RoutedEventArgs e) => Children.Remove(e.OriginalSource as Tag);
@@ -69,7 +69,7 @@ namespace Xky.UI.Controls.Text.Tag
                 _isInternalAction = true;
                 if (!Children.Contains(_addTagButton))
                 {
-                    _addTagButton = new System.Windows.Controls.Button
+                    _addTagButton = new Button
                     {
                         Style = ResourceHelper.GetResource<Style>(ResourceToken.AddTagButtonStyle),
                         Margin = TagMargin

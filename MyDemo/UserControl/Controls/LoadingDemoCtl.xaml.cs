@@ -1,5 +1,5 @@
 ﻿
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     public partial class LoadingDemoCtl
     {

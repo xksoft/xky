@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using MyDemo.Data.Model;
+using MyDemo.Data;
 using MyDemo.Service;
 
-namespace MyDemo.ViewModel.Main
+namespace MyDemo.ViewModel
 {
     public class ContributorsViewModel : DemoViewModelBase<ContributorModel>
     {

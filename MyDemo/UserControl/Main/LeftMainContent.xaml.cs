@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Xky.UI.Data.Args;
+using Xky.UI.Data;
 using Xky.UI.Tools.Extension;
 
-namespace MyDemo.UserControl.Main
+
+namespace MyDemo.UserControl
 {
     /// <summary>
     ///     左侧主内容

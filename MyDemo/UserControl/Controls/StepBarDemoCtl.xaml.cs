@@ -1,5 +1,5 @@
 ﻿
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     /// <summary>
     /// StepBarDemoCtl.xaml 的交互逻辑

@@ -1,8 +1,8 @@
 ﻿using System;
 using GalaSoft.MvvmLight.CommandWpf;
-using Xky.UI.Controls.Window;
+using Xky.UI.Controls;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class ImageBrowserDemoViewModel
     {

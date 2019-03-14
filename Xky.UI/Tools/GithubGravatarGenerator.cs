@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Xky.UI.Controls;
-using Xky.UI.Controls.Base;
 
 namespace Xky.UI.Tools
 {

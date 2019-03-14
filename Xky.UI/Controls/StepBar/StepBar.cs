@@ -5,19 +5,18 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Xky.UI.Data.Args;
-using Xky.UI.Data.Enum;
+using Xky.UI.Data;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.StepBar
+namespace Xky.UI.Controls
 {
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(StepBarItem))]
     [DefaultEvent("StepChanged")]
-    [TemplatePart(Name = ElementProgressBarBack, Type = typeof(System.Windows.Controls.ProgressBar))]
+    [TemplatePart(Name = ElementProgressBarBack, Type = typeof(ProgressBar))]
     public class StepBar : ItemsControl
     {
-        private System.Windows.Controls.ProgressBar _progressBarBack;
+        private ProgressBar _progressBarBack;
 
         #region Constants
 
@@ -107,7 +106,7 @@ namespace Xky.UI.Controls.StepBar
         {
             base.OnApplyTemplate();
 
-            _progressBarBack = GetTemplateChild(ElementProgressBarBack) as System.Windows.Controls.ProgressBar;
+            _progressBarBack = GetTemplateChild(ElementProgressBarBack) as ProgressBar;
         }
 
         protected override void OnRender(DrawingContext drawingContext)

@@ -7,10 +7,10 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
+using Xky.UI.Tools;
 using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Window
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     消息框

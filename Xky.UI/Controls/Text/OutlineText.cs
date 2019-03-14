@@ -6,7 +6,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Text
+namespace Xky.UI.Controls
 {
     public class OutlineText : FrameworkElement
     {
@@ -16,8 +16,10 @@ namespace Xky.UI.Controls.Text
 
         static OutlineText()
         {
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(OutlineText), new FrameworkPropertyMetadata(ValueBoxes.TrueBox));
-            UseLayoutRoundingProperty.OverrideMetadata(typeof(OutlineText), new FrameworkPropertyMetadata(ValueBoxes.TrueBox));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(OutlineText),
+                new FrameworkPropertyMetadata(ValueBoxes.TrueBox));
+            UseLayoutRoundingProperty.OverrideMetadata(typeof(OutlineText),
+                new FrameworkPropertyMetadata(ValueBoxes.TrueBox));
         }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
@@ -81,7 +83,8 @@ namespace Xky.UI.Controls.Text
         }
 
         public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
-            "StrokeThickness", typeof(double), typeof(OutlineText), new PropertyMetadata(ValueBoxes.Double0Box, OnFormattedTextUpdated));
+            "StrokeThickness", typeof(double), typeof(OutlineText),
+            new PropertyMetadata(ValueBoxes.Double0Box, OnFormattedTextUpdated));
 
         public double StrokeThickness
         {
@@ -95,7 +98,7 @@ namespace Xky.UI.Controls.Text
 
         public FontFamily FontFamily
         {
-            get => (FontFamily)GetValue(FontFamilyProperty);
+            get => (FontFamily) GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
         }
 
@@ -106,7 +109,7 @@ namespace Xky.UI.Controls.Text
         [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
         {
-            get => (double)GetValue(FontSizeProperty);
+            get => (double) GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
         }
 
@@ -116,7 +119,7 @@ namespace Xky.UI.Controls.Text
 
         public FontStretch FontStretch
         {
-            get => (FontStretch)GetValue(FontStretchProperty);
+            get => (FontStretch) GetValue(FontStretchProperty);
             set => SetValue(FontStretchProperty, value);
         }
 
@@ -126,7 +129,7 @@ namespace Xky.UI.Controls.Text
 
         public FontStyle FontStyle
         {
-            get => (FontStyle)GetValue(FontStyleProperty);
+            get => (FontStyle) GetValue(FontStyleProperty);
             set => SetValue(FontStyleProperty, value);
         }
 
@@ -136,7 +139,7 @@ namespace Xky.UI.Controls.Text
 
         public FontWeight FontWeight
         {
-            get => (FontWeight)GetValue(FontWeightProperty);
+            get => (FontWeight) GetValue(FontWeightProperty);
             set => SetValue(FontWeightProperty, value);
         }
 
@@ -195,7 +198,7 @@ namespace Xky.UI.Controls.Text
 
         private static void OnFormattedTextUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var outlinedTextBlock = (OutlineText)d;
+            var outlinedTextBlock = (OutlineText) d;
             outlinedTextBlock.UpdateFormattedText();
             outlinedTextBlock._textGeometry = null;
 
@@ -205,7 +208,7 @@ namespace Xky.UI.Controls.Text
 
         private static void OnFormattedTextInvalidated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var outlinedTextBlock = (OutlineText)d;
+            var outlinedTextBlock = (OutlineText) d;
             outlinedTextBlock._formattedText = null;
             outlinedTextBlock._textGeometry = null;
 

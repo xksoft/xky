@@ -5,11 +5,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 using Xky.UI.Interactivity;
 using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Time.TimeBar
+
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     时间条

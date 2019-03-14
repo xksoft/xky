@@ -1,8 +1,8 @@
 ﻿using System;
-using Xky.UI.Data.Enum;
-using Xky.UI.Data.Operation;
+using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Input
+
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     表示可以成为一个数据输入控件

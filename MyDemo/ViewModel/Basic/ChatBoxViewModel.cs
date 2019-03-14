@@ -9,16 +9,14 @@ using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Win32;
+using Xky.UI.Controls;
+using Xky.UI.Data;
+using Xky.UI.Tools;
 using MyDemo.Data;
-using MyDemo.Data.Model;
-using MyDemo.Tools.Helper;
-using Xky.UI.Controls.Other;
-using Xky.UI.Controls.Window;
-using Xky.UI.Data.Enum;
-using Xky.UI.Tools.Helper;
+using MyDemo.Tools;
+using Microsoft.Win32;
 
-namespace MyDemo.ViewModel.Basic
+namespace MyDemo.ViewModel
 {
     public class ChatBoxViewModel : ViewModelBase
     {

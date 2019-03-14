@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     public class DesignerHelper
     {

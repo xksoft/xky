@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:attach="clr-namespace:Xky.UI.Controls.Attach">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ButtonBaseBaseStyle.xaml"/>
@@ -9,20 +8,20 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ToggleButtonBaseStyle" BasedOn="{StaticResource ButtonBaseBaseStyle}" TargetType="ToggleButton">
-        <Setter Property="attach:BorderElement.CornerRadius" Value="4"/>
+        <Setter Property="controls:BorderElement.CornerRadius" Value="4"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DarkMaskBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}">
-                                <Path x:Name="PathMain" Width="{TemplateBinding attach:IconElement.Width}" Height="{TemplateBinding attach:IconElement.Height}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding attach:IconElement.Geometry}"/>
+                                <Path x:Name="PathMain" Width="{TemplateBinding controls:IconElement.Width}" Height="{TemplateBinding controls:IconElement.Height}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding controls:IconElement.Geometry}"/>
                                 <ContentPresenter x:Name="ContentPresenterMain" VerticalAlignment="Center" Margin="6,0,0,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                             </StackPanel>
                         </Border>
-                        <Border Visibility="Collapsed" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="BorderChecked" BorderThickness="4" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <Border Visibility="Collapsed" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="BorderChecked" BorderThickness="4" BorderBrush="{TemplateBinding BorderBrush}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
@@ -31,7 +30,7 @@
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="ContentPresenterMain"/>
                         </Trigger>
-                        <Trigger Property="attach:IconElement.Geometry" Value="{x:Null}">
+                        <Trigger Property="controls:IconElement.Geometry" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="PathMain"/>
                             <Setter Property="Margin" Value="0" TargetName="ContentPresenterMain"/>
                         </Trigger>
@@ -168,27 +167,27 @@
         <Setter Property="Width" Value="{StaticResource DefaultControlHeight}"/>
         <Setter Property="Height" Value="{StaticResource DefaultControlHeight}"/>
         <Setter Property="Padding" Value="8"/>
-        <Setter Property="attach:IconSwitchElement.Geometry" Value="{x:Null}"/>
-        <Setter Property="attach:IconSwitchElement.GeometrySelected" Value="{x:Null}"/>
+        <Setter Property="controls:IconSwitchElement.Geometry" Value="{x:Null}"/>
+        <Setter Property="controls:IconSwitchElement.GeometrySelected" Value="{x:Null}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="attach:BorderElement.CornerRadius" Value="4"/>
+        <Setter Property="controls:BorderElement.CornerRadius" Value="4"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DarkMaskBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}">
                             <ContentControl HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <Path x:Name="PathIcon" Width="{TemplateBinding attach:IconElement.Width}" Height="{TemplateBinding attach:IconElement.Height}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding attach:IconSwitchElement.Geometry}"/>
+                                <Path x:Name="PathIcon" Width="{TemplateBinding controls:IconElement.Width}" Height="{TemplateBinding controls:IconElement.Height}" Fill="{TemplateBinding Foreground}" SnapsToDevicePixels="True" Stretch="Uniform" Data="{TemplateBinding controls:IconSwitchElement.Geometry}"/>
                             </ContentControl>
                         </Border>
-                        <Border Visibility="Collapsed" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="BorderChecked" BorderThickness="4" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <Border Visibility="Collapsed" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="BorderChecked" BorderThickness="4" BorderBrush="{TemplateBinding BorderBrush}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="PathIcon" Property="Data" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(attach:IconSwitchElement.GeometrySelected)}"/>
+                            <Setter TargetName="PathIcon" Property="Data" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(controls:IconSwitchElement.GeometrySelected)}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

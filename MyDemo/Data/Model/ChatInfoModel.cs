@@ -1,6 +1,6 @@
-﻿using Xky.UI.Data.Enum;
+﻿using Xky.UI.Data;
 
-namespace MyDemo.Data.Model
+namespace MyDemo.Data
 {
     public struct ChatInfoModel
     {

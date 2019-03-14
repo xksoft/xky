@@ -3,10 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 using Xky.UI.Interactivity;
 
-namespace Xky.UI.Controls.Input
+namespace Xky.UI.Controls
 {
     public class SearchBar : TextBox
     {

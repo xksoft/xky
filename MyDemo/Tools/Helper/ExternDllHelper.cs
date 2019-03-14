@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace MyDemo.Tools.Helper
+namespace MyDemo.Tools
 {
     internal class ExternDllHelper
     {

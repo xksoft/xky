@@ -1,19 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:other="clr-namespace:Xky.UI.Controls.Other"
-                    xmlns:attach="clr-namespace:Xky.UI.Controls.Attach">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base/RadioGroupBaseStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource RadioGroupBaseStyle}" TargetType="other:RadioGroup"/>
+    <Style BasedOn="{StaticResource RadioGroupBaseStyle}" TargetType="controls:RadioGroup"/>
 
-    <Style x:Key="RadioGroupSolid" BasedOn="{StaticResource RadioGroupBaseStyle}" TargetType="other:RadioGroup">
-        <Setter Property="attach:TitleElement.BorderBrush" Value="{DynamicResource TitleBrush}"/>
-        <Setter Property="attach:TitleElement.Background" Value="{DynamicResource TitleBrush}"/>
-        <Setter Property="attach:TitleElement.Foreground" Value="{DynamicResource TextIconBrush}"/>
+    <Style x:Key="RadioGroupSolid" BasedOn="{StaticResource RadioGroupBaseStyle}" TargetType="controls:RadioGroup">
+        <Setter Property="controls:TitleElement.BorderBrush" Value="{DynamicResource TitleBrush}"/>
+        <Setter Property="controls:TitleElement.Background" Value="{DynamicResource TitleBrush}"/>
+        <Setter Property="controls:TitleElement.Foreground" Value="{DynamicResource TextIconBrush}"/>
     </Style>
 
 </ResourceDictionary>

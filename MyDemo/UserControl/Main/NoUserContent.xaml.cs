@@ -4,13 +4,14 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using Xky.UI.Controls;
+using Xky.UI.Data;
 using MyDemo.Data;
-using MyDemo.Tools.Helper;
+using MyDemo.Tools;
 using MyDemo.Window;
-using Xky.UI.Controls.Other;
-using Xky.UI.Data.Enum;
 
-namespace MyDemo.UserControl.Main
+
+namespace MyDemo.UserControl
 {
     public partial class NoUserContent
     {

@@ -7,19 +7,18 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
 using Xky.UI.Interactivity;
+using Xky.UI.Tools;
 using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     消息提醒
     /// </summary>
-    [TemplatePart(Name = ElementPanelMore, Type = typeof(System.Windows.Controls.Panel))]
+    [TemplatePart(Name = ElementPanelMore, Type = typeof(Panel))]
     [TemplatePart(Name = ElementGridMain, Type = typeof(Grid))]
-    [TemplatePart(Name = ElementButtonClose, Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = ElementButtonClose, Type = typeof(Button))]
     public class Growl : Control
     {
         #region Constants
@@ -32,11 +31,11 @@ namespace Xky.UI.Controls.Other
 
         #region Data
 
-        private System.Windows.Controls.Panel _panelMore;
+        private Panel _panelMore;
 
         private Grid _gridMain;
 
-        private System.Windows.Controls.Button _buttonClose;
+        private Button _buttonClose;
 
         private bool _showCloseButton;
 
@@ -47,7 +46,7 @@ namespace Xky.UI.Controls.Other
         /// <summary>
         ///     消息容器
         /// </summary>
-        public static System.Windows.Controls.Panel GrowlPanel { get; set; }
+        public static Panel GrowlPanel { get; set; }
 
         /// <summary>
         ///     计数
@@ -79,9 +78,9 @@ namespace Xky.UI.Controls.Other
         {
             base.OnApplyTemplate();
 
-            _panelMore = GetTemplateChild(ElementPanelMore) as System.Windows.Controls.Panel;
+            _panelMore = GetTemplateChild(ElementPanelMore) as Panel;
             _gridMain = GetTemplateChild(ElementGridMain) as Grid;
-            _buttonClose = GetTemplateChild(ElementButtonClose) as System.Windows.Controls.Button;
+            _buttonClose = GetTemplateChild(ElementButtonClose) as Button;
 
             CheckNull();
             Update();
@@ -121,7 +120,7 @@ namespace Xky.UI.Controls.Other
         public static readonly DependencyProperty GrowlParentProperty = DependencyProperty.RegisterAttached(
             "GrowlParent", typeof(bool), typeof(Growl), new PropertyMetadata(ValueBoxes.FalseBox, (o, args) =>
             {
-                if (o is System.Windows.Controls.Panel panel)
+                if (o is Panel panel)
                 {
                     SetGrowlPanel(panel);
                 }
@@ -206,7 +205,7 @@ namespace Xky.UI.Controls.Other
         ///     消息容器
         /// </summary>
         /// <param name="panel"></param>
-        private static void SetGrowlPanel(System.Windows.Controls.Panel panel)
+        private static void SetGrowlPanel(Panel panel)
         {
             GrowlPanel = panel;
             var menuItem = new MenuItem

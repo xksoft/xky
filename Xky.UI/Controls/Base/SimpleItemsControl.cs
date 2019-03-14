@@ -6,14 +6,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 
-namespace Xky.UI.Controls.Base
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     ItemsControl的轻量级版本
     /// </summary>
     [DefaultProperty("Items")]
     [ContentProperty("Items")]
-    [TemplatePart(Name = ElementPanel, Type = typeof(System.Windows.Controls.Panel))]
+    [TemplatePart(Name = ElementPanel, Type = typeof(Panel))]
     public class SimpleItemsControl : Control
     {
         private const string ElementPanel = "PART_Panel";
@@ -62,7 +62,7 @@ namespace Xky.UI.Controls.Base
         [Bindable(true)]
         public Collection<object> Items { get; }
 
-        internal System.Windows.Controls.Panel ItemsHost { get; set; }
+        internal Panel ItemsHost { get; set; }
 
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -79,7 +79,7 @@ namespace Xky.UI.Controls.Base
 
             base.OnApplyTemplate();
 
-            ItemsHost = GetTemplateChild(ElementPanel) as System.Windows.Controls.Panel;
+            ItemsHost = GetTemplateChild(ElementPanel) as Panel;
             Refresh();
         }
 

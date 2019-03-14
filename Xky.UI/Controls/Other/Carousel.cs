@@ -12,16 +12,16 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     轮播控件
     /// </summary>
     [DefaultProperty("Items")]
     [ContentProperty("Items")]
-    [TemplatePart(Name = ElementPanelPage, Type = typeof(System.Windows.Controls.Panel))]
+    [TemplatePart(Name = ElementPanelPage, Type = typeof(Panel))]
     [TemplatePart(Name = ElementItemsControl, Type = typeof(ItemsPresenter))]
     public class Carousel : ListBox
     {
@@ -34,7 +34,7 @@ namespace Xky.UI.Controls.Other
 
         #region Data
 
-        private System.Windows.Controls.Panel _panelPage;
+        private Panel _panelPage;
 
         private bool _appliedTemplate;
 
@@ -42,7 +42,7 @@ namespace Xky.UI.Controls.Other
 
         private int _pageIndex = -1;
 
-        private System.Windows.Controls.Button _selectedButton;
+        private Button _selectedButton;
 
         private DispatcherTimer _updateTimer;
 
@@ -59,7 +59,7 @@ namespace Xky.UI.Controls.Other
             base.OnApplyTemplate();
 
             _itemsControl = GetTemplateChild(ElementItemsControl) as ItemsPresenter;
-            _panelPage = GetTemplateChild(ElementPanelPage) as System.Windows.Controls.Panel;
+            _panelPage = GetTemplateChild(ElementPanelPage) as Panel;
 
             CheckNull();
 
@@ -263,9 +263,9 @@ namespace Xky.UI.Controls.Other
         ///     创建页按钮
         /// </summary>
         /// <returns></returns>
-        private System.Windows.Controls.Button CreatePateButton()
+        private Button CreatePateButton()
         {
-            var button = new System.Windows.Controls.Button
+            var button = new Button
             {
                 Style = ResourceHelper.GetResource<Style>(ResourceToken.ButtonCustom),
                 Content = new Border
@@ -286,7 +286,7 @@ namespace Xky.UI.Controls.Other
         {
             if (_selectedButton != null && _selectedButton.Content is Border borderOri)
                 borderOri.Background = Brushes.White;
-            _selectedButton = e.OriginalSource as System.Windows.Controls.Button;
+            _selectedButton = e.OriginalSource as Button;
             if (_selectedButton != null && _selectedButton.Content is Border border)
                 border.Background = ResourceHelper.GetResource<Brush>(ResourceToken.PrimaryBrush);
             var index = _panelPage.Children.IndexOf(_selectedButton);

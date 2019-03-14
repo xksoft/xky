@@ -6,7 +6,6 @@
              xmlns:d1P1="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:data="clr-namespace:MyDemo.Data"
-             xmlns:enum="clr-namespace:MyDemo.Data.Enum"
              d1P1:Ignorable="d" 
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -32,7 +31,7 @@
 
             <ObjectDataProvider x:Key="DemoTypes" MethodName="GetValues" ObjectType="sys:Enum">
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type Type="enum:DemoType"/>
+                    <x:Type Type="data:DemoType"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 

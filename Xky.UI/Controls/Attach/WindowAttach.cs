@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Attach
+namespace Xky.UI.Controls
 {
     public static class WindowAttach
     {

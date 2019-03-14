@@ -1,5 +1,4 @@
 ﻿using System;
-using Xky.UI.Data.Enum;
 
 namespace Xky.UI.Data
 {

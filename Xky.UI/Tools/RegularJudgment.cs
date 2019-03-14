@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
 
 namespace Xky.UI.Tools
 {

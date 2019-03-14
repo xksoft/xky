@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     public class ColorHelper
     {

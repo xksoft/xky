@@ -1,11 +1,9 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.ClockDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.ClockDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
-             xmlns:clock="clr-namespace:Xky.UI.Controls.Time.Clock;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
-        <clock:Clock Margin="32"/>
-    </other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
+        <controls:Clock Margin="32"/>
+    </controls:TransitioningContentControl>
 </UserControl>

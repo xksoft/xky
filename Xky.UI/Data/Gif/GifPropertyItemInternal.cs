@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Data.Gif
+namespace Xky.UI.Data
 {
     [StructLayout(LayoutKind.Sequential)]
     public class GifPropertyItemInternal : IDisposable

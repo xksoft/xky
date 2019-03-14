@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Time.FlipClock
+namespace Xky.UI.Controls
 {
     public class FlipNumber : Viewport3D
     {

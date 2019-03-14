@@ -1,9 +1,9 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
-using Xky.UI.Controls.Other;
+using Xky.UI.Controls;
 using Xky.UI.Data;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class GrowlDemoViewModel
     {

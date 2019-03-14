@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using Xky.UI.Controls.Other;
-using Xky.UI.Controls.Window;
+using Xky.UI.Controls;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
-using MessageBox = Xky.UI.Controls.Window.MessageBox;
+using Xky.UI.Tools;
+using MessageBox = Xky.UI.Controls.MessageBox;
 
 
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     public partial class WindowDemoCtl
     {

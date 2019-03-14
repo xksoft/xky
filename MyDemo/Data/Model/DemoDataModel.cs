@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MyDemo.Data.Enum;
 
-namespace MyDemo.Data.Model
+
+namespace MyDemo.Data
 {
     public class DemoDataModel
     {

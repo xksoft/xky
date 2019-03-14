@@ -5,7 +5,7 @@ using System.Windows.Media;
 using Xky.UI.Data;
 using Xky.UI.Tools.Extension;
 
-namespace Xky.UI.Controls.Rate
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementIcon, Type = typeof(FrameworkElement))]
     public class RateItem : Control

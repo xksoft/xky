@@ -1,6 +1,4 @@
-﻿using Xky.UI.Data.Enum;
-
-namespace Xky.UI.Data.Operation
+﻿namespace Xky.UI.Data
 {
     /// <summary>
     ///     表示一个操作的返回结果信息

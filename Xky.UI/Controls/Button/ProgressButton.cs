@@ -2,7 +2,7 @@
 using System.Windows.Controls.Primitives;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Button
+namespace Xky.UI.Controls
 {
     public class ProgressButton : ToggleButton
     {

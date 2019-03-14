@@ -1,6 +1,4 @@
-﻿using Xky.UI.Data.Enum;
-
-namespace Xky.UI.Data.Operation
+﻿namespace Xky.UI.Data
 {
     public class OperationResult
     {

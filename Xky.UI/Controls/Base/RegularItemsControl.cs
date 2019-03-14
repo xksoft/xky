@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Base
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     规则ItemsControl

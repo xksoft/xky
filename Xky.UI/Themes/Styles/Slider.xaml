@@ -1,9 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:slider="clr-namespace:Xky.UI.Controls.Slider"
-                    xmlns:internal="clr-namespace:Xky.UI.Controls.Internal"
-                    xmlns:attach="clr-namespace:Xky.UI.Controls.Attach">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Basic/Geometries.xaml"/>
@@ -219,9 +216,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="CompareSliderHorizontal" TargetType="slider:CompareSlider">
+    <ControlTemplate x:Key="CompareSliderHorizontal" TargetType="controls:CompareSlider">
         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-            <slider:CompareTrack Margin="-14,0,-15,0" x:Name="PART_Track">
+            <controls:CompareTrack Margin="-14,0,-15,0" x:Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Margin="14,0,-15,0" Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource CompareSliderRepeatButtonTransparent}">
                         <RepeatButton.Content>
@@ -243,7 +240,7 @@
                 <Track.Thumb>
                     <Thumb x:Name="Thumb" Focusable="False" OverridesDefaultStyle="True" Template="{StaticResource CompareSliderThumbHorizontal}" Width="30" Margin="0,0,0,0"/>
                 </Track.Thumb>
-            </slider:CompareTrack>
+            </controls:CompareTrack>
         </Border>
     </ControlTemplate>
 
@@ -323,9 +320,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="CompareSliderVertical" TargetType="slider:CompareSlider">
+    <ControlTemplate x:Key="CompareSliderVertical" TargetType="controls:CompareSlider">
         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-            <slider:CompareTrack Margin="0,-14,0,-15" x:Name="PART_Track">
+            <controls:CompareTrack Margin="0,-14,0,-15" x:Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Margin="0,-15,0,15" Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource CompareSliderRepeatButtonTransparent}">
                         <RepeatButton.Content>
@@ -347,11 +344,11 @@
                 <Track.Thumb>
                     <Thumb x:Name="Thumb" Focusable="False" Height="30" OverridesDefaultStyle="True" Template="{StaticResource CompareSliderThumbVertical}" VerticalAlignment="Top"/>
                 </Track.Thumb>
-            </slider:CompareTrack>
+            </controls:CompareTrack>
         </Border>
     </ControlTemplate>
 
-    <Style TargetType="slider:CompareSlider">
+    <Style TargetType="controls:CompareSlider">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -410,7 +407,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     
-    <ControlTemplate x:Key="PreviewSliderHorizontal" TargetType="slider:PreviewSlider">
+    <ControlTemplate x:Key="PreviewSliderHorizontal" TargetType="controls:PreviewSlider">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -437,7 +434,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     
-    <Style TargetType="slider:PreviewSlider">
+    <Style TargetType="controls:PreviewSlider">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="IsMoveToPointEnabled" Value="True"/>
         <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}"/>
@@ -506,10 +503,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="TipSliderThumbHorizontalTop" TargetType="Thumb">
-        <internal:InternalCanvas>
+        <controls:InternalCanvas>
             <Label Name="LabelValue" Opacity="0" Canvas.Bottom="28" Style="{StaticResource LabelPrimary}" Content="{Binding Value,RelativeSource={RelativeSource AncestorType=Slider}}"/>
             <Border Canvas.Bottom="0" Effect="{StaticResource EffectShadow1}" Name="BorderDot" BorderThickness="0" BorderBrush="{DynamicResource PrimaryBrush}" Width="18" Height="18" Background="White" CornerRadius="9"/>
-        </internal:InternalCanvas>
+        </controls:InternalCanvas>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectShadow2}" TargetName="BorderDot"/>
@@ -537,10 +534,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="TipSliderThumbHorizontalBottom" TargetType="Thumb">
-        <internal:InternalCanvas>
+        <controls:InternalCanvas>
             <Label Name="LabelValue" Opacity="0" Canvas.Top="28" Style="{StaticResource LabelPrimary}" Content="{Binding Value,RelativeSource={RelativeSource AncestorType=Slider}}"/>
             <Border Canvas.Bottom="0" Effect="{StaticResource EffectShadow1}" Name="BorderDot" BorderThickness="0" BorderBrush="{DynamicResource PrimaryBrush}" Width="18" Height="18" Background="White" CornerRadius="9"/>
-        </internal:InternalCanvas>
+        </controls:InternalCanvas>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectShadow2}" TargetName="BorderDot"/>
@@ -568,10 +565,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="TipSliderThumbVerticalLeft" TargetType="Thumb">
-        <internal:InternalCanvas Orientation="Vertical">
+        <controls:InternalCanvas Orientation="Vertical">
             <Label Name="LabelValue" Opacity="0" Canvas.Right="28" Style="{StaticResource LabelPrimary}" Content="{Binding Value,RelativeSource={RelativeSource AncestorType=Slider}}"/>
             <Border Canvas.Right="0" Effect="{StaticResource EffectShadow1}" Name="BorderDot" BorderThickness="0" BorderBrush="{DynamicResource PrimaryBrush}" Width="18" Height="18" Background="White" CornerRadius="9"/>
-        </internal:InternalCanvas>
+        </controls:InternalCanvas>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectShadow2}" TargetName="BorderDot"/>
@@ -599,10 +596,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="TipSliderThumbVerticalRight" TargetType="Thumb">
-        <internal:InternalCanvas Orientation="Vertical">
+        <controls:InternalCanvas Orientation="Vertical">
             <Label Name="LabelValue" Opacity="0" Canvas.Left="28" Style="{StaticResource LabelPrimary}" Content="{Binding Value,RelativeSource={RelativeSource AncestorType=Slider}}"/>
             <Border Canvas.Right="0" Effect="{StaticResource EffectShadow1}" Name="BorderDot" BorderThickness="0" BorderBrush="{DynamicResource PrimaryBrush}" Width="18" Height="18" Background="White" CornerRadius="9"/>
-        </internal:InternalCanvas>
+        </controls:InternalCanvas>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectShadow2}" TargetName="BorderDot"/>
@@ -658,15 +655,15 @@
         <ControlTemplate.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="attach:TipElement.Placement" Value="TopLeft"/>
-                    <Condition Property="attach:TipElement.Visibility" Value="Visible"/>
+                    <Condition Property="controls:TipElement.Placement" Value="TopLeft"/>
+                    <Condition Property="controls:TipElement.Visibility" Value="Visible"/>
                 </MultiTrigger.Conditions>
                 <Setter Property="Template" TargetName="Thumb" Value="{StaticResource TipSliderThumbHorizontalTop}"/>
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="attach:TipElement.Placement" Value="BottomRight"/>
-                    <Condition Property="attach:TipElement.Visibility" Value="Visible"/>
+                    <Condition Property="controls:TipElement.Placement" Value="BottomRight"/>
+                    <Condition Property="controls:TipElement.Visibility" Value="Visible"/>
                 </MultiTrigger.Conditions>
                 <Setter Property="Template" TargetName="Thumb" Value="{StaticResource TipSliderThumbHorizontalBottom}"/>
             </MultiTrigger>
@@ -715,15 +712,15 @@
         <ControlTemplate.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="attach:TipElement.Placement" Value="TopLeft"/>
-                    <Condition Property="attach:TipElement.Visibility" Value="Visible"/>
+                    <Condition Property="controls:TipElement.Placement" Value="TopLeft"/>
+                    <Condition Property="controls:TipElement.Visibility" Value="Visible"/>
                 </MultiTrigger.Conditions>
                 <Setter Property="Template" TargetName="Thumb" Value="{StaticResource TipSliderThumbVerticalLeft}"/>
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="attach:TipElement.Placement" Value="BottomRight"/>
-                    <Condition Property="attach:TipElement.Visibility" Value="Visible"/>
+                    <Condition Property="controls:TipElement.Placement" Value="BottomRight"/>
+                    <Condition Property="controls:TipElement.Visibility" Value="Visible"/>
                 </MultiTrigger.Conditions>
                 <Setter Property="Template" TargetName="Thumb" Value="{StaticResource TipSliderThumbVerticalRight}"/>
             </MultiTrigger>

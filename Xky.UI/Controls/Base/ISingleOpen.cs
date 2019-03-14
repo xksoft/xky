@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xky.UI.Controls.Base
+namespace Xky.UI.Controls
 {
     public interface ISingleOpen : IDisposable
     {

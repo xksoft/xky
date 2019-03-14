@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Panel
+namespace Xky.UI.Controls
 {
-    public class WaterfallPanel : System.Windows.Controls.Panel
+    public class WaterfallPanel : Panel
     {
         public static readonly DependencyProperty GroupsProperty = DependencyProperty.Register(
             "Groups", typeof(int), typeof(WaterfallPanel), new FrameworkPropertyMetadata(ValueBoxes.Int2Box, FrameworkPropertyMetadataOptions.AffectsMeasure), IsGroupsValid);

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Xky.UI.Controls.Time.FlipClock
+namespace Xky.UI.Controls
 {
     public class FlipClock : Control
     {

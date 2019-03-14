@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace Xky.UI.Controls.Time.TimeBar
+
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     作为刻度使用的文字块

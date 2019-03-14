@@ -1,11 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Tools.StyleSelector
+namespace Xky.UI.Tools
 {
-    public class TabItemCapsuleStyleSelector : System.Windows.Controls.StyleSelector
+    public class TabItemCapsuleStyleSelector : StyleSelector
     {
         public override Style SelectStyle(object item, DependencyObject container)
         {

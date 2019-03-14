@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace Xky.UI.Controls.Slider
+namespace Xky.UI.Controls
 {
     public class CompareTrack : Track
     {

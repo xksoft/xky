@@ -1,4 +1,4 @@
-﻿namespace MyDemo.UserControl.Main
+﻿namespace MyDemo.UserControl
 {
     public partial class QQGroupView
     {

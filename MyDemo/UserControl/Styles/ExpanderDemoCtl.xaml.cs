@@ -1,6 +1,6 @@
 ﻿
 
-namespace MyDemo.UserControl.Styles
+namespace MyDemo.UserControl
 {
     /// <summary>
     /// ExpanderDemoCtl.xaml 的交互逻辑

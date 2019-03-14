@@ -4,13 +4,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Xky.UI.Controls.Attach;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 
-namespace Xky.UI.Controls.Time
+namespace Xky.UI.Controls
 {
-    [TemplatePart(Name = ElementButtonConfirm, Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = ElementButtonConfirm, Type = typeof(Button))]
     [TemplatePart(Name = ElementClockPresenter, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = ElementCalendarPresenter, Type = typeof(ContentPresenter))]
     public class CalendarWithClock : Control
@@ -31,11 +29,11 @@ namespace Xky.UI.Controls.Time
 
         private ContentPresenter _calendarPresenter;
 
-        private Clock.Clock _clock;
+        private Clock _clock;
 
         private Calendar _calendar;
 
-        private System.Windows.Controls.Button _buttonConfirm;
+        private Button _buttonConfirm;
 
         private bool _isLoaded;
 
@@ -143,7 +141,7 @@ namespace Xky.UI.Controls.Time
 
             base.OnApplyTemplate();
 
-            _buttonConfirm = GetTemplateChild(ElementButtonConfirm) as System.Windows.Controls.Button;
+            _buttonConfirm = GetTemplateChild(ElementButtonConfirm) as Button;
             _clockPresenter = GetTemplateChild(ElementClockPresenter) as ContentPresenter;
             _calendarPresenter = GetTemplateChild(ElementCalendarPresenter) as ContentPresenter;
 
@@ -219,7 +217,7 @@ namespace Xky.UI.Controls.Time
 
         private void InitCalendarAndClock()
         {
-            _clock = new Clock.Clock
+            _clock = new Clock
             {
                 BorderThickness = new Thickness(),
                 Background = Brushes.Transparent

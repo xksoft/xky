@@ -1,6 +1,5 @@
 ﻿using System;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
 
 namespace MyDemo.Data
 {

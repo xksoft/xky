@@ -1,7 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using Xky.UI.Interactivity;
 
-namespace Xky.UI.Controls.Attach
+namespace Xky.UI.Controls
 {
     public class PanelElement
     {
@@ -10,7 +11,7 @@ namespace Xky.UI.Controls.Attach
 
         private static void OnFluidMoveBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is System.Windows.Controls.Panel panel)
+            if (d is Panel panel)
             {                
                 var collection = Interaction.GetBehaviors(panel);
                 var oldBehavior = GetTempFluidMoveBehavior(panel);

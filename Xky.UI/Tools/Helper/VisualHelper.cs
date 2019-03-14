@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     public class VisualHelper
     {

@@ -4,12 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shell;
 using Xky.UI.Data;
-using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Window
+using System.Windows.Shell;
+using Xky.UI.Tools.Extension;
+
+
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementNonClientArea, Type = typeof(UIElement))]
     public class Window : System.Windows.Window
@@ -126,6 +128,8 @@ namespace Xky.UI.Controls.Window
                 SwitchIsFullScreen(_isFullScreen);
                 SwitchShowNonClientArea(_showNonClientArea);
             };
+            AllowsTransparency = true;
+            WindowStyle = WindowStyle.None;
         }
 
         public Brush CloseButtonBackground

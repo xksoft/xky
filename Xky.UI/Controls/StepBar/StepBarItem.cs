@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Xky.UI.Data.Enum;
+using Xky.UI.Data;
 
-namespace Xky.UI.Controls.StepBar
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     步骤条单元项

@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Cover.CoverFlow
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     封面流

@@ -1,8 +1,10 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
-namespace Xky.UI.Controls.Slider
+
+namespace Xky.UI.Controls
 {
-    public class CompareSlider : System.Windows.Controls.Slider
+    public class CompareSlider : Slider
     {
         public static readonly DependencyProperty TargetContentProperty = DependencyProperty.Register(
             "TargetContent", typeof(object), typeof(CompareSlider), new PropertyMetadata(default(object)));

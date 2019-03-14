@@ -2,9 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:langs="clr-namespace:Xky.UI.Properties.Langs"
                     xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:interactivity="clr-namespace:Xky.UI.Interactivity"
-                    xmlns:other="clr-namespace:Xky.UI.Controls.Other"
-                    xmlns:input="clr-namespace:Xky.UI.Controls.Input">
+                    xmlns:interactivity="clr-namespace:Xky.UI.Interactivity">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Basic/Paths.xaml"/>
@@ -13,13 +11,13 @@
         <ResourceDictionary Source="Button.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="other:ColorPicker">
+    <Style TargetType="controls:ColorPicker">
         <Setter Property="Width" Value="230"/>
         <Setter Property="Background" Value="{DynamicResource RegionBrush}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="other:ColorPicker">
+                <ControlTemplate TargetType="controls:ColorPicker">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="122"/>
@@ -79,19 +77,19 @@
                             </StackPanel>
                             <UniformGrid Name="PART_PanelRgb" Visibility="{Binding ShowList[1],RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource Boolean2VisibilityConverter}}" Rows="1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="-2,14,-2,0" VerticalAlignment="Top">
                                 <StackPanel Margin="2,0">
-                                    <input:NumericUpDown HorizontalContentAlignment="Center" Padding="2,0" Tag="R" Value="{Binding ChannelR,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
+                                    <controls:NumericUpDown HorizontalContentAlignment="Center" Padding="2,0" Tag="R" Value="{Binding ChannelR,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
                                     <TextBlock Foreground="{DynamicResource ThirdlyTextBrush}" Margin="0,6,0,0" FontSize="10" Text="R" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
-                                    <input:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Tag="G" Value="{Binding ChannelG,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
+                                    <controls:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Tag="G" Value="{Binding ChannelG,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
                                     <TextBlock Foreground="{DynamicResource ThirdlyTextBrush}" Margin="0,6,0,0" FontSize="10" Text="G" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
-                                    <input:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Tag="B" Value="{Binding ChannelB,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
+                                    <controls:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Tag="B" Value="{Binding ChannelB,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
                                     <TextBlock Foreground="{DynamicResource ThirdlyTextBrush}" Margin="0,6,0,0" FontSize="10" Text="B" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
-                                    <input:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Value="{Binding ChannelA,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
+                                    <controls:NumericUpDown HorizontalContentAlignment="Center" Padding="0" Value="{Binding ChannelA,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ShowUpDownButton="False" Maximum="255" Minimum="0" FontSize="10" Height="24" />
                                     <TextBlock Foreground="{DynamicResource ThirdlyTextBrush}" Margin="0,6,0,0" FontSize="10" Text="A" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </UniformGrid>

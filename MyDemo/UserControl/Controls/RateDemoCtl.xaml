@@ -1,17 +1,15 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.RateDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.RateDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
-             xmlns:rate="clr-namespace:Xky.UI.Controls.Rate;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <StackPanel Margin="32" HorizontalAlignment="Center" VerticalAlignment="Center" Width="170">
-            <rate:Rate Value="2"/>
-            <rate:Rate Value="5" Count="6" Margin="0,16,0,0" Foreground="{DynamicResource SuccessBrush}"/>
-            <rate:Rate DefaultValue="3" IsReadOnly="True" AllowHalf="True" Margin="0,16,0,0" Foreground="{DynamicResource WarningBrush}"/>
-            <rate:Rate DefaultValue="1" AllowClear="False" AllowHalf="True" Margin="0,16,0,0" Foreground="{DynamicResource DangerBrush}" Icon="{StaticResource LoveGeometry}"/>
-            <rate:Rate Value="4.5" AllowHalf="True" ShowText="True" Margin="0,16,0,0" Foreground="{DynamicResource DangerBrush}" Icon="{StaticResource LoveGeometry}"/>
+            <controls:Rate Value="2"/>
+            <controls:Rate Value="5" Count="6" Margin="0,16,0,0" Foreground="{DynamicResource SuccessBrush}"/>
+            <controls:Rate DefaultValue="3" IsReadOnly="True" AllowHalf="True" Margin="0,16,0,0" Foreground="{DynamicResource WarningBrush}"/>
+            <controls:Rate DefaultValue="1" AllowClear="False" AllowHalf="True" Margin="0,16,0,0" Foreground="{DynamicResource DangerBrush}" Icon="{StaticResource LoveGeometry}"/>
+            <controls:Rate Value="4.5" AllowHalf="True" ShowText="True" Margin="0,16,0,0" Foreground="{DynamicResource DangerBrush}" Icon="{StaticResource LoveGeometry}"/>
         </StackPanel>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

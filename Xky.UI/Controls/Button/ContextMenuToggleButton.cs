@@ -1,7 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace Xky.UI.Controls.Button
+
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     带上下文菜单的切换按钮

@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Styles.TextBlockDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.TextBlockDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <StackPanel Margin="32" Orientation="Horizontal">
             <StackPanel>
                 <TextBlock HorizontalAlignment="Left" Margin="5" Text="TextBlockLargeBold" Style="{StaticResource TextBlockLargeBold}"/>
@@ -46,5 +45,5 @@
                 <TextBlock HorizontalAlignment="Left" Margin="5" Text="{Binding Source={x:Static langs:Lang.Text},Converter={StaticResource StringRepeatConverter},ConverterParameter=20}" Style="{StaticResource TextBlockDefaultSuccess}"/>
             </StackPanel>
         </StackPanel>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

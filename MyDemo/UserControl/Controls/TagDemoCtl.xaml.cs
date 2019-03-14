@@ -1,7 +1,7 @@
 ﻿using System;
-using Xky.UI.Controls.Text.Tag;
+using Xky.UI.Controls;
 
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     public partial class TagDemoCtl
     {

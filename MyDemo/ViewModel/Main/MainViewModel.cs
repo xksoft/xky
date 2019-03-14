@@ -3,11 +3,10 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MyDemo.Data;
-using MyDemo.Data.Model;
 using MyDemo.Service;
-using MyDemo.Tools.Helper;
+using MyDemo.Tools;
 
-namespace MyDemo.ViewModel.Main
+namespace MyDemo.ViewModel
 {
     public class MainViewModel : DemoViewModelBase<DemoDataModel>
     {

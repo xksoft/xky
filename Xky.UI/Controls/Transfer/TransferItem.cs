@@ -1,8 +1,7 @@
 ﻿using System.Windows;
-using Xky.UI.Controls.Base;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Transfer
+namespace Xky.UI.Controls
 {
     public class TransferItem : SelectableItem
     {

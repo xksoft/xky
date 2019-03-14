@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Panel
+namespace Xky.UI.Controls
 {
-    public class CirclePanel : System.Windows.Controls.Panel
+    public class CirclePanel : Panel
     {
         public static readonly DependencyProperty DiameterProperty = DependencyProperty.Register(
             "Diameter", typeof(double), typeof(CirclePanel), new FrameworkPropertyMetadata(170.0, FrameworkPropertyMetadataOptions.AffectsMeasure));

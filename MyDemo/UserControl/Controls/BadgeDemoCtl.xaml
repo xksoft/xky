@@ -1,27 +1,26 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.BadgeDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.BadgeDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <StackPanel Margin="32" Orientation="Horizontal">
-            <other:Badge Text="New" BadgeMargin="0,-14,-20,0" Height="30">
+            <controls:Badge Text="New" BadgeMargin="0,-14,-20,0" Height="30">
                 <Button Content="{x:Static langs:Lang.Comment}"/>
-            </other:Badge>
-            <other:Badge Text="New" BadgeMargin="0,-14,-20,0" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
+            </controls:Badge>
+            <controls:Badge Text="New" BadgeMargin="0,-14,-20,0" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
                 <Button Content="{x:Static langs:Lang.Comment}"/>
-            </other:Badge>
-            <other:Badge Value="1" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgePrimary}">
+            </controls:Badge>
+            <controls:Badge Value="1" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgePrimary}">
                 <Button Content="{x:Static langs:Lang.Comment}"/>
-            </other:Badge>
-            <other:Badge Value="100" BadgeMargin="0,-14,-20,0" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
+            </controls:Badge>
+            <controls:Badge Value="100" BadgeMargin="0,-14,-20,0" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
                 <Button Content="{x:Static langs:Lang.Comment}"/>
-            </other:Badge>
-            <other:Badge IsDot="True" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
+            </controls:Badge>
+            <controls:Badge IsDot="True" Height="30" Margin="32,0,0,0" Style="{StaticResource BadgeDanger}">
                 <Button Content="{x:Static langs:Lang.Reply}"/>
-            </other:Badge>
+            </controls:Badge>
         </StackPanel>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

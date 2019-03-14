@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Xky.UI.Controls.Base;
 using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class Gravatar : ContentControl
     {

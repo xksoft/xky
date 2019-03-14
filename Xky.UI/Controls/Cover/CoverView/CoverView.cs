@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Data;
-using Xky.UI.Controls.Base;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Cover.CoverView
+namespace Xky.UI.Controls
 {
     public class CoverView : RegularItemsControl
     {

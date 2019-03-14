@@ -1,4 +1,4 @@
-﻿namespace Xky.UI.Data.Enum
+﻿namespace Xky.UI.Data
 {
     public enum ChatRoleType
     {

@@ -8,20 +8,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
 using Xky.UI.Properties.Langs;
-using Xky.UI.Tools.Helper;
-using MessageBox = Xky.UI.Controls.Window.MessageBox;
+using Xky.UI.Tools;
+using Microsoft.Win32;
 
-namespace Xky.UI.Controls.Image
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementGridMain, Type = typeof(Grid))]
     [TemplatePart(Name = ElementCanvasSmallImg, Type = typeof(Canvas))]
     [TemplatePart(Name = ElementBorderMove, Type = typeof(Border))]
     [TemplatePart(Name = ElementBorderBottom, Type = typeof(Border))]
-    [TemplatePart(Name = ElementImageMain, Type = typeof(System.Windows.Controls.Image))]
+    [TemplatePart(Name = ElementImageMain, Type = typeof(Image))]
     public class ImageViewer : Control
     {
         #region Constants
@@ -61,7 +60,7 @@ namespace Xky.UI.Controls.Image
 
         private Border _borderBottom;
 
-        private System.Windows.Controls.Image _imageMain;
+        private Image _imageMain;
 
         /// <summary>
         ///     右下角小图片是否加载过
@@ -405,7 +404,7 @@ namespace Xky.UI.Controls.Image
             _gridMain = GetTemplateChild(ElementGridMain) as Grid;
             _canvasSmallImg = GetTemplateChild(ElementCanvasSmallImg) as Canvas;
             _borderMove = GetTemplateChild(ElementBorderMove) as Border;
-            _imageMain = GetTemplateChild(ElementImageMain) as System.Windows.Controls.Image;
+            _imageMain = GetTemplateChild(ElementImageMain) as Image;
             _borderBottom = GetTemplateChild(ElementBorderBottom) as Border;
 
             if (_imageMain != null)

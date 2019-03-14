@@ -2,14 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Xky.UI.Controls"
                     xmlns:langs="clr-namespace:Xky.UI.Properties.Langs"
-                    xmlns:interactivity="clr-namespace:Xky.UI.Interactivity"
-                    xmlns:window="clr-namespace:Xky.UI.Controls.Window">
+                    xmlns:interactivity="clr-namespace:Xky.UI.Interactivity">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Window.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="window:MessageBox" BasedOn="{StaticResource WindowWin10}">
+    <Style TargetType="controls:MessageBox" BasedOn="{StaticResource WindowWin10}">
         <Setter Property="MinHeight" Value="172"/>
         <Setter Property="ShowInTaskbar" Value="False"/>
         <Setter Property="MinWidth" Value="335"/>

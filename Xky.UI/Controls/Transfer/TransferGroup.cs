@@ -1,8 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Windows;
-using Xky.UI.Controls.Base;
 
-namespace Xky.UI.Controls.Transfer
+namespace Xky.UI.Controls
 {
     public class TransferGroup : SimpleItemsControl
     {

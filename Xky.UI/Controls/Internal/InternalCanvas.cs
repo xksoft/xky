@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Xky.UI.Controls.Internal
+namespace Xky.UI.Controls
 {
     internal class InternalCanvas : Canvas
     {

@@ -3,10 +3,6 @@ using System.Windows;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using MyDemo.Service;
-using MyDemo.ViewModel.Basic;
-using MyDemo.ViewModel.Common;
-using MyDemo.ViewModel.Controls;
-using MyDemo.ViewModel.Main;
 
 namespace MyDemo.ViewModel
 {

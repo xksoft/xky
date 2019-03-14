@@ -1,20 +1,19 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.ScrollViewerDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.ScrollViewerDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}"
              Width="550"
              Height="600">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <Grid Margin="32">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}">
-                <other:ScrollViewer Orientation="Horizontal" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" IsEnableInertia="True">
+                <controls:ScrollViewer Orientation="Horizontal" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" IsEnableInertia="True">
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource BorderRegionStyle}" Width="200" Height="200" Margin="10,10,32,10">
                             <Border Background="{DynamicResource PrimaryBrush}">
@@ -42,10 +41,10 @@
                             </Border>
                         </Border>
                     </StackPanel>
-                </other:ScrollViewer>
+                </controls:ScrollViewer>
             </Border>
             <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Margin="0,16,0,0">
-                <other:ScrollViewer IsEnableInertia="True">
+                <controls:ScrollViewer IsEnableInertia="True">
                     <WrapPanel Orientation="Horizontal">
                         <Border Style="{StaticResource BorderRegionStyle}" Width="200" Height="200" Margin="10,10,32,10">
                             <Border Background="{DynamicResource PrimaryBrush}">
@@ -73,8 +72,8 @@
                             </Border>
                         </Border>
                     </WrapPanel>
-                </other:ScrollViewer>
+                </controls:ScrollViewer>
             </Border>
         </Grid>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

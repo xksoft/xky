@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Data.Gif
+namespace Xky.UI.Data
 {
     // ReSharper disable once InconsistentNaming
     internal class GPStream : ExternDllHelper.IStream

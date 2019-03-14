@@ -4,7 +4,7 @@ using System.Windows.Media;
 using Xky.UI.Data;
 using Xky.UI.Expression.Drawing;
 
-namespace Xky.UI.Controls.ProgressBar
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     波浪进度条

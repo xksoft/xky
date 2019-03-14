@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Attach
+namespace Xky.UI.Controls
 {
     public class DataGridAttach
     {

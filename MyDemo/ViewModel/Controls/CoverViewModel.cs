@@ -1,7 +1,7 @@
-﻿using MyDemo.Data.Model;
+﻿using MyDemo.Data;
 using MyDemo.Service;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class CoverViewModel : DemoViewModelBase<CoverViewDemoModel>
     {

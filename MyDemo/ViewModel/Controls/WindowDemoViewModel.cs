@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
 using GalaSoft.MvvmLight.CommandWpf;
-using MyDemo.Tools.Helper;
+using MyDemo.Tools;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class WindowDemoViewModel
     {

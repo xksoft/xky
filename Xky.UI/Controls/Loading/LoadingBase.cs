@@ -6,7 +6,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Loading
+
+namespace Xky.UI.Controls
 {
     public abstract class LoadingBase : ContentControl
     {

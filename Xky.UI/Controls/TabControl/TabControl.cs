@@ -3,11 +3,10 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Xky.UI.Controls.Button;
 using Xky.UI.Data;
 using Xky.UI.Tools.Extension;
 
-namespace Xky.UI.Controls.TabControl
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = OverflowButtonKey, Type = typeof(ContextMenuToggleButton))]
     [TemplatePart(Name = HeaderPanelKey, Type = typeof(TabPanel))]

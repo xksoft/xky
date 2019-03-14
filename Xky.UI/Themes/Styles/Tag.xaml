@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:tag="clr-namespace:Xky.UI.Controls.Text.Tag">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base/TagBaseStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
-    <Style BasedOn="{StaticResource TagBaseStyle}" TargetType="tag:Tag"/>
+    <Style BasedOn="{StaticResource TagBaseStyle}" TargetType="controls:Tag"/>
 
 </ResourceDictionary>

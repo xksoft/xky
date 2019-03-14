@@ -1,6 +1,7 @@
-﻿using Xky.UI.Data.Operation;
+﻿using Xky.UI.Data;
 
-namespace MyDemo.UserControl.Controls
+
+namespace MyDemo.UserControl
 {
     public partial class NumericUpDownDemoCtl
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Xky.UI.Controls.Base
+namespace Xky.UI.Controls
 {
     public class HeaderedSelectableItem : SelectableItem
     {

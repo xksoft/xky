@@ -3,7 +3,7 @@ using System.Windows.Controls.Primitives;
 using Xky.UI.Data;
 using Xky.UI.Expression.Shapes;
 
-namespace Xky.UI.Controls.ProgressBar
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = IndicatorTemplateName, Type = typeof(Arc))]
     public class CircleProgressBar : RangeBase

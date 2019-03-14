@@ -6,9 +6,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.TabControl
+namespace Xky.UI.Controls
 {
     public class TabItem : System.Windows.Controls.TabItem
     {

@@ -1,20 +1,18 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.LoadingDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.LoadingDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="{DynamicResource RegionBrush}"
-             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
-             xmlns:loading="clr-namespace:Xky.UI.Controls.Loading;assembly=Xky.UI">
-    <other:TransitioningContentControl>
+             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI">
+    <controls:TransitioningContentControl>
         <StackPanel Width="600" Margin="32" VerticalAlignment="Center">
-            <loading:LoadingLine/>
-            <loading:LoadingLine Margin="0,30" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
+            <controls:LoadingLine/>
+            <controls:LoadingLine Margin="0,30" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <loading:LoadingCircle/>
+                <controls:LoadingCircle/>
                 <Border VerticalAlignment="Center" Margin="32,0,0,0" Background="{DynamicResource PrimaryBrush}" CornerRadius="10">
-                    <loading:LoadingCircle Style="{StaticResource LoadingCircleLight}" Margin="10"/>
+                    <controls:LoadingCircle Style="{StaticResource LoadingCircleLight}" Margin="10"/>
                 </Border>
             </StackPanel>
         </StackPanel>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

@@ -6,17 +6,17 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Security.Permissions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
-using Xky.UI.Data.Gif;
+using Xky.UI.Data;
 using Xky.UI.Tools;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Image
+namespace Xky.UI.Controls
 {
-    public class GifImage : System.Windows.Controls.Image, IDisposable
+    public class GifImage : Image, IDisposable
     {
         private static readonly Guid GifGuid = new Guid("{b96b3caa-0728-11d3-9d7b-0000f81ef32e}");
 

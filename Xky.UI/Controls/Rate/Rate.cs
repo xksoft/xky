@@ -2,11 +2,10 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Xky.UI.Controls.Base;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Rate
+namespace Xky.UI.Controls
 {
     public class Rate : RegularItemsControl
     {

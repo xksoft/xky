@@ -1,4 +1,4 @@
-﻿namespace Xky.UI.Data.Enum
+﻿namespace Xky.UI.Data
 {
     /// <summary>
     ///     步骤状态

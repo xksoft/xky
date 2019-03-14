@@ -6,9 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     [TemplateVisualState(GroupName = PresentationGroup, Name = NormalState)]
     [TemplateVisualState(GroupName = PresentationGroup, Name = DefaultTransitionState)]

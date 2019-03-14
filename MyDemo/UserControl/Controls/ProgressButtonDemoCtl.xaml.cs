@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Threading;
 
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     public partial class ProgressButtonDemoCtl
     {

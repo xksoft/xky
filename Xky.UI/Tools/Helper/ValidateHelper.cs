@@ -1,4 +1,4 @@
-﻿namespace Xky.UI.Tools.Helper
+﻿namespace Xky.UI.Tools
 {
     /// <summary>
     ///     验证帮助类

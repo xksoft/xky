@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using Xky.UI.Controls.Image;
-using Xky.UI.Data.Gif;
+using Xky.UI.Controls;
 
-namespace Xky.UI.Tools
+namespace Xky.UI.Data
 {
     internal class ImageAnimator
     {

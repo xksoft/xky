@@ -2,10 +2,10 @@
 using System.Windows.Controls;
 using Xky.UI.Data;
 using Xky.UI.Expression.Drawing;
+using Xky.UI.Tools;
 using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Cover.CoverView
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementTriangle, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = ElementContent, Type = typeof(FrameworkElement))]

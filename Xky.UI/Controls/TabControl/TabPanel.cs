@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.TabControl
+namespace Xky.UI.Controls
 {
-    public class TabPanel : System.Windows.Controls.Panel
+    public class TabPanel : Panel
     {
         private int _itemCount;
 

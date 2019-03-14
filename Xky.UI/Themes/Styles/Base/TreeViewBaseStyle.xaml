@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:other="clr-namespace:Xky.UI.Controls.Other">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Basic/Converters.xaml"/>
@@ -104,7 +103,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="other:ScrollViewer.IsEnableInertia" Value="False"/>
+        <Setter Property="controls:ScrollViewer.IsEnableInertia" Value="False"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <!--<Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>-->
@@ -112,9 +111,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TreeView">
                     <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                        <other:ScrollViewer x:Name="_tv_scrollviewer_" IsEnableInertia="{Binding Path=(other:ScrollViewer.IsEnableInertia),RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ScrollViewerBaseControlTemplate}" Background="{TemplateBinding Background}" CanContentScroll="false" Focusable="false" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                        <controls:ScrollViewer x:Name="_tv_scrollviewer_" IsEnableInertia="{Binding Path=(controls:ScrollViewer.IsEnableInertia),RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ScrollViewerBaseControlTemplate}" Background="{TemplateBinding Background}" CanContentScroll="false" Focusable="false" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter/>
-                        </other:ScrollViewer>
+                        </controls:ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">

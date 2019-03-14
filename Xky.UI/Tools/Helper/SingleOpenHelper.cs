@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
-using Xky.UI.Controls.Base;
+using Xky.UI.Controls;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     /// <summary>
     ///     该类可以为可视化元素提供单开的功能

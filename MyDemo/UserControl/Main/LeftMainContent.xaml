@@ -1,16 +1,13 @@
-﻿<Border other:ScrollViewer.IsEnableInertia="True"
+﻿<Border controls:ScrollViewer.IsEnableInertia="True"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:command="http://www.galasoft.ch/mvvmlight"
-        x:Class="MyDemo.UserControl.Main.LeftMainContent"
+        x:Class="MyDemo.UserControl.LeftMainContent"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:data="clr-namespace:MyDemo.Data"
         Background="{Binding Background,RelativeSource={RelativeSource AncestorType=Window}}"
         xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
         xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
-        xmlns:input="clr-namespace:Xky.UI.Controls.Input;assembly=Xky.UI"
-        xmlns:attach="clr-namespace:Xky.UI.Controls.Attach;assembly=Xky.UI">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <TabControl SelectionChanged="TabControl_OnSelectionChanged" Style="{StaticResource TabControlInLine}" Background="Transparent" >
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="SelectionChanged">
@@ -27,145 +24,145 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <input:SearchBar x:Name="SearchBarStyle" SearchStarted="SearchBarStyle_OnSearchStarted" Style="{StaticResource SearchBarPlus}" attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterKey}" Margin="4"/>
+                <controls:SearchBar x:Name="SearchBarStyle" SearchStarted="SearchBarStyle_OnSearchStarted" Style="{StaticResource SearchBarPlus}" controls:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterKey}" Margin="4"/>
                 <ToggleButton Name="ButtonStyleAscending" Click="ButtonStyleAscending_OnClick" Grid.Row="0" Grid.Column="1" Margin="0,0,4,0" Style="{StaticResource ToggleButtonCustom}">
                     <Border CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource RegionBrush}" Height="30" Width="30" >
                         <Image Stretch="None" Source="/MyDemo;component/Resources/Img/LeftMainContent/SortAscending_grey_16x.png"/>
                     </Border>
-                    <attach:StatusSwitchElement.CheckedElement>
+                    <controls:StatusSwitchElement.CheckedElement>
                         <Border CornerRadius="4" Height="30" Width="30" BorderThickness="1" BorderBrush="{DynamicResource PrimaryBrush}"/>
-                    </attach:StatusSwitchElement.CheckedElement>
+                    </controls:StatusSwitchElement.CheckedElement>
                 </ToggleButton>
                 <ListBox Name="ListBoxStyle" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" BorderThickness="0" SelectionMode="Single" Style="{StaticResource ListBoxTransparent}">
                     <ListBoxItem Tag="{x:Static data:MessageToken.BrushDemoCtl}" Content="{x:Static langs:Lang.Brush}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Brush_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ButtonDemoCtl}" Content="{x:Static langs:Lang.Button}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ButtonClick_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ToggleButtonDemoCtl}" Content="{x:Static langs:Lang.ToggleButton}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Toggle_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.RadioButtonDemoCtl}" Content="{x:Static langs:Lang.RadioButton}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/RadioButton_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CheckBoxDemoCtl}" Content="{x:Static langs:Lang.CheckBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/CheckBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeScrollViewerDemoCtl}" Content="{x:Static langs:Lang.ScrollViewer}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ScrollBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.SliderDemoCtl}" Content="{x:Static langs:Lang.Slider}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Slider_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TextBlockDemoCtl}" Content="{x:Static langs:Lang.TextBlock}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TextBlock_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeTextBoxDemoCtl}" Content="{x:Static langs:Lang.TextBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TextBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeComboBoxDemoCtl}" Content="{x:Static langs:Lang.ComboBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ComboBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativePasswordBoxDemoCtl}" Content="{x:Static langs:Lang.PasswordBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/PasswordBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ExpanderDemoCtl}" Content="{x:Static langs:Lang.Expander}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Expander_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeProgressBarDemoCtl}" Content="{x:Static langs:Lang.ProgressBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ProgressBar_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CalendarDemoCtl}" Content="{x:Static langs:Lang.Calendar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Calendar_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeDatePickerDemoCtl}" Content="{x:Static langs:Lang.DatePicker}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DatePicker_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NativeTabControlDemoCtl}" Content="{x:Static langs:Lang.TabControl}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TabPage_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.DataGridDemoCtl}" Content="{x:Static langs:Lang.DataGrid}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DataGrid_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TreeViewDemoCtl}" Content="{x:Static langs:Lang.TreeView}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TreeView_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ListBoxDemoCtl}" Content="{x:Static langs:Lang.ListBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ListBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ListViewDemoCtl}" Content="{x:Static langs:Lang.ListView}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ListView_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.GroupBoxDemoCtl}" Content="{x:Static langs:Lang.GroupBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/GroupBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.MenuDemoCtl}" Content="{x:Static langs:Lang.Menu}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ContextMenu_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.RichTextBoxDemoCtl}" Content="{x:Static langs:Lang.RichTextBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/RichTextBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ToolBarDemoCtl}" Content="{x:Static langs:Lang.ToolBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ToolBar_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.BorderDemoCtl}" Content="{x:Static langs:Lang.Border1}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/BorderElement_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.LabelDemoCtl}" Content="{x:Static langs:Lang.Label}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Label_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     
                 </ListBox>
@@ -181,225 +178,225 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <input:SearchBar SearchStarted="SearchBarControl_OnSearchStarted" Style="{StaticResource SearchBarPlus}" attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterKey}" Margin="4"/>
+                <controls:SearchBar SearchStarted="SearchBarControl_OnSearchStarted" Style="{StaticResource SearchBarPlus}" controls:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterKey}" Margin="4"/>
                 <ToggleButton Name="ButtonControlAscending" Click="ButtonControlAscending_OnClick" Grid.Row="0" Grid.Column="1" Margin="0,0,4,0" Style="{StaticResource ToggleButtonCustom}">
                     <Border CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource RegionBrush}" Height="30" Width="30" >
                         <Image Stretch="None" Source="/MyDemo;component/Resources/Img/LeftMainContent/SortAscending_grey_16x.png"/>
                     </Border>
-                    <attach:StatusSwitchElement.CheckedElement>
+                    <controls:StatusSwitchElement.CheckedElement>
                         <Border CornerRadius="4" Height="30" Width="30" BorderThickness="1" BorderBrush="{DynamicResource PrimaryBrush}"/>
-                    </attach:StatusSwitchElement.CheckedElement>
+                    </controls:StatusSwitchElement.CheckedElement>
                 </ToggleButton>
                 <ListBox Name="ListBoxControl" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" BorderThickness="0" SelectionMode="Single"  Style="{StaticResource ListBoxTransparent}">
                     <ListBoxItem Style="{StaticResource ListBoxItemNew}" Tag="{x:Static data:MessageToken.GravatarDemoCtl}" Content="{x:Static langs:Lang.Gravatar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/User_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Style="{StaticResource ListBoxItemNew}" Tag="{x:Static data:MessageToken.BadgeDemoCtl}" Content="{x:Static langs:Lang.Badge}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DotLarge_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Style="{StaticResource ListBoxItemNew}" Tag="{x:Static data:MessageToken.GotoTopDemoCtl}" Content="{x:Static langs:Lang.GotoTop}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/GoToTop_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ProgressButtonDemoCtl}" Content="{x:Static langs:Lang.ProgressButton}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ProgressButton_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ChatBubbleDemoCtl}" Content="{x:Static langs:Lang.ChatBubble}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Bubble_16xLG.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.NumericUpDownDemoCtl}" Content="{x:Static langs:Lang.NumericUpDown}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/NumericListBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TextBoxDemoCtl}" Content="{x:Static langs:Lang.TextBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TextBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ComboBoxDemoCtl}" Content="{x:Static langs:Lang.ComboBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ComboBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.PasswordBoxDemoCtl}" Content="{x:Static langs:Lang.PasswordBox}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/PasswordBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.DatePickerDemoCtl}" Content="{x:Static langs:Lang.DatePicker}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DatePicker_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ClockDemoCtl}" Content="{x:Static langs:Lang.Clock}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Time_color_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TimePickerDemoCtl}" Content="{x:Static langs:Lang.TimePicker}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TimePicker_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CalendarWithClockDemoCtl}" Content="{x:Static langs:Lang.CalendarWithClock}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Calendar_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.DateTimePickerDemoCtl}" Content="{x:Static langs:Lang.DateTimePicker}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DatePicker_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TransferDemoCtl}" Content="{x:Static langs:Lang.Transfer}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Transfer_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.FlipClockDemoCtl}" Content="{x:Static langs:Lang.FlipClock}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/FlipVertical_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.RateDemoCtl}" Content="{x:Static langs:Lang.Rate}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Star.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ShieldDemoCtl}" Content="{x:Static langs:Lang.Shield}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Shield_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.SearchBarDemoCtl}" Content="{x:Static langs:Lang.SearchBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Search_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TagDemoCtl}" Content="{x:Static langs:Lang.Tag}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Tag_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.GifImageDemoCtl}" Content="{x:Static langs:Lang.GifImage}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Animation_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.OutlineTextDemoCtl}" Content="{x:Static langs:Lang.OutlineText}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TextBlock_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CirclePanelDemoCtl}" Content="{x:Static langs:Lang.CirclePanel}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ColorWheel_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.WaterfallPanelDemoCtl}" Content="{x:Static langs:Lang.WaterfallPanel}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Panel_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CoverViewDemoCtl}" Content="{x:Static langs:Lang.CoverView}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/DetailDataView_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CoverFlowDemoCtl}" Content="{x:Static langs:Lang.CoverFlow}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/LinearCarousel_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Style="{StaticResource ListBoxItemNew}" Tag="{x:Static data:MessageToken.ProgressBarDemoCtl}" Content="{x:Static langs:Lang.ProgressBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ProgressBar_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.StepBarDemoCtl}" Content="{x:Static langs:Lang.StepBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Flow_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.GrowlDemoCtl}" Content="{x:Static langs:Lang.Growl}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Message_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.LoadingDemoCtl}" Content="{x:Static langs:Lang.Loading}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Loading_Blue_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ImageBrowserDemoCtl}" Content="{x:Static langs:Lang.ImageBrowser}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ImageBrowser_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ColorPickerDemoCtl}" Content="{x:Static langs:Lang.ColorPicker}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ColorPalette_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CarouselDemoCtl}" Content="{x:Static langs:Lang.Carousel}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Carousel_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.CompareSliderDemoCtl}" Content="{x:Static langs:Lang.CompareSlider}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/SplitterControl_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.PreviewSliderDemoCtl}" Content="{x:Static langs:Lang.PreviewSlider}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/HoverMenu_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TimeBarDemoCtl}" Content="{x:Static langs:Lang.TimeBar}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Timeline_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.PaginationDemoCtl}" Content="{x:Static langs:Lang.Pagination}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Paginator_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.AnimationPathDemoCtl}" Content="{x:Static langs:Lang.AnimationPath}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Path_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.TabControlDemoCtl}" Content="{x:Static langs:Lang.TabControl}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/TabPage_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.ScrollViewerDemoCtl}" Content="{x:Static langs:Lang.ScrollViewer}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/ScrollBox_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Style="{StaticResource ListBoxItemNew}" Tag="{x:Static data:MessageToken.DialogDemoCtl}" Content="{x:Static langs:Lang.Dialog}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/Dialog_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                     <ListBoxItem Tag="{x:Static data:MessageToken.WindowDemoCtl}" Content="{x:Static langs:Lang.Window}">
-                        <attach:EdgeElement.LeftContent>
+                        <controls:EdgeElement.LeftContent>
                             <Image Source="../../Resources/Img/LeftMainContent/WindowsForm_16x.png"/>
-                        </attach:EdgeElement.LeftContent>
+                        </controls:EdgeElement.LeftContent>
                     </ListBoxItem>
                 </ListBox>
             </Grid>

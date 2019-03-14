@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyDemo.UserControl.Controls
+namespace MyDemo.UserControl
 {
     public partial class CoverFlowDemoCtl
     {

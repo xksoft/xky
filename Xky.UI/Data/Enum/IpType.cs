@@ -1,5 +1,5 @@
 ﻿
-namespace Xky.UI.Data.Enum
+namespace Xky.UI.Data
 {
     /// <summary>
     /// IP类型枚举

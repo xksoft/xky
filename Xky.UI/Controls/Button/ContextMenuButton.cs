@@ -1,11 +1,12 @@
 ﻿using System.Windows.Controls;
 
-namespace Xky.UI.Controls.Button
+
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     带上下文菜单的按钮
     /// </summary>
-    public class ContextMenuButton : System.Windows.Controls.Button
+    public class ContextMenuButton : Button
     {
         public ContextMenu Menu { get; set; }
 

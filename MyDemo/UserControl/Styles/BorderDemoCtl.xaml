@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Styles.BorderDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.BorderDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <UniformGrid Margin="32,32,0,0" Columns="3" Rows="2">
             <Border Style="{StaticResource BorderRegionStyle}" Width="200" Height="200" Margin="0,0,32,32">
                 <Border Background="{DynamicResource PrimaryBrush}">
@@ -38,5 +37,5 @@
                 </Border>
             </Border>
         </UniformGrid>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

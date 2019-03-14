@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xky.UI.Data.Gif
+namespace Xky.UI.Data
 {
     internal class GifFrameDimension
     {

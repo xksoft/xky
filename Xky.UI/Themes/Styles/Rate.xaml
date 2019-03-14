@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:rate="clr-namespace:Xky.UI.Controls.Rate">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base/RateBaseStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource RateBaseStyle}" TargetType="rate:Rate"/>
+    <Style BasedOn="{StaticResource RateBaseStyle}" TargetType="controls:Rate"/>
 
 </ResourceDictionary>

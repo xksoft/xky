@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Cover.CoverFlow
+namespace Xky.UI.Controls
 {
     public class CoverFlowItem : ModelVisual3D
     {

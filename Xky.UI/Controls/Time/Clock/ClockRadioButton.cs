@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 
-namespace Xky.UI.Controls.Time.Clock
+
+namespace Xky.UI.Controls
 {
     public class ClockRadioButton : RadioButton
     {

@@ -6,16 +6,14 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using Xky.UI.Controls.Panel;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Time.Clock
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementButtonAm, Type = typeof(RadioButton))]
     [TemplatePart(Name = ElementButtonPm, Type = typeof(RadioButton))]
-    [TemplatePart(Name = ElementButtonConfirm, Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = ElementButtonConfirm, Type = typeof(Button))]
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     [TemplatePart(Name = ElementBorderTitle, Type = typeof(Border))]
     [TemplatePart(Name = ElementBorderClock, Type = typeof(Border))]
@@ -42,7 +40,7 @@ namespace Xky.UI.Controls.Time.Clock
 
         private RadioButton _buttonPm;
 
-        private System.Windows.Controls.Button _buttonConfirm;
+        private Button _buttonConfirm;
 
         private Canvas _canvas;
 
@@ -208,7 +206,7 @@ namespace Xky.UI.Controls.Time.Clock
 
             _buttonAm = GetTemplateChild(ElementButtonAm) as RadioButton;
             _buttonPm = GetTemplateChild(ElementButtonPm) as RadioButton;
-            _buttonConfirm = GetTemplateChild(ElementButtonConfirm) as System.Windows.Controls.Button;
+            _buttonConfirm = GetTemplateChild(ElementButtonConfirm) as Button;
             _borderTitle = GetTemplateChild(ElementBorderTitle) as Border;
             _canvas = GetTemplateChild(ElementCanvas) as Canvas;
             _borderClock = GetTemplateChild(ElementBorderClock) as Border;

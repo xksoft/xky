@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using Xky.UI.Tools;
-using Xky.UI.Tools.Helper;
 
 namespace MyDemo.Tools.Converter
 {

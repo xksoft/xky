@@ -5,9 +5,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Window
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     弹出窗口

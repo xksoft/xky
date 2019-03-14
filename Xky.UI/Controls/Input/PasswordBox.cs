@@ -4,14 +4,11 @@ using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Xky.UI.Controls.Attach;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
-using Xky.UI.Data.Operation;
 using Xky.UI.Interactivity;
 using Xky.UI.Properties.Langs;
 
-namespace Xky.UI.Controls.Input
+namespace Xky.UI.Controls
 {
     /// <inheritdoc cref="IDataInput" />
     [TemplatePart(Name = ElementPasswordBox, Type = typeof(System.Windows.Controls.PasswordBox))]

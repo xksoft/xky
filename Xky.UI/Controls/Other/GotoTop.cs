@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using Xky.UI.Data;
+using Xky.UI.Tools;
 using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
-    public class GotoTop : System.Windows.Controls.Button
+    public class GotoTop : Button
     {
         private Action _gotoTopAction;
 

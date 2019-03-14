@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Media3D;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     /// <summary>
     ///     包含内部使用的一些简单算法

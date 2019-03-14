@@ -1,5 +1,5 @@
 ﻿
-namespace MyDemo.Data.Enum
+namespace MyDemo.Data
 {
     public enum DemoType
     {

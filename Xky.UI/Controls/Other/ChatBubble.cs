@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows;
-using Xky.UI.Controls.Base;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class ChatBubble : SelectableItem
     {

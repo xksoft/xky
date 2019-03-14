@@ -1,4 +1,4 @@
-﻿namespace Xky.UI.Data.Gif
+﻿namespace Xky.UI.Data
 {
     public class GifPropertyItem
     {

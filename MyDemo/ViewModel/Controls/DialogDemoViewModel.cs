@@ -1,10 +1,10 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MyDemo.UserControl.Basic;
-using Xky.UI.Controls.Other;
+using Xky.UI.Controls;
+using MyDemo.UserControl;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class DialogDemoViewModel : ViewModelBase
     {

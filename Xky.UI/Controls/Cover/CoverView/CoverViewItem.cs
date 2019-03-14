@@ -1,6 +1,4 @@
-﻿using Xky.UI.Controls.Base;
-
-namespace Xky.UI.Controls.Cover.CoverView
+﻿namespace Xky.UI.Controls
 {
     public class CoverViewItem : HeaderedSelectableItem
     {       

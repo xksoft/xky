@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 using System.Security.Permissions;
 using System.Threading;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     internal class ExternDllHelper
     {

@@ -5,13 +5,13 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 
-namespace Xky.UI.Controls.Slider
+
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = PreviewContentKey, Type = typeof(ContentControl))]
     [TemplatePart(Name = TracKKey, Type = typeof(Track))]
-    public class PreviewSlider : System.Windows.Controls.Slider
+    public class PreviewSlider : Slider
     {
         private const string PreviewContentKey = "PART_ContentBorder";
 

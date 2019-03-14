@@ -1,9 +1,8 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.ColorPickerDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.ColorPickerDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI">
-    <other:TransitioningContentControl>
-        <other:ColorPicker Name="ColorPicker" Margin="32"/>
-    </other:TransitioningContentControl>
+             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI">
+    <controls:TransitioningContentControl>
+        <controls:ColorPicker Name="ColorPicker" Margin="32"/>
+    </controls:TransitioningContentControl>
 </UserControl>

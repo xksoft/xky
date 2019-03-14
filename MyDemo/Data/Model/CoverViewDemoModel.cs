@@ -1,4 +1,4 @@
-﻿namespace MyDemo.Data.Model
+﻿namespace MyDemo.Data
 {
     public class CoverViewDemoModel
     {

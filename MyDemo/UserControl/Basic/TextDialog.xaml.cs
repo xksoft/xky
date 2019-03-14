@@ -1,4 +1,4 @@
-﻿namespace MyDemo.UserControl.Basic
+﻿namespace MyDemo.UserControl
 {
     public partial class TextDialog
     {

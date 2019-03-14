@@ -2,14 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Xky.UI.Controls.Attach;
 using Xky.UI.Data;
-using Xky.UI.Data.Enum;
-using Xky.UI.Data.Operation;
 using Xky.UI.Interactivity;
 using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Input
+namespace Xky.UI.Controls
 {
     /// <inheritdoc cref="IDataInput" />
     public class TextBox : System.Windows.Controls.TextBox, IDataInput

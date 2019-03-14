@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Xky.UI.Tools.StyleSelector;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class RadioGroup : ItemsControl
     {

@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.CommandWpf;
-using MyDemo.Data.Model;
+using Xky.UI.Controls;
+using MyDemo.Data;
 using MyDemo.Service;
-using Xky.UI.Controls.StepBar;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class StepBarDemoViewModel : DemoViewModelBase<StepBarDemoModel>
     {

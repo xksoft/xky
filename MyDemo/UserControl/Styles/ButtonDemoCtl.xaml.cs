@@ -1,5 +1,5 @@
 ﻿
-namespace MyDemo.UserControl.Styles
+namespace MyDemo.UserControl
 {
     /// <summary>
     /// ButtonDemoCtl.xaml 的交互逻辑

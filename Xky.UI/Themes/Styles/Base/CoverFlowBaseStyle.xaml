@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:coverFlow="clr-namespace:Xky.UI.Controls.Cover.CoverFlow">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <!--<Style x:Key="CoverFlowItemBaseStyle" TargetType="controls:CoverFlowItem">
         <Setter Property="Width" Value="{Binding ItemWidth,RelativeSource={RelativeSource  AncestorType=controls:CoverFlow}}"/>
@@ -17,11 +16,11 @@
         </Setter>
     </Style>-->
 
-    <Style x:Key="CoverFlowBaseStyle" TargetType="coverFlow:CoverFlow">
+    <Style x:Key="CoverFlowBaseStyle" TargetType="controls:CoverFlow">
         <!--<Setter Property="ItemContainerStyle" Value="{StaticResource CoverFlowItemBaseStyle}"/>-->
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="coverFlow:CoverFlow">
+                <ControlTemplate TargetType="controls:CoverFlow">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                         <Viewport3D x:Name="PART_Viewport3D">
                             <Viewport3D.Camera>

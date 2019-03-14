@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     标记

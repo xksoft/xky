@@ -6,11 +6,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Xky.UI.Controls.Base;
 using Xky.UI.Interactivity;
 using Xky.UI.Tools.Extension;
 
-namespace Xky.UI.Controls.Transfer
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     穿梭框

@@ -1,5 +1,5 @@
 ﻿
-namespace MyDemo.UserControl.Styles
+namespace MyDemo.UserControl
 {
     public partial class NativeTabControlDemoCtl
     {

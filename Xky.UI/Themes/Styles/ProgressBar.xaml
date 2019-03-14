@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:progressBar="clr-namespace:Xky.UI.Controls.ProgressBar">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base/ProgressBarBaseStyle.xaml"/>
@@ -177,43 +176,43 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="progressBar:CircleProgressBar">
+    <Style BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="controls:CircleProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarSuccessCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="progressBar:CircleProgressBar">
+    <Style x:Key="ProgressBarSuccessCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="controls:CircleProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarInfoCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="progressBar:CircleProgressBar">
+    <Style x:Key="ProgressBarInfoCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="controls:CircleProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource InfoBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarWarningCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="progressBar:CircleProgressBar">
+    <Style x:Key="ProgressBarWarningCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="controls:CircleProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource WarningBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarDangerCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="progressBar:CircleProgressBar">
+    <Style x:Key="ProgressBarDangerCircle" BasedOn="{StaticResource ProgressBarCircleBaseStyle}" TargetType="controls:CircleProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/>
     </Style>
 
-    <Style BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="progressBar:WaveProgressBar">
+    <Style BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="controls:WaveProgressBar">
         <Setter Property="WaveFill" Value="{DynamicResource DarkPrimaryBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarSuccessWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="progressBar:WaveProgressBar">
+    <Style x:Key="ProgressBarSuccessWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="controls:WaveProgressBar">
         <Setter Property="WaveFill" Value="{DynamicResource DarkSuccessBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarInfoWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="progressBar:WaveProgressBar">
+    <Style x:Key="ProgressBarInfoWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="controls:WaveProgressBar">
         <Setter Property="WaveFill" Value="{DynamicResource DarkInfoBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarWarningWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="progressBar:WaveProgressBar">
+    <Style x:Key="ProgressBarWarningWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="controls:WaveProgressBar">
         <Setter Property="WaveFill" Value="{DynamicResource DarkWarningBrush}"/>
     </Style>
 
-    <Style x:Key="ProgressBarDangerWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="progressBar:WaveProgressBar">
+    <Style x:Key="ProgressBarDangerWave" BasedOn="{StaticResource ProgressBarWaveBaseStyle}" TargetType="controls:WaveProgressBar">
         <Setter Property="WaveFill" Value="{DynamicResource DarkDangerBrush}"/>
     </Style>
 

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 
-namespace Xky.UI.Data.Args
+
+namespace Xky.UI.Data
 {
     public class FunctionEventArgs<T> : RoutedEventArgs
     {

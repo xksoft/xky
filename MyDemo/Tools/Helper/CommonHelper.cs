@@ -2,7 +2,7 @@
 using System.Management;
 using Xky.UI.Data;
 
-namespace MyDemo.Tools.Helper
+namespace MyDemo.Tools
 {
     public class CommonHelper
     {

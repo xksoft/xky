@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Xky.UI.Data.Enum;
+using Xky.UI.Data;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     /// <summary>
     ///     资源帮助类

@@ -5,9 +5,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Xky.UI.Data;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class ScrollViewer : System.Windows.Controls.ScrollViewer
     {

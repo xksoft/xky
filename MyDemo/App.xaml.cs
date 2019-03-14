@@ -7,8 +7,6 @@ using Xky.UI.Data;
 using Xky.UI.Tools;
 using MyDemo.Data;
 using MyDemo.Tools;
-using Xky.UI.Data.Enum;
-using Xky.UI.Tools.Helper;
 
 namespace MyDemo
 {
@@ -29,7 +27,7 @@ namespace MyDemo
                 UpdateSkin(GlobalData.Config.Skin);
             }
 
-
+            BlurWindow.SystemVersionInfo = CommonHelper.GetSystemVersionInfo();
         }
 
         protected override void OnExit(ExitEventArgs e)

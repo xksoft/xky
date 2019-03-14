@@ -4,7 +4,8 @@ using System.Windows.Data;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Xky.UI.Controls.Loading
+
+namespace Xky.UI.Controls
 {
     public class LoadingLine : LoadingBase
     {

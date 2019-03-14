@@ -2,9 +2,9 @@
 using System.Windows.Documents;
 using System.Windows.Input;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
+using Xky.UI.Tools;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class Dialog : ContentControl
     {

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Xky.UI.Data;
 
-namespace Xky.UI.Controls.Base
+namespace Xky.UI.Controls
 {
     public class SelectableItem : ContentControl, ISelectable
     {

@@ -1,6 +1,6 @@
 ﻿using MyDemo.Service;
 
-namespace MyDemo.ViewModel.Common
+namespace MyDemo.ViewModel
 {
     public class ComboBoxDemoViewModel : DemoViewModelBase<string>
     {

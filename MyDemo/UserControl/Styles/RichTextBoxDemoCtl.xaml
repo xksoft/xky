@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Styles.RichTextBoxDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.RichTextBoxDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <RichTextBox Margin="32" Width="400" Height="300" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <FlowDocument>
                 <Paragraph>
@@ -19,5 +18,5 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

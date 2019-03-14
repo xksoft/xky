@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Xky.UI.Controls.Input
+namespace Xky.UI.Controls
 {
     [TemplatePart(Name = ElementContentName, Type = typeof(ContentControl))]
     public class WatermarkTextBox : TextBox

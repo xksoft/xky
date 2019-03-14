@@ -4,11 +4,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Xky.UI.Controls.Image;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
 
-namespace Xky.UI.Controls.Window
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     图片浏览器

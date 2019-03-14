@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace Xky.UI.Controls.Attach
+namespace Xky.UI.Controls
 {
     public class IconSwitchElement : IconElement
     {

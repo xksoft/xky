@@ -3,7 +3,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     [ContentProperty(nameof(Status))]
     public class Shield : ButtonBase

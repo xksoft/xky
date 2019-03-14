@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Xky.UI.Tools.Helper
+namespace Xky.UI.Tools
 {
     /// <summary>
     ///     包含一些常用的动画辅助方法

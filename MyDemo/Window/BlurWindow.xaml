@@ -1,11 +1,10 @@
-﻿<window:BlurWindow x:Class="MyDemo.Window.BlurWindow"
+﻿<controls:BlurWindow x:Class="MyDemo.Window.BlurWindow"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
                      xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-                     xmlns:window="clr-namespace:Xky.UI.Controls.Window;assembly=Xky.UI"
                      mc:Ignorable="d"
                      WindowStartupLocation="CenterScreen"
                      Title="{x:Static langs:Lang.Title}"
@@ -14,4 +13,4 @@
                      Height="450" 
                      Width="800" 
                      Icon="/MyDemo;component/Resources/Img/icon.ico">
-</window:BlurWindow>
+</controls:BlurWindow>

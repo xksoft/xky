@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:attach="clr-namespace:Xky.UI.Controls.Attach">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
     <ControlTemplate x:Key="GroupBoxBaseTopTemplate" TargetType="GroupBox">
         <Grid>
@@ -9,10 +8,10 @@
                 <RowDefinition Height="Auto" MinHeight="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border MinHeight="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(attach:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,0,6">
+            <Border MinHeight="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(controls:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,0,6">
                 <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"  Margin="10,0" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
-            <Border Grid.Row="1" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Border Grid.Row="1" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
         </Grid>
@@ -24,7 +23,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="30"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border MinWidth="30" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="False" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(attach:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,6,0">
+            <Border MinWidth="30" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="False" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(controls:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Margin="0,0,6,0">
                 <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"  Margin="0,10" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RenderTransformOrigin="0.5,0.5">
                     <ContentPresenter.LayoutTransform>
                         <TransformGroup>
@@ -33,7 +32,7 @@
                     </ContentPresenter.LayoutTransform>
                 </ContentPresenter>
             </Border>
-            <Border Grid.Column="1" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Border Grid.Column="1" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
         </Grid>
@@ -43,16 +42,16 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
         <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextIconBrush}"/>
-        <Setter Property="attach:TitleElement.Background" Value="{DynamicResource TitleBrush}"/>
-        <Setter Property="attach:TitleElement.TitleAlignment" Value="Top"/>
-        <Setter Property="attach:BorderElement.CornerRadius" Value="4"/>
+        <Setter Property="controls:TitleElement.Background" Value="{DynamicResource TitleBrush}"/>
+        <Setter Property="controls:TitleElement.TitleAlignment" Value="Top"/>
+        <Setter Property="controls:BorderElement.CornerRadius" Value="4"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="4"/>
         <Setter Property="Template" Value="{StaticResource GroupBoxBaseTopTemplate}"/>
         <Style.Triggers>
-            <Trigger Property="attach:TitleElement.TitleAlignment" Value="Left">
+            <Trigger Property="controls:TitleElement.TitleAlignment" Value="Left">
                 <Setter Property="Template" Value="{StaticResource GroupBoxBaseLeftTemplate}"/>
             </Trigger>
         </Style.Triggers>
@@ -65,7 +64,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}" Margin="8,0,8,4" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-            <Border Grid.Row="1" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Border Grid.Row="1" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
         </Grid>
@@ -74,11 +73,11 @@
     <ControlTemplate x:Key="GroupBoxOriginalLeftTemplate" TargetType="GroupBox">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding Path=(attach:InfoElement.TitleWidth),RelativeSource={RelativeSource TemplatedParent}}"/>
+                <ColumnDefinition Width="{Binding Path=(controls:InfoElement.TitleWidth),RelativeSource={RelativeSource TemplatedParent}}"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ContentPresenter Margin="0,7,6,8" TextElement.Foreground="{TemplateBinding Foreground}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-            <Border Grid.Column="1" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Border Grid.Column="1" CornerRadius="{Binding Path=(controls:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
         </Grid>
@@ -86,13 +85,13 @@
 
     <Style x:Key="GroupBoxOriginalBaseStyle" BasedOn="{StaticResource GroupBoxBaseStyle}" TargetType="GroupBox">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
-        <Setter Property="attach:BorderElement.CornerRadius" Value="0"/>
+        <Setter Property="controls:BorderElement.CornerRadius" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Template" Value="{StaticResource GroupBoxOriginalTopTemplate}"/>
         <Style.Triggers>
-            <Trigger Property="attach:TitleElement.TitleAlignment" Value="Left">
+            <Trigger Property="controls:TitleElement.TitleAlignment" Value="Left">
                 <Setter Property="Template" Value="{StaticResource GroupBoxOriginalLeftTemplate}"/>
             </Trigger>
         </Style.Triggers>
@@ -107,7 +106,7 @@
             <Border Grid.Row="1" CornerRadius="0,0,4,4" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
-            <Border Grid.Row="0" MinHeight="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(attach:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="4,4,0,0">
+            <Border Grid.Row="0" MinHeight="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(controls:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="4,4,0,0">
                 <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}" Margin="10,0" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
         </Grid>
@@ -122,7 +121,7 @@
             <Border Grid.Column="1" CornerRadius="0,4,4,0" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                 <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
-            <Border Grid.Column="0" MinWidth="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(attach:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="4,0,0,4">
+            <Border Grid.Column="0" MinWidth="30" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{Binding Path=(controls:TitleElement.Background),RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="4,0,0,4">
                 <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}" Margin="0,10" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <ContentPresenter.LayoutTransform>
                         <TransformGroup>
@@ -137,7 +136,7 @@
     <Style x:Key="GroupBoxTabBaseStyle" BasedOn="{StaticResource GroupBoxBaseStyle}" TargetType="GroupBox">
         <Setter Property="Template" Value="{StaticResource GroupBoxTabTopTemplate}"/>
         <Style.Triggers>
-            <Trigger Property="attach:TitleElement.TitleAlignment" Value="Left">
+            <Trigger Property="controls:TitleElement.TitleAlignment" Value="Left">
                 <Setter Property="Template" Value="{StaticResource GroupBoxTabLeftTemplate}"/>
             </Trigger>
         </Style.Triggers>

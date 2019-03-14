@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Controls.GrowlDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.GrowlDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              DataContext="{Binding GrowlDemo,Source={StaticResource Locator}}"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <WrapPanel Margin="32" VerticalAlignment="Center">
             <Button Command="{Binding InfoCmd}" Content="{x:Static langs:Lang.Info}" Margin="0,5,5,5" Style="{StaticResource ButtonInfo}"/>
             <Button Command="{Binding SuccessCmd}" Content="{x:Static langs:Lang.Success}" Margin="5" Style="{StaticResource ButtonSuccess}"/>
@@ -16,5 +15,5 @@
             <Button Command="{Binding FatalCmd}" Content="{x:Static langs:Lang.Fatal}" Margin="5,0"/>
             <Button Command="{Binding ClearCmd}" Content="{x:Static langs:Lang.Clear}" Margin="5,0,0,0" Style="{StaticResource ButtonPrimary}"/>
         </WrapPanel>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

@@ -4,7 +4,7 @@ using System.Windows.Data;
 using Xky.UI.Data;
 using Xky.UI.Tools.Converter;
 
-namespace Xky.UI.Controls.Attach
+namespace Xky.UI.Controls
 {
     public class BorderElement
     {

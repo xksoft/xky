@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyDemo.Tools.Helper
+namespace MyDemo.Tools
 {
     public class AssemblyHelper
     {

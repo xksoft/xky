@@ -5,7 +5,8 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Xky.UI.Controls.Loading
+
+namespace Xky.UI.Controls
 {
     public class LoadingCircle : LoadingBase
     {

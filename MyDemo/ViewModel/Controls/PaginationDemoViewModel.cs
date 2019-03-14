@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using GalaSoft.MvvmLight.CommandWpf;
-using MyDemo.Data.Model;
+using Xky.UI.Data;
+using MyDemo.Data;
 using MyDemo.Service;
-using Xky.UI.Data.Args;
 
-namespace MyDemo.ViewModel.Controls
+namespace MyDemo.ViewModel
 {
     public class PaginationDemoViewModel : DemoViewModelBase<DemoDataModel>
     {

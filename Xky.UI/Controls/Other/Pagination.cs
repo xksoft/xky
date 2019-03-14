@@ -3,21 +3,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 using Xky.UI.Interactivity;
+using Xky.UI.Tools;
 using Xky.UI.Tools.Extension;
-using Xky.UI.Tools.Helper;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     页码
     /// </summary>
-    [TemplatePart(Name = ElementButtonLeft, Type = typeof(System.Windows.Controls.Button))]
-    [TemplatePart(Name = ElementButtonRight, Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = ElementButtonLeft, Type = typeof(Button))]
+    [TemplatePart(Name = ElementButtonRight, Type = typeof(Button))]
     [TemplatePart(Name = ElementButtonFirst, Type = typeof(RadioButton))]
     [TemplatePart(Name = ElementTextBlockLeft, Type = typeof(TextBlock))]
-    [TemplatePart(Name = ElementPanelMain, Type = typeof(System.Windows.Controls.Panel))]
+    [TemplatePart(Name = ElementPanelMain, Type = typeof(Panel))]
     [TemplatePart(Name = ElementTextBlockRight, Type = typeof(TextBlock))]
     [TemplatePart(Name = ElementButtonLast, Type = typeof(RadioButton))]
     public class Pagination : Control
@@ -36,11 +35,11 @@ namespace Xky.UI.Controls.Other
 
         #region Data
 
-        private System.Windows.Controls.Button _buttonLeft;
-        private System.Windows.Controls.Button _buttonRight;
+        private Button _buttonLeft;
+        private Button _buttonRight;
         private RadioButton _buttonFirst;
         private TextBlock _textBlockLeft;
-        private System.Windows.Controls.Panel _panelMain;
+        private Panel _panelMain;
         private TextBlock _textBlockRight;
         private RadioButton _buttonLast;
 
@@ -228,11 +227,11 @@ namespace Xky.UI.Controls.Other
             _appliedTemplate = false;
             base.OnApplyTemplate();
 
-            _buttonLeft = GetTemplateChild(ElementButtonLeft) as System.Windows.Controls.Button;
-            _buttonRight = GetTemplateChild(ElementButtonRight) as System.Windows.Controls.Button;
+            _buttonLeft = GetTemplateChild(ElementButtonLeft) as Button;
+            _buttonRight = GetTemplateChild(ElementButtonRight) as Button;
             _buttonFirst = GetTemplateChild(ElementButtonFirst) as RadioButton;
             _textBlockLeft = GetTemplateChild(ElementTextBlockLeft) as TextBlock;
-            _panelMain = GetTemplateChild(ElementPanelMain) as System.Windows.Controls.Panel;
+            _panelMain = GetTemplateChild(ElementPanelMain) as Panel;
             _textBlockRight = GetTemplateChild(ElementTextBlockRight) as TextBlock;
             _buttonLast = GetTemplateChild(ElementButtonLast) as RadioButton;
 

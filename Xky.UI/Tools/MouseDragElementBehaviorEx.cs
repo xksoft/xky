@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Xky.UI.Data;
 using Xky.UI.Interactivity;
-using Xky.UI.Tools.Helper;
 
 namespace Xky.UI.Tools
 {

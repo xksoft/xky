@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
-using MyDemo.Data;
 using Xky.UI.Tools.Extension;
+using MyDemo.Data;
 
-namespace MyDemo.UserControl.Main
+
+namespace MyDemo.UserControl
 {
     /// <summary>
     ///     主内容

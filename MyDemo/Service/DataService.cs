@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using Xky.UI.Data;
 using MyDemo.Data;
-using MyDemo.Data.Enum;
-using MyDemo.Data.Model;
 using MyDemo.Tools.Converter;
 using Newtonsoft.Json;
 

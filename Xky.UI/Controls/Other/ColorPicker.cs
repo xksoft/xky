@@ -5,14 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Xky.UI.Controls.Base;
-using Xky.UI.Controls.Input;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
 using Xky.UI.Interactivity;
 using Xky.UI.Tools.Extension;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     颜色拾取器
@@ -20,10 +17,10 @@ namespace Xky.UI.Controls.Other
     [TemplatePart(Name = ElementBorderColor, Type = typeof(Border))]
     [TemplatePart(Name = ElementBorderPicker, Type = typeof(Border))]
     [TemplatePart(Name = ElementBorderDrag, Type = typeof(Border))]
-    [TemplatePart(Name = ElementPanelColor, Type = typeof(System.Windows.Controls.Panel))]
-    [TemplatePart(Name = ElementSliderColor, Type = typeof(System.Windows.Controls.Panel))]
-    [TemplatePart(Name = ElementSliderOpacity, Type = typeof(System.Windows.Controls.Panel))]
-    [TemplatePart(Name = ElementPanelRgb, Type = typeof(System.Windows.Controls.Panel))]
+    [TemplatePart(Name = ElementPanelColor, Type = typeof(Panel))]
+    [TemplatePart(Name = ElementSliderColor, Type = typeof(Panel))]
+    [TemplatePart(Name = ElementSliderOpacity, Type = typeof(Panel))]
+    [TemplatePart(Name = ElementPanelRgb, Type = typeof(Panel))]
     public class ColorPicker : Control, ISingleOpen
     {
         #region Constants
@@ -40,7 +37,7 @@ namespace Xky.UI.Controls.Other
 
         #region Data
 
-        private System.Windows.Controls.Panel _panelRgb;
+        private Panel _panelRgb;
 
         private Border _borderColor;
 
@@ -48,11 +45,11 @@ namespace Xky.UI.Controls.Other
 
         private Border _borderDrag;
 
-        private System.Windows.Controls.Panel _panelColor;
+        private Panel _panelColor;
 
-        private System.Windows.Controls.Slider _sliderColor;
+        private Slider _sliderColor;
 
-        private System.Windows.Controls.Slider _sliderOpacity;
+        private Slider _sliderOpacity;
 
         private bool _appliedTemplate;
 
@@ -373,10 +370,10 @@ namespace Xky.UI.Controls.Other
             _borderColor = GetTemplateChild(ElementBorderColor) as Border;
             _borderDrag = GetTemplateChild(ElementBorderDrag) as Border;
             _borderPicker = GetTemplateChild(ElementBorderPicker) as Border;
-            _panelColor = GetTemplateChild(ElementPanelColor) as System.Windows.Controls.Panel;
-            _sliderColor = GetTemplateChild(ElementSliderColor) as System.Windows.Controls.Slider;
-            _sliderOpacity = GetTemplateChild(ElementSliderOpacity) as System.Windows.Controls.Slider;
-            _panelRgb = GetTemplateChild(ElementPanelRgb) as System.Windows.Controls.Panel;
+            _panelColor = GetTemplateChild(ElementPanelColor) as Panel;
+            _sliderColor = GetTemplateChild(ElementSliderColor) as Slider;
+            _sliderOpacity = GetTemplateChild(ElementSliderOpacity) as Slider;
+            _panelRgb = GetTemplateChild(ElementPanelRgb) as Panel;
 
             if (_sliderColor != null)
             {
@@ -423,12 +420,12 @@ namespace Xky.UI.Controls.Other
         ///     创建颜色按钮
         /// </summary>
         /// <returns></returns>
-        private System.Windows.Controls.Button CreateColorButton(string colorStr)
+        private Button CreateColorButton(string colorStr)
         {
             var color = ColorConverter.ConvertFromString(colorStr) ?? default(Color);
             var brush = new SolidColorBrush((Color)color);
 
-            var button = new System.Windows.Controls.Button
+            var button = new Button
             {
                 Margin = new Thickness(0, 0, 12, 12),
                 Style = FindResource("ButtonCustom") as Style,

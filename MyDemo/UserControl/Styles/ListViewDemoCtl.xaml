@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="MyDemo.UserControl.Styles.ListViewDemoCtl"
+﻿<UserControl x:Class="MyDemo.UserControl.ListViewDemoCtl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
-             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
              Background="{DynamicResource RegionBrush}">
-    <other:TransitioningContentControl>
+    <controls:TransitioningContentControl>
         <ListView ItemsSource="{Binding DataList}">
             <ListView.View>
                 <GridView>
@@ -15,5 +14,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-    </other:TransitioningContentControl>
+    </controls:TransitioningContentControl>
 </UserControl>

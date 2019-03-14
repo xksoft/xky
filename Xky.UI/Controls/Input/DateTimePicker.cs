@@ -6,22 +6,17 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Xky.UI.Controls.Attach;
-using Xky.UI.Controls.Time;
 using Xky.UI.Data;
-using Xky.UI.Data.Args;
-using Xky.UI.Data.Enum;
-using Xky.UI.Data.Operation;
 using Xky.UI.Interactivity;
 
-namespace Xky.UI.Controls.Input
+namespace Xky.UI.Controls
 {
     /// <summary>
     ///     时间日期选择器
     /// </summary>
     [TemplatePart(Name = ElementRoot, Type = typeof(Grid))]
     [TemplatePart(Name = ElementTextBox, Type = typeof(WatermarkTextBox))]
-    [TemplatePart(Name = ElementButton, Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = ElementButton, Type = typeof(Button))]
     [TemplatePart(Name = ElementPopup, Type = typeof(Popup))]
     public class DateTimePicker : Control, IDataInput
     {
@@ -314,7 +309,7 @@ namespace Xky.UI.Controls.Input
             base.OnApplyTemplate();
 
             _popUp = GetTemplateChild(ElementPopup) as Popup;
-            _dropDownButton = GetTemplateChild(ElementButton) as System.Windows.Controls.Button;
+            _dropDownButton = GetTemplateChild(ElementButton) as Button;
             _textBox = GetTemplateChild(ElementTextBox) as WatermarkTextBox;
 
             CheckNull();

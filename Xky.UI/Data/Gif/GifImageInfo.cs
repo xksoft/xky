@@ -1,8 +1,7 @@
 ﻿using System;
-using Xky.UI.Controls.Image;
-using Xky.UI.Tools;
+using Xky.UI.Controls;
 
-namespace Xky.UI.Data.Gif
+namespace Xky.UI.Data
 {
     public class GifImageInfo
     {

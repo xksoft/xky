@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace MyDemo.UserControl.Basic
+
+namespace MyDemo.UserControl
 {
     public partial class Avatar
     {

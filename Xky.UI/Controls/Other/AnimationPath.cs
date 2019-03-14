@@ -8,7 +8,7 @@ using Xky.UI.Data;
 using Xky.UI.Expression.Drawing;
 using Xky.UI.Tools.Extension;
 
-namespace Xky.UI.Controls.Other
+namespace Xky.UI.Controls
 {
     public class AnimationPath : Shape
     {

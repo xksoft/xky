@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:controls="clr-namespace:Xky.UI.Controls"
-                    xmlns:flipClock="clr-namespace:Xky.UI.Controls.Time.FlipClock">
+                    xmlns:controls="clr-namespace:Xky.UI.Controls">
 
-    <Style TargetType="flipClock:FlipNumber">
+    <Style TargetType="controls:FlipNumber">
         <Setter Property="FontSize" Value="70"/>
         <Setter Property="Foreground" Value="{DynamicResource TextIconBrush}"/>
         <Setter Property="Background" Value="{DynamicResource TitleBrush}"/>
@@ -15,17 +14,17 @@
         </Setter>
     </Style>
 
-    <Style TargetType="flipClock:FlipClock">
+    <Style TargetType="controls:FlipClock">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="flipClock:FlipClock">
+                <ControlTemplate TargetType="controls:FlipClock">
                     <StackPanel Orientation="Horizontal">
-                        <flipClock:FlipNumber Margin="-20" Number="{Binding NumberList[0],RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <flipClock:FlipNumber Margin="-20" Number="{Binding NumberList[1],RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <flipClock:FlipNumber Margin="0,-20,-20,-20" Number="{Binding NumberList[2],RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <flipClock:FlipNumber Margin="-20" Number="{Binding NumberList[3],RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <flipClock:FlipNumber Margin="0,-20,-20,-20" Number="{Binding NumberList[4],RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <flipClock:FlipNumber Margin="-20" Number="{Binding NumberList[5],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="-20" Number="{Binding NumberList[0],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="-20" Number="{Binding NumberList[1],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="0,-20,-20,-20" Number="{Binding NumberList[2],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="-20" Number="{Binding NumberList[3],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="0,-20,-20,-20" Number="{Binding NumberList[4],RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <controls:FlipNumber Margin="-20" Number="{Binding NumberList[5],RelativeSource={RelativeSource TemplatedParent}}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>

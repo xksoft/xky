@@ -1,11 +1,10 @@
-﻿<window:Window x:Class="MyDemo.Window.CustomNonClientAreaWindow"
+﻿<controls:Window x:Class="MyDemo.Window.CustomNonClientAreaWindow"
                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                            xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
                            xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
-                           xmlns:window="clr-namespace:Xky.UI.Controls.Window;assembly=Xky.UI"
                            mc:Ignorable="d"
                            OtherButtonForeground="{DynamicResource ReverseTextBrush}"
                            CloseButtonForeground="{DynamicResource ReverseTextBrush}"
@@ -18,7 +17,7 @@
                            Title="{x:Static langs:Lang.Title}" 
                            Height="450" 
                            Width="800">
-    <window:Window.NonClientAreaContent>
+    <controls:Window.NonClientAreaContent>
         <StackPanel Orientation="Horizontal" Height="69">
             <Path Data="{StaticResource LogoGeometry}" Width="40" Height="40" Stretch="Uniform" Fill="#F76B1C" Margin="20,0,0,0"></Path>
             <Button Style="{StaticResource ButtonCustom}" Margin="32,0,0,0">
@@ -57,6 +56,6 @@
                 </Border>
             </Button>
         </StackPanel>
-    </window:Window.NonClientAreaContent>
+    </controls:Window.NonClientAreaContent>
     <Border Background="{DynamicResource MainContentForegroundDrawingBrush}"/>
-</window:Window>
+</controls:Window>
