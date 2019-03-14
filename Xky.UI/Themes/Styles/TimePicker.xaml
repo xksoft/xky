@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:input="clr-namespace:Xky.UI.Controls.Input">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base/TimePickerBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource TimePickerBaseStyle}" TargetType="input:TimePicker"/>
+
+    <Style x:Key="TimePickerExtend" BasedOn="{StaticResource TimePickerExtendBaseStyle}" TargetType="input:TimePicker"/>
+
+    <Style x:Key="TimePickerPlus" BasedOn="{StaticResource TimePickerPlusBaseStyle}" TargetType="input:TimePicker"/>
+
+</ResourceDictionary>

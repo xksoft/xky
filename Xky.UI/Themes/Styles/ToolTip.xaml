@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:attach="clr-namespace:Xky.UI.Controls.Attach">
+
+    <Style TargetType="ToolTip">
+        <Setter Property="Padding" Value="0,6"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="attach:BorderElement.CornerRadius" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="White" Padding="{TemplateBinding Padding}" BorderThickness="1" CornerRadius="{Binding Path=(attach:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" BorderBrush="{DynamicResource BorderBrush}">
+                        <ContentPresenter Margin="10,0"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

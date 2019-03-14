@@ -1,0 +1,14 @@
+﻿
+namespace MyDemo.UserControl.Styles
+{
+    /// <summary>
+    /// ButtonDemoCtl.xaml 的交互逻辑
+    /// </summary>
+    public partial class ButtonDemoCtl
+    {
+        public ButtonDemoCtl()
+        {
+            InitializeComponent();
+        }
+    }
+}

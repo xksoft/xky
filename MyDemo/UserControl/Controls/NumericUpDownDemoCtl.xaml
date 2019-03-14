@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="MyDemo.UserControl.Controls.NumericUpDownDemoCtl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
+             xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
+             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
+             xmlns:input="clr-namespace:Xky.UI.Controls.Input;assembly=Xky.UI"
+             xmlns:attach="clr-namespace:Xky.UI.Controls.Attach;assembly=Xky.UI"
+             Background="{DynamicResource RegionBrush}">
+    <other:TransitioningContentControl>
+        <StackPanel Margin="32" Orientation="Horizontal">
+            <StackPanel>
+                <input:NumericUpDown/>
+                <input:NumericUpDown Margin="0,32,0,0" IsEnabled="False"/>
+
+                <input:NumericUpDown attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr1}" Margin="0,32,0,0" Style="{StaticResource NumericUpDownExtend}"/>
+                <input:NumericUpDown attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterContent}" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr1}" Margin="0,32,0,0" attach:InfoElement.Necessary="True" Style="{StaticResource NumericUpDownExtend}"/>
+                <input:NumericUpDown Width="380" attach:InfoElement.TitleWidth="140" attach:InfoElement.TitleAlignment="Left" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr3}" Style="{StaticResource NumericUpDownExtend}" Margin="0,32,0,0"/>
+                <input:NumericUpDown Width="380" attach:InfoElement.TitleWidth="140" attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterContent}" attach:InfoElement.TitleAlignment="Left" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr3}" Style="{StaticResource NumericUpDownExtend}" attach:InfoElement.Necessary="True" Margin="0,32,0,0"/>
+            </StackPanel>
+            <StackPanel Margin="32,0,0,0">
+                <input:NumericUpDown Name="NumericUpDownCustomVerify" ShowClearButton="True" Style="{StaticResource NumericUpDownPlus}"/>
+                <input:NumericUpDown Margin="0,32,0,0" IsEnabled="False" Style="{StaticResource NumericUpDownPlus}"/>
+
+                <input:NumericUpDown ShowClearButton="True" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr1}" Margin="0,32,0,0" Style="{StaticResource NumericUpDownPlus}"/>
+                <input:NumericUpDown attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterContent}" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr1}" Margin="0,32,0,0" attach:InfoElement.Necessary="True" Style="{StaticResource NumericUpDownPlus}"/>
+                <input:NumericUpDown Width="380" attach:InfoElement.TitleWidth="140" attach:InfoElement.TitleAlignment="Left" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr3}" Style="{StaticResource NumericUpDownPlus}" Margin="0,32,0,0"/>
+                <input:NumericUpDown DecimalPlaces="2" ShowClearButton="True" Width="380" attach:InfoElement.TitleWidth="140" attach:InfoElement.Placeholder="{x:Static langs:Lang.PlsEnterContent}" attach:InfoElement.TitleAlignment="Left" attach:InfoElement.Title="{x:Static langs:Lang.TitleDemoStr3}" Style="{StaticResource NumericUpDownPlus}" attach:InfoElement.Necessary="True" Margin="0,32,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </other:TransitioningContentControl>
+</UserControl>

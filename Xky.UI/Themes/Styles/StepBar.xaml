@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:stepBar="clr-namespace:Xky.UI.Controls.StepBar">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base/StepBarBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource StepBarBaseStyle}" TargetType="stepBar:StepBar"/>
+
+</ResourceDictionary>

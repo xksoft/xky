@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="MyDemo.UserControl.Controls.ChatBubbleDemoCtl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:userControl="clr-namespace:MyDemo.UserControl"
+             xmlns:basic="clr-namespace:MyDemo.UserControl.Basic"
+             Background="{DynamicResource RegionBrush}">
+    <ContentControl>
+        <StackPanel Orientation="Horizontal" Margin="32">
+            <basic:ChatBox>
+                <basic:ChatBox.Background>
+                    <ImageBrush ImageSource="/MyDemo;component/Resources/Img/Chat/chat_back1.jpg" Stretch="Uniform"/>
+                </basic:ChatBox.Background>
+            </basic:ChatBox>
+            <basic:ChatBox Margin="32,0,0,0">
+                <basic:ChatBox.Background>
+                    <ImageBrush ImageSource="/MyDemo;component/Resources/Img/Chat/chat_back2.jpg" Stretch="Uniform"/>
+                </basic:ChatBox.Background>
+            </basic:ChatBox>
+        </StackPanel>
+    </ContentControl>
+</UserControl>

@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:input="clr-namespace:Xky.UI.Controls.Input">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base/DateTimePickerBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource DateTimePickerBaseStyle}" TargetType="input:DateTimePicker"/>
+
+    <Style x:Key="DateTimePickerExtend" BasedOn="{StaticResource DateTimePickerExtendBaseStyle}" TargetType="input:DateTimePicker"/>
+
+    <Style x:Key="DateTimePickerPlus" BasedOn="{StaticResource DateTimePickerPlusBaseStyle}" TargetType="input:DateTimePicker"/>
+
+</ResourceDictionary>

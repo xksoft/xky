@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:input="clr-namespace:Xky.UI.Controls.Input">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base/SearchBarBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource SearchBarBaseStyle}" TargetType="input:SearchBar"/>
+
+    <Style x:Key="SearchBarExtend" BasedOn="{StaticResource SearchBarExtendBaseStyle}" TargetType="input:SearchBar"/>
+
+    <Style x:Key="SearchBarPlus" BasedOn="{StaticResource SearchBarPlusBaseStyle}" TargetType="input:SearchBar"/>
+
+</ResourceDictionary>

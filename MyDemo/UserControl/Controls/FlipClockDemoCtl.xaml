@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="MyDemo.UserControl.Controls.FlipClockDemoCtl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource RegionBrush}"
+             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
+             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
+             xmlns:flipClock="clr-namespace:Xky.UI.Controls.Time.FlipClock;assembly=Xky.UI">
+    <other:TransitioningContentControl>
+        <flipClock:FlipClock Margin="32"/>
+    </other:TransitioningContentControl>
+</UserControl>

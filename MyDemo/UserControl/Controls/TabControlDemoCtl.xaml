@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="MyDemo.UserControl.Controls.TabControlDemoCtl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource RegionBrush}"
+             xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
+             xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
+             xmlns:tabControl="clr-namespace:Xky.UI.Controls.TabControl;assembly=Xky.UI">
+    <other:TransitioningContentControl>
+        <other:ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Label Style="{StaticResource LabelPrimary}" Content="Default" Margin="32,32,0,0" HorizontalAlignment="Left"/>
+                <tabControl:TabControl Margin="32,16,32,0" Width="800" Height="300">
+                    <tabControl:TabItem Header="TabItem1">
+                        <Grid Background="White"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem2">
+                        <Grid Background="{DynamicResource DarkDangerBrush}"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem3" IsSelected="True">
+                        <Grid Background="{DynamicResource PrimaryBrush}"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem4">
+                        <Grid Background="{DynamicResource DarkInfoBrush}"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem5">
+                        <Grid Background="{DynamicResource DarkSuccessBrush}"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem6">
+                        <Grid Background="{DynamicResource DarkWarningBrush}"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem7">
+                        <Grid Background="{DynamicResource DarkAccentBrush}"/>
+                    </tabControl:TabItem>
+                </tabControl:TabControl>
+                <StackPanel Orientation="Horizontal" Margin="32,32,32,16">
+                    <Label Style="{StaticResource LabelPrimary}" Margin="0" Content="IsEnableTabFill = True"/>
+                    <Label Style="{StaticResource LabelPrimary}" Margin="16,0,0,0" Content="ShowCloseButton = True"/>
+                    <Label Style="{StaticResource LabelPrimary}" Margin="16,0,0,0" Content="IsDraggable = True"/>
+                    <Label Style="{StaticResource LabelPrimary}" Margin="16,0,0,0" Content="IsEnableAnimation = True"/>
+                </StackPanel>
+                <tabControl:TabControl IsEnableAnimation="True" ShowCloseButton="True" IsDraggable="True" IsEnableTabFill="True" Margin="32,0,32,32" Width="800" Height="300">
+                    <tabControl:TabItem Header="TabItem1">
+                        <Grid Background="White"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem IsSelected="True" Header="TabItem2">
+                        <Grid Background="#FFE8563F"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem3">
+                        <Grid Background="#FF3F4EE8"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem4">
+                        <Grid Background="#FFE83F6D"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem5">
+                        <Grid Background="#FFB23FE8"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem6">
+                        <Grid Background="#FF3FE8E8"/>
+                    </tabControl:TabItem>
+                    <tabControl:TabItem Header="TabItem7">
+                        <Grid Background="#FFE8E03F"/>
+                    </tabControl:TabItem>
+                </tabControl:TabControl>
+            </StackPanel>
+        </other:ScrollViewer>
+    </other:TransitioningContentControl>
+</UserControl>

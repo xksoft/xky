@@ -1,0 +1,45 @@
+﻿<window:BlurWindow x:Class="MyDemo.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
+                     xmlns:userControl="clr-namespace:MyDemo.UserControl"
+                     xmlns:window="clr-namespace:Xky.UI.Controls.Window;assembly=Xky.UI"
+                     xmlns:main="clr-namespace:MyDemo.UserControl.Main"
+                     xmlns:other="clr-namespace:Xky.UI.Controls.Other;assembly=Xky.UI"
+                     mc:Ignorable="d"
+                     BorderThickness="1"
+                     Background="White"
+                     BorderBrush="#262e2f"
+                     NonClientAreaBackground="#262e2f"
+                     OtherButtonHoverBackground="#888580"
+                     CloseButtonForeground="White"
+                     OtherButtonHoverForeground="White"
+                     OtherButtonForeground="White"
+                     Style="{StaticResource WindowBlur}"
+                 
+                     Title="MainWindow" 
+                     ResizeMode="CanResizeWithGrip"
+                     Name="MyWindow"
+                     DataContext="{Binding Main,Source={StaticResource Locator}}"
+                     AllowsTransparency="True"
+                     WindowStyle="None"
+                     d:DesignHeight="800" 
+                     d:DesignWidth="1400">
+    <window:Window.NonClientAreaContent>
+        <main:NoUserContent/>
+    </window:Window.NonClientAreaContent>
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="200" MaxWidth="400"/>
+            <ColumnDefinition MinWidth="200"/>
+        </Grid.ColumnDefinitions>
+        <main:LeftMainContent/>
+        <main:MainContent Grid.Column="1"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Width="4" Background="Transparent" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource BorderBrush}"/>
+        <other:ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right" IsEnableInertia="True" IsPenetrating="True">
+            <StackPanel other:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
+        </other:ScrollViewer>
+    </Grid>
+</window:BlurWindow>

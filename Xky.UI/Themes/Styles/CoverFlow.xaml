@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:controls="clr-namespace:Xky.UI.Controls"
+                    xmlns:coverFlow="clr-namespace:Xky.UI.Controls.Cover.CoverFlow">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base/CoverFlowBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource CoverFlowBaseStyle}" TargetType="coverFlow:CoverFlow"/>
+    
+</ResourceDictionary>

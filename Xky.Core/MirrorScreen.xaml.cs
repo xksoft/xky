@@ -36,10 +36,11 @@ namespace Xky.Core
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (_fpsDictionary.ContainsKey(DateTime.Now.Second - 1))
+            var second = DateTime.Now.Second;
+            if (_fpsDictionary.ContainsKey(second - 1))
             {
-                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[DateTime.Now.Second - 1]; });
-                _fpsDictionary.Remove(DateTime.Now.Second - 1);
+                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[second - 1]; });
+                _fpsDictionary.Remove(second - 1);
             }
             else
             {
@@ -65,10 +66,11 @@ namespace Xky.Core
                 {
                     if (IsShowFps)
                     {
-                        if (_fpsDictionary.ContainsKey(DateTime.Now.Second))
-                            _fpsDictionary[DateTime.Now.Second]++;
+                        var second = DateTime.Now.Second;
+                        if (_fpsDictionary.ContainsKey(second))
+                            _fpsDictionary[second]++;
                         else
-                            _fpsDictionary.Add(DateTime.Now.Second, 0);
+                            _fpsDictionary.Add(second, 0);
                     }
 
                     if (ScreenImage.Source == null)
