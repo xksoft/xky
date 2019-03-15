@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="{DynamicResource RegionBrush}"
              xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI">
-    <controls:TransitioningContentControl>
+
         <controls:Carousel Margin="32" IsCenter="True" AutoRun="True" Width="600" Height="330" VerticalAlignment="Center">
             <Image Width="600" Stretch="UniformToFill" Source="/MyDemo;component/Resources/Img/1.jpg"/>
             <Image Width="300" Stretch="UniformToFill" Source="/MyDemo;component/Resources/Img/2.jpg"/>
@@ -14,5 +14,5 @@
             <Image Width="600" Stretch="UniformToFill" Source="/MyDemo;component/Resources/Img/4.jpg"/>
             <Image Width="600" Stretch="UniformToFill" Source="/MyDemo;component/Resources/Img/5.jpg"/>
         </controls:Carousel>
-    </controls:TransitioningContentControl>
+
 </UserControl>

@@ -62,7 +62,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Click="MenuItemContributors_OnClick" Foreground="White" Header="{x:Static langs:Lang.Contributors}">
+            <MenuItem Click="MenuItemContributors_OnClick" Foreground="White" Header="侠客云开放平台">
                 <MenuItem.Icon>
                     <Path Data="{StaticResource ContributorsGeometry}" Fill="#ef6c00"/>
                 </MenuItem.Icon>

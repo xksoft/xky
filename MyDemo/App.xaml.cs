@@ -18,7 +18,7 @@ namespace MyDemo
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             GlobalData.Init();
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(GlobalData.Config.Lang);
 
@@ -54,6 +54,12 @@ namespace MyDemo
                 Source = new Uri("pack://application:,,,/MyDemo;component/Resources/Themes/Theme.xaml")
             });
             Current.MainWindow?.OnApplyTemplate();
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var ex = e.ExceptionObject as Exception;
+            Console.WriteLine(ex.Message);
         }
     }
 }
