@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -6,9 +7,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Xky.UI.Data;
 using Xky.UI.Tools;
-
 using System.Windows.Shell;
 using Xky.UI.Tools.Extension;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
+using FontFamily = System.Windows.Media.FontFamily;
+using Point = System.Windows.Point;
 
 
 namespace Xky.UI.Controls
@@ -72,11 +76,6 @@ namespace Xky.UI.Controls
         public static readonly DependencyProperty ShowTitleProperty = DependencyProperty.Register(
             "ShowTitle", typeof(bool), typeof(Window), new PropertyMetadata(ValueBoxes.FalseBox));
 
-        public static readonly DependencyProperty IsFullScreenProperty = DependencyProperty.Register(
-            "IsFullScreen", typeof(bool), typeof(Window),
-            new PropertyMetadata(ValueBoxes.FalseBox, OnIsFullScreenChanged));
-
-        private bool _isFullScreen;
 
         private UIElement _nonClientArea;
 
@@ -85,12 +84,6 @@ namespace Xky.UI.Controls
         private double _tempNonClientAreaHeight;
 
         private Thickness _tempThickness;
-
-        private WindowState _tempWindowState;
-
-        private WindowStyle _tempWindowStyle;
-
-        private ResizeMode _tempResizeMode;
 
         public Window()
         {
@@ -121,16 +114,96 @@ namespace Xky.UI.Controls
                 CommandBindings.Add(new CommandBinding(SystemCommands.ShowSystemMenuCommand, ShowSystemMenu));
 
                 _tempNonClientAreaHeight = NonClientAreaHeight;
-                _tempWindowState = WindowState;
-                _tempWindowStyle = WindowStyle;
-                _tempResizeMode = ResizeMode;
 
-                SwitchIsFullScreen(_isFullScreen);
+
                 SwitchShowNonClientArea(_showNonClientArea);
             };
             AllowsTransparency = true;
             WindowStyle = WindowStyle.None;
+
+
+            var wc = new WindowChrome
+            {
+                CaptionHeight = 30,
+                GlassFrameThickness = new Thickness(0),
+                CornerRadius = new CornerRadius(0),
+                UseAeroCaptionButtons = false,
+                ResizeBorderThickness = new Thickness(15)
+            };
+            Activated += MainWindow_Activated;
+            Deactivated += MainWindow_Deactivated;
+            SizeChanged += MainWindow_OnSizeChanged;
+            WindowChrome.SetWindowChrome(this, wc);
+
+            try
+            {
+                using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
+                {
+                    if (Math.Abs(graphics.DpiX - 96) > 0)
+                    {
+                        TextOptions.SetTextFormattingMode(this, TextFormattingMode.Ideal);
+                        FontFamily = new FontFamily("Microsoft Yahei");
+                    }
+                    else
+                    {
+                        TextOptions.SetTextFormattingMode(this, TextFormattingMode.Display);
+                        FontFamily = new FontFamily("SimSun");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
+
+        #region 界面UI事件
+
+        private void MainWindow_Deactivated(object sender, EventArgs e)
+        {
+            //  DropShadowEffect.Color = Color.FromArgb(204, 200, 200, 200);
+        }
+
+        private void MainWindow_Activated(object sender, EventArgs e)
+        {
+            //   DropShadowEffect.Color = Color.FromArgb(204, 0, 0, 0);
+        }
+
+        private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                var top = (e.NewSize.Height - SystemParameters.PrimaryScreenHeight) / 2 + SystemParameters.WorkArea.Top;
+                var left = (e.NewSize.Width - SystemParameters.WorkArea.Width) / 2 + SystemParameters.WorkArea.Left;
+                var right = (e.NewSize.Width - SystemParameters.WorkArea.Width) / 2 +
+                            SystemParameters.PrimaryScreenWidth - SystemParameters.WorkArea.Right;
+                var bottom = (e.NewSize.Height - SystemParameters.PrimaryScreenHeight) / 2 +
+                             SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Bottom;
+                Margin = new Thickness(left, top, right, bottom);
+            }
+            else
+            {
+                Margin = new Thickness(10);
+            }
+        }
+
+        private void Btn_close(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Btn_max(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
+        }
+
+
+        private void Btn_min(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        #endregion
 
         public Brush CloseButtonBackground
         {
@@ -162,11 +235,6 @@ namespace Xky.UI.Controls
             set => SetValue(NonClientAreaHeightProperty, value);
         }
 
-        public bool IsFullScreen
-        {
-            get => (bool) GetValue(IsFullScreenProperty);
-            set => SetValue(IsFullScreenProperty, value);
-        }
 
         public object NonClientAreaContent
         {
@@ -238,17 +306,8 @@ namespace Xky.UI.Controls
 
             if (showNonClientArea)
             {
-                if (IsFullScreen)
-                {
-                    _nonClientArea.Show(false);
-                    _tempNonClientAreaHeight = NonClientAreaHeight;
-                    NonClientAreaHeight = 0;
-                }
-                else
-                {
-                    _nonClientArea.Show(true);
-                    NonClientAreaHeight = _tempNonClientAreaHeight;
-                }
+                _nonClientArea.Show(true);
+                NonClientAreaHeight = _tempNonClientAreaHeight;
             }
             else
             {
@@ -258,54 +317,6 @@ namespace Xky.UI.Controls
             }
         }
 
-        private static void OnIsFullScreenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var ctl = (Window) d;
-            ctl.SwitchIsFullScreen((bool) e.NewValue);
-        }
-
-        private void SwitchIsFullScreen(bool isFullScreen)
-        {
-            if (_nonClientArea == null)
-            {
-                _isFullScreen = isFullScreen;
-                return;
-            }
-
-            if (isFullScreen)
-            {
-                _nonClientArea.Show(false);
-                _tempNonClientAreaHeight = NonClientAreaHeight;
-                NonClientAreaHeight = 0;
-
-                _tempWindowState = WindowState;
-                _tempWindowStyle = WindowStyle;
-                _tempResizeMode = ResizeMode;
-                WindowStyle = WindowStyle.None;
-                //下面三行不能改变，就是故意的
-                WindowState = WindowState.Maximized;
-                WindowState = WindowState.Minimized;
-                WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                if (ShowNonClientArea)
-                {
-                    _nonClientArea.Show(true);
-                    NonClientAreaHeight = _tempNonClientAreaHeight;
-                }
-                else
-                {
-                    _nonClientArea.Show(false);
-                    _tempNonClientAreaHeight = NonClientAreaHeight;
-                    NonClientAreaHeight = 0;
-                }
-
-                WindowState = _tempWindowState;
-                WindowStyle = _tempWindowStyle;
-                ResizeMode = _tempResizeMode;
-            }
-        }
 
         protected override void OnStateChanged(EventArgs e)
         {
@@ -346,29 +357,6 @@ namespace Xky.UI.Controls
             base.OnContentRendered(e);
             if (SizeToContent == SizeToContent.WidthAndHeight)
                 InvalidateMeasure();
-        }
-
-        /// <summary>
-        ///     获取自定义窗口
-        /// </summary>
-        /// <returns></returns>
-        public static Window GetCustomWindow(FrameworkElement content)
-        {
-            var window = new Window
-            {
-                Style = ResourceHelper.GetResource<Style>(ResourceToken.WindowWin10),
-                Content = content
-            };
-            window.Loaded += (s, e) =>
-            {
-                window.Width = window.BorderThickness.Left + window.BorderThickness.Right + content.Width;
-                if (!(window.Template.FindName("GridMenu", window) is Grid nemuArea))
-                    throw new NullReferenceException("can not find GridMenu in template");
-                window.Height = window.BorderThickness.Top + window.BorderThickness.Bottom + content.Height +
-                                nemuArea.ActualHeight;
-            };
-
-            return window;
         }
     }
 }

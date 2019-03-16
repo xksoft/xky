@@ -6,8 +6,7 @@
                      xmlns:controls="clr-namespace:Xky.UI.Controls;assembly=Xky.UI"
                      xmlns:userControl="clr-namespace:MyDemo.UserControl"
                      mc:Ignorable="d"
-                     BorderThickness="1"
-                     BorderBrush="#262e2f"
+    
                      NonClientAreaBackground="#262e2f"
                      OtherButtonHoverBackground="#888580"
                      CloseButtonForeground="White"

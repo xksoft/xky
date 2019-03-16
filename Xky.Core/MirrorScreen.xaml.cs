@@ -430,6 +430,7 @@ namespace Xky.Core
                     },
                     Foreground = new SolidColorBrush(color)
                 };
+                label.Style = null;
                 LogPanel.Children.Add(label);
                 HideLabel(label);
             }

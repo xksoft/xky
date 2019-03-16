@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:data="clr-namespace:MyDemo.Data"
              d1P1:Ignorable="d" 
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow1.xaml">
     <Application.Resources>
 
         <ResourceDictionary>

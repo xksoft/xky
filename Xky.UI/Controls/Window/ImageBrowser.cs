@@ -32,10 +32,7 @@ namespace Xky.UI.Controls
 
         #endregion Data
 
-        static ImageBrowser()
-        {
-            IsFullScreenProperty.AddOwner(typeof(ImageBrowser), new PropertyMetadata(ValueBoxes.FalseBox));
-        }    
+
 
         public ImageBrowser()
         {
