@@ -63,6 +63,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControl\MyTabItem.xaml.cs">
+      <DependentUpon>MyTabItem.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControl\MyTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -103,37 +110,39 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\close_btn1.png" />
-    <Resource Include="Resources\close_btn2.png" />
-    <Resource Include="Resources\close_btn3.png" />
+    <Resource Include="Resources\Icon\close_btn1.png" />
+    <Resource Include="Resources\Icon\close_btn2.png" />
+    <Resource Include="Resources\Icon\close_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\myico.png" />
+    <Resource Include="Resources\Icon\myico.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\max_btn1.png" />
-    <Resource Include="Resources\max_btn2.png" />
-    <Resource Include="Resources\max_btn3.png" />
+    <Resource Include="Resources\Icon\max_btn1.png" />
+    <Resource Include="Resources\Icon\max_btn2.png" />
+    <Resource Include="Resources\Icon\max_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\restore_btn1.png" />
-    <Resource Include="Resources\restore_btn2.png" />
-    <Resource Include="Resources\restore_btn3.png" />
+    <Resource Include="Resources\Icon\restore_btn1.png" />
+    <Resource Include="Resources\Icon\restore_btn2.png" />
+    <Resource Include="Resources\Icon\restore_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\min_btn1.png" />
-    <Resource Include="Resources\min_btn2.png" />
-    <Resource Include="Resources\min_btn3.png" />
+    <Resource Include="Resources\Icon\min_btn1.png" />
+    <Resource Include="Resources\Icon\min_btn2.png" />
+    <Resource Include="Resources\Icon\min_btn3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xky.Core\Xky.Core.csproj">
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
       <Name>Xky.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xky.UI\Xky.UI.csproj">
-      <Project>{dc966e3d-bcff-4652-98cf-070e5494749a}</Project>
-      <Name>Xky.UI</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\whatapps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\devices.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

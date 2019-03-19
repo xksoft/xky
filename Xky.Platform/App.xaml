@@ -4,12 +4,12 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Xky.UI;component/Themes/SkinDefault.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Xky.UI;component/Themes/Theme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <!-- <ResourceDictionary> -->
+        <!--     <ResourceDictionary.MergedDictionaries> -->
+        <!--         <ResourceDictionary Source="pack://application:,,,/Xky.UI;component/Themes/SkinDefault.xaml" /> -->
+        <!--         <ResourceDictionary Source="pack://application:,,,/Xky.UI;component/Themes/Theme.xaml" /> -->
+        <!--     </ResourceDictionary.MergedDictionaries> -->
+        <!-- </ResourceDictionary> -->
 
     </Application.Resources>
 </Application>

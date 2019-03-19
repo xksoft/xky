@@ -5,7 +5,7 @@
              xmlns:langs="clr-namespace:MyDemo.Properties.Langs"
              DataContext="{Binding ComboBoxDemo,Source={StaticResource Locator}}"
              Background="{DynamicResource RegionBrush}">
-    <controls:TransitioningContentControl>
+ 
         <ToolBarTray Margin="32" VerticalAlignment="Center">
             <ToolBar Padding="6" Header="{x:Static langs:Lang.Title}">
                 <CheckBox IsChecked="True" Margin="10,0,0,0"/>
@@ -57,5 +57,5 @@
                 </Menu>
             </ToolBar>
         </ToolBarTray>
-    </controls:TransitioningContentControl>
+
 </UserControl>
