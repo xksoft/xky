@@ -18,7 +18,7 @@ namespace Xky.Platform.UserControl
     /// <summary>
     /// MyTabItem.xaml 的交互逻辑
     /// </summary>
-    public partial class MyTabItem : System.Windows.Controls.UserControl
+    public partial class MyTabItem 
     {
         public MyTabItem()
         {
@@ -28,18 +28,19 @@ namespace Xky.Platform.UserControl
 
         private static readonly List<MyTabItem> ItemList = new List<MyTabItem>();
 
-        public bool IsSelected
-        {
-            get => (bool) GetValue(IsSelectedProperty);
-            set => SetValue(IsSelectedProperty, value);
-        }
+     
 
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyTabItem), new PropertyMetadata(false,
-                (o, e) =>
+
+                public bool IsSelected
                 {
-                    var li = (MyTabItem) o;
-                }));
+                    get => (bool) GetValue(IsSelectedProperty);
+                    set => SetValue(IsSelectedProperty, value);
+                }
+        
+                public static readonly DependencyProperty IsSelectedProperty =
+                    DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyTabItem), new PropertyMetadata(false,null));
+
+
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {

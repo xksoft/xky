@@ -14,171 +14,184 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         FontFamily="SimSun"
+        MinHeight="768"
+        MinWidth="1024"
         Title="MainWindow" Height="873" Width="1026">
 
+    <Border Background="White" x:Name="MainGrid" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect x:Name="DropShadowEffect" Color="#CC000000" Direction="320" BlurRadius="8"
+                              Opacity="0.35" />
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
 
-    <Grid x:Name="MainGrid" Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="34" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
 
-        <!-- 顶部导航 -->
-        <Border Background="White" BorderThickness="1" BorderBrush="Black" Grid.RowSpan="3" Grid.ColumnSpan="2">
-            <Border.Effect>
-                <DropShadowEffect x:Name="DropShadowEffect" Color="#CC000000" Direction="320" BlurRadius="8"
-                                  Opacity="0.35" />
-            </Border.Effect>
-        </Border>
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0">
-            <Border BorderThickness="0,0,0,1" BorderBrush="Black" />
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                <Image Source="Resources/Icon/myico.png" Height="24" Width="24" Margin="10,0,0,0" />
-                <TextBlock x:Name="MyTitle" VerticalAlignment="Center" Margin="10,0,0,0">侠客云开放平台(安卓版) 1.0</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
-                        Margin="0,0,1,0">
+            <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Panel.ZIndex="999">
 
-                <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="Btn_close" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Image x:Name="btnbg"
-                                               Source="Resources/Icon/close_btn1.png"
-                                               Stretch="Fill" Width="32" Height="32" />
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/close_btn2.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/close_btn3.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button x:Name="BtnMax" Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="Btn_max" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Image x:Name="btnbg"
-                                               Source="Resources/Icon/max_btn1.png"
-                                               Stretch="Fill" Width="32" Height="32" />
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/max_btn2.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/max_btn3.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button x:Name="BtnRestore" Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="Btn_max" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="Collapsed">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Image x:Name="btnbg"
-                                               Source="Resources/Icon/restore_btn1.png"
-                                               Stretch="Fill" Width="32" Height="32" />
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/restore_btn2.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/restore_btn3.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                        Click="Btn_min" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Image x:Name="btnbg"
-                                               Source="Resources/Icon/min_btn1.png"
-                                               Stretch="Fill" Width="32" Height="32" />
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/min_btn2.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Source"
-                                                        Value="Resources/Icon/min_btn3.png"
-                                                        TargetName="btnbg" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Image Source="Resources/Icon/myico.png" Height="24" Width="24" Margin="10,0,0,0" />
+                    <TextBlock x:Name="MyTitle" VerticalAlignment="Center" Margin="10,0,0,0">侠客云开放平台(安卓版) 1.0</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
+                            Margin="0,0,1,0">
+
+                    <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
+                            Click="Btn_close" WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Image x:Name="btnbg"
+                                                   Source="Resources/Icon/close_btn1.png"
+                                                   Stretch="Fill" Width="32" Height="32" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/close_btn2.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/close_btn3.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="BtnMax" Cursor="Hand" Focusable="False" Width="32" Height="32"
+                            Click="Btn_max" WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Image x:Name="btnbg"
+                                                   Source="Resources/Icon/max_btn1.png"
+                                                   Stretch="Fill" Width="32" Height="32" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/max_btn2.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/max_btn3.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="BtnRestore" Cursor="Hand" Focusable="False" Width="32" Height="32"
+                            Click="Btn_max" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="Collapsed">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Image x:Name="btnbg"
+                                                   Source="Resources/Icon/restore_btn1.png"
+                                                   Stretch="Fill" Width="32" Height="32" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/restore_btn2.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/restore_btn3.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
+                            Click="Btn_min" WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Image x:Name="btnbg"
+                                                   Source="Resources/Icon/min_btn1.png"
+                                                   Stretch="Fill" Width="32" Height="32" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/min_btn2.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Source"
+                                                            Value="Resources/Icon/min_btn3.png"
+                                                            TargetName="btnbg" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <!-- 顶部导航 -->
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                    Grid.Column="0" CornerRadius="5" Panel.ZIndex="999" />
+
+            <!-- 内容主题 -->
+            <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" />
+
+            <!-- 底部导航 -->
+            <Grid Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
+                <Border BorderThickness="0,1,0,0" BorderBrush="Black" />
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                            Orientation="Horizontal">
+                    <TextBlock>核心:</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" />
+            </Grid>
+
+
+            <!-- 第一栏 -->
+            <Grid Grid.Column="0" Background="#1d232a" Grid.Row="0" Grid.RowSpan="3">
+                <Grid.Effect>
+                    <DropShadowEffect Color="#CC000000" Direction="0" BlurRadius="8"
+                                      Opacity="0.6" />
+                </Grid.Effect>
+                <StackPanel VerticalAlignment="Center" Margin="5,0,0,0">
+                    <UserControl:MyTabItem />
+                    <UserControl:MyTabItem />
+                    <UserControl:MyTabItem />
+                </StackPanel>
+            </Grid>
+
+
         </Grid>
-        <!-- 内容主题 -->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" />
-
-        <!-- 底部导航 -->
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0">
-            <Border BorderThickness="0,1,0,0" BorderBrush="Black" />
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Orientation="Horizontal">
-                <TextBlock>核心:</TextBlock>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" />
-        </Grid>
-
-
-        <Grid Grid.Column="0" Background="#1d232a" Grid.Row="0" Grid.RowSpan="3">
-            <StackPanel VerticalAlignment="Center" Margin="5,0,0,0">
-                <UserControl:MyTabItem />
-                <UserControl:MyTabItem />
-                <UserControl:MyTabItem />
-            </StackPanel>
-        </Grid>
-    </Grid>
+    </Border>
 </Window>
