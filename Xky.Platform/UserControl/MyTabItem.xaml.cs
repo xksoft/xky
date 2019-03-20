@@ -57,7 +57,8 @@ namespace Xky.Platform.UserControl
             {
                 foreach (var myTabItem in ItemList)
                 {
-                    myTabItem.IsSelected = myTabItem == this;
+                    myTabItem.IsSelected = Equals(myTabItem, this);
+                    MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
                 }
             }
         }
@@ -70,7 +71,7 @@ namespace Xky.Platform.UserControl
 
         private void MyTabItem_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
+            MyIcon.Margin =new Thickness(-8, 0, 0, 0);
         }
     }
 }
