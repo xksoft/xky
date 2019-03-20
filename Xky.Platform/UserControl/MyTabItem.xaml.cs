@@ -18,7 +18,7 @@ namespace Xky.Platform.UserControl
     /// <summary>
     /// MyTabItem.xaml 的交互逻辑
     /// </summary>
-    public partial class MyTabItem 
+    public partial class MyTabItem
     {
         public MyTabItem()
         {
@@ -28,18 +28,27 @@ namespace Xky.Platform.UserControl
 
         private static readonly List<MyTabItem> ItemList = new List<MyTabItem>();
 
-     
+
+        public bool IsSelected
+        {
+            get => (bool) GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsSelectedProperty =
+            DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyTabItem),
+                new PropertyMetadata(false, null));
 
 
-                public bool IsSelected
-                {
-                    get => (bool) GetValue(IsSelectedProperty);
-                    set => SetValue(IsSelectedProperty, value);
-                }
-        
-                public static readonly DependencyProperty IsSelectedProperty =
-                    DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyTabItem), new PropertyMetadata(false,null));
+        public ImageSource ImgSource
+        {
+            get => (ImageSource) GetValue(ImgSourceProperty);
+            set => SetValue(ImgSourceProperty, value);
+        }
 
+        public static readonly DependencyProperty ImgSourceProperty =
+            DependencyProperty.Register("ImgSource", typeof(ImageSource), typeof(MyTabItem),
+                new PropertyMetadata(null, null));
 
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -51,6 +60,17 @@ namespace Xky.Platform.UserControl
                     myTabItem.IsSelected = myTabItem == this;
                 }
             }
+        }
+
+
+        private void MyTabItem_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
+        }
+
+        private void MyTabItem_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
         }
     }
 }

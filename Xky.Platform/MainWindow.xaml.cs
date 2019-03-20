@@ -10,7 +10,7 @@ using System.Windows.Shell;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Model;
-
+using Xky.Platform.UserControl;
 using Color = System.Windows.Media.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 
@@ -21,7 +21,6 @@ namespace Xky.Platform
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +30,7 @@ namespace Xky.Platform
                 GlassFrameThickness = new Thickness(0),
                 CornerRadius = new CornerRadius(0),
                 UseAeroCaptionButtons = false,
-                ResizeBorderThickness = new Thickness(15)
+                ResizeBorderThickness = new Thickness(25)
             };
             Activated += MainWindow_Activated;
             Deactivated += MainWindow_Deactivated;
@@ -58,10 +57,9 @@ namespace Xky.Platform
             {
                 // ignored
             }
+
+            MainContent.Content = new MyLogin();
         }
-
-
-
 
 
         #region 界面UI事件
@@ -92,7 +90,7 @@ namespace Xky.Platform
             }
             else
             {
-                MainGrid.Margin = new Thickness(10);
+                MainGrid.Margin = new Thickness(20);
                 BtnRestore.Visibility = Visibility.Collapsed;
                 BtnMax.Visibility = Visibility.Visible;
             }
@@ -107,7 +105,6 @@ namespace Xky.Platform
         {
             WindowState = WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
         }
-
 
         private void Btn_min(object sender, RoutedEventArgs e)
         {

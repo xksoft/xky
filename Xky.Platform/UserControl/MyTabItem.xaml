@@ -5,34 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" MouseDown="UIElement_OnMouseDown" MouseEnter="MyTabItem_OnMouseEnter" MouseLeave="MyTabItem_OnMouseLeave">
     <UserControl.Resources>
-        <Style TargetType="{x:Type local:MyTabItem}">
+        <Style x:Key="MyTabItemStyle">
+            <Setter Property="Border.Background" Value="Transparent" />
+            <Setter Property="Border.Margin" Value="8,0,0,8" />
+            <Setter Property="Border.CornerRadius" Value="5,0,0,5" />
             <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-
-                        <Condition Property="IsSelected" Value="True" />
-                    </MultiTrigger.Conditions>
-                    <Setter  Property="Effect">
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=IsSelected}"
+                            Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Border.Effect">
                         <Setter.Value>
-                            <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="20"
-                                              Opacity="0.5" />
+                            <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="5" ShadowDepth="3"
+                                              Opacity="0.4" />
                         </Setter.Value>
                     </Setter>
-            
-
-                </MultiTrigger>
+                    <Setter Property="Border.Background" Value="#292f37" />
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=IsSelected}"
+                            Value="False" />
+                        <Condition
+                            Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=IsMouseOver}"
+                            Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <!-- <Setter Property="Effect"> -->
+                    <!--     <Setter.Value> -->
+                    <!--         <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="5" ShadowDepth="3" -->
+                    <!--                           Opacity="0.4" /> -->
+                    <!--     </Setter.Value> -->
+                    <!-- </Setter> -->
+                    <Setter Property="Border.Background" Value="#292f37" />
+                    <Setter Property="Border.Margin" Value="8,0,8,8" />
+                    <Setter Property="Border.CornerRadius" Value="5" />
+                </MultiDataTrigger>
 
 
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border x:Name="border" CornerRadius="5,0,0,5" Background="{Binding Path=BoardBackground}" Height="50" Margin="0,5,0,5"
-            MouseDown="UIElement_OnMouseDown">
-
+    <Border Height="60" Style="{StaticResource MyTabItemStyle}">
         <Grid>
-            <Image Source="../Resources/Icon/devices.png" Height="32" Width="32" />
+            <Image x:Name="MyIcon"
+                Margin="-8,0,0,0"
+                Source="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=ImgSource}"
+                Height="32" Width="32" />
         </Grid>
     </Border>
 
