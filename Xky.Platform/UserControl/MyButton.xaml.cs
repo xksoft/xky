@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Xky.Platform.UserControl
 {
     /// <summary>
-    /// MyMainControl.xaml 的交互逻辑
+    /// MyButton.xaml 的交互逻辑
     /// </summary>
-    public partial class MyMainControl : System.Windows.Controls.UserControl
+    public partial class MyButton 
     {
-        public MyMainControl()
+        public MyButton()
         {
             InitializeComponent();
         }

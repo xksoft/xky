@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:platform="clr-namespace:Xky.Platform"
         mc:Ignorable="d"
 
         AllowsTransparency="True"
@@ -15,9 +16,11 @@
         FontFamily="SimSun"
         MinHeight="768"
         MinWidth="1024"
-        Title="MainWindow" Height="873" Width="1026">
+        Title="MainWindow" Height="795" Width="1233">
 
-
+    <Window.Resources>
+        <platform:ButtonStatus x:Key="ButtonStatus" />
+    </Window.Resources>
     <Grid Background="White" x:Name="MainGrid" Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
@@ -33,7 +36,7 @@
                               Opacity="0.35" />
         </Grid.Effect>
 
-        <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True"  Panel.ZIndex="998" >
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
@@ -47,17 +50,19 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Image x:Name="btnbg"
-                                               Source="Resources/Icon/close_btn1.png"
+                                               Source="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=close_btn1.png}"
                                                Stretch="Fill" Width="32" Height="32" />
                                         <ControlTemplate.Triggers>
+
+
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/close_btn2.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=close_btn2.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/close_btn3.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=close_btn3.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
@@ -75,17 +80,17 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Image x:Name="btnbg"
-                                               Source="Resources/Icon/max_btn1.png"
+                                               Source="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=max_btn1.png}"
                                                Stretch="Fill" Width="32" Height="32" />
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/max_btn2.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=max_btn2.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/max_btn3.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=max_btn3.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
@@ -103,17 +108,17 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Image x:Name="btnbg"
-                                               Source="Resources/Icon/restore_btn1.png"
+                                               Source="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=restore_btn1.png}"
                                                Stretch="Fill" Width="32" Height="32" />
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/restore_btn2.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=restore_btn2.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/restore_btn3.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=restore_btn3.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
@@ -131,19 +136,24 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Image x:Name="btnbg"
-                                               Source="Resources/Icon/min_btn1.png"
+                                               Source="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=min_btn1.png}"
                                                Stretch="Fill" Width="32" Height="32" />
+
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/min_btn2.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=min_btn2.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
+
+
                                             <Trigger Property="IsPressed" Value="True">
                                                 <Setter Property="Source"
-                                                        Value="Resources/Icon/min_btn3.png"
+                                                        Value="{Binding Path=Baseurl,Converter={StaticResource ButtonStatus},ConverterParameter=min_btn3.png}"
                                                         TargetName="btnbg" />
                                             </Trigger>
+
+
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -174,10 +184,12 @@
                 </Border.Effect>
             </Border>
             <Image Source="Resources/Icon/logo.png" Width="32" Height="32" Grid.Row="0" />
-            <StackPanel VerticalAlignment="Top" Grid.Row="1" >
-                <userControl:MyTabItem IsSelected="True" ImgSource="Resources/Icon/devices.png" />
-                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" />
-                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" />
+            <StackPanel VerticalAlignment="Top" Grid.Row="1">
+                <userControl:MyTabItem IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
+                                       OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
+                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="MainControl" IsDarkStyle="False" 
+                                       OnClickEvent="MyTabItem_OnOnClickEvent" />
+                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" OnClickEvent="MyTabItem_OnOnClickEvent" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -103,7 +103,7 @@ namespace Xky.Core
             ffmpeg.av_free(curPtr);
         }
 
-        internal event DecodeBitmap OnDecodeBitmapSource;
+   
 
         internal static void RegisterFFmpegBinaries()
         {
@@ -148,6 +148,7 @@ namespace Xky.Core
         [DllImport("kernel32", SetLastError = true)]
         private static extern bool SetDllDirectory(string lpPathName);
 
+        internal event DecodeBitmap OnDecodeBitmapSource;
         internal delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
 
         private sealed class VideoFrameConverter : IDisposable

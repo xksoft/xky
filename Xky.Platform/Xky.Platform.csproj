@@ -63,14 +63,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserControl\MyLogin.xaml.cs">
+    <Compile Include="UserControl\MyButton.xaml.cs">
+      <DependentUpon>MyButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Pages\MyLogin.xaml.cs">
       <DependentUpon>MyLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MyMainControl.xaml.cs">
+    <Compile Include="UserControl\Pages\MyMainControl.xaml.cs">
       <DependentUpon>MyMainControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\MyTabItem.xaml.cs">
       <DependentUpon>MyTabItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\MyTextBox.xaml.cs">
+      <DependentUpon>MyTextBox.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -84,15 +90,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControl\MyLogin.xaml">
+    <Page Include="UserControl\MyButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MyMainControl.xaml">
+    <Page Include="UserControl\Pages\MyLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Pages\MyMainControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MyTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\MyTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,27 +139,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\close_btn1.png" />
-    <Resource Include="Resources\Icon\close_btn2.png" />
-    <Resource Include="Resources\Icon\close_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\close_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\close_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\close_btn3.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\myico.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\max_btn1.png" />
-    <Resource Include="Resources\Icon\max_btn2.png" />
-    <Resource Include="Resources\Icon\max_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\max_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\max_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\max_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\restore_btn1.png" />
-    <Resource Include="Resources\Icon\restore_btn2.png" />
-    <Resource Include="Resources\Icon\restore_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\restore_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\restore_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\restore_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\min_btn1.png" />
-    <Resource Include="Resources\Icon\min_btn2.png" />
-    <Resource Include="Resources\Icon\min_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\min_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\min_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\default\min_btn3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xky.Core\Xky.Core.csproj">
@@ -161,6 +175,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\logo.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icon\ControlBox\dark\close_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\close_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\close_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\max_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\max_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\max_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\min_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\min_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\min_btn3.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\restore_btn1.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\restore_btn2.png" />
+    <Resource Include="Resources\Icon\ControlBox\dark\restore_btn3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
