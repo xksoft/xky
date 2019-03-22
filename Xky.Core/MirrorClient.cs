@@ -21,7 +21,7 @@ namespace Xky.Core
         {
             Console.WriteLine("正在获取设备" + sn + "的连接信息..");
             MirrorScreen?.AddLabel("正在获取设备" + sn + "的连接信息..", Colors.White);
-            var device = Post("get_device", new JObject {["sn"] = sn, ["session"] = session});
+            var device = Client.Post("get_device", new JObject {["sn"] = sn, ["session"] = session});
             if (device["errcode"]?.ToString() != "0") throw new Exception("获取设备状态出错" + device["msg"]);
 
             if (!device.ContainsKey("t_nodeurl") || !device["t_nodeurl"].ToString().StartsWith("http"))
@@ -53,38 +53,7 @@ namespace Xky.Core
             _socket.On("h264", data => { Decoder?.Decode((byte[]) data); });
         }
 
-        public JObject Post(string api, JObject json)
-        {
-            var handler = new HttpClientHandler
-            {
-                AllowAutoRedirect = true
-            };
-            var httpClient = new HttpClient(handler) {Timeout = new TimeSpan(0, 0, 0, 15)};
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
-            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
-            content.Headers.Add("Content-Type", "application/json");
-            var responseMessage = httpClient.PostAsync("https://api.xky.com/" + api, content).Result;
-            var jsonResult = JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
-            if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
-                return new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"};
-            return JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
-        }
 
-        public JObject Get(string api, JObject json)
-        {
-            var handler = new HttpClientHandler
-            {
-                AllowAutoRedirect = true
-            };
-            var httpClient = new HttpClient(handler) {Timeout = new TimeSpan(0, 0, 0, 15)};
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
-            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
-            content.Headers.Add("Content-Type", "application/json");
-            var responseMessage = httpClient.GetAsync("https://api.xky.com/" + api).Result;
-            var jsonResult = JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
-            if (jsonResult == null) return new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"};
-            return JsonConvert.DeserializeObject<JObject>(jsonResult.ToString());
-        }
 
         public void EmitEvent(JObject jObject)
         {

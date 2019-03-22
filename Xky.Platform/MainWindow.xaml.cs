@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Newtonsoft.Json.Linq;
@@ -67,6 +68,7 @@ namespace Xky.Platform
             DataContext = _buttonStatus;
             //初始化页面加载
             MyTabItem_OnOnClickEvent(null, "Login", true);
+            Common.MainWindow = this;
         }
 
         #region 基础属性
@@ -81,6 +83,8 @@ namespace Xky.Platform
         #endregion
 
         #region 界面UI事件和属性
+
+
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {

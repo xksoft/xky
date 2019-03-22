@@ -18,12 +18,12 @@
                             Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=IsSelected}"
                             Value="True" />
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="Border.Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="5" ShadowDepth="3"
-                                              Opacity="0.4" />
-                        </Setter.Value>
-                    </Setter>
+                    <!-- <Setter Property="Border.Effect"> -->
+                    <!--     <Setter.Value> -->
+                    <!--         <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="5" ShadowDepth="3" -->
+                    <!--                           Opacity="0.4" /> -->
+                    <!--     </Setter.Value> -->
+                    <!-- </Setter> -->
                     <Setter Property="Border.Background" Value="#292f37" />
                 </MultiDataTrigger>
                 <MultiDataTrigger>

@@ -27,147 +27,61 @@ namespace Xky.Platform.UserControl
             DataContext = this;
         }
 
-        private readonly MyTextBoxModel _myTextBoxModel = new MyTextBoxModel();
 
-        public CornerRadius CornerRadius
+
+
+        /// <summary>
+        /// 输入圆弧角度
+        /// </summary>
+        public static readonly DependencyProperty TextBoxCornerRadiusProperty = DependencyProperty.Register(
+            "TextBoxCornerRadius", typeof(CornerRadius), typeof(MyTextBox), new PropertyMetadata(new CornerRadius(5)));
+
+        public CornerRadius TextBoxCornerRadius
         {
-            get => (CornerRadius) GetValue(CornerRadiusProperty);
-
-            set
-            {
-                SetValue(CornerRadiusProperty, value);
-                _myTextBoxModel.CornerRadius = value;
-            }
+            get => (CornerRadius) GetValue(TextBoxCornerRadiusProperty);
+            set => SetValue(TextBoxCornerRadiusProperty, value);
         }
 
-        public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(MyTabItem),
-                new PropertyMetadata(new CornerRadius(5), null));
-
-        public Brush MyBackground
+        public Brush TextBoxBackground
         {
-            get => _myTextBoxModel.Background;
-
-            set
-            {
-                SetValue(MyBackgroundProperty, value);
-                _myTextBoxModel.Background = value;
-            }
+            get => (Brush)GetValue(TextBoxBackgroundProperty);
+            set => SetValue(TextBoxBackgroundProperty, value);
         }
 
-        public static readonly DependencyProperty MyBackgroundProperty =
-            DependencyProperty.Register("MyBackground", typeof(Brush), typeof(MyTabItem),
-                new PropertyMetadata(new SolidColorBrush(Colors.Black), null));
+        public static readonly DependencyProperty TextBoxBackgroundProperty =
+            DependencyProperty.Register("TextBoxBackground", typeof(Brush), typeof(MyTextBox),
+                new PropertyMetadata(new SolidColorBrush(Colors.Black)));
 
-        public Brush MyForeground
+        public Brush TextBoxForeground
         {
-            get => _myTextBoxModel.Foreground;
-
-            set
-            {
-                SetValue(MyForegroundProperty, value);
-                _myTextBoxModel.Foreground = value;
-            }
+            get => (Brush)GetValue(TextBoxForegroundProperty);
+            set => SetValue(TextBoxForegroundProperty, value);
         }
 
-        public static readonly DependencyProperty MyForegroundProperty =
-            DependencyProperty.Register("MyForeground", typeof(Brush), typeof(MyTabItem),
-                new PropertyMetadata(new SolidColorBrush(Colors.Black), null));
+        public static readonly DependencyProperty TextBoxForegroundProperty =
+            DependencyProperty.Register("TextBoxForeground", typeof(Brush), typeof(MyTextBox),
+                new PropertyMetadata(new SolidColorBrush(Colors.Black)));
 
-        public string Text
+        public string TextBoxText
         {
-            get => _myTextBoxModel.Text;
-
-            set
-            {
-                SetValue(TextProperty, value);
-                _myTextBoxModel.Text = value;
-            }
+            get => (string)GetValue(TextBoxProperty);
+            set => SetValue(TextBoxProperty, value);
         }
 
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(MyTabItem),
-                new PropertyMetadata(null, null));
+        public static readonly DependencyProperty TextBoxProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(MyTextBox),
+                new PropertyMetadata(null));
 
-        public string WaterText
+        public string TextBoxWaterText
         {
-            get => _myTextBoxModel.WaterText;
-
-            set
-            {
-                SetValue(WaterTextProperty, value);
-                _myTextBoxModel.WaterText = value;
-            }
+            get => (string)GetValue(TextBoxWaterTextProperty);
+            set => SetValue(TextBoxWaterTextProperty, value);
         }
 
-        public static readonly DependencyProperty WaterTextProperty =
-            DependencyProperty.Register("WaterText", typeof(string), typeof(MyTabItem),
-                new PropertyMetadata(null, null));
+        public static readonly DependencyProperty TextBoxWaterTextProperty =
+            DependencyProperty.Register("TextBoxWaterText", typeof(string), typeof(MyTextBox),
+                new PropertyMetadata(null));
 
-        public class MyTextBoxModel : INotifyPropertyChanged
-        {
-            private CornerRadius _cornerRadius = new CornerRadius(5);
-
-            public CornerRadius CornerRadius
-            {
-                get => _cornerRadius;
-                set
-                {
-                    _cornerRadius = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CornerRadius"));
-                }
-            }
-
-            private Brush _background = new SolidColorBrush(Colors.Black);
-
-            public Brush Background
-            {
-                get => _background;
-                set
-                {
-                    _background = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Background"));
-                }
-            }
-
-            private Brush _foreground = new SolidColorBrush(Colors.White);
-
-            public Brush Foreground
-            {
-                get => _foreground;
-                set
-                {
-                    _foreground = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Foreground"));
-                }
-            }
-
-            private string _text;
-
-            public string Text
-            {
-                get => _text;
-                set
-                {
-                    _text = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Text"));
-                }
-            }
-
-            private string _waterText = "我是水印";
-
-            public string WaterText
-            {
-                get => _waterText;
-                set
-                {
-                    _waterText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("WaterText"));
-                }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-        }
 
         private void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {

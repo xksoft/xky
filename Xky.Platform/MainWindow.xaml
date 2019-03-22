@@ -36,6 +36,7 @@
                               Opacity="0.35" />
         </Grid.Effect>
 
+        <!-- 顶部导航 -->
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 
 
@@ -163,13 +164,20 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <!-- 顶部导航 -->
         <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
                 Grid.Column="0" Panel.ZIndex="999" />
 
+        <!-- Toast -->
+        <StackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
+                    Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998">
+            <Grid>
+                <Border CornerRadius="8" Background="#373d45" />
+                <TextBlock x:Name="ToastText" Margin="10" Foreground="White" />
+            </Grid>
+        </StackPanel>
+
         <!-- 内容主题 -->
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" />
-
 
         <!-- 第一栏 -->
         <Grid Grid.Column="0" Background="#1d232a" Grid.Row="0" Grid.RowSpan="2">
@@ -177,17 +185,18 @@
                 <RowDefinition Height="65" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border BorderThickness="0,0,1,0" BorderBrush="#1d232a" Grid.RowSpan="2">
-                <Border.Effect>
-                    <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="8" ShadowDepth="3"
-                                      Opacity="0.5" />
-                </Border.Effect>
-            </Border>
+            <!-- <Border BorderThickness="0,0,1,0" BorderBrush="#1d232a" Grid.RowSpan="2"> -->
+            <!--     <Border.Effect> -->
+            <!--         <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="8" ShadowDepth="3" -->
+            <!--                           Opacity="0.5" /> -->
+            <!--     </Border.Effect> -->
+            <!-- </Border> -->
             <Image Source="Resources/Icon/logo.png" Width="32" Height="32" Grid.Row="0" />
             <StackPanel VerticalAlignment="Top" Grid.Row="1">
                 <userControl:MyTabItem IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
-                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="MainControl" IsDarkStyle="False" 
+                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="MainControl"
+                                       IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
                 <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" OnClickEvent="MyTabItem_OnOnClickEvent" />
             </StackPanel>

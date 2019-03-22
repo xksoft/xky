@@ -10,11 +10,12 @@
 
     </UserControl.Resources>
     <Grid>
-        <Border CornerRadius="{Binding Path=CornerRadius}" Background="{Binding Path=Background}" />
+        <Border CornerRadius="{Binding Path=TextBoxCornerRadius}" Background="{Binding Path=TextBoxBackground}" />
         <Label x:Name="WaterLabel" Margin="5,0,0,0" VerticalContentAlignment="Center" Foreground="#868b8e"
-               Content="{Binding Path=WaterText}" />
-            <TextBox x:Name="TextBox1" Background="Transparent" BorderThickness="0" Margin="5,0,0,0" Foreground="{Binding Path=Foreground}"
-                 CaretBrush="{Binding Path=Foreground}"
-                 VerticalContentAlignment="Center" Text="{Binding Path=Text}" TextChanged="TextBox1_TextChanged"/>
+               Content="{Binding Path=TextBoxWaterText}" />
+        <TextBox x:Name="TextBox1" Background="Transparent" BorderThickness="0" Margin="5,0,0,0"
+                 Foreground="{Binding Path=TextBoxForeground}"
+                 CaretBrush="{Binding Path=TextBoxForeground}"
+                 VerticalContentAlignment="Center" Text="{Binding Path=Text}" TextChanged="TextBox1_TextChanged" />
     </Grid>
 </UserControl>
