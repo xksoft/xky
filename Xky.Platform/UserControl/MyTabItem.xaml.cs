@@ -92,7 +92,7 @@ namespace Xky.Platform.UserControl
             {
                 if (CheckLicense && Client.License == null)
                 {
-                    Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255,36,50));
+                    Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255,36,50),"off");
                     return;
                 }
 

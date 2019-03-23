@@ -184,7 +184,9 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\voice_on.wav" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\ControlBox\dark\close_btn1.png" />
     <Resource Include="Resources\Icon\ControlBox\dark\close_btn2.png" />
@@ -198,6 +200,21 @@
     <Resource Include="Resources\Icon\ControlBox\dark\restore_btn1.png" />
     <Resource Include="Resources\Icon\ControlBox\dark\restore_btn2.png" />
     <Resource Include="Resources\Icon\ControlBox\dark\restore_btn3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bigbox.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\messagebox.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smallbox.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voice_alert.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voice_off.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

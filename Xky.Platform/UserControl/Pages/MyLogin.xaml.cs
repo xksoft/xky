@@ -42,7 +42,7 @@ namespace Xky.Platform.UserControl.Pages
                 if (response.Result)
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
-                    Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime);
+                    Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime,"on");
                 }
                 else
                 {

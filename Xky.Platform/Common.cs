@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using System.Windows.Media.Animation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
+using Xky.Platform.Properties;
 using File = System.IO.File;
 
 namespace Xky.Platform
@@ -20,9 +22,46 @@ namespace Xky.Platform
         public static MainWindow MainWindow;
 
 
-        private static int _showToastStep = 0;
+        public static void PlaySound(string name)
+        {
+            switch (name)
+            {
+                case "on":
+                {
+                    var player = new SoundPlayer(Resources.voice_on);
+                    player.Play();
+                    break;
+                }
+                case "off":
+                {
+                    var player = new SoundPlayer(Resources.voice_off);
+                    player.Play();
+                    break;
+                }
+                case "alert":
+                {
+                    var player = new SoundPlayer(Resources.voice_alert);
+                    player.Play();
+                    break;
+                }
+                case "bigbox":
+                {
+                    var player = new SoundPlayer(Resources.bigbox);
+                    player.Play();
+                    break;
+                }
+                case "messagebox":
+                {
+                    var player = new SoundPlayer(Resources.messagebox);
+                    player.Play();
+                    break;
+                }
+            }
+        }
 
-        public static void ShowToast(string toast, Color color)
+        private static int _showToastStep;
+
+        public static void ShowToast(string toast, Color color, string sound = null)
         {
             Task.Factory.StartNew(async () =>
             {
@@ -44,6 +83,7 @@ namespace Xky.Platform
 
                 UiAction(() =>
                 {
+                    PlaySound(sound);
                     MainWindow.ToastText.Text = toast;
                     MainWindow.ToastText.Foreground = new SolidColorBrush(color);
                 });

@@ -59,5 +59,59 @@ namespace Xky.Platform.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream bigbox {
+            get {
+                return ResourceManager.GetStream("bigbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream messagebox {
+            get {
+                return ResourceManager.GetStream("messagebox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream smallbox {
+            get {
+                return ResourceManager.GetStream("smallbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream voice_alert {
+            get {
+                return ResourceManager.GetStream("voice_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream voice_off {
+            get {
+                return ResourceManager.GetStream("voice_off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream voice_on {
+            get {
+                return ResourceManager.GetStream("voice_on", resourceCulture);
+            }
+        }
     }
 }
