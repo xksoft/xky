@@ -69,6 +69,7 @@ namespace Xky.Platform
             //初始化页面加载
             MyTabItem_OnOnClickEvent(null, "Login", true);
             Common.MainWindow = this;
+            LoginTabItem.ClickDown(null,null);
         }
 
         #region 基础属性
@@ -83,8 +84,6 @@ namespace Xky.Platform
         #endregion
 
         #region 界面UI事件和属性
-
-
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {
@@ -179,6 +178,13 @@ namespace Xky.Platform
                     case "MainControl":
                     {
                         var page = new MyMainControl();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
+                    case "Task":
+                    {
+                        var page = new MyTask();
                         _userControlDic.Add(pagename, page);
                         MainContent.Content = page;
                         break;

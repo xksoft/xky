@@ -185,20 +185,16 @@
                 <RowDefinition Height="65" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!-- <Border BorderThickness="0,0,1,0" BorderBrush="#1d232a" Grid.RowSpan="2"> -->
-            <!--     <Border.Effect> -->
-            <!--         <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="8" ShadowDepth="3" -->
-            <!--                           Opacity="0.5" /> -->
-            <!--     </Border.Effect> -->
-            <!-- </Border> -->
+ 
             <Image Source="Resources/Icon/logo.png" Width="32" Height="32" Grid.Row="0" />
             <StackPanel VerticalAlignment="Top" Grid.Row="1">
-                <userControl:MyTabItem IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
+                <userControl:MyTabItem x:Name="LoginTabItem" CheckLicense="False" IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
                 <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="MainControl"
                                        IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
-                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" OnClickEvent="MyTabItem_OnOnClickEvent" />
+                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="Task" IsDarkStyle="False"
+                                       OnClickEvent="MyTabItem_OnOnClickEvent" />
             </StackPanel>
         </Grid>
     </Grid>

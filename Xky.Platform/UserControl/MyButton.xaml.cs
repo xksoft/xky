@@ -32,7 +32,7 @@ namespace Xky.Platform.UserControl
         }
 
         public static readonly DependencyProperty ButtonTexttProperty =
-            DependencyProperty.Register("ButtonText", typeof(string), typeof(MyTextBox),
+            DependencyProperty.Register("ButtonText", typeof(string), typeof(MyButton),
                 new PropertyMetadata(null));
 
         public Brush ButtonBackground1
@@ -42,7 +42,7 @@ namespace Xky.Platform.UserControl
         }
 
         public static readonly DependencyProperty ButtonBackground1Property =
-            DependencyProperty.Register("ButtonBackground1", typeof(Brush), typeof(MyTextBox),
+            DependencyProperty.Register("ButtonBackground1", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(55,61,69))));
 
         public Brush ButtonBackground2
@@ -52,7 +52,7 @@ namespace Xky.Platform.UserControl
         }
 
         public static readonly DependencyProperty ButtonBackground2Property =
-            DependencyProperty.Register("ButtonBackground2", typeof(Brush), typeof(MyTextBox),
+            DependencyProperty.Register("ButtonBackground2", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(65, 71, 79))));
 
         public Brush ButtonBackground3
@@ -62,7 +62,7 @@ namespace Xky.Platform.UserControl
         }
 
         public static readonly DependencyProperty ButtonBackground3Property =
-            DependencyProperty.Register("ButtonBackground3", typeof(Brush), typeof(MyTextBox),
+            DependencyProperty.Register("ButtonBackground3", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(85, 91, 99))));
 
         public Brush ButtonForeground
@@ -72,7 +72,7 @@ namespace Xky.Platform.UserControl
         }
 
         public static readonly DependencyProperty ButtonForegroundProperty =
-            DependencyProperty.Register("ButtonForeground", typeof(Brush), typeof(MyTextBox),
+            DependencyProperty.Register("ButtonForeground", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Colors.White)));
     }
 }

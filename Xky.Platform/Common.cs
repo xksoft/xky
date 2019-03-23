@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Xky.Core;
+using File = System.IO.File;
 
 namespace Xky.Platform
 {
@@ -14,49 +19,51 @@ namespace Xky.Platform
     {
         public static MainWindow MainWindow;
 
+
+        private static int _showToastStep = 0;
+
         public static void ShowToast(string toast, Color color)
         {
-            MainWindow.Dispatcher.Invoke(() =>
+            Task.Factory.StartNew(async () =>
             {
-                MainWindow.ToastText.Text = toast;
-                MainWindow.ToastText.Foreground = new SolidColorBrush(color);
-
-                var showAnimation = new DoubleAnimation {From = 0, To = 1, FillBehavior = FillBehavior.HoldEnd};
-                var start = new Storyboard {Duration = TimeSpan.FromSeconds(1)};
-                start.Children.Add(showAnimation);
-                Storyboard.SetTargetProperty(showAnimation, new PropertyPath("Opacity"));
-
-                var holdAnimation = new DoubleAnimation {From = 1, To = 1, FillBehavior = FillBehavior.HoldEnd};
-                var hold = new Storyboard {Duration = TimeSpan.FromSeconds(4)};
-                hold.Children.Add(holdAnimation);
-                Storyboard.SetTargetProperty(holdAnimation, new PropertyPath("Opacity"));
-
-                var endAnimation = new DoubleAnimation {From = 1, To = 0, FillBehavior = FillBehavior.HoldEnd};
-                var end = new Storyboard {Duration = TimeSpan.FromSeconds(1)};
-                end.Children.Add(endAnimation);
-                Storyboard.SetTargetProperty(endAnimation, new PropertyPath("Opacity"));
-                if (MainWindow.ToastPanel.Opacity > 0)
+                _showToastStep++;
+                var currentStep = _showToastStep;
+                var current = (double) 0;
+                UiAction(() => { current = MainWindow.ToastPanel.Opacity; });
+                if (current > 0)
                 {
-                   hold.Remove(MainWindow.ToastPanel);
-                    hold.Completed += delegate
+                    for (var i = 0; i < 21; i++)
                     {
-                        if (MainWindow.ToastText.Text == toast)
-                            end.Begin(MainWindow.ToastPanel);
-                    };
-                    hold.Begin(MainWindow.ToastPanel);
+                        if (_showToastStep != currentStep)
+                            break;
+                        var i1 = i;
+                        UiAction(() => { MainWindow.ToastPanel.Opacity = current * (20 - i1) * 0.05; });
+                        await Task.Delay(1);
+                    }
                 }
-                else
+
+                UiAction(() =>
                 {
-                    start.Completed += delegate
-                    {
-                        hold.Completed += delegate
-                        {
-                            if (MainWindow.ToastText.Text == toast)
-                                end.Begin(MainWindow.ToastPanel);
-                        };
-                        hold.Begin(MainWindow.ToastPanel);
-                    };
-                    start.Begin(MainWindow.ToastPanel);
+                    MainWindow.ToastText.Text = toast;
+                    MainWindow.ToastText.Foreground = new SolidColorBrush(color);
+                });
+                for (var i = 0; i < 21; i++)
+                {
+                    if (_showToastStep != currentStep)
+                        break;
+                    var i1 = i;
+                    UiAction(() => { MainWindow.ToastPanel.Opacity = i1 * 0.05; });
+                    await Task.Delay(1);
+                }
+
+                await Task.Delay(3000);
+                for (var i = 0; i < 26; i++)
+                {
+                    if (_showToastStep != currentStep)
+                        break;
+                    var i1 = i;
+                    UiAction(() => { MainWindow.ToastPanel.Opacity = (25 - i1) * 0.04; });
+                    await Task.Delay(3);
                 }
             });
         }
@@ -64,6 +71,32 @@ namespace Xky.Platform
         public static void ShowToast(string toast)
         {
             ShowToast(toast, Colors.White);
+        }
+
+        public static void UiAction(Action callback)
+        {
+            MainWindow?.Dispatcher.Invoke(callback);
+        }
+
+        public static void SaveJson(string name, JObject json)
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var specificFolder = Path.Combine(folder, "xiakeyun");
+            if (!Directory.Exists(specificFolder))
+                Directory.CreateDirectory(specificFolder);
+            File.WriteAllText(Path.Combine(specificFolder, name), json.ToString(), Encoding.UTF8);
+        }
+
+        public static JObject LoadJson(string name)
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var specificFolder = Path.Combine(folder, "xiakeyun");
+            if (!Directory.Exists(specificFolder))
+                Directory.CreateDirectory(specificFolder);
+            return File.Exists(Path.Combine(specificFolder, name))
+                ? JsonConvert.DeserializeObject<JObject>(
+                    File.ReadAllText(Path.Combine(specificFolder, name), Encoding.UTF8))
+                : null;
         }
     }
 }

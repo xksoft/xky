@@ -89,8 +89,10 @@
     <Compile Include="MirrorScreen.xaml.cs">
       <DependentUpon>MirrorScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\License.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\Node.cs" />
+    <Compile Include="Model\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rsa.cs" />
   </ItemGroup>

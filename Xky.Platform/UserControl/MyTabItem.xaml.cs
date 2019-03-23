@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Xky.Core;
 
 namespace Xky.Platform.UserControl
 {
@@ -51,6 +52,16 @@ namespace Xky.Platform.UserControl
             DependencyProperty.Register("IsDarkStyle", typeof(bool), typeof(MyTabItem),
                 new PropertyMetadata(false, null));
 
+        public bool CheckLicense
+        {
+            get => (bool) GetValue(CheckLicenseProperty);
+            set => SetValue(CheckLicenseProperty, value);
+        }
+
+        public static readonly DependencyProperty CheckLicenseProperty =
+            DependencyProperty.Register("CheckLicense", typeof(bool), typeof(MyTabItem),
+                new PropertyMetadata(true, null));
+
         public bool IsSelected
         {
             get => (bool) GetValue(IsSelectedProperty);
@@ -75,30 +86,30 @@ namespace Xky.Platform.UserControl
 
         #region 事件
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        public void ClickDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e == null || e.LeftButton == MouseButtonState.Pressed)
             {
+                if (CheckLicense && Client.License == null)
+                {
+                    Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255,36,50));
+                    return;
+                }
+
+
                 foreach (var myTabItem in ItemList)
                 {
                     myTabItem.IsSelected = Equals(myTabItem, this);
-                    MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
+                    myTabItem.MyCanvas.Background = myTabItem.IsSelected
+                        ? new SolidColorBrush(Color.FromRgb(46, 165, 255))
+                        : new SolidColorBrush(Colors.Transparent);
                 }
+
                 if (IsSelected)
                 {
                     OnClickEvent?.Invoke(this, PageName, IsDarkStyle);
                 }
             }
-        }
-
-        private void MyTabItem_OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            MyIcon.Margin = IsSelected ? new Thickness(-8, 0, 0, 0) : new Thickness(0);
-        }
-
-        private void MyTabItem_OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            MyIcon.Margin = new Thickness(-8, 0, 0, 0);
         }
 
         #endregion

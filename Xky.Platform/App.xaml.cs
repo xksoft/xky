@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Xky.Platform
@@ -13,13 +14,14 @@ namespace Xky.Platform
             base.OnStartup(e);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+    
 
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject as Exception;
-            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.Message+ex.StackTrace);
         }
     }
 
