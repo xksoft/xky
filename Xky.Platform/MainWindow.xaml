@@ -176,6 +176,15 @@
             </Grid>
         </StackPanel>
 
+        <!-- Status -->
+        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="30,0,0,30" Grid.RowSpan="2" Grid.Column="0" 
+                    Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998">
+            <Grid>
+                <Border CornerRadius="15" Background="#373d45" />
+                <TextBlock  Margin="10" Foreground="White" Text="了撒扩大解放了撒扩大解放离开首都基辅路上看到警方傻了快点放假螺丝钉棵解放路上看到房价十六大开发"/>
+            </Grid>
+        </StackPanel>
+
         <!-- 内容主题 -->
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" />
 
@@ -188,9 +197,9 @@
  
             <Image Source="Resources/Icon/logo.png" Width="32" Height="32" Grid.Row="0" />
             <StackPanel VerticalAlignment="Top" Grid.Row="1">
-                <userControl:MyTabItem x:Name="LoginTabItem" CheckLicense="False" IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
+                <userControl:MyTabItem x:Name="LoginTabItem" ToolTip="授权登录" CheckLicense="False" IsSelected="True" ImgSource="Resources/Icon/devices.png" PageName="Login"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
-                <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="MainControl"
+                <userControl:MyTabItem ToolTip="主控面板" ImgSource="Resources/Icon/whatapps.png" PageName="MainControl"
                                        IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
                 <userControl:MyTabItem ImgSource="Resources/Icon/whatapps.png" PageName="Task" IsDarkStyle="False"

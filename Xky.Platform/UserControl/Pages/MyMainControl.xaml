@@ -8,14 +8,64 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="#292f37">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
+            <StackPanel Grid.Row="1" Margin="15">
+                <local:MyTagItem />
+                <local:MyTagItem />
+                <local:MyTagItem />
+                <local:MyTagItem />
+
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Background="#242a31">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                <ScrollViewer.Content>
+                    <StackPanel >
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+                        <local:MyDeviceItem />
+
+                    </StackPanel>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+      
+        </Grid>
+        <Grid Grid.Column="2">
+            <Border Width="432" Height="768" Background="CadetBlue">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">我是手机屏幕</TextBlock>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="3">
+
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">脚本面板</TextBlock>
 
         </Grid>
-        <Grid Grid.Column="1" Background="#242a31" />
     </Grid>
 </UserControl>

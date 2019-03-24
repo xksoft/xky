@@ -125,7 +125,7 @@ namespace Xky.Core
 
                     var options = new IO.Options
                     {
-                        IgnoreServerCertificateValidation = true,
+                        IgnoreServerCertificateValidation = false,
                         AutoConnect = true,
                         ForceNew = true,
                         Query = new Dictionary<string, string>

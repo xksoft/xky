@@ -40,7 +40,7 @@
     <Border Height="60" Style="{StaticResource MyTabItemStyle}" Cursor="Hand" >
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Canvas x:Name="MyCanvas" Grid.Column="0" ></Canvas>
