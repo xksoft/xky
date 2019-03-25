@@ -54,6 +54,20 @@
                                            Grid.Column="2" />
                             </Grid>
                         </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger
+                                Binding="{Binding
+                    RelativeSource={RelativeSource
+                        Mode=FindAncestor,
+                        AncestorType={x:Type ListBoxItem}},
+                        Path=IsSelected}"
+                                Value="True">
+                                <Setter
+                        
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
