@@ -12,21 +12,21 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type UserControl}">
-                            <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" >
+                            <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3" />
                                         <ColumnDefinition Width="3*" />
                                     </Grid.ColumnDefinitions>
-                                    <Canvas x:Name="MyCanvas" Grid.Column="0" ></Canvas>
-                        
+                                    <Canvas x:Name="MyCanvas" Grid.Column="0" />
+                            
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" TargetName="MyBorder"
                                             Value="{StaticResource BackgroundColor1}" />
-                 
+
                                 </Trigger>
                                 <DataTrigger Binding="{Binding Path=TagIsSelected}" Value="True">
 

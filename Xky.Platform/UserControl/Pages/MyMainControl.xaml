@@ -33,29 +33,53 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
-                <ScrollViewer.Content>
-                    <StackPanel >
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
-                        <local:MyDeviceItem />
 
-                    </StackPanel>
-                </ScrollViewer.Content>
-            </ScrollViewer>
-      
+            <ListBox x:Name="DeviceListBox" Grid.Row="1" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="5*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Text="{Binding Path=Id}" FontSize="16" HorizontalAlignment="left"
+                                           Grid.Column="0" />
+                                <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center"
+                                           Grid.Column="1" />
+                                <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
+                                           Grid.Column="2" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="FrameworkElement.Width" Value="Auto" />
+
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+            </ListBox>
+
+
         </Grid>
         <Grid Grid.Column="2">
             <Border Width="432" Height="768" Background="CadetBlue">
@@ -65,7 +89,7 @@
         <Grid Grid.Column="3">
 
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">脚本面板</TextBlock>
-
+            <Button Click="ButtonBase_OnClick">reload</Button>
         </Grid>
     </Grid>
 </UserControl>

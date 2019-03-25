@@ -16,6 +16,7 @@ namespace Xky.Platform.UserControl
         {
             InitializeComponent();
             ItemList.Add(this);
+            Console.WriteLine(DataContext);
         }
 
         //用于判断选中状态

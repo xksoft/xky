@@ -201,9 +201,6 @@
     <Resource Include="Resources\Icon\whatapps.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\devices.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Icon\logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +234,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\voice_off.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\authority.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\devices.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\nodes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
@@ -42,7 +43,14 @@ namespace Xky.Platform.UserControl.Pages
                 if (response.Result)
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
-                    Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime,"on");
+                    Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
+                    await Task.Delay(500);
+                    Common.UiAction(() =>
+                    {
+                        Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
+                        Common.MainWindow.MainControlTabItem.ClickDown(null, null);
+                        Common.MyMainControl.LoadDevices();
+                    });
                 }
                 else
                 {

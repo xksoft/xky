@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -67,9 +68,22 @@ namespace Xky.Platform
             _buttonStatus.Baseurl = "Resources/Icon/ControlBox/drak/";
             DataContext = _buttonStatus;
             //初始化页面加载
-            MyTabItem_OnOnClickEvent(null, "Login", true);
             Common.MainWindow = this;
-            LoginTabItem.ClickDown(null,null);
+            LoginTabItem.ClickDown(null, null);
+
+            //启动状态定时器
+            new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
+        }
+
+        private void MainWindow_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Common.UiAction(() =>
+            {
+                CoreStatus.Fill = Client.CoreConnected
+                    ? new SolidColorBrush(Colors.Lime)
+                    : new SolidColorBrush(Colors.OrangeRed);
+                StatusText.Text = "速率：1024kbps 节点：3";
+            });
         }
 
         #region 基础属性
@@ -152,7 +166,7 @@ namespace Xky.Platform
 
         #endregion
 
-        #region 点击事件
+        #region 事件
 
         private void MyTabItem_OnOnClickEvent(MyTabItem sender, string pagename, bool dark)
         {
@@ -192,7 +206,6 @@ namespace Xky.Platform
                 }
             }
         }
-
         #endregion
     }
 

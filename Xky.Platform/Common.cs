@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Platform.Properties;
+using Xky.Platform.UserControl.Pages;
 using File = System.IO.File;
 
 namespace Xky.Platform
@@ -20,7 +21,7 @@ namespace Xky.Platform
     public static class Common
     {
         public static MainWindow MainWindow;
-
+        public static MyMainControl MyMainControl;
 
         public static void PlaySound(string name)
         {

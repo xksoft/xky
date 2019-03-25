@@ -85,7 +85,11 @@ namespace Xky.Core
         }
 
         public static License License;
-        public static Socket CoreSocket;
+        internal static Socket CoreSocket;
+        public static bool CoreConnected;
+
+        public static List<Node> Nodes=new List<Node>();
+        public static List<Device> Devices=new List<Device>();
 
         public static DateTime ConvertTimestamp(double timestamp)
         {
@@ -137,14 +141,99 @@ namespace Xky.Core
                         Transports = ImmutableList.Create("websocket")
                     };
                     CoreSocket = IO.Socket("wss://api.xky.com", options);
-                    CoreSocket.On(Socket.EVENT_CONNECT, () => { Console.WriteLine("Connected"); });
-                    CoreSocket.On(Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
+                    CoreSocket.On(Socket.EVENT_CONNECT, () =>
+                    {
+                        Console.WriteLine("Connected");
+                        CoreConnected = true;
+                    });
+                    CoreSocket.On(Socket.EVENT_DISCONNECT, () =>
+                    {
+                        Console.WriteLine("Disconnected");
+                        CoreConnected = false;
+                    });
                     CoreSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
                     CoreSocket.On("event", json => { Console.WriteLine(json); });
                 }
                 else
                 {
                     License = null;
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                };
+            }
+        }
+
+
+        public static async Task<Response> LoadDevices()
+        {
+            try
+            {
+                if (License == null)
+                {
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                    };
+                }
+
+                var loadtick = DateTime.Now.Ticks;
+                var response = await Post("get_device_list", new JObject {["session"] = License.Session});
+
+                if (response.Result)
+                {
+                    foreach (var json in (JArray) response.Json["list"])
+                    {
+                        var device = Devices.Find(p => p.Id == (int) json["t_id"]);
+                        //如果已经存在就更新
+                        if (device != null)
+                        {
+                            device.ConnectionHash = json["t_connection_hash"]?.ToString();
+                            device.Description = json["t_desc"]?.ToString();
+                            device.Forward = json["t_forward"]?.ToString();
+                            device.GpsLat = json["t_gps_lat"]?.ToString();
+                            device.GpsLng = json["t_gps_lng"]?.ToString();
+                            device.Id = (int) json["t_id"];
+                            device.Model = json["t_model"]?.ToString();
+                            device.Name = json["t_name"]?.ToString();
+                            device.Node = json["t_node"]?.ToString();
+                            device.Product = json["t_product"]?.ToString();
+                            device.Sn = json["t_sn"]?.ToString();
+                            device.LoadTick = loadtick;
+                        }
+                        else
+                        {
+                            device = new Device
+                            {
+                                ConnectionHash = json["t_connection_hash"]?.ToString(),
+                                Description = json["t_desc"]?.ToString(),
+                                Forward = json["t_forward"]?.ToString(),
+                                GpsLat = json["t_gps_lat"]?.ToString(),
+                                GpsLng = json["t_gps_lng"]?.ToString(),
+                                Id = (int) json["t_id"],
+                                Model = json["t_model"]?.ToString(),
+                                Name = json["t_name"]?.ToString(),
+                                Node = json["t_node"]?.ToString(),
+                                Product = json["t_product"]?.ToString(),
+                                Sn = json["t_sn"]?.ToString(),
+                                LoadTick = loadtick
+                            };
+                            Devices.Add(device);
+                        }
+                    }
+
+                    //删除所有本时序中不存在的设备
+                    Devices.RemoveAll(p => p.LoadTick != loadtick);
                 }
 
                 return response;

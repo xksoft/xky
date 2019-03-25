@@ -2,6 +2,9 @@
 {
     public class Device
     {
+        //加载时序
+        public long LoadTick { get; set; }
+
         /// <summary>
         ///     设备id
         /// </summary>
