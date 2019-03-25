@@ -16,7 +16,7 @@
                             Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=IsSelected}"
                             Value="True" />
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="Border.Background" Value="#292f37" />
+                    <Setter Property="Border.Background" Value="{StaticResource  BackgroundColor4}" />
 
                 </MultiDataTrigger>
                 <MultiDataTrigger>
@@ -29,7 +29,7 @@
                             Value="True" />
                     </MultiDataTrigger.Conditions>
 
-                    <Setter Property="Border.Background" Value="#292f37" />
+                    <Setter Property="Border.Background" Value="{StaticResource  BackgroundColor4}" />
 
                 </MultiDataTrigger>
 

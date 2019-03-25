@@ -13,7 +13,7 @@ namespace Xky.Core
     public class MirrorClient
     {
         internal readonly H264Decoder Decoder = new H264Decoder();
-        private Socket _socket;
+  
         public MirrorScreen MirrorScreen;
 
 
@@ -57,7 +57,7 @@ namespace Xky.Core
 
         public void EmitEvent(JObject jObject)
         {
-            _socket?.Emit("event", jObject);
+           // _socket?.Emit("event", jObject);
         }
     }
 }

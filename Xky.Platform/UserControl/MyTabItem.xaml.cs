@@ -88,6 +88,7 @@ namespace Xky.Platform.UserControl
 
         public void ClickDown(object sender, MouseButtonEventArgs e)
         {
+   
             if (e == null || e.LeftButton == MouseButtonState.Pressed)
             {
                 if (CheckLicense && Client.License == null)
@@ -101,7 +102,7 @@ namespace Xky.Platform.UserControl
                 {
                     myTabItem.IsSelected = Equals(myTabItem, this);
                     myTabItem.MyCanvas.Background = myTabItem.IsSelected
-                        ? new SolidColorBrush(Color.FromRgb(46, 165, 255))
+                        ? FindResource("BlueLine") as SolidColorBrush
                         : new SolidColorBrush(Colors.Transparent);
                 }
 

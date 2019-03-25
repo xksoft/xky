@@ -171,7 +171,7 @@
         <StackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
                     Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998">
             <Grid>
-                <Border CornerRadius="8" Background="#373d45" />
+                <Border CornerRadius="8" Background="{StaticResource  BackgroundColor1}" />
                 <TextBlock x:Name="ToastText" Margin="10" Foreground="White" />
             </Grid>
         </StackPanel>
@@ -180,7 +180,7 @@
         <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="30,0,0,30" Grid.RowSpan="2" Grid.Column="0" 
                     Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998">
             <Grid>
-                <Border CornerRadius="15" Background="#373d45" />
+                <Border CornerRadius="15" Background="{StaticResource  BackgroundColor1}" />
                 <TextBlock  Margin="10" Foreground="White" Text="了撒扩大解放了撒扩大解放离开首都基辅路上看到警方傻了快点放假螺丝钉棵解放路上看到房价十六大开发"/>
             </Grid>
         </StackPanel>
@@ -189,7 +189,7 @@
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" />
 
         <!-- 第一栏 -->
-        <Grid Grid.Column="0" Background="#1d232a" Grid.Row="0" Grid.RowSpan="2">
+        <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor2}" Grid.Row="0" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="65" />
                 <RowDefinition Height="*" />

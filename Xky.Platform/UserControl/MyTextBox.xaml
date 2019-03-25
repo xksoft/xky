@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:userControl="clr-namespace:Xky.Platform.UserControl"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -22,7 +21,7 @@
             </Style>
         </Border.Style>
         <Grid>
-            <Label x:Name="WaterLabel" Margin="5,0,0,0" VerticalContentAlignment="Center" Foreground="#868b8e"
+            <Label x:Name="WaterLabel" Margin="5,0,0,0" VerticalContentAlignment="Center" Foreground="{StaticResource  DescriptionColor}"
                    Content="{Binding Path=TextBoxWaterText}" />
             <TextBox x:Name="TextBox1" Background="Transparent" BorderThickness="0" Margin="5,0,0,0"
                      Foreground="{Binding Path=TextBoxForeground}"

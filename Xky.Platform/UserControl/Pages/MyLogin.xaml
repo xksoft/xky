@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#292f37">
+    <Grid Background="{StaticResource  BackgroundColor4}">
         <StackPanel VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:MyTextBox x:Name="LicenseKey" Height="41" Width="314" TextBoxCornerRadius="5"
-                                 TextBoxBackground="#373d45"
+                                 TextBoxBackground="{StaticResource  BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="请输入32位授权码" />
                 <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" ButtonText="授权" Width="102" />
             </StackPanel>

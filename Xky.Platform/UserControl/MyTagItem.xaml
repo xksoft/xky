@@ -12,7 +12,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type UserControl}">
-                            <Border x:Name="MyBorder" Background="#292f37" CornerRadius="5">
+                            <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor4}" CornerRadius="5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="7*" />
@@ -34,7 +34,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" TargetName="MyBorder"
-                                            Value="#373d45" />
+                                            Value="{StaticResource  BackgroundColor1}" />
                                     <Setter Property="Foreground" TargetName="MyTextBlock1"
                                             Value="White" />
                                     <Setter Property="Foreground" TargetName="MyTextBlock2"
@@ -43,7 +43,7 @@
                                 <DataTrigger Binding="{Binding Path=TagIsSelected}" Value="True">
 
                                     <Setter Property="Background" TargetName="MyBorder"
-                                            Value="#373d45" />
+                                            Value="{StaticResource BackgroundColor1}" />
                                     <Setter Property="Foreground" TargetName="MyTextBlock1"
                                             Value="White" />
                                     <Setter Property="Foreground" TargetName="MyTextBlock2"

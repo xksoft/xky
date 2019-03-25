@@ -13,7 +13,7 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="#292f37">
+        <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor4}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
@@ -27,7 +27,7 @@
 
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Background="#242a31">
+        <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
