@@ -6,11 +6,13 @@
     <Application.Resources>
 
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="UserControl/Style/Colors.xaml" />
                         <ResourceDictionary Source="UserControl/Style/ScrollBars.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ContextMenu.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
