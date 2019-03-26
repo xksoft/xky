@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" />
@@ -34,40 +35,47 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
 
-            <ListBox x:Name="DeviceListBox" Grid.Row="1" >
+            <ListBox x:Name="DeviceListBox" Grid.Row="1">
+
                 <ListBox.ItemTemplate>
+
+
                     <DataTemplate>
-                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="30">
+                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="100"
+                                Margin="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="5*" />
                                     <ColumnDefinition Width="5*" />
                                     <ColumnDefinition Width="5*" />
                                 </Grid.ColumnDefinitions>
 
-
-                                <TextBlock Text="{Binding Path=Id}" FontSize="16" HorizontalAlignment="left"
-                                           Grid.Column="0" />
+                                <Canvas x:Name="MyBlueLine" Grid.Column="0" Background="{StaticResource BlueLine}"
+                                        Visibility="Collapsed" />
+                                <Image Grid.Column="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Width="43.2" Height="76.2"></Image>
                                 <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center"
-                                           Grid.Column="1" />
-                                <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
                                            Grid.Column="2" />
+                                <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
+                                           Grid.Column="3" />
                             </Grid>
                         </Border>
                         <DataTemplate.Triggers>
                             <DataTrigger
-                                Binding="{Binding
-                    RelativeSource={RelativeSource
-                        Mode=FindAncestor,
-                        AncestorType={x:Type ListBoxItem}},
-                        Path=IsSelected}"
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
                                 Value="True">
-                                <Setter
-                        
-                                    Property="Visibility"
-                                    Value="Visible"/>
+                                <Setter TargetName="MyBlueLine" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="MyBorder" Property="Background"
+                                        Value="{StaticResource BackgroundColor1}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
+                                Value="True">
+                                <Setter TargetName="MyBorder" Property="Background"
+                                        Value="{StaticResource BackgroundColor1}" />
                             </DataTrigger>
                         </DataTemplate.Triggers>
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
@@ -79,15 +87,20 @@
 
                 <ListBox.ItemContainerStyle>
                     <Style>
-                        <Setter Property="FrameworkElement.Width" Value="Auto" />
-
+                        <Setter Property="Control.Margin" Value="0" />
+                        <Setter Property="Control.Padding" Value="0" />
+                        <Setter Property="Control.BorderThickness" Value="0" />
                     </Style>
                 </ListBox.ItemContainerStyle>
 
+
                 <ListBox.Template>
-                    <ControlTemplate>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ItemsPresenter />
+                    <ControlTemplate TargetType="ListBox">
+
+                        <ScrollViewer
+                            Focusable="false">
+                            <StackPanel
+                                IsItemsHost="True" />
                         </ScrollViewer>
                     </ControlTemplate>
                 </ListBox.Template>

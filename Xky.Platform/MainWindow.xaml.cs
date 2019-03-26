@@ -67,8 +67,12 @@ namespace Xky.Platform
 
             _buttonStatus.Baseurl = "Resources/Icon/ControlBox/drak/";
             DataContext = _buttonStatus;
-            //初始化页面加载
+
+            //初始化页面加载、方便调用UI线程委托
             Common.MainWindow = this;
+            Client.MainWindow = this;
+
+            //加载login页面
             LoginTabItem.ClickDown(null, null);
 
             //启动状态定时器
@@ -206,6 +210,7 @@ namespace Xky.Platform
                 }
             }
         }
+
         #endregion
     }
 

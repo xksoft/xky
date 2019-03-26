@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
+using Xky.Core.Model;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -25,6 +28,7 @@ namespace Xky.Platform.UserControl.Pages
                     Common.UiAction(() => { LicenseKey.TextBoxText = json["license"].ToString(); });
                 }
             });
+
         }
 
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -47,7 +51,7 @@ namespace Xky.Platform.UserControl.Pages
                     await Task.Delay(500);
                     Common.UiAction(() =>
                     {
-                        Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
+                       // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadDevices();
                     });
@@ -64,5 +68,6 @@ namespace Xky.Platform.UserControl.Pages
                 });
             });
         }
+
     }
 }

@@ -19,7 +19,8 @@
                                         <ColumnDefinition Width="3*" />
                                     </Grid.ColumnDefinitions>
                                     <Canvas x:Name="MyCanvas" Grid.Column="0" />
-                            
+                                    <TextBlock Grid.Column="1" Text="{Binding Path=Id}"></TextBlock>
+
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>

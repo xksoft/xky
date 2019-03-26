@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Model;
@@ -84,21 +87,31 @@ namespace Xky.Core
             };
         }
 
-        public static License License;
         internal static Socket CoreSocket;
+
+        #region 公开属性
+
+        public static License License;
         public static bool CoreConnected;
+        public static Window MainWindow;
 
-        public static List<Node> Nodes=new List<Node>();
-        public static List<Device> Devices=new List<Device>();
+        public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+        public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
 
-        public static DateTime ConvertTimestamp(double timestamp)
+        #endregion
+
+        private static DateTime ConvertTimestamp(double timestamp)
         {
             var converted = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             var newDateTime = converted.AddMilliseconds(timestamp);
             return newDateTime.ToLocalTime();
         }
 
-
+        /// <summary>
+        /// 认证授权KEY
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns></returns>
         public static async Task<Response> AuthLicense(string license)
         {
             try
@@ -152,7 +165,7 @@ namespace Xky.Core
                         CoreConnected = false;
                     });
                     CoreSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
-                    CoreSocket.On("event", json => { Console.WriteLine(json); });
+                    CoreSocket.On("event", json => { CoreEvent((JObject) json); });
                 }
                 else
                 {
@@ -172,7 +185,10 @@ namespace Xky.Core
             }
         }
 
-
+        /// <summary>
+        /// 重新加载设备列表
+        /// </summary>
+        /// <returns></returns>
         public static async Task<Response> LoadDevices()
         {
             try
@@ -194,46 +210,20 @@ namespace Xky.Core
                 {
                     foreach (var json in (JArray) response.Json["list"])
                     {
-                        var device = Devices.Find(p => p.Id == (int) json["t_id"]);
-                        //如果已经存在就更新
-                        if (device != null)
-                        {
-                            device.ConnectionHash = json["t_connection_hash"]?.ToString();
-                            device.Description = json["t_desc"]?.ToString();
-                            device.Forward = json["t_forward"]?.ToString();
-                            device.GpsLat = json["t_gps_lat"]?.ToString();
-                            device.GpsLng = json["t_gps_lng"]?.ToString();
-                            device.Id = (int) json["t_id"];
-                            device.Model = json["t_model"]?.ToString();
-                            device.Name = json["t_name"]?.ToString();
-                            device.Node = json["t_node"]?.ToString();
-                            device.Product = json["t_product"]?.ToString();
-                            device.Sn = json["t_sn"]?.ToString();
-                            device.LoadTick = loadtick;
-                        }
-                        else
-                        {
-                            device = new Device
-                            {
-                                ConnectionHash = json["t_connection_hash"]?.ToString(),
-                                Description = json["t_desc"]?.ToString(),
-                                Forward = json["t_forward"]?.ToString(),
-                                GpsLat = json["t_gps_lat"]?.ToString(),
-                                GpsLng = json["t_gps_lng"]?.ToString(),
-                                Id = (int) json["t_id"],
-                                Model = json["t_model"]?.ToString(),
-                                Name = json["t_name"]?.ToString(),
-                                Node = json["t_node"]?.ToString(),
-                                Product = json["t_product"]?.ToString(),
-                                Sn = json["t_sn"]?.ToString(),
-                                LoadTick = loadtick
-                            };
-                            Devices.Add(device);
-                        }
+                        PushDevice(json, loadtick);
                     }
 
-                    //删除所有本时序中不存在的设备
-                    Devices.RemoveAll(p => p.LoadTick != loadtick);
+                    //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        foreach (var t in Devices.ToList())
+                        {
+                            if (t.LoadTick != loadtick)
+                            {
+                                Devices.Remove(t);
+                            }
+                        }
+                    });
                 }
 
                 return response;
@@ -246,6 +236,92 @@ namespace Xky.Core
                     Message = e.Message,
                     Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
                 };
+            }
+        }
+
+        /// <summary>
+        /// 添加或更新Device
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="loadtick"></param>
+        private static void PushDevice(JToken json, long loadtick)
+        {
+            var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+            //如果已经存在就更新
+            if (device != null)
+            {
+                device.ConnectionHash = json["t_connection_hash"]?.ToString();
+                device.Description = json["t_desc"]?.ToString();
+                device.Forward = json["t_forward"]?.ToString();
+                device.GpsLat = json["t_gps_lat"]?.ToString();
+                device.GpsLng = json["t_gps_lng"]?.ToString();
+                device.Id = (int) json["t_id"];
+                device.Model = json["t_model"]?.ToString();
+                device.Name = json["t_name"]?.ToString();
+                device.Node = json["t_node"]?.ToString();
+                device.Product = json["t_product"]?.ToString();
+                device.Sn = json["t_sn"]?.ToString();
+                device.LoadTick = loadtick;
+            }
+            else
+            {
+                device = new Device
+                {
+                    ConnectionHash = json["t_connection_hash"]?.ToString(),
+                    Description = json["t_desc"]?.ToString(),
+                    Forward = json["t_forward"]?.ToString(),
+                    GpsLat = json["t_gps_lat"]?.ToString(),
+                    GpsLng = json["t_gps_lng"]?.ToString(),
+                    Id = (int) json["t_id"],
+                    Model = json["t_model"]?.ToString(),
+                    Name = json["t_name"]?.ToString(),
+                    Node = json["t_node"]?.ToString(),
+                    Product = json["t_product"]?.ToString(),
+                    Sn = json["t_sn"]?.ToString(),
+                    LoadTick = loadtick
+                };
+                //用UI线程委托添加，防止报错
+                MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
+            }
+        }
+
+        /// <summary>
+        /// 移除Device
+        /// </summary>
+        /// <param name="json"></param>
+        private static void RemoveDevice(JToken json)
+        {
+            var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+            if (device != null)
+            {
+                //用UI线程委托删除，防止报错
+                MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
+            }
+        }
+
+        /// <summary>
+        /// 核心服务器事件
+        /// </summary>
+        /// <param name="json"></param>
+        private static void CoreEvent(JObject json)
+        {
+            Console.WriteLine(json);
+            var type = json["type"]?.ToString();
+            switch (type)
+            {
+                case "device_state":
+                {
+                    if (json["message"]?.ToString() == "online")
+                    {
+                        PushDevice(json["device"], DateTime.Now.Ticks);
+                    }
+                    else
+                    {
+                        RemoveDevice(json["device"]);
+                    }
+
+                    break;
+                }
             }
         }
     }

@@ -116,7 +116,15 @@ namespace Xky.Platform
 
         public static void UiAction(Action callback)
         {
-            MainWindow?.Dispatcher.Invoke(callback);
+            try
+            {
+                MainWindow?.Dispatcher.Invoke(callback);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+     
         }
 
         public static void SaveJson(string name, JObject json)
