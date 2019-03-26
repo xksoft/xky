@@ -244,5 +244,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\nodes.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Device\device_android1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

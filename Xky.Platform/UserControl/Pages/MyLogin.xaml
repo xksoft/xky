@@ -15,5 +15,7 @@
                 <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" ButtonText="授权" Width="102" />
             </StackPanel>
         </StackPanel>
+
+
     </Grid>
 </UserControl>

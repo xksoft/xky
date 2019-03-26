@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using Xky.Core.Annotations;
 
 namespace Xky.Core.Model
@@ -18,6 +19,7 @@ namespace Xky.Core.Model
         private string _connectionHash;
         private string _gpsLat;
         private string _gpsLng;
+        private ImageSource _screenShot;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -198,8 +200,20 @@ namespace Xky.Core.Model
             }
         }
 
+
+        /// <summary>
+        /// 画面截图
+        /// </summary>
+        public ImageSource ScreenShot
+        {
+            get => _screenShot;
+            set
+            {
+                _screenShot = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("_screenShot"));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
-
-
     }
 }

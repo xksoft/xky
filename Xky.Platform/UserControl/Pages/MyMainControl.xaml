@@ -9,8 +9,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="200" />
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
@@ -35,26 +35,43 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
 
-            <ListBox x:Name="DeviceListBox" Grid.Row="1">
+            <ListBox x:Name="DeviceListBox" Grid.Row="1"       RenderOptions.BitmapScalingMode="HighQuality">
 
                 <ListBox.ItemTemplate>
 
 
                     <DataTemplate>
-                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="100"
+                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="110"
                                 Margin="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2" />
-                                    <ColumnDefinition Width="5*" />
+                                    <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="5*" />
                                     <ColumnDefinition Width="5*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Canvas x:Name="MyBlueLine" Grid.Column="0" Background="{StaticResource BlueLine}"
                                         Visibility="Collapsed" />
-                                <Image Grid.Column="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Width="43.2" Height="76.2"></Image>
-                                <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center"
+
+                                <Grid Grid.Column="1" Margin="5"      RenderOptions.BitmapScalingMode="Fant">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="17*" />
+                                        <ColumnDefinition Width="380*" />
+                                        <ColumnDefinition Width="20*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="13*" />
+                                        <RowDefinition Height="98*" />
+                                        <RowDefinition Height="13*" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Stretch="Fill" ></Image>
+                                </Grid>
+                                <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center" 
                                            Grid.Column="2" />
                                 <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
                                            Grid.Column="3" />
@@ -110,7 +127,23 @@
         </Grid>
         <Grid Grid.Column="2">
             <Border Width="432" Height="768" Background="CadetBlue">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">我是手机屏幕</TextBlock>
+                <Grid MinHeight="762" MinWidth="438"    RenderOptions.BitmapScalingMode="Fant">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"/>
+                    </Grid.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="380*" />
+                        <ColumnDefinition Width="20*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="13*" />
+                        <RowDefinition Height="98*" />
+                        <RowDefinition Height="13*" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Stretch="Fill" ></Image>
+                </Grid>
             </Border>
         </Grid>
         <Grid Grid.Column="3">
