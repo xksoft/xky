@@ -70,17 +70,17 @@ namespace Xky.Platform
                 var currentStep = _showToastStep;
                 var current = (double) 0;
                 UiAction(() => { current = MainWindow.ToastPanel.Opacity; });
-                if (current > 0)
-                {
-                    for (var i = 0; i < 21; i++)
-                    {
-                        if (_showToastStep != currentStep)
-                            break;
-                        var i1 = i;
-                        UiAction(() => { MainWindow.ToastPanel.Opacity = current * (20 - i1) * 0.05; });
-                        await Task.Delay(1);
-                    }
-                }
+//                if (current > 0)
+//                {
+//                    for (var i = 0; i < 21; i++)
+//                    {
+//                        if (_showToastStep != currentStep)
+//                            break;
+//                        var i1 = i;
+//                        UiAction(() => { MainWindow.ToastPanel.Opacity = current * (20 - i1) * 0.05; });
+//                        await Task.Delay(1);
+//                    }
+//                }
 
                 UiAction(() =>
                 {
@@ -93,7 +93,7 @@ namespace Xky.Platform
                     if (_showToastStep != currentStep)
                         break;
                     var i1 = i;
-                    UiAction(() => { MainWindow.ToastPanel.Opacity = i1 * 0.05; });
+                    UiAction(() => { MainWindow.ToastPanel.Opacity = current + i1 * 0.05; });
                     await Task.Delay(1);
                 }
 
@@ -124,7 +124,6 @@ namespace Xky.Platform
             {
                 Console.WriteLine(e);
             }
-     
         }
 
         public static void SaveJson(string name, JObject json)
