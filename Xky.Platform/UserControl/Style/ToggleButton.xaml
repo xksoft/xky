@@ -22,17 +22,7 @@
                    TargetType="ContentControl">
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock FontFamily="Wingdings 2"
-                                       FontSize="24"
-                                       FontWeight="Bold"
-                                       Foreground="White"
-                                       Text="" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+                
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
@@ -40,15 +30,6 @@
                    TargetType="ContentControl">
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock FontSize="24"
-                                       Foreground="White"
-                                       Text="" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
@@ -57,7 +38,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid x:Name="MainRow">
+                    <Grid x:Name="MainRow" Width="40" Height="20">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="{Binding ElementName=TopRow, Path=ActualHeight}" />
@@ -79,6 +60,7 @@
                                      Height="{Binding ElementName=MainRow,
                                                       Path=ActualHeight}"
                                      HorizontalAlignment="Left"
+                                    
                                      Fill="{StaticResource BlueLine}" />
                             <Ellipse x:Name="BackgroundEllipse2"
                                      Grid.Row="0"
@@ -92,7 +74,6 @@
                                      HorizontalAlignment="Right"
                                      Fill="{StaticResource ToggleButtonFalseBackground}" />
                             <Border x:Name="BackgroundBorder"
-                                    Padding="1"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
@@ -135,8 +116,22 @@
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource  ToggleButtonFalseBackground}" />
                             <Setter TargetName="ForegroundEllipse" Property="Fill" Value="{StaticResource ToggleButtonFalseForeground}" />
-                            <!--<Trigger.EnterActions>
-                                        <BeginStoryboard>
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{StaticResource ToggleButtonFalseBackground}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder" Storyboard.TargetProperty="Width" To="0" From="20"  Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder" Storyboard.TargetProperty="Width"  From="0" To="20" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <!--<BeginStoryboard>
                                             <Storyboard>
                                                 <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder"  Storyboard.TargetProperty="(Border.Width)" To="0" Duration="0:0:3"/>
                                             </Storyboard>
@@ -150,7 +145,7 @@
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>-->
-                            <Setter TargetName="AnimationSizeBorder" Property="Width" Value="0" />
+                            <!--<Setter TargetName="AnimationSizeBorder" Property="Width" Value="0" />-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

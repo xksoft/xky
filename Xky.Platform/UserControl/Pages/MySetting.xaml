@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">不显示离线设备</Label>
-                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center"  Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" Height="20" Width="40"/>
+                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center"  Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}"  />
             </Grid>
             <Grid Height="60">
                 <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                     <TextBlock Margin="25,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="#999" >关闭该开关，当您点击主界面的关闭按钮时，系统将直接停止正在运行的任务并退出程序</TextBlock>
                 </StackPanel>
                
-                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" Height="20" Width="40"/>
+                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" />
             </Grid>
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
@@ -70,18 +70,18 @@
                     <Label Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">接收桌面通知</Label>
                     <TextBlock Margin="25,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="#999" >主要包含以下类型的通知：设备、节点服务器以及任务状态</TextBlock>
                 </StackPanel>
-                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" Height="20" Width="40"/>
+                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}"  />
             </Grid>
 
             <Separator Margin="20,20,20,10" Background="{StaticResource BackgroundColor1}"/>
             <Label FontSize="20" Foreground="White" Margin="20,0,0,0">显示</Label>
-            <Grid Height="50">
+            <Grid Height="55">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24"></RowDefinition>
                     <RowDefinition Height="36"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Margin="20,0,0,0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">画面解析模式</Label>
-                <ComboBox Height="20" Margin="25,0,0,0"  Grid.Row="1" Width="100"  HorizontalAlignment="Left">
+                <ComboBox Height="25" Margin="25,0,0,0"  Grid.Row="1" Width="100"  HorizontalAlignment="Left">
                     <ComboBoxItem>流畅</ComboBoxItem>
                     <ComboBoxItem IsSelected="True">一般</ComboBoxItem>
                     <ComboBoxItem>高清</ComboBoxItem>
