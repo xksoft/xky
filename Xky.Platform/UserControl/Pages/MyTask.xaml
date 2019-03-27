@@ -7,48 +7,9 @@
              xmlns:UserControl="clr-namespace:Xky.Platform.UserControl" x:Class="Xky.Platform.UserControl.Pages.MyTask"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-   
-    <Grid>
-        <GroupBox >
-            
-            
-            
-            <GroupBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="文件">
-                        <MenuItem Header="打开"/>
-                        <MenuItem.Icon>
-                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/max_btn1.png" ></ImageBrush> 
-                        </MenuItem.Icon>
-                       
-                    </MenuItem>
-                        <Separator>
-                        </Separator>
-                    <MenuItem Header="重启当前设备">
-                        <MenuItem.Icon>
-                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/min_btn1.png" ></ImageBrush>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="删除设备">
-                        <MenuItem.Icon>
-                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/close_btn1.png" ></ImageBrush>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                        <MenuItem Header="升级系统"/>
-                        <Separator />
 
-                    </ContextMenu>
-                </GroupBox.ContextMenu>
-          
-        </GroupBox>
-        <StackPanel VerticalAlignment="Center">
-            <ToggleButton Width="70"
-                      Height="35"
-                      Margin="10"
-                      Style="{StaticResource SwitchTypeToggleButton}" />
-        </StackPanel>
+    <Grid>
+       
 
 
     </Grid>

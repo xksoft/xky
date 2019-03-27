@@ -14,7 +14,7 @@
                         <ResourceDictionary Source="UserControl/Style/ScrollBars.xaml" />
                         <ResourceDictionary Source="UserControl/Style/ContextMenu.xaml" />
                         <ResourceDictionary Source="UserControl/Style/Animation.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/CheckBox.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ToggleButton.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
