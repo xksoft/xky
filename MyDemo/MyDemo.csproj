@@ -899,10 +899,6 @@
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
       <Name>Xky.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xky.UI\Xky.UI.csproj">
-      <Project>{dc966e3d-bcff-4652-98cf-070e5494749a}</Project>
-      <Name>Xky.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
