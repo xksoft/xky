@@ -8,12 +8,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid Background="{StaticResource BackgroundColor1}">
-        <GroupBox >
+    <Grid Background="{StaticResource BackgroundColor4}">
+     
 
 
 
-            <GroupBox.ContextMenu>
+            <Grid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="文件">
                         <MenuItem Header="打开"/>
@@ -40,9 +40,9 @@
                     <Separator />
 
                 </ContextMenu>
-            </GroupBox.ContextMenu>
+            </Grid.ContextMenu>
 
-        </GroupBox>
+
         <StackPanel VerticalAlignment="Center">
             <ToggleButton Style="{StaticResource SwitchTypeToggleButton}" Height="20" Width="40"/>
         </StackPanel>

@@ -207,7 +207,7 @@
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
                 <userControl:MyTabItem ToolTip="节点" ImgSource="Resources/Icon/nodes.png" PageName="Task" IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
-                <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Task" IsDarkStyle="False"
+                <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Setting" IsDarkStyle="True"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
             </StackPanel>
         </Grid>
