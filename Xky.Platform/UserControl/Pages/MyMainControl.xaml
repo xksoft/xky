@@ -110,11 +110,13 @@
                                     Visibility="Collapsed" />
 
 
-                            <Viewbox  Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
-                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"
+                            <Viewbox Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      RenderOptions.BitmapScalingMode="Fant"
                                       Height="940" Width="470">
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
+                                        <ImageBrush
+                                            ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
                                     </Grid.Background>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -135,18 +137,37 @@
                             </Viewbox>
 
 
-                   
-
                             <StackPanel Grid.Column="1" Margin="0,10,10,10">
-                                <Border x:Name="DeviceNameBorader" CornerRadius="5"
-                                        Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
-                                        Margin="0,3,0,0">
-                                    <Label x:Name="DeviceNameLabel"
-                                           Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
-                                           VerticalAlignment="Center" HorizontalAlignment="Left"
-                                           Content="{Binding Path=Name}" />
-                                </Border>
-
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <Border x:Name="DeviceNameBorader" CornerRadius="8" HorizontalAlignment="Left"
+                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
+                                          >
+                                        <TextBlock x:Name="DeviceNameLabel" Margin="5,3,3,3"
+                                                   Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                   Text="{Binding Path=Name}" />
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <Border x:Name="DeviceModelBorader" CornerRadius="8" HorizontalAlignment="Left"
+                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
+                                            >
+                                        <TextBlock x:Name="DeviceModelNameLabel" Margin="5,3,3,3"
+                                                   Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                   Text="{Binding Path=Model}" />
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <Border x:Name="DeviceStatusBorader" CornerRadius="8" HorizontalAlignment="Left"
+                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
+                                            >
+                                        <TextBlock x:Name="DeviceStatusNameLabel" Margin="5,3,3,3"
+                                                   Foreground="{StaticResource OnLine}"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                   Text="脚本" />
+                                    </Border>
+                                </StackPanel>
                             </StackPanel>
 
 
@@ -164,16 +185,38 @@
                                 <Setter TargetName="DeviceNameLabel" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
 
+                                <Setter TargetName="DeviceModelBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceModelNameLabel" Property="Foreground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
+
+                                <Setter TargetName="DeviceStatusBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
+                                        Value="{StaticResource OnLine}" />
+
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
+
                                 <Setter TargetName="DeviceNameBorader" Property="Background"
                                         Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
                                 <Setter TargetName="DeviceNameLabel" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
+                                <Setter TargetName="DeviceModelBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceModelNameLabel" Property="Foreground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
+                                <Setter TargetName="DeviceStatusBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
+                                        Value="{StaticResource OnLine}" />
 
                             </DataTrigger>
                         </DataTemplate.Triggers>
