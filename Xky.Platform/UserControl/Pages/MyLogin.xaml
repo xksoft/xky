@@ -14,8 +14,11 @@
                                  TextBoxForeground="White" TextBoxWaterText="请输入32位授权码" />
                 <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" ButtonText="授权" Width="102" />
             </StackPanel>
+            <StackPanel>
+                <CheckBox Width="150">记住授权码</CheckBox>
+            </StackPanel>
         </StackPanel>
-
+       
 
     </Grid>
 </UserControl>

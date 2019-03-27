@@ -9,9 +9,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
    
     <Grid>
-        <GroupBox Content="aa">
-           
-                <GroupBox.ContextMenu>
+        <GroupBox >
+            
+            
+            
+            <GroupBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="文件">
                         <MenuItem Header="打开"/>
@@ -41,7 +43,9 @@
                 </GroupBox.ContextMenu>
           
         </GroupBox>
-
+        <StackPanel VerticalAlignment="Center">
+            <CheckBox Width="150">记住授权码</CheckBox>
+        </StackPanel>
 
 
     </Grid>
