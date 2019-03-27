@@ -49,7 +49,7 @@
                       
                        
                         <Separator />
-                        <MenuItem Header="设为调试机器">
+                        <MenuItem Header="设为调试机器" IsEnabled="False">
                             <MenuItem.Icon>
                                 <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/setdebug.png" ></ImageBrush>
                             </MenuItem.Icon>
