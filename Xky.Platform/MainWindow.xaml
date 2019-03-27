@@ -181,9 +181,13 @@
         </StackPanel>
 
         <!-- Status -->
-        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="30,0,0,30" Grid.RowSpan="2" Grid.Column="0"
+        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="10,0,0,10" Grid.RowSpan="2" Grid.Column="0"
                     Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998"
                     IsHitTestVisible="False">
+            <StackPanel.Effect>
+                <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
+                                  Opacity="0.35" />
+            </StackPanel.Effect>
             <Border CornerRadius="15" Background="{StaticResource  BackgroundColor1}">
                 <StackPanel Orientation="Horizontal" Margin="8">
                     <Ellipse x:Name="CoreStatus" Fill="{StaticResource OffLine}" Width="8" Height="8" IsHitTestVisible="False" />
