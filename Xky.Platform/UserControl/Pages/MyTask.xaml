@@ -44,7 +44,10 @@
           
         </GroupBox>
         <StackPanel VerticalAlignment="Center">
-            <CheckBox Width="150">记住授权码</CheckBox>
+            <ToggleButton Width="70"
+                      Height="35"
+                      Margin="10"
+                      Style="{StaticResource SwitchTypeToggleButton}" />
         </StackPanel>
 
 
