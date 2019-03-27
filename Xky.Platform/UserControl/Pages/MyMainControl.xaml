@@ -137,7 +137,7 @@
                             </Viewbox>
 
 
-                            <StackPanel Grid.Column="1" Margin="0,10,10,10">
+                            <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                     <Border x:Name="DeviceNameBorader" CornerRadius="8" HorizontalAlignment="Left"
                                             Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
@@ -159,13 +159,21 @@
                                     </Border>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <Border x:Name="DeviceStatusBorader" CornerRadius="8" HorizontalAlignment="Left"
+                                    <Border x:Name="DeviceStatusBorader" CornerRadius="8" HorizontalAlignment="Left" Margin="0,0,3,0"
                                             Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
                                             >
                                         <TextBlock x:Name="DeviceStatusNameLabel" Margin="5,3,3,3"
                                                    Foreground="{StaticResource OnLine}"
                                                    VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                   Text="脚本" />
+                                                   Text="执行中" />
+                                    </Border>
+                                    <Border x:Name="DeviceScriptBorader" CornerRadius="8" HorizontalAlignment="Left"
+                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
+                                    >
+                                        <TextBlock x:Name="DeviceScriptLabel" Margin="5,3,3,3"
+                                                   Foreground="{StaticResource OnLine}"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                   Text="自动注册" />
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
@@ -196,6 +204,11 @@
                                 <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
                                         Value="{StaticResource OnLine}" />
 
+                                <Setter TargetName="DeviceScriptBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceScriptLabel" Property="Foreground"
+                                        Value="{StaticResource OnLine}" />
+
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
@@ -216,6 +229,11 @@
                                 <Setter TargetName="DeviceStatusBorader" Property="Background"
                                         Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
                                 <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
+                                        Value="{StaticResource OnLine}" />
+
+                                <Setter TargetName="DeviceScriptBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceScriptLabel" Property="Foreground"
                                         Value="{StaticResource OnLine}" />
 
                             </DataTrigger>
