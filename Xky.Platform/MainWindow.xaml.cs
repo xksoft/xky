@@ -207,6 +207,13 @@ namespace Xky.Platform
                         MainContent.Content = page;
                         break;
                     }
+                    case "Setting":
+                        {
+                            var page = new MySetting();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                 }
             }
         }

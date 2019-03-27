@@ -29,7 +29,7 @@
                                        FontSize="24"
                                        FontWeight="Bold"
                                        Foreground="White"
-                                       Text="P" />
+                                       Text="" />
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -45,7 +45,7 @@
                         <ControlTemplate>
                             <TextBlock FontSize="24"
                                        Foreground="White"
-                                       Text="X" />
+                                       Text="" />
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -69,6 +69,7 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
+                            <!--开启状态背景-->
                             <Ellipse x:Name="BackgroundEllipse1"
                                      Grid.RowSpan="2"
                                      Grid.Column="0"
@@ -78,7 +79,7 @@
                                      Height="{Binding ElementName=MainRow,
                                                       Path=ActualHeight}"
                                      HorizontalAlignment="Left"
-                                     Fill="{StaticResource ToggleButtonTrueBackground}" />
+                                     Fill="{StaticResource BlueLine}" />
                             <Ellipse x:Name="BackgroundEllipse2"
                                      Grid.Row="0"
                                      Grid.RowSpan="2"
@@ -91,10 +92,11 @@
                                      HorizontalAlignment="Right"
                                      Fill="{StaticResource ToggleButtonFalseBackground}" />
                             <Border x:Name="BackgroundBorder"
+                                    Padding="1"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Background="{StaticResource ToggleButtonTrueBackground}" />
+                                    Background="{StaticResource BlueLine}" />
                         </Grid>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -125,13 +127,13 @@
                                          Height="{Binding ElementName=MainRow,
                                                           Path=ActualHeight}"
                                          HorizontalAlignment="Right"
-                                         Fill="{StaticResource ToggleButtonTrueForeground}" />
+                                         Fill="White" />
                             </StackPanel>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource ToggleButtonFalseBackground}" />
+                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource  ToggleButtonFalseBackground}" />
                             <Setter TargetName="ForegroundEllipse" Property="Fill" Value="{StaticResource ToggleButtonFalseForeground}" />
                             <!--<Trigger.EnterActions>
                                         <BeginStoryboard>

@@ -1,0 +1,53 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Xky.Platform.UserControl.Pages"
+             xmlns:UserControl="clr-namespace:Xky.Platform.UserControl" x:Class="Xky.Platform.UserControl.Pages.MySetting"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="{StaticResource BackgroundColor1}">
+        <GroupBox >
+
+
+
+            <GroupBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="文件">
+                        <MenuItem Header="打开"/>
+                        <MenuItem.Icon>
+                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/max_btn1.png" ></ImageBrush>
+                        </MenuItem.Icon>
+
+                    </MenuItem>
+                    <Separator>
+                    </Separator>
+                    <MenuItem Header="重启当前设备">
+                        <MenuItem.Icon>
+                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/min_btn1.png" ></ImageBrush>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="删除设备">
+                        <MenuItem.Icon>
+                            <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/close_btn1.png" ></ImageBrush>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="升级系统"/>
+                    <Separator />
+
+                </ContextMenu>
+            </GroupBox.ContextMenu>
+
+        </GroupBox>
+        <StackPanel VerticalAlignment="Center">
+            <ToggleButton Style="{StaticResource SwitchTypeToggleButton}" Height="20" Width="40"/>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
+ 
