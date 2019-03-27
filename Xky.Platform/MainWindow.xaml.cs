@@ -86,7 +86,7 @@ namespace Xky.Platform
                 CoreStatus.Fill = Client.CoreConnected
                     ? new SolidColorBrush(Colors.Lime)
                     : new SolidColorBrush(Colors.OrangeRed);
-                StatusText.Text = "速率：1024kbps 节点：3";
+                StatusText.Text = "速率：1024kbps 节点：3 设备："+Client.Devices.Count;
             });
         }
 

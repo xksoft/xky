@@ -10,7 +10,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
@@ -19,6 +19,7 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/>
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
             <StackPanel Grid.Row="1" Margin="15">
                 <local:MyTagItem />
@@ -28,98 +29,109 @@
 
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}">
+        <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}" Width="300">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
+         <Grid Grid.Row="0">
+             <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/>
+             <local:MyTextBox x:Name="LicenseKey" Margin="15" TextBoxCornerRadius="5"
+                              TextBoxBackground="{StaticResource  BackgroundColor1}"
+                              TextBoxForeground="White" TextBoxWaterText="搜索在线设备" WindowChrome.IsHitTestVisibleInChrome="True"/>
 
-            <ListBox x:Name="DeviceListBox" Grid.Row="1"       RenderOptions.BitmapScalingMode="HighQuality">
+            </Grid>
+
+            <ListBox x:Name="DeviceListBox" Grid.Row="1" HorizontalContentAlignment="Stretch">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
-                            <MenuItem Header="修改基本信息"/>
-                            <MenuItem Header="修改标签"/>
+                            <MenuItem Header="修改基本信息" />
+                            <MenuItem Header="修改标签" />
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" />
                             </MenuItem.Icon>
 
                         </MenuItem>
-                      
-                       
+
+
                         <Separator />
                         <MenuItem Header="设为调试机器" IsEnabled="False">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/setdebug.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/setdebug.png" />
                             </MenuItem.Icon>
                         </MenuItem>
-                       
+
                         <MenuItem Header="获取调试授权码">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/debugcode.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/debugcode.png" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator />
                         <MenuItem Header="升级系统">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/download.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/download.png" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator />
                         <MenuItem Header="重启当前设备">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/restart.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/restart.png" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="删除设备">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" />
                             </MenuItem.Icon>
                         </MenuItem>
-                       
+
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
 
-
                     <DataTemplate>
-                        <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="110"
-                                Margin="0">
-                            <Grid>
+                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="110"
+                             
+                              Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="MyBlueLine" Grid.ColumnSpan="3" BorderThickness="1"
+                                    BorderBrush="{StaticResource BlueLine}"
+                                    Visibility="Collapsed" />
+
+
+                            <Grid Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
+                                <Grid.Background>
+                                    <ImageBrush
+                                        ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"
+                                        RenderOptions.BitmapScalingMode="HighQuality" />
+                                </Grid.Background>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2" />
-                                    <ColumnDefinition Width="60" />
-                                    <ColumnDefinition Width="5*" />
-                                    <ColumnDefinition Width="5*" />
+                                    <ColumnDefinition Width="16*" />
+                                    <ColumnDefinition Width="432*" />
+                                    <ColumnDefinition Width="17*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Canvas x:Name="MyBlueLine" Grid.Column="0" Background="{StaticResource BlueLine}"
-                                        Visibility="Collapsed" />
-
-                                <Grid Grid.Column="1" Margin="5"      RenderOptions.BitmapScalingMode="Fant">
-                                    <Grid.Background>
-                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"/>
-                                    </Grid.Background>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="17*" />
-                                        <ColumnDefinition Width="380*" />
-                                        <ColumnDefinition Width="20*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="13*" />
-                                        <RowDefinition Height="98*" />
-                                        <RowDefinition Height="13*" />
-                                    </Grid.RowDefinitions>
-                                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Stretch="Fill" ></Image>
-                                </Grid>
-                                <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center" 
-                                           Grid.Column="2" />
-                                <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
-                                           Grid.Column="3" />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="96*" />
+                                    <RowDefinition Height="768*" />
+                                    <RowDefinition Height="87*" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Column="1" Grid.Row="1"
+                                       Source="https://static.xky.com/screenshot/202e7e68.jpg"
+                                       Stretch="Fill" />
                             </Grid>
-                        </Border>
+
+                            <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center"
+                                       Grid.Column="1" />
+                            <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
+                                       Grid.Column="2" />
+                        </Grid>
+
                         <DataTemplate.Triggers>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
@@ -158,9 +170,13 @@
                     <ControlTemplate TargetType="ListBox">
 
                         <ScrollViewer
-                            Focusable="false">
-                            <StackPanel
-                                IsItemsHost="True" />
+                            Focusable="false" HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                       
+                                <StackPanel
+                                    IsItemsHost="True"   HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Top" />
+                         
+                   
                         </ScrollViewer>
                     </ControlTemplate>
                 </ListBox.Template>
@@ -168,31 +184,32 @@
 
 
         </Grid>
-        <Grid Grid.Column="2">
-            <Border Width="432" Height="768" Background="CadetBlue">
-                <Grid MinHeight="762" MinWidth="438"    RenderOptions.BitmapScalingMode="Fant">
-                    <Grid.Background>
-                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"/>
-                    </Grid.Background>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="17*" />
-                        <ColumnDefinition Width="380*" />
-                        <ColumnDefinition Width="20*" />
-                    </Grid.ColumnDefinitions>
+        <Grid Grid.Column="2" Background="#eff4f8">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="13*" />
-                        <RowDefinition Height="98*" />
-                        <RowDefinition Height="13*" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg" Stretch="Fill" ></Image>
-                </Grid>
-            </Border>
+            <Grid RenderOptions.BitmapScalingMode="Fant" MaxHeight="984" MaxWidth="505" Margin="20">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="16*" />
+                    <ColumnDefinition Width="432*" />
+                    <ColumnDefinition Width="17*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96*" />
+                    <RowDefinition Height="768*" />
+                    <RowDefinition Height="87*" />
+                </Grid.RowDefinitions>
+                <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg"
+                       Stretch="Fill" />
+            </Grid>
+
         </Grid>
-        <Grid Grid.Column="3">
+        <Grid Grid.Column="3" Background="#fbfcfc">
 
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">脚本面板</TextBlock>
-            <Button Click="ButtonBase_OnClick">reload</Button>
+
         </Grid>
     </Grid>
 </UserControl>
