@@ -110,27 +110,32 @@
                                     Visibility="Collapsed" />
 
 
-                            <Grid Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
-                                <Grid.Background>
-                                    <ImageBrush
-                                        ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png"
-                                        RenderOptions.BitmapScalingMode="HighQuality" />
-                                </Grid.Background>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="16*" />
-                                    <ColumnDefinition Width="432*" />
-                                    <ColumnDefinition Width="17*" />
-                                </Grid.ColumnDefinitions>
+                            <Viewbox  Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"
+                                      Height="940" Width="470">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="432*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="96*" />
-                                    <RowDefinition Height="768*" />
-                                    <RowDefinition Height="87*" />
-                                </Grid.RowDefinitions>
-                                <Image Grid.Column="1" Grid.Row="1"
-                                       Source="https://static.xky.com/screenshot/202e7e68.jpg"
-                                       Stretch="Fill" />
-                            </Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50*" />
+                                        <RowDefinition Height="768*" />
+                                        <RowDefinition Height="50*" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="1" Grid.Row="1" RenderOptions.BitmapScalingMode="Fant"
+                                           Source="{Binding Path=ScreenShot}"
+                                           Stretch="Fill" MaxWidth="432" MaxHeight="768" />
+                                </Grid>
+
+                            </Viewbox>
+
+
+                   
 
                             <StackPanel Grid.Column="1" Margin="0,10,10,10">
                                 <Border x:Name="DeviceNameBorader" CornerRadius="5"
@@ -218,28 +223,29 @@
                                       Opacity="1" />
                 </Border.Effect>
             </Border>
-            <Viewbox MaxHeight="984" MaxWidth="505">
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center"  RenderOptions.BitmapScalingMode="Fant" Height="984" Width="505" Margin="20">
+            <Viewbox MaxHeight="940" MaxWidth="490" Margin="20">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"
+                      Height="940" Width="470">
                     <Grid.Background>
                         <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
                     </Grid.Background>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="16*" />
+                        <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="432*" />
-                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="96*" />
+                        <RowDefinition Height="50*" />
                         <RowDefinition Height="768*" />
-                        <RowDefinition Height="87*" />
+                        <RowDefinition Height="50*" />
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg"
-                           Stretch="Fill" />
+                    <Image Grid.Column="1" Grid.Row="1" RenderOptions.BitmapScalingMode="Fant"
+                           Source="/Xky.Platform;component/Resources/Icon/Device/testbg.png"
+                           Stretch="Fill" MaxWidth="432" MaxHeight="768" />
                 </Grid>
-            </Viewbox>
-     
 
+            </Viewbox>
 
         </Grid>
         <Grid Grid.Column="3" Background="#fbfcfc">
