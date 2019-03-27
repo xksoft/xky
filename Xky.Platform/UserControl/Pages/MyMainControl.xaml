@@ -19,7 +19,13 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/>
+            <Border Grid.RowSpan="2" BorderThickness="0,0,1,0" BorderBrush="Black">
+                <Border.Effect>
+                    <DropShadowEffect Color="#CC000000" Direction="180" BlurRadius="6" ShadowDepth="1"
+                                      Opacity="1" />
+                </Border.Effect>
+            </Border>
+
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
             <StackPanel Grid.Row="1" Margin="15">
                 <local:MyTagItem />
@@ -34,11 +40,12 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-         <Grid Grid.Row="0">
-             <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/>
-             <local:MyTextBox x:Name="LicenseKey" Margin="15" TextBoxCornerRadius="5"
-                              TextBoxBackground="{StaticResource  BackgroundColor1}"
-                              TextBoxForeground="White" TextBoxWaterText="搜索在线设备" WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <Grid Grid.Row="0">
+                <!-- <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/> -->
+                <local:MyTextBox x:Name="LicenseKey" Margin="15" TextBoxCornerRadius="5"
+                                 TextBoxBackground="{StaticResource  BackgroundColor1}"
+                                 TextBoxForeground="White" TextBoxWaterText="搜索在线设备"
+                                 WindowChrome.IsHitTestVisibleInChrome="True" />
 
             </Grid>
 
@@ -91,15 +98,14 @@
 
                     <DataTemplate>
                         <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="110"
-                             
+
                               Margin="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="5*" />
-                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Border x:Name="MyBlueLine" Grid.ColumnSpan="3" BorderThickness="1"
+                            <Border x:Name="MyBlueLine" Grid.ColumnSpan="3" BorderThickness="2,1,2,1"
                                     BorderBrush="{StaticResource BlueLine}"
                                     Visibility="Collapsed" />
 
@@ -126,10 +132,19 @@
                                        Stretch="Fill" />
                             </Grid>
 
-                            <TextBlock Text="{Binding Path=Sn}" FontSize="16" HorizontalAlignment="Center"
-                                       Grid.Column="1" />
-                            <TextBlock Text="{Binding Path=Name}" FontSize="16" HorizontalAlignment="Center"
-                                       Grid.Column="2" />
+                            <StackPanel Grid.Column="1" Margin="0,10,10,10">
+                                <Border x:Name="DeviceNameBorader" CornerRadius="5"
+                                        Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
+                                        Margin="0,3,0,0">
+                                    <Label x:Name="DeviceNameLabel"
+                                           Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                                           Content="{Binding Path=Name}" />
+                                </Border>
+
+                            </StackPanel>
+
+
                         </Grid>
 
                         <DataTemplate.Triggers>
@@ -139,12 +154,22 @@
                                 <Setter TargetName="MyBlueLine" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
+                                <Setter TargetName="DeviceNameBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceNameLabel" Property="Foreground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
+                                <Setter TargetName="DeviceNameBorader" Property="Background"
+                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
+                                <Setter TargetName="DeviceNameLabel" Property="Foreground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
                             </DataTrigger>
                         </DataTemplate.Triggers>
 
@@ -172,11 +197,12 @@
                         <ScrollViewer
                             Focusable="false" HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
-                       
-                                <StackPanel
-                                    IsItemsHost="True"   HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Top" />
-                         
-                   
+
+                            <StackPanel
+                                IsItemsHost="True" HorizontalAlignment="Stretch" Orientation="Vertical"
+                                VerticalAlignment="Top" />
+
+
                         </ScrollViewer>
                     </ControlTemplate>
                 </ListBox.Template>
@@ -184,8 +210,13 @@
 
 
         </Grid>
-        <Grid Grid.Column="2" Background="#eff4f8">
-
+        <Grid Grid.Column="2" Background="{StaticResource  BackgroundColor4}">
+            <Border Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="Black">
+                <Border.Effect>
+                    <DropShadowEffect Color="#CC000000" Direction="360" BlurRadius="4" ShadowDepth="1"
+                                      Opacity="1" />
+                </Border.Effect>
+            </Border>
             <Grid RenderOptions.BitmapScalingMode="Fant" MaxHeight="984" MaxWidth="505" Margin="20">
                 <Grid.Background>
                     <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />

@@ -13,4 +13,8 @@
 
     <SolidColorBrush x:Key="DescriptionColor">#868b8e</SolidColorBrush>
 
+    <SolidColorBrush x:Key="White">White</SolidColorBrush>
+
+    <SolidColorBrush x:Key="Black">Black</SolidColorBrush>
+
 </ResourceDictionary>
