@@ -39,29 +39,45 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
-                           
+                            <MenuItem Header="修改基本信息"/>
+                            <MenuItem Header="修改标签"/>
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/max_btn1.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" ></ImageBrush>
                             </MenuItem.Icon>
 
                         </MenuItem>
-                        <Separator>
-                        </Separator>
+                      
+                       
+                        <Separator />
+                        <MenuItem Header="设为调试机器">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/setdebug.png" ></ImageBrush>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                       
+                        <MenuItem Header="获取调试授权码">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/debugcode.png" ></ImageBrush>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="升级系统">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/download.png" ></ImageBrush>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
                         <MenuItem Header="重启当前设备">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/min_btn1.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/restart.png" ></ImageBrush>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <Separator />
                         <MenuItem Header="删除设备">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/close_btn1.png" ></ImageBrush>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" ></ImageBrush>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <Separator />
-                        <MenuItem Header="升级系统"/>
-                        <Separator />
-
+                       
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>

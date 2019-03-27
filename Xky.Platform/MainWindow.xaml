@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:platform="clr-namespace:Xky.Platform"
         mc:Ignorable="d"
-
         AllowsTransparency="True"
         RenderOptions.BitmapScalingMode="LowQuality"
         UseLayoutRounding="True"

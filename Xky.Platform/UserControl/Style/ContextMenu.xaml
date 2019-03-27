@@ -4,13 +4,13 @@
 
     <Style TargetType="{x:Type ContextMenu}">
         
-        <Setter Property="Foreground" Value="#E0F0F0F0" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Border BorderBrush="#FF444444" 
                                 BorderThickness ="1,1,1,1" 
-                                Background="#FF1B1B1C" 
+                                Background="{StaticResource BackgroundColor2}" 
                                 Opacity="1">
                         <ItemsPresenter Margin="2,2" />
                     </Border>
@@ -35,11 +35,17 @@
     </Style>
 
     <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="FontFamily">
+            <Setter.Value>
+                <FontFamily>SimSun</FontFamily>
+            </Setter.Value>
+
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
                     <Border x:Name="ChildItem" MinWidth="120">
-                        <Grid Height="22">
+                        <Grid Height="24">
                             <Grid.ColumnDefinitions>
                                 <!--图标部分-->
                                 <ColumnDefinition Width="24"/>
@@ -72,7 +78,9 @@
                                                   Margin="8,0,20,0"
                                                   HorizontalAlignment="Left"
                                                   ContentSource="Header" 
-                                                  Grid.Column="1" />
+                                                  Grid.Column="1" 
+                                              
+                                              />
                             <!--子菜单-->
                             <Popup 
                                        IsOpen="{TemplateBinding IsSubmenuOpen}"
@@ -90,13 +98,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="#FF007ACC"/>
+                            <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource BlueLine}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="ChildItem" Property="Background" Value="#FF444444"/>
+                            <Setter TargetName="ChildItem" Property="Background" Value="{StaticResource BackgroundColor1}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="ChildItem" Property="Background" Value="#FF1B1B1C"/>
+                            <Setter TargetName="ChildItem" Property="Background" Value="{StaticResource BackgroundColor2}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter TargetName="ChildItem" Property="Background" Value="#FF555555"/>
@@ -104,6 +112,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="ChildItem" Property="TextBlock.Foreground" Value="#70FFFFFF"/>
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -256,5 +256,23 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\Device\device_android1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\debugcode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\setdebug.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
