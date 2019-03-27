@@ -84,8 +84,8 @@ namespace Xky.Platform
             Common.UiAction(() =>
             {
                 CoreStatus.Fill = Client.CoreConnected
-                    ? new SolidColorBrush(Colors.Lime)
-                    : new SolidColorBrush(Colors.OrangeRed);
+                    ? (SolidColorBrush)FindResource("OnLine")
+                    : (SolidColorBrush)FindResource("OffLine");
                 StatusText.Text = "速率：1024kbps 节点：3 设备："+Client.Devices.Count;
             });
         }

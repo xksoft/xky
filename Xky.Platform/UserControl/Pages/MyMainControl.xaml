@@ -210,6 +210,7 @@
 
 
         </Grid>
+
         <Grid Grid.Column="2" Background="{StaticResource  BackgroundColor4}">
             <Border Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="Black">
                 <Border.Effect>
@@ -217,24 +218,28 @@
                                       Opacity="1" />
                 </Border.Effect>
             </Border>
-            <Grid RenderOptions.BitmapScalingMode="Fant" MaxHeight="984" MaxWidth="505" Margin="20">
-                <Grid.Background>
-                    <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
-                </Grid.Background>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="16*" />
-                    <ColumnDefinition Width="432*" />
-                    <ColumnDefinition Width="17*" />
-                </Grid.ColumnDefinitions>
+            <Viewbox MaxHeight="984" MaxWidth="505">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center"  RenderOptions.BitmapScalingMode="Fant" Height="984" Width="505" Margin="20">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
+                    </Grid.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16*" />
+                        <ColumnDefinition Width="432*" />
+                        <ColumnDefinition Width="17*" />
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="96*" />
-                    <RowDefinition Height="768*" />
-                    <RowDefinition Height="87*" />
-                </Grid.RowDefinitions>
-                <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg"
-                       Stretch="Fill" />
-            </Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="96*" />
+                        <RowDefinition Height="768*" />
+                        <RowDefinition Height="87*" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="1" Grid.Row="1" Source="https://static.xky.com/screenshot/202e7e68.jpg"
+                           Stretch="Fill" />
+                </Grid>
+            </Viewbox>
+     
+
 
         </Grid>
         <Grid Grid.Column="3" Background="#fbfcfc">

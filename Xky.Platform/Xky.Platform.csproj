@@ -69,9 +69,6 @@
     <Compile Include="UserControl\MyButton.xaml.cs">
       <DependentUpon>MyButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MyDeviceItem.xaml.cs">
-      <DependentUpon>MyDeviceItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\MyTagItem.xaml.cs">
       <DependentUpon>MyTagItem.xaml</DependentUpon>
     </Compile>
@@ -108,10 +105,6 @@
     <Page Include="UserControl\MyButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyDeviceItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\MyTagItem.xaml">
       <SubType>Designer</SubType>
