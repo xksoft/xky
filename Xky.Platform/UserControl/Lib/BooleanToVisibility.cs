@@ -8,9 +8,9 @@ using System.Windows.Data;
 
 namespace Xky.Platform.UserControl
 {
-    class MyContextMenu : System.Windows.Markup.MarkupExtension, IValueConverter
+    class BooleanToVisibility : System.Windows.Markup.MarkupExtension, IValueConverter
     {
-        public MyContextMenu()
+        public BooleanToVisibility()
         {
 
         }

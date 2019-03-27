@@ -3,8 +3,8 @@
                     xmlns:convert="clr-namespace:Xky.Platform.UserControl">
 
     <Style TargetType="{x:Type ContextMenu}">
+        
         <Setter Property="Foreground" Value="#E0F0F0F0" />
-        <Setter Property="FontFamily" Value="微软雅黑" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
@@ -55,7 +55,7 @@
                                       Stroke="Black" 
                                       StrokeThickness="0"
                                       Fill="#E0F0F0F0"
-                                      Visibility="{TemplateBinding IsChecked, Converter={convert:MyContextMenu}}"
+                                      Visibility="{TemplateBinding IsChecked, Converter={convert:BooleanToVisibility}}"
                                       Data="M14,4 L6,12 5,12 1,8 3,6 5,8 6,8 12,2 z"
                                       Grid.Column="0"/>
                             <Path x:Name="Arrow"
@@ -65,7 +65,7 @@
                                       Stroke="Black" 
                                       StrokeThickness="0"
                                       Fill="#E0F0F0F0"
-                                      Visibility="{TemplateBinding HasItems, Converter={convert:MyContextMenu}}"
+                                      Visibility="{TemplateBinding HasItems, Converter={convert:BooleanToVisibility}}"
                                       Grid.Column="1" Data="M0,0 L0,6 L6,3 z"/>
                             <!--文字部分-->
                             <ContentPresenter VerticalAlignment="Center" 

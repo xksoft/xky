@@ -36,7 +36,34 @@
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">列表</TextBlock>
 
             <ListBox x:Name="DeviceListBox" Grid.Row="1"       RenderOptions.BitmapScalingMode="HighQuality">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="编辑">
+                           
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/max_btn1.png" ></ImageBrush>
+                            </MenuItem.Icon>
 
+                        </MenuItem>
+                        <Separator>
+                        </Separator>
+                        <MenuItem Header="重启当前设备">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/min_btn1.png" ></ImageBrush>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="删除设备">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/close_btn1.png" ></ImageBrush>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="升级系统"/>
+                        <Separator />
+
+                    </ContextMenu>
+                </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
 
 
