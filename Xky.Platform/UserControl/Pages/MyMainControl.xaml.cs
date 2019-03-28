@@ -22,6 +22,15 @@ namespace Xky.Platform.UserControl.Pages
             Common.MyMainControl = this;
         }
 
+        /// <summary>
+        /// 最后打开的设备
+        /// </summary>
+        private Device _lastDevice;
+
+        /// <summary>
+        /// 屏幕源变更事件订阅
+        /// </summary>
+        /// <param name="source"></param>
         private void MyMirrorScreen_OnChangeSource(ImageSource source)
         {
             if (DeviceListBox.SelectedItem is Device device)
@@ -37,6 +46,10 @@ namespace Xky.Platform.UserControl.Pages
             }
         }
 
+
+        /// <summary>
+        /// 加载设备列表
+        /// </summary>
         public void LoadDevices()
         {
             Task.Factory.StartNew(async () =>
@@ -59,12 +72,11 @@ namespace Xky.Platform.UserControl.Pages
         }
 
 
-        private Device _lastDevice;
-
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
+                //连接屏幕
                 MyMirrorScreen.Connect(device);
             }
         }
