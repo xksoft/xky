@@ -262,6 +262,8 @@ namespace Xky.Core
                 device.Node = json["t_node"]?.ToString();
                 device.Product = json["t_product"]?.ToString();
                 device.Sn = json["t_sn"]?.ToString();
+                device.Cpus = (int) json["t_cpus"];
+                device.Memory = (int) json["t_memory"];
                 device.LoadTick = loadtick;
             }
             else
@@ -279,6 +281,8 @@ namespace Xky.Core
                     Node = json["t_node"]?.ToString(),
                     Product = json["t_product"]?.ToString(),
                     Sn = json["t_sn"]?.ToString(),
+                    Cpus = (int) json["t_cpus"],
+                    Memory = (int) json["t_memory"],
                     LoadTick = loadtick
                 };
                 //用UI线程委托添加，防止报错

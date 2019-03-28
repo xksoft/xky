@@ -20,6 +20,8 @@ namespace Xky.Core.Model
         private string _gpsLat;
         private string _gpsLng;
         private ImageSource _screenShot;
+        private int _cpus;
+        private int _memory;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -196,6 +198,38 @@ namespace Xky.Core.Model
                 {
                     _gpsLng = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("GpsLng"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Cpu个数
+        /// </summary>
+        public int Cpus
+        {
+            get => _cpus;
+            set
+            {
+                if (_cpus != value)
+                {
+                    _cpus = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Cpus"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内存数量
+        /// </summary>
+        public int Memory
+        {
+            get => _memory;
+            set
+            {
+                if (_memory != value)
+                {
+                    _memory = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Memory"));
                 }
             }
         }
