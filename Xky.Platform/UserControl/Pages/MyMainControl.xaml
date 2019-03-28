@@ -278,6 +278,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <WrapPanel     Grid.Row="0" Margin="10,50,10,10"  Orientation="Horizontal">
+                    <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="全部模块" Height="20" />
                     <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
                     <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="知乎相关" Height="20" />
                     <local:MyButton MinWidth="10" Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
