@@ -35,7 +35,6 @@ namespace Xky.Core
             FpsTimer.Enabled = true;
             FpsTimer.Interval = 1000;
             FpsTimer.Elapsed += FpsTimer_Elapsed;
-            _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
         }
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -102,7 +101,7 @@ namespace Xky.Core
 
         #region 屏幕连接
 
-        private readonly H264Decoder _decoder = new H264Decoder();
+        private H264Decoder _decoder;
 
         private Socket _socket;
 
@@ -110,6 +109,12 @@ namespace Xky.Core
 
         public async void Connect(Device model)
         {
+            if (_decoder == null)
+            {
+                _decoder = new H264Decoder();
+                _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
+            }
+
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
             _device = await Client.GetDevice(model.Sn);
             if (_device == null) throw new Exception("无法获取这个设备的信息");
