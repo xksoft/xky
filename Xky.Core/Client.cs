@@ -245,7 +245,7 @@ namespace Xky.Core
         /// </summary>
         /// <param name="json"></param>
         /// <param name="loadtick"></param>
-        private static void PushDevice(JToken json, long loadtick)
+        private static Device PushDevice(JToken json, long loadtick)
         {
             var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
             //如果已经存在就更新
@@ -254,6 +254,7 @@ namespace Xky.Core
                 device.ConnectionHash = json["t_connection_hash"]?.ToString();
                 device.Description = json["t_desc"]?.ToString();
                 device.Forward = json["t_forward"]?.ToString();
+                device.NodeUrl = json["t_nodeurl"]?.ToString();
                 device.GpsLat = json["t_gps_lat"]?.ToString();
                 device.GpsLng = json["t_gps_lng"]?.ToString();
                 device.Id = (int) json["t_id"];
@@ -273,6 +274,7 @@ namespace Xky.Core
                     ConnectionHash = json["t_connection_hash"]?.ToString(),
                     Description = json["t_desc"]?.ToString(),
                     Forward = json["t_forward"]?.ToString(),
+                    NodeUrl = json["t_nodeurl"]?.ToString(),
                     GpsLat = json["t_gps_lat"]?.ToString(),
                     GpsLng = json["t_gps_lng"]?.ToString(),
                     Id = (int) json["t_id"],
@@ -295,6 +297,8 @@ namespace Xky.Core
                     Devices.Add(device);
                 });
             }
+
+            return device;
         }
 
         /// <summary>
@@ -309,6 +313,14 @@ namespace Xky.Core
                 //用UI线程委托删除，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
             }
+        }
+
+
+        public static async Task<Device> GetDevice(string sn)
+        {
+            var response = await Post("get_device",
+                new JObject {["sn"] = sn, ["session"] = License.Session});
+            return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
         }
 
         /// <summary>

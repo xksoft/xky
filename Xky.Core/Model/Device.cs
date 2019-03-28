@@ -22,6 +22,7 @@ namespace Xky.Core.Model
         private ImageSource _screenShot;
         private int _cpus;
         private int _memory;
+        private string _nodeUrl;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -86,6 +87,22 @@ namespace Xky.Core.Model
                 {
                     _forward = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Forward"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 节点地址
+        /// </summary>
+        public string NodeUrl
+        {
+            get => _nodeUrl;
+            set
+            {
+                if (_nodeUrl != value)
+                {
+                    _nodeUrl = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NodeUrl"));
                 }
             }
         }
@@ -201,6 +218,7 @@ namespace Xky.Core.Model
                 }
             }
         }
+
 
         /// <summary>
         /// Cpu个数

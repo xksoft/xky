@@ -2,9 +2,11 @@
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using Xky.Core;
+using Xky.Core.Model;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -41,17 +43,12 @@ namespace Xky.Platform.UserControl.Pages
         }
 
 
-    }
-    public class DeviceScreenShot : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            return value + "" + parameter;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                MyMirrorScreen.Connect(device);
+            }
         }
     }
 }

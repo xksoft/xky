@@ -85,7 +85,6 @@
     <Compile Include="Controls\Loading\LoadingIndicator.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />
-    <Compile Include="MirrorClient.cs" />
     <Compile Include="MirrorScreen.xaml.cs">
       <DependentUpon>MirrorScreen.xaml</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -10,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
+using Quobject.SocketIoClientDotNet.Client;
+using Xky.Core.Model;
 
 namespace Xky.Core
 {
@@ -20,7 +23,7 @@ namespace Xky.Core
     {
         private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
         internal readonly Timer FpsTimer = new Timer();
-        private MirrorClient _client;
+
 
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
@@ -32,31 +35,30 @@ namespace Xky.Core
             FpsTimer.Enabled = true;
             FpsTimer.Interval = 1000;
             FpsTimer.Elapsed += FpsTimer_Elapsed;
+            _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
         }
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var second = DateTime.Now.Second;
-            if (_fpsDictionary.ContainsKey(second - 1))
+            try
             {
-                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[second - 1]; });
-                _fpsDictionary.Remove(second - 1);
+                var second = DateTime.Now.Second;
+                if (_fpsDictionary.ContainsKey(second - 1))
+                {
+                    Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[second - 1]; });
+                    _fpsDictionary.Remove(second - 1);
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + 0; });
+                }
             }
-            else
+            catch (Exception exception)
             {
-                Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + 0; });
+                Console.WriteLine(exception);
             }
         }
 
-        public void SetClient(MirrorClient client)
-        {
-            if (_client != null) _client.Decoder.OnDecodeBitmapSource -= Decoder_OnDecodeBitmapSource;
-
-            client.MirrorScreen = this;
-            _isShow = false;
-            _client = client;
-            _client.Decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
-        }
 
         private void Decoder_OnDecodeBitmapSource(object sender, int width, int height, int stride, IntPtr intprt)
         {
@@ -96,6 +98,57 @@ namespace Xky.Core
                 Console.WriteLine(e);
             }
         }
+
+
+        #region 屏幕连接
+
+        private readonly H264Decoder _decoder = new H264Decoder();
+
+        private Socket _socket;
+
+        private Device _device;
+
+        public async void Connect(Device model)
+        {
+            AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
+            _device = await Client.GetDevice(model.Sn);
+            if (_device == null) throw new Exception("无法获取这个设备的信息");
+
+            if (_device.NodeUrl == null) throw new Exception("该设备没有设置P2P转发模式");
+
+            _socket?.Disconnect();
+            _decoder.Firstpacket = true;
+            var options = new IO.Options
+            {
+                IgnoreServerCertificateValidation = true,
+                AutoConnect = true,
+                ForceNew = true,
+                Query = new Dictionary<string, string>
+                {
+                    {"sn", _device.Sn},
+                    {"action", "mirror"},
+                    {"v2", "true"},
+                    {"hash", _device.ConnectionHash}
+                },
+                Path = "/xky",
+                Transports = ImmutableList.Create("websocket")
+            };
+            AddLabel("正在连接..", Colors.White);
+            _socket = IO.Socket(_device.NodeUrl, options);
+            _socket.On(Socket.EVENT_CONNECT, () => { Console.WriteLine("Connected"); });
+            _socket.On(Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
+            _socket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
+            _socket.On("event", json => { Console.WriteLine(json); });
+            _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
+        }
+
+
+        public void EmitEvent(JObject jObject)
+        {
+            _socket?.Emit("event", jObject);
+        }
+
+        #endregion
 
         #region 属性
 
@@ -163,7 +216,7 @@ namespace Xky.Core
                     Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
                 }
 
-                _client?.EmitEvent(
+                EmitEvent(
                     new JObject
                     {
                         {"type", "device_button"},
@@ -185,7 +238,7 @@ namespace Xky.Core
                 };
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     json.Add("zoom", true);
-                _client?.EmitEvent(json);
+                EmitEvent(json);
                 MyInput.Focus();
             }
 
@@ -210,7 +263,7 @@ namespace Xky.Core
                 };
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     json.Add("zoom", true);
-                _client?.EmitEvent(json);
+                EmitEvent(json);
                 if (IsShowArrow)
                 {
                     Tap.SetValue(Window.TopProperty, postion.Y - 15);
@@ -230,7 +283,7 @@ namespace Xky.Core
             };
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
-            _client?.EmitEvent(json);
+            EmitEvent(json);
             if (IsShowArrow)
             {
                 Tap.Visibility = Visibility.Collapsed;
@@ -249,7 +302,7 @@ namespace Xky.Core
             };
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
-            _client?.EmitEvent(json);
+            EmitEvent(json);
         }
 
         private void MyInput_LostFocus(object sender, RoutedEventArgs e)
@@ -264,7 +317,7 @@ namespace Xky.Core
 
         private void MyInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            _client.EmitEvent(new JObject
+            EmitEvent(new JObject
             {
                 {"text", e.Text},
                 {"type", "input"}
@@ -277,7 +330,7 @@ namespace Xky.Core
             {
                 case Key.Back:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 67},
                         {"name", "code"},
@@ -287,7 +340,7 @@ namespace Xky.Core
                 }
                 case Key.Return:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 66},
                         {"name", "code"},
@@ -297,7 +350,7 @@ namespace Xky.Core
                 }
                 case Key.Space:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 62},
                         {"name", "code"},
@@ -307,7 +360,7 @@ namespace Xky.Core
                 }
                 case Key.Up:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 19},
                         {"name", "code"},
@@ -317,7 +370,7 @@ namespace Xky.Core
                 }
                 case Key.Down:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 20},
                         {"name", "code"},
@@ -327,7 +380,7 @@ namespace Xky.Core
                 }
                 case Key.Left:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 21},
                         {"name", "code"},
@@ -337,7 +390,7 @@ namespace Xky.Core
                 }
                 case Key.Right:
                 {
-                    _client.EmitEvent(new JObject
+                    EmitEvent(new JObject
                     {
                         {"key", 22},
                         {"name", "code"},
@@ -350,7 +403,7 @@ namespace Xky.Core
             if (e.Key != Key.V || (Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.Control) return;
             var text = Clipboard.GetText();
             if (!string.IsNullOrEmpty(text))
-                _client.EmitEvent(new JObject
+                EmitEvent(new JObject
                 {
                     {"text", text},
                     {"type", "input"}
