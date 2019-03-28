@@ -9,9 +9,51 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="{StaticResource BackgroundColor4}">
+            <StackPanel>
+                <Label Foreground="#fff" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0">任务中心</Label>
+                <StackPanel Grid.Row="1" Margin="15">
+                    <UserControl:MyTagItem />
+                    <UserControl:MyTagItem />
+                    <UserControl:MyTagItem />
+                    <UserControl:MyTagItem />
 
-
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Margin="20,0,0,0" Grid.Row="0">
+                    <Label FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,25,0,0">全部任务</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <UserControl:MyButton x:Name="BtnLogin" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="添加任务" Width="102" Height="32" />
+                    </StackPanel>
+                   
+                </StackPanel>
+                <DataGrid Grid.Row="1" x:Name="datagrid_task" GridLinesVisibility="None">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID"
+									Binding="{Binding Path=ID}"/>
+                        <DataGridTextColumn Header="仪器编号"
+									Binding="{Binding Path=仪器编号}"
+									Foreground="Black"/>
+                        <DataGridTextColumn Header="管道类型"
+									Binding="{Binding Path=管道类型}"
+									Foreground="Black" />
+                    </DataGrid.Columns>
+                    
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
+
 </UserControl>
  

@@ -19,6 +19,7 @@
                         <ResourceDictionary Source="UserControl/Style/Animation.xaml" />
                         <ResourceDictionary Source="UserControl/Style/ToggleButton.xaml" />
                         <ResourceDictionary Source="UserControl/Style/ComboBox.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/DataGrid.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
