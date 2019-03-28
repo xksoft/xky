@@ -75,13 +75,13 @@
 
             <Separator Margin="20,20,20,10" Background="{StaticResource BackgroundColor1}"/>
             <Label FontSize="20" Foreground="White" Margin="20,0,0,0">显示</Label>
-            <Grid Height="55">
+            <Grid Height="60">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24"></RowDefinition>
                     <RowDefinition Height="36"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Margin="20,0,0,0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">画面解析模式</Label>
-                <ComboBox Height="25" Margin="25,0,0,0"  Grid.Row="1" Width="100"  HorizontalAlignment="Left">
+                <ComboBox Height="30" Margin="25,0,0,0"  Grid.Row="1" Width="100"  HorizontalAlignment="Left">
                     <ComboBoxItem>流畅</ComboBoxItem>
                     <ComboBoxItem IsSelected="True">一般</ComboBoxItem>
                     <ComboBoxItem>高清</ComboBoxItem>

@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Xky.Platform.UserControl
 {
-    public class HoverColorConverter : IValueConverter
+    public class HoverColorConverter : System.Windows.Markup.MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -27,6 +27,10 @@ namespace Xky.Platform.UserControl
             color = Color.FromRgb((byte) (color.R - num), (byte) (color.G - num), (byte) (color.B - num));
 
             return new SolidColorBrush(color);
+        }
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
         }
     }
 }

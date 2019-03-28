@@ -64,8 +64,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common.cs" />
-    <Compile Include="UserControl\HoverColorConverter.cs" />
     <Compile Include="UserControl\Lib\BooleanToVisibility.cs" />
+    <Compile Include="UserControl\Lib\HoverColorConverter.cs" />
     <Compile Include="UserControl\MyButton.xaml.cs">
       <DependentUpon>MyButton.xaml</DependentUpon>
     </Compile>
