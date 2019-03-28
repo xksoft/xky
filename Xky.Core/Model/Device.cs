@@ -20,6 +20,9 @@ namespace Xky.Core.Model
         private string _gpsLat;
         private string _gpsLng;
         private ImageSource _screenShot;
+        private int _cpus;
+        private int _memory;
+        private string _nodeUrl;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -84,6 +87,22 @@ namespace Xky.Core.Model
                 {
                     _forward = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Forward"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 节点地址
+        /// </summary>
+        public string NodeUrl
+        {
+            get => _nodeUrl;
+            set
+            {
+                if (_nodeUrl != value)
+                {
+                    _nodeUrl = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NodeUrl"));
                 }
             }
         }
@@ -202,6 +221,39 @@ namespace Xky.Core.Model
 
 
         /// <summary>
+        /// Cpu个数
+        /// </summary>
+        public int Cpus
+        {
+            get => _cpus;
+            set
+            {
+                if (_cpus != value)
+                {
+                    _cpus = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Cpus"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 内存数量
+        /// </summary>
+        public int Memory
+        {
+            get => _memory;
+            set
+            {
+                if (_memory != value)
+                {
+                    _memory = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Memory"));
+                }
+            }
+        }
+
+
+        /// <summary>
         /// 画面截图
         /// </summary>
         public ImageSource ScreenShot
@@ -210,7 +262,7 @@ namespace Xky.Core.Model
             set
             {
                 _screenShot = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("_screenShot"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScreenShot"));
             }
         }
 

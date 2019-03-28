@@ -34,7 +34,7 @@ namespace Xky.Platform.UserControl
 
         public static readonly DependencyProperty TabLabelForegroundProperty =
             DependencyProperty.Register("TabLabelForeground", typeof(Brush), typeof(MyTagLabel),
-                new PropertyMetadata(new SolidColorBrush(Colors.Lime), new PropertyChangedCallback(OnColorChanged)));
+                new PropertyMetadata(new SolidColorBrush(Colors.Lime), OnColorChanged));
 
         private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
