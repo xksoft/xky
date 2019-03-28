@@ -10,7 +10,7 @@
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Display"
 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#FF118BF0">
+             d:DesignHeight="450" d:DesignWidth="800" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

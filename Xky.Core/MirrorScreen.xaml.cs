@@ -74,8 +74,9 @@ namespace Xky.Core
                             _fpsDictionary.Add(second, 0);
                     }
 
-                    if (ScreenImage.Source == null)
+                    if (ScreenImage.Source == null || _newConnect)
                     {
+                        _newConnect = false;
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                         ScreenImage.Source = _writeableBitmap;
                         OnChangeSource?.Invoke(ScreenImage.Source);
@@ -112,12 +113,11 @@ namespace Xky.Core
 
         private Device _device;
 
+        private bool _newConnect;
+
         public async void Connect(Device model)
         {
-            if (ScreenImage.Source != null)
-            {
-                ScreenImage.Source = null;
-            }
+            _newConnect = true;
 
             if (_decoder == null)
             {
@@ -156,7 +156,6 @@ namespace Xky.Core
             _socket.On("event", json => { Console.WriteLine(json); });
             _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
         }
-
 
         public void EmitEvent(JObject jObject)
         {
