@@ -5,19 +5,9 @@
            TargetType="{x:Type ToggleButton}">
 
         <Style.Resources>
-            <Color x:Key="Color.Additional.LightGrey">#989EA8</Color>
-            <Color x:Key="Color.Additional.MediumGrey">#61656B</Color>
-            <Color x:Key="Color.MedtronicBranding.MedtronicBlue">#004B87</Color>
-            <Color x:Key="Color.MedtronicBranding.CobaltBlue">#0085CA</Color>
+            
 
-            <SolidColorBrush x:Key="ToggleButtonFalseBackground"
-                             Color="{StaticResource Color.Additional.LightGrey}" />
-            <SolidColorBrush x:Key="ToggleButtonTrueBackground"
-                             Color="{StaticResource Color.MedtronicBranding.CobaltBlue}" />
-            <SolidColorBrush x:Key="ToggleButtonFalseForeground"
-                             Color="{StaticResource Color.Additional.MediumGrey}" />
-            <SolidColorBrush x:Key="ToggleButtonTrueForeground"
-                             Color="{StaticResource Color.MedtronicBranding.MedtronicBlue}" />
+           
             <Style x:Key="OnContentControl"
                    TargetType="ContentControl">
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -72,7 +62,7 @@
                                      Height="{Binding ElementName=MainRow,
                                                       Path=ActualHeight}"
                                      HorizontalAlignment="Right"
-                                     Fill="{StaticResource ToggleButtonFalseBackground}" />
+                                     Fill="{StaticResource BackgroundColor1}" />
                             <Border x:Name="BackgroundBorder"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
@@ -113,10 +103,16 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BackgroundBorder" Property="Background" Value="red" />
+                            <Setter TargetName="ForegroundEllipse" Property="Fill" Value="red" />
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="red" />
+                            <Setter TargetName="BackgroundEllipse2" Property="Fill" Value="red" />
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource  ToggleButtonFalseBackground}" />
-                            <Setter TargetName="ForegroundEllipse" Property="Fill" Value="{StaticResource ToggleButtonFalseForeground}" />
-                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{StaticResource ToggleButtonFalseBackground}" />
+                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1}}" />
+                            <Setter TargetName="ForegroundEllipse" Property="Fill" Value="#999" />
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1}}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
