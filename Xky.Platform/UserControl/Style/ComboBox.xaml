@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Xky.Platform.UserControl">
+                    xmlns:local="clr-namespace:Xky.Platform.UserControl"
+                    xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib">
    
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
         
@@ -37,10 +38,10 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ local:HoverColorConverter},ConverterParameter=+10}" />
+                <Setter TargetName="Border" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ local:HoverColorConverter},ConverterParameter=+10}" />
+                <Setter TargetName="Border" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />

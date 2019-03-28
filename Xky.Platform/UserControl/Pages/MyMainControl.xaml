@@ -95,7 +95,6 @@
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
-
                     <DataTemplate>
                         <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="110"
 
@@ -137,44 +136,25 @@
                             </Viewbox>
 
 
-                            <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Top">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <Border x:Name="DeviceNameBorader" CornerRadius="8" HorizontalAlignment="Left"
-                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
-                                          >
-                                        <TextBlock x:Name="DeviceNameLabel" Margin="5,3,3,3"
-                                                   Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                   Text="{Binding Path=Name}" />
-                                    </Border>
+                                    <TextBlock Foreground="White" Text="{Binding  Path=Name}"></TextBlock>
+                                    <local:MyTagLabel x:Name="DeviceName"  TabLabelText="{Binding  Path=Name}"
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <Border x:Name="DeviceModelBorader" CornerRadius="8" HorizontalAlignment="Left"
-                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
-                                            >
-                                        <TextBlock x:Name="DeviceModelNameLabel" Margin="5,3,3,3"
-                                                   Foreground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                   Text="{Binding Path=Model}" />
-                                    </Border>
+                                    <local:MyTagLabel 
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <Border x:Name="DeviceStatusBorader" CornerRadius="8" HorizontalAlignment="Left" Margin="0,0,3,0"
-                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
-                                            >
-                                        <TextBlock x:Name="DeviceStatusNameLabel" Margin="5,3,3,3"
-                                                   Foreground="{StaticResource OnLine}"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                   Text="执行中" />
-                                    </Border>
-                                    <Border x:Name="DeviceScriptBorader" CornerRadius="8" HorizontalAlignment="Left"
-                                            Background="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=0}"
-                                    >
-                                        <TextBlock x:Name="DeviceScriptLabel" Margin="5,3,3,3"
-                                                   Foreground="{StaticResource OnLine}"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                   Text="自动注册" />
-                                    </Border>
+                                    <local:MyTagLabel TabLabelText="{Binding Path=Model}"
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+              
+                                    <local:MyTagLabel x:Name="RunStatus"
+                                                      TabLabelForeground="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=-50}" />
+
                                 </StackPanel>
                             </StackPanel>
 
@@ -188,53 +168,21 @@
                                 <Setter TargetName="MyBlueLine" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
-                                <Setter TargetName="DeviceNameBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceNameLabel" Property="Foreground"
+
+                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
-
-                                <Setter TargetName="DeviceModelBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceModelNameLabel" Property="Foreground"
-                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
-
-
-                                <Setter TargetName="DeviceStatusBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
-                                        Value="{StaticResource OnLine}" />
-
-                                <Setter TargetName="DeviceScriptBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceScriptLabel" Property="Foreground"
-                                        Value="{StaticResource OnLine}" />
-
+                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
-                                <Setter TargetName="MyBorder" Property="Background"
-                                        Value="{StaticResource BackgroundColor1}" />
 
-                                <Setter TargetName="DeviceNameBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceNameLabel" Property="Foreground"
+                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
 
-                                <Setter TargetName="DeviceModelBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceModelNameLabel" Property="Foreground"
-                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
-
-                                <Setter TargetName="DeviceStatusBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceStatusNameLabel" Property="Foreground"
-                                        Value="{StaticResource OnLine}" />
-
-                                <Setter TargetName="DeviceScriptBorader" Property="Background"
-                                        Value="{Binding Source={StaticResource BackgroundColor1},Converter={StaticResource HoverColorConverter},ConverterParameter=-10}" />
-                                <Setter TargetName="DeviceScriptLabel" Property="Foreground"
-                                        Value="{StaticResource OnLine}" />
 
                             </DataTrigger>
                         </DataTemplate.Triggers>

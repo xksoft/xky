@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:userControl="clr-namespace:Xky.Platform.UserControl"
+             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
         <ResourceDictionary>
-            <userControl:HoverColorConverter x:Key="HoverColorConverter" />
+            <lib:HoverColorConverter x:Key="HoverColorConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
