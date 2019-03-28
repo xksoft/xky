@@ -272,9 +272,28 @@
 
         </Grid>
         <Grid Grid.Column="3" Background="#fbfcfc">
-
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">脚本面板</TextBlock>
-            <Image x:Name="aaaaa" HorizontalAlignment="Left" Height="41" Margin="38,278,0,0" VerticalAlignment="Top" Width="64"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <WrapPanel     Grid.Row="0" Margin="10,40,10,10"  Orientation="Horizontal">
+                    <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="知乎相关" Height="20" />
+                    <local:MyButton MinWidth="10" Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="QQ好友相关" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="运营组专用" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="知乎相关" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="换ip" Height="20" />
+                </WrapPanel>
+                <WrapPanel Grid.Row="1" Orientation="Horizontal">
+                    
+                    
+                </WrapPanel>
+            </Grid>
+           
+         
 
         </Grid>
     </Grid>
