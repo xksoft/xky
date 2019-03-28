@@ -12,6 +12,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
+using Xky.Core.Common;
 using Xky.Core.Model;
 
 namespace Xky.Core
@@ -27,6 +28,8 @@ namespace Xky.Core
 
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
+        private readonly AverageNumber _averageNumber = new AverageNumber(3);
+
 
         public MirrorScreen()
         {
@@ -41,15 +44,8 @@ namespace Xky.Core
         {
             try
             {
-                var second = DateTime.Now.Second;
-                if (_fpsDictionary.ContainsKey(second - 1))
                 {
-                    Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _fpsDictionary[second - 1]; });
-                    _fpsDictionary.Remove(second - 1);
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + 0; });
+                    Dispatcher.Invoke(() => { FpsLabel.Content = "FPS:" + _averageNumber.GetAverageNumber(); });
                 }
             }
             catch (Exception exception)
@@ -67,11 +63,7 @@ namespace Xky.Core
                 {
                     if (IsShowFps)
                     {
-                        var second = DateTime.Now.Second;
-                        if (_fpsDictionary.ContainsKey(second))
-                            _fpsDictionary[second]++;
-                        else
-                            _fpsDictionary.Add(second, 0);
+                        _averageNumber.Push(1);
                     }
 
                     if (ScreenImage.Source == null || _newConnect)

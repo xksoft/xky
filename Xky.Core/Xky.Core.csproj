@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Common\AverageNumber.cs" />
     <Compile Include="Controls\Loading\LoadingIndicator.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />

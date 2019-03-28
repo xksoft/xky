@@ -84,9 +84,26 @@ namespace Xky.Platform
             Common.UiAction(() =>
             {
                 CoreStatus.Fill = Client.CoreConnected
-                    ? (SolidColorBrush)FindResource("OnLine")
-                    : (SolidColorBrush)FindResource("OffLine");
-                StatusText.Text = "速率：1024kbps 节点：3 设备："+Client.Devices.Count;
+                    ? (SolidColorBrush) FindResource("OnLine")
+                    : (SolidColorBrush) FindResource("OffLine");
+
+                //速率单位换算
+                var bitcount = Client.BitAverageNumber.GetAverageNumber() * 8;
+                string bitspeed;
+                if (bitcount > 1024 * 1024)
+                {
+                    bitspeed = (bitcount / (decimal) 1024 / 1024).ToString("F2") + " Mbps";
+                }
+                else if (bitcount > 1024)
+                {
+                    bitspeed = (bitcount / (decimal) 1024).ToString("F2") + " Kbps";
+                }
+                else
+                {
+                    bitspeed = bitcount + " bps";
+                }
+
+                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count;
             });
         }
 
@@ -208,12 +225,12 @@ namespace Xky.Platform
                         break;
                     }
                     case "Setting":
-                        {
-                            var page = new MySetting();
-                            _userControlDic.Add(pagename, page);
-                            MainContent.Content = page;
-                            break;
-                        }
+                    {
+                        var page = new MySetting();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
                 }
             }
         }
