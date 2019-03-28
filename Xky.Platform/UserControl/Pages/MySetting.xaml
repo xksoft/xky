@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">不显示离线设备</Label>
-                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center"  Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}"  />
+                <ToggleButton x:Name="togglebutton_test" IsChecked="True" Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center"  Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" Checked="Togglebutton_test_Checked" Click="Togglebutton_test_Click" />
             </Grid>
             <Grid Height="60">
                 <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                     <TextBlock Margin="25,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="#999" >关闭该开关，当您点击主界面的关闭按钮时，系统将直接停止正在运行的任务并退出程序</TextBlock>
                 </StackPanel>
                
-                <ToggleButton Margin="20,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" />
+                <ToggleButton Margin="20,0,0,0" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource SwitchTypeToggleButton}" />
             </Grid>
             <Grid Height="40">
                 <Grid.ColumnDefinitions>
@@ -81,11 +81,38 @@
                     <RowDefinition Height="36"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Margin="20,0,0,0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White">画面解析模式</Label>
-                <ComboBox Height="30" Margin="25,0,0,0"  Grid.Row="1" Width="100"  HorizontalAlignment="Left">
-                    <ComboBoxItem>流畅</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">一般</ComboBoxItem>
-                    <ComboBoxItem>高清</ComboBoxItem>
-                </ComboBox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Height="30" Margin="25,0,0,0"  Grid.Column="1"   HorizontalAlignment="Left"  IsEnabled="False">
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">一般发送的范德萨发大水时</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem >一般</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem >一般</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="combobox_test" Height="30" Margin="25,0,0,0"  Grid.Column="0" Width="100"  HorizontalAlignment="Left" SelectionChanged="Combobox_test_SelectionChanged" IsEnabled="True">
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">一般</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem >一般</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                        <ComboBoxItem >一般</ComboBoxItem>
+                        <ComboBoxItem>高清</ComboBoxItem>
+                        <ComboBoxItem>流畅</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+              
             </Grid>
 
 
