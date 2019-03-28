@@ -78,6 +78,7 @@ namespace Xky.Core
                     {
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                         ScreenImage.Source = _writeableBitmap;
+                        OnChangeSource?.Invoke(ScreenImage.Source);
                     }
 
                     _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
@@ -99,6 +100,10 @@ namespace Xky.Core
         }
 
 
+        public event ChangeSource OnChangeSource;
+
+        public delegate void ChangeSource(ImageSource source);
+
         #region 屏幕连接
 
         private H264Decoder _decoder;
@@ -109,6 +114,11 @@ namespace Xky.Core
 
         public async void Connect(Device model)
         {
+            if (ScreenImage.Source != null)
+            {
+                ScreenImage.Source = null;
+            }
+
             if (_decoder == null)
             {
                 _decoder = new H264Decoder();

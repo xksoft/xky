@@ -262,7 +262,7 @@ namespace Xky.Core.Model
             set
             {
                 _screenShot = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("_screenShot"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScreenShot"));
             }
         }
 

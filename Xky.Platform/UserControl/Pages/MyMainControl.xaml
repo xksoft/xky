@@ -265,7 +265,7 @@
                         <RowDefinition Height="50*" />
                     </Grid.RowDefinitions>
                     <Core:MirrorScreen x:Name="MyMirrorScreen" Grid.Column="1" Grid.Row="1" MaxWidth="432"
-                                       MaxHeight="768" />
+                                       MaxHeight="768" OnChangeSource="MyMirrorScreen_OnChangeSource"  />
                 </Grid>
 
             </Viewbox>
@@ -274,6 +274,7 @@
         <Grid Grid.Column="3" Background="#fbfcfc">
 
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">脚本面板</TextBlock>
+            <Image x:Name="aaaaa" HorizontalAlignment="Left" Height="41" Margin="38,278,0,0" VerticalAlignment="Top" Width="64"/>
 
         </Grid>
     </Grid>
