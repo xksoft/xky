@@ -39,16 +39,16 @@
                    
                 </StackPanel>
                 <DataGrid Grid.Row="1" x:Name="datagrid_task" GridLinesVisibility="None">
-                    <DataGrid.Columns>
+                    <!--<DataGrid.Columns>
                         <DataGridTextColumn Header="ID"
-									Binding="{Binding Path=ID}"/>
-                        <DataGridTextColumn Header="仪器编号"
-									Binding="{Binding Path=仪器编号}"
+									/>
+                        <DataGridTextColumn Header="名称"
+									Binding="{Binding Path=Name}"
 									Foreground="Black"/>
-                        <DataGridTextColumn Header="管道类型"
-									Binding="{Binding Path=管道类型}"
+                        <DataGridTextColumn Header="状态"
+									Binding="{Binding Path=State}"
 									Foreground="Black" />
-                    </DataGrid.Columns>
+                    </DataGrid.Columns>-->
                     
                 </DataGrid>
             </Grid>
