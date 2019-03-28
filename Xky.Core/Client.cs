@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Model;
 using Quobject.SocketIoClientDotNet.Client;
+using Xky.Core.Common;
 
 namespace Xky.Core
 {
@@ -98,6 +99,8 @@ namespace Xky.Core
 
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
+
+        public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
 

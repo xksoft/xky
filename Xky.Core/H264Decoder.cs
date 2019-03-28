@@ -47,6 +47,7 @@ namespace Xky.Core
 
         internal void Decode(byte[] h264Data)
         {
+            Client.BitAverageNumber.Push(h264Data.Length);
             var curSize = h264Data.Length;
 
             var curPtr = (byte*) ffmpeg.av_malloc((ulong) h264Data.Length);
@@ -103,7 +104,6 @@ namespace Xky.Core
             ffmpeg.av_free(curPtr);
         }
 
-   
 
         internal static void RegisterFFmpegBinaries()
         {
@@ -149,6 +149,7 @@ namespace Xky.Core
         private static extern bool SetDllDirectory(string lpPathName);
 
         internal event DecodeBitmap OnDecodeBitmapSource;
+
         internal delegate void DecodeBitmap(object sender, int width, int height, int stride, IntPtr intprt);
 
         private sealed class VideoFrameConverter : IDisposable
