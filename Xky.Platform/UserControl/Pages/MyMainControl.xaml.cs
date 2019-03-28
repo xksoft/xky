@@ -27,24 +27,7 @@ namespace Xky.Platform.UserControl.Pages
         /// </summary>
         private Device _lastDevice;
 
-        /// <summary>
-        /// 屏幕源变更事件订阅
-        /// </summary>
-        /// <param name="source"></param>
-        private void MyMirrorScreen_OnChangeSource(ImageSource source)
-        {
-            if (DeviceListBox.SelectedItem is Device device)
-            {
-                //克隆一份最后的图像给上个设备的ScreenShot，然后脱离引用，避免被其他device屏幕覆盖
-                if (_lastDevice != null && _lastDevice.Sn != device.Sn)
-                {
-                    _lastDevice.ScreenShot = _lastDevice.ScreenShot.Clone();
-                }
 
-                device.ScreenShot = source;
-                _lastDevice = device;
-            }
-        }
 
 
         /// <summary>

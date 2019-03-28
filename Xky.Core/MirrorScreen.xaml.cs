@@ -29,6 +29,7 @@ namespace Xky.Core
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
         private readonly AverageNumber _averageNumber = new AverageNumber(3);
+        private Device _lastDevice;
 
 
         public MirrorScreen()
@@ -66,13 +67,19 @@ namespace Xky.Core
                         _averageNumber.Push(1);
                     }
 
-                    if (ScreenImage.Source == null || _newConnect)
+                    if (ScreenImage.Source == null)
                     {
-                        _newConnect = false;
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                         ScreenImage.Source = _writeableBitmap;
-                        OnChangeSource?.Invoke(ScreenImage.Source);
                     }
+
+                    //给设备绑定图像数据源
+                    if (_lastDevice == null || _lastDevice.Sn != _device.Sn)
+                    {
+                        _device.ScreenShot = ScreenImage.Source;
+                        _lastDevice = _device;
+                    }
+
 
                     _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
                         stride);
@@ -93,9 +100,6 @@ namespace Xky.Core
         }
 
 
-        public event ChangeSource OnChangeSource;
-
-        public delegate void ChangeSource(ImageSource source);
 
         #region 屏幕连接
 
@@ -105,12 +109,9 @@ namespace Xky.Core
 
         private Device _device;
 
-        private bool _newConnect;
 
         public async void Connect(Device model)
         {
-            _newConnect = true;
-
             if (_decoder == null)
             {
                 _decoder = new H264Decoder();
@@ -124,6 +125,13 @@ namespace Xky.Core
             if (_device.NodeUrl == null) throw new Exception("该设备没有设置P2P转发模式");
 
             _socket?.Disconnect();
+
+            //让最后一个设备的图像源脱离引用
+            if (_lastDevice != null && _lastDevice.Sn != _device.Sn)
+            {
+                _lastDevice.ScreenShot = _lastDevice.ScreenShot.CloneCurrentValue();
+            }
+
             _decoder.Firstpacket = true;
             var options = new IO.Options
             {

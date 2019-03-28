@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -91,6 +94,7 @@ namespace Xky.Core
 
         internal static Socket CoreSocket;
 
+
         #region 公开属性
 
         public static License License;
@@ -104,12 +108,6 @@ namespace Xky.Core
 
         #endregion
 
-        private static DateTime ConvertTimestamp(double timestamp)
-        {
-            var converted = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var newDateTime = converted.AddMilliseconds(timestamp);
-            return newDateTime.ToLocalTime();
-        }
 
         /// <summary>
         /// 认证授权KEY
@@ -243,6 +241,29 @@ namespace Xky.Core
             }
         }
 
+
+        public static async Task<Device> GetDevice(string sn)
+        {
+            var response = await Post("get_device",
+                new JObject {["sn"] = sn, ["session"] = License.Session});
+            return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
+        }
+
+
+        #region  内部方法
+
+        /// <summary>
+        /// unix时间戳转换成datetime
+        /// </summary>
+        /// <param name="timestamp"></param>
+        /// <returns></returns>
+        private static DateTime ConvertTimestamp(double timestamp)
+        {
+            var converted = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var newDateTime = converted.AddMilliseconds(timestamp);
+            return newDateTime.ToLocalTime();
+        }
+
         /// <summary>
         /// 添加或更新Device
         /// </summary>
@@ -290,15 +311,27 @@ namespace Xky.Core
                     Memory = (int) json["t_memory"],
                     LoadTick = loadtick
                 };
-                //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() =>
+
+                Task.Factory.StartNew(() =>
                 {
-                    //设置初始屏幕
-                    device.ScreenShot =
-                        new BitmapImage(new Uri("http://static.xky.com/screenshot/" + device.Sn +
-                                                ".jpg?x-oss-process=image/resize,h_100"));
-                    Devices.Add(device);
+                    try
+                    {
+                        using (var client = new WebClient())
+                        {
+                            var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
+                                                           ".jpg?x-oss-process=image/resize,h_100,w_52");
+                            MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 });
+
+
+                //用UI线程委托添加，防止报错
+                MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
             }
 
             return device;
@@ -316,14 +349,6 @@ namespace Xky.Core
                 //用UI线程委托删除，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
             }
-        }
-
-
-        public static async Task<Device> GetDevice(string sn)
-        {
-            var response = await Post("get_device",
-                new JObject {["sn"] = sn, ["session"] = License.Session});
-            return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
         }
 
         /// <summary>
@@ -351,5 +376,30 @@ namespace Xky.Core
                 }
             }
         }
+
+
+        /// <summary>
+        /// byte转图片源
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        private static BitmapSource ByteToBitmapSource(byte[] buffer)
+        {
+            var image = new BitmapImage();
+            using (var stream = new MemoryStream(buffer))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                image.BeginInit();
+                image.StreamSource = stream;
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.EndInit();
+            }
+
+            return image;
+        }
+
+        #endregion
     }
 }

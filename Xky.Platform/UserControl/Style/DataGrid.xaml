@@ -651,7 +651,7 @@
 
     </Style>
 
-    <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter"/>
+    <BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
 
     <Style x:Key="RowHeaderGripperStyle" TargetType="{x:Type Thumb}">
 

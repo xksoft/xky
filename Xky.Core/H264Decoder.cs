@@ -14,6 +14,8 @@ namespace Xky.Core
         private readonly AVFrame* _pFrame;
         internal bool Firstpacket = true;
 
+  
+
         internal H264Decoder()
         {
             try
@@ -45,6 +47,8 @@ namespace Xky.Core
             }
         }
 
+  
+
         internal void Decode(byte[] h264Data)
         {
             Client.BitAverageNumber.Push(h264Data.Length);
@@ -56,6 +60,7 @@ namespace Xky.Core
 
             while (curSize > 0)
             {
+        
                 AVPacket packet;
                 if (Firstpacket)
                 {
@@ -86,9 +91,11 @@ namespace Xky.Core
                     {
                         var convertedFrame = vfc.Convert(*_pFrame);
 
-                        //调用事件
-                        OnDecodeBitmapSource?.Invoke(this, convertedFrame.width, convertedFrame.height,
-                            convertedFrame.linesize[0], (IntPtr) convertedFrame.data[0]);
+                      
+                            //调用事件
+                            OnDecodeBitmapSource?.Invoke(this, convertedFrame.width, convertedFrame.height,
+                                convertedFrame.linesize[0], (IntPtr)convertedFrame.data[0]);
+                      
 
                         //释放内存吗？
                         ffmpeg.av_frame_unref(&convertedFrame);

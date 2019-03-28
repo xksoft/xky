@@ -265,7 +265,7 @@
                         <RowDefinition Height="50*" />
                     </Grid.RowDefinitions>
                     <Core:MirrorScreen x:Name="MyMirrorScreen" Grid.Column="1" Grid.Row="1" MaxWidth="432"
-                                       MaxHeight="768" OnChangeSource="MyMirrorScreen_OnChangeSource"  />
+                                       MaxHeight="768"   />
                 </Grid>
 
             </Viewbox>
