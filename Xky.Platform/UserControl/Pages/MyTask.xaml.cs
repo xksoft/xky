@@ -23,23 +23,37 @@ namespace Xky.Platform.UserControl.Pages
         public MyTask()
         {
             InitializeComponent();
-            List<int[]> list = new List<int[]>();
-            list.Add(new int[] { 1, 2, 3 });
-            list.Add(new int[] { 2, 3, 4});
-            list.Add(new int[] { 3, 4, 5 });
+            List<XkyTask> list = new List<XkyTask>();
+            list.Add(new XkyTask { Id=1,Name="点赞加好友",State= "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
+            list.Add(new XkyTask { Id = 1, Name = "点赞加好友", State = "执行中" });
 
-            int _col = list[0].Length;
-            int _row = list.Count;
-            for (int i = 0; i < _col; i++)
-            {
-                //datagrid_task.Columns.Add(new DataGridTextColumn
-                //{
-                //    Width = (Width - 30) / _col,
-                //    Header = $"{(char)(65 + i)}",
-                //    Binding = new Binding($"[{i.ToString()}]")
-                //});
-            }
             datagrid_task.ItemsSource = list;
         }
+    }
+    public class XkyTask {
+        private int _id =1;
+        private string _name = "加好友并点赞";
+        private string _state = "执行中";
+
+        public int Id { get => _id; set => _id = value; }
+        public string Name { get => _name; set => _name = value; }
+        public string State { get => _state; set => _state = value; }
     }
 }

@@ -277,7 +277,7 @@
             <SolidColorBrush x:Key="NormalBrush">#fff</SolidColorBrush>
             <SolidColorBrush x:Key="NormalBorderBrush">#d9dfe1</SolidColorBrush>
             <SolidColorBrush x:Key="TextBrush">#fff</SolidColorBrush>
-            <SolidColorBrush x:Key="AlternateBackgroundBrush">#989EA8</SolidColorBrush>
+            <SolidColorBrush x:Key="AlternateBackgroundBrush">#f9f9f9</SolidColorBrush><!--隔行颜色-->
             <SolidColorBrush x:Key="BorderBrush">#fff</SolidColorBrush>
             <SolidColorBrush x:Key="ControlContentBrush">#d9dfe1</SolidColorBrush>
         </Style.Resources>
