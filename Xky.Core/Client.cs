@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Model;
@@ -281,7 +282,14 @@ namespace Xky.Core
                     LoadTick = loadtick
                 };
                 //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
+                MainWindow.Dispatcher.Invoke(() =>
+                {
+                    //设置初始屏幕
+                    device.ScreenShot =
+                        new BitmapImage(new Uri("http://static.xky.com/screenshot/" + device.Sn +
+                                                ".jpg?x-oss-process=image/resize,h_100"));
+                    Devices.Add(device);
+                });
             }
         }
 

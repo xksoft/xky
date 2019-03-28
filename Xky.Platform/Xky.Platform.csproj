@@ -64,12 +64,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common.cs" />
+    <Compile Include="UserControl\HoverColorConverter.cs" />
     <Compile Include="UserControl\Lib\BooleanToVisibility.cs" />
     <Compile Include="UserControl\MyButton.xaml.cs">
       <DependentUpon>MyButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyDeviceItem.xaml.cs">
-      <DependentUpon>MyDeviceItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\MyTagItem.xaml.cs">
       <DependentUpon>MyTagItem.xaml</DependentUpon>
@@ -107,10 +105,6 @@
     <Page Include="UserControl\MyButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyDeviceItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\MyTagItem.xaml">
       <SubType>Designer</SubType>
@@ -291,6 +285,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Device\testbg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

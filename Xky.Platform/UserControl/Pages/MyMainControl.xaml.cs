@@ -40,10 +40,7 @@ namespace Xky.Platform.UserControl.Pages
             });
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            LoadDevices();
-        }
+
     }
     public class DeviceScreenShot : IValueConverter
     {

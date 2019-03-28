@@ -168,7 +168,12 @@
 
         <!-- Toast -->
         <StackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
-                    Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998" IsHitTestVisible="False">
+                    Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998"
+                    IsHitTestVisible="False">
+            <StackPanel.Effect>
+                <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
+                                  Opacity="0.35" />
+            </StackPanel.Effect>
             <Grid>
                 <Border CornerRadius="8" Background="{StaticResource  BackgroundColor1}" />
                 <TextBlock x:Name="ToastText" Margin="10" Foreground="White" />
@@ -176,13 +181,18 @@
         </StackPanel>
 
         <!-- Status -->
-        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="30,0,0,30" Grid.RowSpan="2" Grid.Column="0"
-                    Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998" IsHitTestVisible="False">
+        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="10,0,0,10" Grid.RowSpan="2" Grid.Column="0"
+                    Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998"
+                    IsHitTestVisible="False">
+            <StackPanel.Effect>
+                <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
+                                  Opacity="0.35" />
+            </StackPanel.Effect>
             <Border CornerRadius="15" Background="{StaticResource  BackgroundColor1}">
                 <StackPanel Orientation="Horizontal" Margin="8">
-                    <Ellipse x:Name="CoreStatus" Fill="OrangeRed" Width="8" Height="8" IsHitTestVisible="False" />
+                    <Ellipse x:Name="CoreStatus" Fill="{StaticResource OffLine}" Width="8" Height="8" IsHitTestVisible="False" />
                     <TextBlock Margin="8,0,0,0" Foreground="White" x:Name="StatusText"
-                               Text="了撒扩大解放了撒扩大解放离开首都基辅路上看到警方傻了快点放假螺丝钉棵解放路上看到房价十六大开发" />
+                               />
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -192,20 +202,22 @@
 
         <!-- 第一栏 -->
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor2}" Grid.Row="0" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="65" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
 
-            <Image Source="Resources/Icon/logo.png" Width="32" Height="32" Grid.Row="0" />
-            <StackPanel VerticalAlignment="Top" Grid.Row="1">
+
+            <StackPanel VerticalAlignment="Top">
+                <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False" 
+                                       ImgSource="Resources/Icon/logo.png" PageName="Logo"
+                                       IsDarkStyle="True" />
+
                 <userControl:MyTabItem x:Name="LoginTabItem" ToolTip="授权" CheckLicense="False" IsSelected="True"
                                        ImgSource="Resources/Icon/authority.png" PageName="Login"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
-                <userControl:MyTabItem x:Name="MainControlTabItem" ToolTip="主控" ImgSource="Resources/Icon/devices.png" PageName="MainControl"
+                <userControl:MyTabItem x:Name="MainControlTabItem" ToolTip="主控" ImgSource="Resources/Icon/devices.png"
+                                       PageName="MainControl"
                                        IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
-                <userControl:MyTabItem ToolTip="节点" ImgSource="Resources/Icon/nodes.png" PageName="Task" IsDarkStyle="False"
+                <userControl:MyTabItem ToolTip="节点" ImgSource="Resources/Icon/nodes.png" PageName="Task"
+                                       IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
                 <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Setting" IsDarkStyle="True"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
