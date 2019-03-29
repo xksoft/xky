@@ -129,7 +129,7 @@ namespace Xky.Core
 
             //重置
             _bindingSource = 0;
-
+            _isShow = false;
 
             var options = new IO.Options
             {
