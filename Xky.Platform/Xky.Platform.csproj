@@ -305,7 +305,15 @@
     <Resource Include="Resources\Icon\Device\testbg.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\app.png" />
+    <Resource Include="Resources\Icon\app.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\app_2.jpg" />
+    <Resource Include="Resources\Icon\app_3.jpg" />
+    <Resource Include="Resources\Icon\app_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\app_5.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
