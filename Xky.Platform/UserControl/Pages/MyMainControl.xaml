@@ -274,21 +274,26 @@
         <Grid Grid.Column="3" Background="#fbfcfc">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <WrapPanel     Grid.Row="0" Margin="10,50,10,10"  Orientation="Horizontal">
+                <local:MyTextBox Margin="15,60,15,10"  TextBoxCornerRadius="5" Grid.Row="0"
+                                 TextBoxBackground="#ccc"
+                                 TextBoxForeground="#616161" TextBoxWaterText="搜索模块"
+                                 WindowChrome.IsHitTestVisibleInChrome="True" />
+                <WrapPanel     Grid.Row="1" Margin="10,10,10,10"  Orientation="Horizontal">
                     <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="全部模块" Height="20" />
-                    <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="知乎相关" Height="20" />
+                    <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="#9736f1" ButtonBackground2="#9736f1"  ButtonText="陌陌" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#0078d7" ButtonBackground2="#0078d7"  ButtonText="知乎相关" Height="20" />
                     <local:MyButton MinWidth="10" Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="QQ好友相关" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="运营组专用" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="知乎相关" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌" Height="20" />
-                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="换ip" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#4291fc" ButtonBackground2="#4291fc"  ButtonText="QQ好友相关" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#e7c000" ButtonBackground2="#e7c000"  ButtonText="运营组专用" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#f90100" ButtonBackground2="#f90100"  ButtonText="今日头条" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#300d21" ButtonBackground2="#300d21"  ButtonText="抖音" Height="20" />
+                    <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#02950d" ButtonBackground2="#02950d"  ButtonText="换ip" Height="20" />
                 </WrapPanel>
-                <WrapPanel Grid.Row="1" Orientation="Horizontal">
+                <WrapPanel Grid.Row="2" Orientation="Horizontal">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
