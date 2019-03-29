@@ -1,22 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xky.Core.Annotations;
 
 namespace Xky.Core.Model
 {
     public class License : INotifyPropertyChanged
     {
-        private string _name;
+        private string _avatra;
         private string _email;
         private int _id;
-        private string _phone;
-        private string _avatra;
-        private string _licenseKey;
-        private string _licenseName;
-        private int _licenseLevel;
         private string _licenseCustom;
         private DateTime _licenseExpiration;
+        private string _licenseKey;
+        private int _licenseLevel;
+        private string _licenseName;
+        private string _name;
+        private string _phone;
         private string _session;
 
         public int Id

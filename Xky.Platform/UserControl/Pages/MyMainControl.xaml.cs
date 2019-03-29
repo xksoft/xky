@@ -56,7 +56,8 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Task.Factory.StartNew(action: () =>
+                
+                Task.Factory.StartNew(() =>
                 {
                     //连接屏幕
                     MyMirrorScreen.Connect(device);

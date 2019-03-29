@@ -10,7 +10,7 @@
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Display"
 
-             d:DesignHeight="450" d:DesignWidth="800" >
+             d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,14 +19,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid >
+    <Grid>
         <TextBox TextWrapping="NoWrap" MaxLength="1" Height="30" Width="1" HorizontalAlignment="Left"
                  VerticalAlignment="Bottom" Margin="10,0,0,10"
                  x:Name="MyInput" LostFocus="MyInput_LostFocus" GotFocus="MyInput_GotFocus"
                  HorizontalScrollBarVisibility="Auto" PreviewTextInput="MyInput_PreviewTextInput" UndoLimit="0"
-                 PreviewKeyDown="MyInput_PreviewKeyDown" Style="{x:Null}"/>
+                 PreviewKeyDown="MyInput_PreviewKeyDown" Style="{x:Null}" />
         <Image x:Name="ScreenImage" MouseDown="Image_OnMouseDown" MouseUp="Image_OnMouseUp"
-               MouseMove="Image_OnMouseMove" MouseLeave="Image_OnMouseLeave" Stretch="Fill" Style="{x:Null}"/>
+               MouseMove="Image_OnMouseMove" MouseLeave="Image_OnMouseLeave" Stretch="Fill" Style="{x:Null}" />
         <loading:LoadingIndicator x:Name="ScreenLoading" SpeedRatio="1" IsActive="True"
                                   Style="{DynamicResource LoadingIndicatorWaveStyleKey}"
                                   Foreground="White" Height="15" IsHitTestVisible="False">
@@ -38,7 +38,8 @@
             <Ellipse x:Name="Tap" Fill="#7E00FF00" Width="30" Height="30" IsHitTestVisible="False"
                      Visibility="Collapsed" />
         </Canvas>
-        <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsHitTestVisible="False" Style="{x:Null}"/>
+        <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsHitTestVisible="False"
+                    Style="{x:Null}" />
         <Label x:Name="FpsLabel" Foreground="Lime" FontFamily="SimSun" IsHitTestVisible="False" Style="{x:Null}">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />

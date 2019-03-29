@@ -19,15 +19,14 @@ namespace Xky.Core
         {
             try
             {
-                const AVCodecID codecId = AVCodecID.AV_CODEC_ID_H264;
                 RegisterFFmpegBinaries();
-                var pCodec = ffmpeg.avcodec_find_decoder(codecId);
+                var pCodec = ffmpeg.avcodec_find_decoder(AVCodecID.AV_CODEC_ID_H264);
 
                 _pCodecCtx = ffmpeg.avcodec_alloc_context3(pCodec);
                 _pCodecCtx->qcompress = 1F;
                 _pCodecCtx->frame_number = 1;
                 _pCodecCtx->codec_type = AVMediaType.AVMEDIA_TYPE_VIDEO;
-                _pCodecParserCtx = ffmpeg.av_parser_init((int) codecId);
+                _pCodecParserCtx = ffmpeg.av_parser_init((int) AVCodecID.AV_CODEC_ID_H264);
                 if (null == _pCodecParserCtx)
                     throw new Exception("_pCodecParserCtx is null");
 
@@ -52,10 +51,10 @@ namespace Xky.Core
             //加入速率计数器
             Client.BitAverageNumber.Push(h264Data.Length);
             var curSize = h264Data.Length;
-            var curPtr = (byte*) ffmpeg.av_malloc((ulong) h264Data.Length);
+            var curPtr = (byte*) ffmpeg.av_malloc((ulong) curSize);
             try
             {
-                for (var i = 0; i < h264Data.Length; i++) curPtr[i] = h264Data[i];
+                for (var i = 0; i < curSize; i++) curPtr[i] = h264Data[i];
 
                 while (curSize > 0)
                 {
@@ -68,15 +67,14 @@ namespace Xky.Core
                         Firstpacket = false;
                     }
 
-                    /* 返回解析了的字节数 */
+
                     var len = ffmpeg.av_parser_parse2(_pCodecParserCtx, _pCodecCtx,
                         &packet.data, &packet.size, curPtr, curSize,
                         ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE);
-                    // curPtr += len;
+
                     curSize -= len;
                     if (packet.size == 0)
                         continue;
-
 
                     ffmpeg.avcodec_send_packet(_pCodecCtx, &packet);
 
@@ -90,15 +88,14 @@ namespace Xky.Core
                         {
                             var convertedFrame = vfc.Convert(*_pFrame);
 
-
                             //调用事件
                             OnDecodeBitmapSource?.Invoke(this, convertedFrame.width, convertedFrame.height,
                                 convertedFrame.linesize[0], (IntPtr) convertedFrame.data[0]);
 
-
                             //释放内存吗？
                             ffmpeg.av_frame_unref(&convertedFrame);
                         }
+
 
                         ret = ffmpeg.avcodec_receive_frame(_pCodecCtx, _pFrame);
                     }
