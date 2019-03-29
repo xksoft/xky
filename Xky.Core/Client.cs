@@ -9,18 +9,19 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xky.Core.Model;
 using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
+using Xky.Core.Model;
 
 namespace Xky.Core
 {
     public class Client
     {
+        internal static Socket CoreSocket;
+
         internal static async Task<Response> Post(string api, JObject json)
         {
             try
@@ -92,25 +93,9 @@ namespace Xky.Core
             };
         }
 
-        internal static Socket CoreSocket;
-
-
-        #region 公开属性
-
-        public static License License;
-        public static bool CoreConnected;
-        public static Window MainWindow;
-
-        public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
-        public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
-
-        public static AverageNumber BitAverageNumber = new AverageNumber(3);
-
-        #endregion
-
 
         /// <summary>
-        /// 认证授权KEY
+        ///     认证授权KEY
         /// </summary>
         /// <param name="license"></param>
         /// <returns></returns>
@@ -188,7 +173,7 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 重新加载设备列表
+        ///     重新加载设备列表
         /// </summary>
         /// <returns></returns>
         public static async Task<Response> LoadDevices()
@@ -196,35 +181,26 @@ namespace Xky.Core
             try
             {
                 if (License == null)
-                {
                     return new Response
                     {
                         Result = false,
                         Message = "未授权",
                         Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
                     };
-                }
 
                 var loadtick = DateTime.Now.Ticks;
                 var response = await Post("get_device_list", new JObject {["session"] = License.Session});
 
                 if (response.Result)
                 {
-                    foreach (var json in (JArray) response.Json["list"])
-                    {
-                        PushDevice(json, loadtick);
-                    }
+                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json, loadtick);
 
                     //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
                     MainWindow.Dispatcher.Invoke(() =>
                     {
                         foreach (var t in Devices.ToList())
-                        {
                             if (t.LoadTick != loadtick)
-                            {
                                 Devices.Remove(t);
-                            }
-                        }
                     });
                 }
 
@@ -250,10 +226,24 @@ namespace Xky.Core
         }
 
 
+        #region 公开属性
+
+        public static License License;
+        public static bool CoreConnected;
+        public static Window MainWindow;
+
+        public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+        public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
+
+        public static AverageNumber BitAverageNumber = new AverageNumber(3);
+
+        #endregion
+
+
         #region  内部方法
 
         /// <summary>
-        /// unix时间戳转换成datetime
+        ///     unix时间戳转换成datetime
         /// </summary>
         /// <param name="timestamp"></param>
         /// <returns></returns>
@@ -265,7 +255,7 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 添加或更新Device
+        ///     添加或更新Device
         /// </summary>
         /// <param name="json"></param>
         /// <param name="loadtick"></param>
@@ -338,21 +328,17 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 移除Device
+        ///     移除Device
         /// </summary>
         /// <param name="json"></param>
         private static void RemoveDevice(JToken json)
         {
             var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-            if (device != null)
-            {
-                //用UI线程委托删除，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
-            }
+            if (device != null) MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
         }
 
         /// <summary>
-        /// 核心服务器事件
+        ///     核心服务器事件
         /// </summary>
         /// <param name="json"></param>
         private static void CoreEvent(JObject json)
@@ -364,13 +350,9 @@ namespace Xky.Core
                 case "device_state":
                 {
                     if (json["message"]?.ToString() == "online")
-                    {
                         PushDevice(json["device"], DateTime.Now.Ticks);
-                    }
                     else
-                    {
                         RemoveDevice(json["device"]);
-                    }
 
                     break;
                 }
@@ -379,7 +361,7 @@ namespace Xky.Core
 
 
         /// <summary>
-        /// byte转图片源
+        ///     byte转图片源
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>

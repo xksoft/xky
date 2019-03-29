@@ -1,28 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
 using System.Windows.Media;
-using Xky.Core.Annotations;
 
 namespace Xky.Core.Model
 {
     public class Device : INotifyPropertyChanged
     {
-        private string _name;
-        private int _id;
-        private string _sn;
-        private string _forward;
-        private string _description;
-        private string _node;
-        private string _model;
-        private string _product;
         private string _connectionHash;
+        private int _cpus;
+        private string _description;
+        private string _forward;
         private string _gpsLat;
         private string _gpsLng;
-        private ImageSource _screenShot;
-        private int _cpus;
+        private int _id;
         private int _memory;
+        private string _model;
+        private string _name;
+        private string _node;
         private string _nodeUrl;
+        private string _product;
+        private ImageSource _screenShot;
+        private string _sn;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -92,7 +89,7 @@ namespace Xky.Core.Model
         }
 
         /// <summary>
-        /// 节点地址
+        ///     节点地址
         /// </summary>
         public string NodeUrl
         {
@@ -221,7 +218,7 @@ namespace Xky.Core.Model
 
 
         /// <summary>
-        /// Cpu个数
+        ///     Cpu个数
         /// </summary>
         public int Cpus
         {
@@ -237,7 +234,7 @@ namespace Xky.Core.Model
         }
 
         /// <summary>
-        /// 内存数量
+        ///     内存数量
         /// </summary>
         public int Memory
         {
@@ -254,7 +251,7 @@ namespace Xky.Core.Model
 
 
         /// <summary>
-        /// 画面截图
+        ///     画面截图
         /// </summary>
         public ImageSource ScreenShot
         {

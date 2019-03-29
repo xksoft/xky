@@ -22,10 +22,10 @@ namespace Xky.Core
     /// </summary>
     public partial class MirrorScreen
     {
+        private readonly AverageNumber _averageNumber = new AverageNumber(3);
         private readonly Timer _fpsTimer;
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
-        private readonly AverageNumber _averageNumber = new AverageNumber(3);
 
 
         public MirrorScreen()
@@ -62,16 +62,21 @@ namespace Xky.Core
                     {
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                         ScreenImage.Source = _writeableBitmap;
-                        _device.ScreenShot = ScreenImage.Source;
                     }
+
+
+                    //3帧过后再绑定图像源
+                    if (_bindingSource < 3)
+                    {
+                        _bindingSource++;
+                        if (_bindingSource == 3) _device.ScreenShot = _writeableBitmap;
+                    }
+
 
                     _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
                         stride);
 
-                    if (IsShowFps)
-                    {
-                        _averageNumber.Push(1);
-                    }
+                    if (IsShowFps) _averageNumber.Push(1);
 
                     if (!_isShow)
                     {
@@ -95,6 +100,7 @@ namespace Xky.Core
         private Socket _socket;
 
         private Device _device;
+        private int _bindingSource;
 
 
         public async void Connect(Device model)
@@ -106,9 +112,7 @@ namespace Xky.Core
             }
 
             if (_device != null && model.Sn != _device.Sn)
-            {
                 Dispatcher.Invoke(() => { _device.ScreenShot = _device.ScreenShot.Clone(); });
-            }
 
 
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
@@ -119,12 +123,14 @@ namespace Xky.Core
 
             if (_device.NodeUrl == null) throw new Exception("该设备没有设置P2P转发模式");
 
-            if (_writeableBitmap != null)
-                _device.ScreenShot = _writeableBitmap;
 
             _socket?.Disconnect();
+            _socket?.Close();
 
-            _decoder.Firstpacket = true;
+            //重置
+            _bindingSource = 0;
+
+
             var options = new IO.Options
             {
                 IgnoreServerCertificateValidation = true,
@@ -218,10 +224,7 @@ namespace Xky.Core
             var postion = e.GetPosition(ScreenImage);
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (IsShowArrow)
-                {
-                    Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
-                }
+                if (IsShowArrow) Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
 
                 EmitEvent(
                     new JObject
@@ -232,10 +235,7 @@ namespace Xky.Core
             }
             else if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (IsShowArrow)
-                {
-                    Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 0, 255, 0));
-                }
+                if (IsShowArrow) Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 0, 255, 0));
 
                 var json = new JObject
                 {
@@ -291,10 +291,7 @@ namespace Xky.Core
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
             EmitEvent(json);
-            if (IsShowArrow)
-            {
-                Tap.Visibility = Visibility.Collapsed;
-            }
+            if (IsShowArrow) Tap.Visibility = Visibility.Collapsed;
         }
 
 

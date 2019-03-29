@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xky.Core.Common
 {
@@ -33,7 +30,7 @@ namespace Xky.Core.Common
         public long GetAverageNumber()
         {
             var lastNum = _total[_lastIndex];
-            return (_total.Sum()- lastNum) / (_total.Length-1);
+            return (_total.Sum() - lastNum) / (_total.Length - 1);
         }
     }
 }
