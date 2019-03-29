@@ -9,8 +9,7 @@
              RenderOptions.BitmapScalingMode="LowQuality"
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Display"
-
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#3D00FF00">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,21 +29,22 @@
         <loading:LoadingIndicator x:Name="ScreenLoading" SpeedRatio="1" IsActive="True"
                                   Style="{DynamicResource LoadingIndicatorWaveStyleKey}"
                                   Foreground="White" Height="15" IsHitTestVisible="False">
-            <loading:LoadingIndicator.Effect>
-                <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
-            </loading:LoadingIndicator.Effect>
         </loading:LoadingIndicator>
         <Canvas IsHitTestVisible="False" Style="{x:Null}">
             <Ellipse x:Name="Tap" Fill="#7E00FF00" Width="30" Height="30" IsHitTestVisible="False"
                      Visibility="Collapsed" />
         </Canvas>
-        <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsHitTestVisible="False"
+
+        <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                    IsHitTestVisible="False"
                     Style="{x:Null}" />
-        <Label x:Name="FpsLabel" Foreground="Lime" FontFamily="SimSun" IsHitTestVisible="False" Style="{x:Null}">
+
+        <Label x:Name="FpsLabel" Foreground="Lime" IsHitTestVisible="False" Style="{x:Null}">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
             </Label.Effect>
         </Label>
+
     </Grid>
 
 </UserControl>
