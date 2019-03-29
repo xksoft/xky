@@ -89,6 +89,7 @@
     <Compile Include="MirrorScreen.xaml.cs">
       <DependentUpon>MirrorScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Tag.cs" />
     <Compile Include="Model\License.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\Node.cs" />

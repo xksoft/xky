@@ -249,6 +249,8 @@ namespace Xky.Core.Model
             }
         }
 
+        public string GetHardwareDesc => Cpus + "核心 " + (Memory / (double) 1024 / 1024).ToString("F2") + "GB内存";
+
 
         /// <summary>
         ///     画面截图

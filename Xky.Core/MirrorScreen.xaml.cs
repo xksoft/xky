@@ -487,6 +487,7 @@ namespace Xky.Core
                             BlurRadius = 0,
                             Opacity = 1
                         },
+                        FontSize = 14,
                         Foreground = new SolidColorBrush(color),
                         Style = null
                     };

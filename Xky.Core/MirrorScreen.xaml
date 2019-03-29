@@ -35,9 +35,12 @@
                      Visibility="Collapsed" />
         </Canvas>
 
-        <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                    IsHitTestVisible="False"
-                    Style="{x:Null}" />
+        <Viewbox HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <StackPanel x:Name="LogPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        IsHitTestVisible="False"
+                        Style="{x:Null}" />
+        </Viewbox>
+
 
         <Label x:Name="FpsLabel" Foreground="Lime" IsHitTestVisible="False" Style="{x:Null}">
             <Label.Effect>

@@ -28,13 +28,155 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
-            <StackPanel Grid.Row="1" Margin="15">
-                <local:MyTagItem />
-                <local:MyTagItem />
-                <local:MyTagItem />
-                <local:MyTagItem />
+            <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15" >
+       
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="118"
 
-            </StackPanel>
+                              Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="MyBlueLine" Grid.ColumnSpan="3" BorderThickness="2,1,2,1"
+                                    BorderBrush="{StaticResource BlueLine}"
+                                    Visibility="Collapsed" />
+
+
+                            <Viewbox Grid.Column="0" RenderOptions.BitmapScalingMode="Fant" Margin="10">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      RenderOptions.BitmapScalingMode="Fant"
+                                      Height="940" Width="470">
+                                    <Grid.Background>
+                                        <ImageBrush
+                                            ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="432*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50*" />
+                                        <RowDefinition Height="768*" />
+                                        <RowDefinition Height="50*" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="1" Grid.Row="1" RenderOptions.BitmapScalingMode="Fant"
+                                           Source="{Binding Path=ScreenShot}"
+                                           Stretch="Fill" MaxWidth="432" MaxHeight="768" />
+                                </Grid>
+
+                            </Viewbox>
+
+
+                            <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+
+                                    <local:MyTagLabel x:Name="DeviceId"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"   Margin="0,0,3,0"
+
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                    <local:MyTagLabel x:Name="DeviceName"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"   Margin="0,0,3,0"
+
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <local:MyTagLabel
+                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <local:MyTagLabel
+                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Model}"
+                                        Margin="0,0,3,0"
+                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                    <local:MyTagLabel
+                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Cpus}"
+                                        Margin="0,0,3,0"
+                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                    <local:MyTagLabel
+                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Memory}"
+                                        Margin="0,0,3,0"
+                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+
+                                    <local:MyTagLabel x:Name="RunStatus"
+                                                      TabLabelForeground="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=-50}" />
+
+                                </StackPanel>
+                            </StackPanel>
+
+
+                        </Grid>
+
+                        <DataTemplate.Triggers>
+                            <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                Value="True">
+                                <Setter TargetName="MyBlueLine" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="MyBorder" Property="Background"
+                                        Value="{StaticResource BackgroundColor1}" />
+
+                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
+                                Value="True">
+
+                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
+
+
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Control.Margin" Value="0" />
+                        <Setter Property="Control.Padding" Value="0" />
+                        <Setter Property="Control.BorderThickness" Value="0" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+
+                <ListBox.Template>
+                    <ControlTemplate TargetType="ListBox">
+
+                        <ScrollViewer
+                            Focusable="false" HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+
+                            <StackPanel
+                                IsItemsHost="True" HorizontalAlignment="Stretch" Orientation="Vertical"
+                                VerticalAlignment="Top" />
+
+
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+            </ListBox>
         </Grid>
         <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}" Width="300">
             <Grid.RowDefinitions>
@@ -98,7 +240,7 @@
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="118"
+                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120"
 
                               Margin="0">
                             <Grid.ColumnDefinitions>
@@ -141,8 +283,12 @@
                             <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
+                                    <local:MyTagLabel x:Name="DeviceId"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"   Margin="0,0,3,0"
+
+                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel x:Name="DeviceName"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"   Margin="0,0,3,0"
 
                                                       TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
@@ -156,13 +302,10 @@
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Cpus}"
+                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.GetHardwareDesc}"
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
-                                    <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Memory}"
-                                        Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
+                                 
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
@@ -183,6 +326,8 @@
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
 
+                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="DeviceName" Property="TabLabelForeground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="RunStatus" Property="TabLabelForeground"
@@ -192,6 +337,8 @@
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
 
+                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                        Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="DeviceName" Property="TabLabelForeground"
                                         Value="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="RunStatus" Property="TabLabelForeground"
@@ -246,9 +393,9 @@
                                       Opacity="1" />
                 </Border.Effect>
             </Border>
-            <Viewbox MaxHeight="940" MaxWidth="490" Margin="20">
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"
-                      Height="920" Width="470">
+            <Viewbox MaxHeight="920" MaxWidth="450" Margin="20">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" 
+                      Height="920" Width="450">
                     <Grid.Background>
                         <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
                     </Grid.Background>
@@ -261,7 +408,7 @@
                     </Grid.ColumnDefinitions>
                
                     <Core:MirrorScreen x:Name="MyMirrorScreen"  MaxWidth="432" Grid.ColumnSpan="5"
-                                       MaxHeight="768"   />
+                                       MaxHeight="768"    />
                     
                 </Grid>
 

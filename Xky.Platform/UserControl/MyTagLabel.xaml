@@ -11,7 +11,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type UserControl}">
                         <Border CornerRadius="8" Background="{Binding Path=TabLabelBackground}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="{Binding Path=TabLabelText}" Foreground="{Binding Path=TabLabelForeground}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,3,3,3"></TextBlock>
+                            <TextBlock Text="{Binding Path=TabLabelText}" Foreground="{Binding Path=TabLabelForeground}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,3,5,3"></TextBlock>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

@@ -233,6 +233,7 @@ namespace Xky.Core
         public static Window MainWindow;
 
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+        public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
 
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
@@ -323,6 +324,8 @@ namespace Xky.Core
                 //用UI线程委托添加，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
             }
+
+
 
             return device;
         }
