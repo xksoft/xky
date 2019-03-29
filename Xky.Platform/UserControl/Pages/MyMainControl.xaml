@@ -297,88 +297,83 @@
                     <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#300d21" ButtonBackground2="#300d21"  ButtonText="抖音" Height="20" />
                     <local:MyButton MinWidth="10"   Margin="5" ButtonBackground1="#02950d" ButtonBackground2="#02950d"  ButtonText="换ip" Height="20" />
                 </WrapPanel>
-                <WrapPanel Grid.Row="2" Orientation="Horizontal">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Image Width="64" Grid.Row="0" Source="/Xky.Platform;component/Resources/Icon/app.png"></Image>
-                        <Label  Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</Label>
-                    </Grid>
-                </WrapPanel>
+                <ScrollViewer x:Name="scr" Margin="0,0,0,20" VerticalScrollBarVisibility="Auto" Grid.Row="2">
+                    <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,0">
+
+
+                        <Grid Width="80" Margin="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app.jpg" />
+                                </Border.Background>
+                                <Grid>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="0,5,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">全自动注册今日头条</TextBlock>
+                        </Grid>
+                        <Grid Width="80" Margin="0,0,0,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                </Border.Background>
+                                <Grid>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="0,5,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                        </Grid>
+                        <Grid Width="80" Margin="0,0,0,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
+                                <Border.Background>
+                                    <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                </Border.Background>
+                                <Grid>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="0,5,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                        </Grid>
+                        <Grid Width="80" Margin="0,0,0,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                </Border.Background>
+                                <Grid>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="0,5,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                        </Grid>
+                        <Grid Width="80" Margin="0,0,0,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                </Border.Background>
+                                <Grid>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="0,5,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                        </Grid>
+
+                    </WrapPanel>
+                </ScrollViewer>
             </Grid>
            
          
