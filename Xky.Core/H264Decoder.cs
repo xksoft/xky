@@ -14,7 +14,6 @@ namespace Xky.Core
         private readonly AVFrame* _pFrame;
         internal bool Firstpacket = true;
 
-  
 
         internal H264Decoder()
         {
@@ -47,68 +46,75 @@ namespace Xky.Core
             }
         }
 
-  
 
         internal void Decode(byte[] h264Data)
         {
+            //加入速率计数器
             Client.BitAverageNumber.Push(h264Data.Length);
             var curSize = h264Data.Length;
-
             var curPtr = (byte*) ffmpeg.av_malloc((ulong) h264Data.Length);
-
-            for (var i = 0; i < h264Data.Length; i++) curPtr[i] = h264Data[i];
-
-            while (curSize > 0)
+            try
             {
-        
-                AVPacket packet;
-                if (Firstpacket)
+                for (var i = 0; i < h264Data.Length; i++) curPtr[i] = h264Data[i];
+
+                while (curSize > 0)
                 {
-                    packet.size = curSize;
-                    packet.data = curPtr;
-                    ffmpeg.av_init_packet(&packet);
-                    Firstpacket = false;
-                }
-
-                /* 返回解析了的字节数 */
-                var len = ffmpeg.av_parser_parse2(_pCodecParserCtx, _pCodecCtx,
-                    &packet.data, &packet.size, curPtr, curSize,
-                    ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE);
-                // curPtr += len;
-                curSize -= len;
-                if (packet.size == 0)
-                    continue;
-
-
-                ffmpeg.avcodec_send_packet(_pCodecCtx, &packet);
-                var ret = ffmpeg.avcodec_receive_frame(_pCodecCtx, _pFrame);
-
-                while (ret >= 0)
-                {
-                    using (var vfc = new VideoFrameConverter(new Size(_pFrame->width, _pFrame->height),
-                        _pCodecCtx->pix_fmt, new Size(_pFrame->width, _pFrame->height),
-                        AVPixelFormat.AV_PIX_FMT_BGR24))
+                    AVPacket packet;
+                    if (Firstpacket)
                     {
-                        var convertedFrame = vfc.Convert(*_pFrame);
-
-                      
-                            //调用事件
-                            OnDecodeBitmapSource?.Invoke(this, convertedFrame.width, convertedFrame.height,
-                                convertedFrame.linesize[0], (IntPtr)convertedFrame.data[0]);
-                      
-
-                        //释放内存吗？
-                        ffmpeg.av_frame_unref(&convertedFrame);
+                        packet.size = curSize;
+                        packet.data = curPtr;
+                        ffmpeg.av_init_packet(&packet);
+                        Firstpacket = false;
                     }
 
-                    ret = ffmpeg.avcodec_receive_frame(_pCodecCtx, _pFrame);
+                    /* 返回解析了的字节数 */
+                    var len = ffmpeg.av_parser_parse2(_pCodecParserCtx, _pCodecCtx,
+                        &packet.data, &packet.size, curPtr, curSize,
+                        ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE, ffmpeg.AV_NOPTS_VALUE);
+                    // curPtr += len;
+                    curSize -= len;
+                    if (packet.size == 0)
+                        continue;
+
+
+                    ffmpeg.avcodec_send_packet(_pCodecCtx, &packet);
+
+                    var ret = ffmpeg.avcodec_receive_frame(_pCodecCtx, _pFrame);
+
+                    while (ret >= 0)
+                    {
+                        using (var vfc = new VideoFrameConverter(new Size(_pFrame->width, _pFrame->height),
+                            _pCodecCtx->pix_fmt, new Size(_pFrame->width, _pFrame->height),
+                            AVPixelFormat.AV_PIX_FMT_BGR24))
+                        {
+                            var convertedFrame = vfc.Convert(*_pFrame);
+
+
+                            //调用事件
+                            OnDecodeBitmapSource?.Invoke(this, convertedFrame.width, convertedFrame.height,
+                                convertedFrame.linesize[0], (IntPtr) convertedFrame.data[0]);
+
+
+                            //释放内存吗？
+                            ffmpeg.av_frame_unref(&convertedFrame);
+                        }
+
+                        ret = ffmpeg.avcodec_receive_frame(_pCodecCtx, _pFrame);
+                    }
+
+                    //释放内存吗？
+                    ffmpeg.av_packet_unref(&packet);
                 }
-
-                //释放内存吗？
-                ffmpeg.av_packet_unref(&packet);
             }
-
-            ffmpeg.av_free(curPtr);
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                ffmpeg.av_free(curPtr);
+            }
         }
 
 

@@ -22,23 +22,18 @@ namespace Xky.Core
     /// </summary>
     public partial class MirrorScreen
     {
-        private readonly Dictionary<int, int> _fpsDictionary = new Dictionary<int, int>();
-        internal readonly Timer FpsTimer = new Timer();
-
-
+        private readonly Timer _fpsTimer;
         private bool _isShow;
         private WriteableBitmap _writeableBitmap;
         private readonly AverageNumber _averageNumber = new AverageNumber(3);
-        private Device _lastDevice;
 
 
         public MirrorScreen()
         {
             InitializeComponent();
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
-            FpsTimer.Enabled = true;
-            FpsTimer.Interval = 1000;
-            FpsTimer.Elapsed += FpsTimer_Elapsed;
+            _fpsTimer = new Timer {Enabled = true, Interval = 1000};
+            _fpsTimer.Elapsed += FpsTimer_Elapsed;
         }
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -62,28 +57,21 @@ namespace Xky.Core
             {
                 Dispatcher.Invoke(() =>
                 {
-                    if (IsShowFps)
-                    {
-                        _averageNumber.Push(1);
-                    }
-
+                    //第一次初始化
                     if (ScreenImage.Source == null)
                     {
                         _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                         ScreenImage.Source = _writeableBitmap;
-                    }
-
-                    //给设备绑定图像数据源
-                    if (_lastDevice == null || _lastDevice.Sn != _device.Sn)
-                    {
                         _device.ScreenShot = ScreenImage.Source;
-                        _lastDevice = _device;
                     }
-
 
                     _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
                         stride);
 
+                    if (IsShowFps)
+                    {
+                        _averageNumber.Push(1);
+                    }
 
                     if (!_isShow)
                     {
@@ -98,7 +86,6 @@ namespace Xky.Core
                 Console.WriteLine(e);
             }
         }
-
 
 
         #region 屏幕连接
@@ -118,19 +105,24 @@ namespace Xky.Core
                 _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
             }
 
+            if (_device != null && model.Sn != _device.Sn)
+            {
+                Dispatcher.Invoke(() => { _device.ScreenShot = _device.ScreenShot.Clone(); });
+            }
+
+
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
             _device = await Client.GetDevice(model.Sn);
+
+
             if (_device == null) throw new Exception("无法获取这个设备的信息");
 
             if (_device.NodeUrl == null) throw new Exception("该设备没有设置P2P转发模式");
 
-            _socket?.Disconnect();
+            if (_writeableBitmap != null)
+                _device.ScreenShot = _writeableBitmap;
 
-            //让最后一个设备的图像源脱离引用
-            if (_lastDevice != null && _lastDevice.Sn != _device.Sn)
-            {
-                _lastDevice.ScreenShot = _lastDevice.ScreenShot.CloneCurrentValue();
-            }
+            _socket?.Disconnect();
 
             _decoder.Firstpacket = true;
             var options = new IO.Options
@@ -157,6 +149,7 @@ namespace Xky.Core
             _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
         }
 
+
         public void EmitEvent(JObject jObject)
         {
             _socket?.Emit("event", jObject);
@@ -181,12 +174,12 @@ namespace Xky.Core
 
                     if ((bool) e.NewValue == false)
                     {
-                        li.FpsTimer.Enabled = false;
+                        li._fpsTimer.Enabled = false;
                         li.FpsLabel.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        li.FpsTimer.Enabled = true;
+                        li._fpsTimer.Enabled = true;
                         li.FpsLabel.Visibility = Visibility.Visible;
                     }
                 }));
@@ -482,25 +475,28 @@ namespace Xky.Core
 
         public void AddLabel(string msg, Color color)
         {
-            if (IsShowLog)
+            Dispatcher.Invoke(() =>
             {
-                var label = new Label
+                if (IsShowLog)
                 {
-                    Content = msg,
-                    Effect = new DropShadowEffect
+                    var label = new Label
                     {
-                        Color = Colors.Black,
-                        Direction = 300,
-                        ShadowDepth = 1,
-                        BlurRadius = 0,
-                        Opacity = 1
-                    },
-                    Foreground = new SolidColorBrush(color)
-                };
-                label.Style = null;
-                LogPanel.Children.Add(label);
-                HideLabel(label);
-            }
+                        Content = msg,
+                        Effect = new DropShadowEffect
+                        {
+                            Color = Colors.Black,
+                            Direction = 300,
+                            ShadowDepth = 1,
+                            BlurRadius = 0,
+                            Opacity = 1
+                        },
+                        Foreground = new SolidColorBrush(color),
+                        Style = null
+                    };
+                    LogPanel.Children.Add(label);
+                    HideLabel(label);
+                }
+            });
         }
 
         #endregion

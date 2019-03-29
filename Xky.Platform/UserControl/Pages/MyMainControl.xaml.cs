@@ -22,10 +22,7 @@ namespace Xky.Platform.UserControl.Pages
             Common.MyMainControl = this;
         }
 
-        /// <summary>
-        /// 最后打开的设备
-        /// </summary>
-        private Device _lastDevice;
+
 
 
 
@@ -59,8 +56,12 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                //连接屏幕
-                MyMirrorScreen.Connect(device);
+                Task.Factory.StartNew(action: () =>
+                {
+                    //连接屏幕
+                    MyMirrorScreen.Connect(device);
+                });
+     
             }
         }
     }
