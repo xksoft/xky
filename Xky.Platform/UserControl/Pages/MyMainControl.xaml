@@ -278,10 +278,14 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <local:MyTextBox Margin="15,60,15,10"  TextBoxCornerRadius="5" Grid.Row="0"
-                                 TextBoxBackground="#ccc"
-                                 TextBoxForeground="#616161" TextBoxWaterText="搜索模块"
-                                 WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Border  Margin="15,60,15,10"  CornerRadius="5" Height="30"  BorderBrush="#ccc" BorderThickness="1" >
+                <local:MyTextBox  Grid.Row="0"  BorderThickness="0" 
+                             
+                                 TextBoxBackground="#fff"
+                                 TextBoxForeground="#616161" 
+                                 TextBoxWaterText="搜索模块"
+                                 WindowChrome.IsHitTestVisibleInChrome="True" >
+                </local:MyTextBox></Border>
                 <WrapPanel     Grid.Row="1" Margin="10,10,10,10"  Orientation="Horizontal">
                     <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="全部模块" Height="20" />
                     <local:MyButton MinWidth="10"  Margin="5" ButtonBackground1="#9736f1" ButtonBackground2="#9736f1"  ButtonText="陌陌" Height="20" />
