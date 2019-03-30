@@ -15,10 +15,11 @@ using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
 using Xky.Core.Model;
+using Zeroconf;
 
 namespace Xky.Core
 {
-    public class Client
+    public static class Client
     {
         internal static Socket CoreSocket;
 
@@ -91,6 +92,35 @@ namespace Xky.Core
                 Message = resultJson["msg"]?.ToString(),
                 Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
             };
+        }
+
+        internal static void SearchLocalNode()
+        {
+            Task.Factory.StartNew(async () =>
+            {
+                while (true)
+                {
+                    var responses = ZeroconfResolver.BrowseDomainsAsync().Result;
+                    foreach (var service in responses)
+                    {
+                        foreach (var host in service)
+                        {
+                            if (service.Key.Contains("_node"))
+                            {
+                                if (!LocalNodes.ContainsKey(service.Key))
+                                {
+                                    LocalNodes.Add(service.Key, null);
+                                }
+                            }
+
+                            Console.WriteLine(host);
+                        }
+                    }
+
+                    //每10秒检查一次
+                    await Task.Delay(10 * 1000);
+                }
+            });
         }
 
 
@@ -233,6 +263,7 @@ namespace Xky.Core
         public static Window MainWindow;
 
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+        public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
 
@@ -324,7 +355,6 @@ namespace Xky.Core
                 //用UI线程委托添加，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
             }
-
 
 
             return device;

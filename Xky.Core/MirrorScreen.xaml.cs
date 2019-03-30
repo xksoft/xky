@@ -31,6 +31,8 @@ namespace Xky.Core
         public MirrorScreen()
         {
             InitializeComponent();
+            //启动局域网节点探查器
+            Client.SearchLocalNode();
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
             _fpsTimer = new Timer {Enabled = true, Interval = 1000};
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
@@ -65,11 +67,11 @@ namespace Xky.Core
                     }
 
 
-                    //3帧过后再绑定图像源
-                    if (_bindingSource < 3)
+                    //5帧过后再绑定图像源
+                    if (_bindingSource < 5)
                     {
                         _bindingSource++;
-                        if (_bindingSource == 3) _device.ScreenShot = _writeableBitmap;
+                        if (_bindingSource == 5) _device.ScreenShot = _writeableBitmap;
                     }
 
 
