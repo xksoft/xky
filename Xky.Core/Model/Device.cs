@@ -20,6 +20,7 @@ namespace Xky.Core.Model
         private string _product;
         private ImageSource _screenShot;
         private string _sn;
+        private string _nodeSerial;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -52,6 +53,22 @@ namespace Xky.Core.Model
                 {
                     _sn = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Sn"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 节点信息
+        /// </summary>
+        public string NodeSerial
+        {
+            get => _nodeSerial;
+            set
+            {
+                if (_nodeSerial != value)
+                {
+                    _nodeSerial = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NodeSerial"));
                 }
             }
         }

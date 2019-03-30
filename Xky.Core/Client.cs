@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
 using Xky.Core.Model;
 using Zeroconf;
+using Socket = Quobject.SocketIoClientDotNet.Client.Socket;
 
 namespace Xky.Core
 {
@@ -38,6 +40,7 @@ namespace Xky.Core
                 var responseMessage = await httpClient.PostAsync("https://api.xky.com/" + api, content);
                 var jsonResult =
                     JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
+                Console.WriteLine(jsonResult);
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
                     return new Response
                     {
@@ -96,29 +99,46 @@ namespace Xky.Core
 
         internal static void SearchLocalNode()
         {
-            Task.Factory.StartNew(async () =>
+            Task.Factory.StartNew(() =>
             {
-                while (true)
+                try
                 {
-                    var responses = ZeroconfResolver.BrowseDomainsAsync().Result;
-                    foreach (var service in responses)
+                    var udp = new UdpClient(18866);
+                    var ip = new IPEndPoint(IPAddress.Any, 18866);
+                    while (true)
                     {
-                        foreach (var host in service)
+                        var bytes = udp.Receive(ref ip);
+                        var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
+                        var serial = json["serial"]?.ToString();
+                        if (serial != null)
                         {
-                            if (service.Key.Contains("_node"))
+                            if (!LocalNodes.ContainsKey(serial))
                             {
-                                if (!LocalNodes.ContainsKey(service.Key))
+                                var node = new Node
                                 {
-                                    LocalNodes.Add(service.Key, null);
-                                }
+                                    Serial = json["serial"]?.ToString(),
+                                    Name = json["name"].ToString(),
+                                    Ip = ip.Address.ToString(),
+                                    LoadTick = DateTime.Now.Ticks
+                                };
+                                LocalNodes.Add(node.Serial, node);
                             }
-
-                            Console.WriteLine(host);
+                            else
+                            {
+                                LocalNodes[serial].Serial = json["serial"]?.ToString();
+                                LocalNodes[serial].Name = json["name"].ToString();
+                                LocalNodes[serial].Ip = ip.Address.ToString();
+                                LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
+                            }
                         }
-                    }
 
-                    //每10秒检查一次
-                    await Task.Delay(10 * 1000);
+                        Console.WriteLine(LocalNodes.Count);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
                 }
             });
         }
@@ -293,71 +313,79 @@ namespace Xky.Core
         /// <param name="loadtick"></param>
         private static Device PushDevice(JToken json, long loadtick)
         {
-            var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-            //如果已经存在就更新
-            if (device != null)
+            lock ("devices")
             {
-                device.ConnectionHash = json["t_connection_hash"]?.ToString();
-                device.Description = json["t_desc"]?.ToString();
-                device.Forward = json["t_forward"]?.ToString();
-                device.NodeUrl = json["t_nodeurl"]?.ToString();
-                device.GpsLat = json["t_gps_lat"]?.ToString();
-                device.GpsLng = json["t_gps_lng"]?.ToString();
-                device.Id = (int) json["t_id"];
-                device.Model = json["t_model"]?.ToString();
-                device.Name = json["t_name"]?.ToString();
-                device.Node = json["t_node"]?.ToString();
-                device.Product = json["t_product"]?.ToString();
-                device.Sn = json["t_sn"]?.ToString();
-                device.Cpus = (int) json["t_cpus"];
-                device.Memory = (int) json["t_memory"];
-                device.LoadTick = loadtick;
-            }
-            else
-            {
-                device = new Device
+                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                //如果已经存在就更新
+                if (device != null)
                 {
-                    ConnectionHash = json["t_connection_hash"]?.ToString(),
-                    Description = json["t_desc"]?.ToString(),
-                    Forward = json["t_forward"]?.ToString(),
-                    NodeUrl = json["t_nodeurl"]?.ToString(),
-                    GpsLat = json["t_gps_lat"]?.ToString(),
-                    GpsLng = json["t_gps_lng"]?.ToString(),
-                    Id = (int) json["t_id"],
-                    Model = json["t_model"]?.ToString(),
-                    Name = json["t_name"]?.ToString(),
-                    Node = json["t_node"]?.ToString(),
-                    Product = json["t_product"]?.ToString(),
-                    Sn = json["t_sn"]?.ToString(),
-                    Cpus = (int) json["t_cpus"],
-                    Memory = (int) json["t_memory"],
-                    LoadTick = loadtick
-                };
-
-                Task.Factory.StartNew(() =>
+                    device.ConnectionHash = json["t_connection_hash"]?.ToString();
+                    device.Description = json["t_desc"]?.ToString();
+                    device.Forward = json["t_forward"]?.ToString();
+                    device.NodeUrl = json["t_nodeurl"]?.ToString();
+                    device.NodeSerial = json["t_node"]?.ToString();
+                    device.GpsLat = json["t_gps_lat"]?.ToString();
+                    device.GpsLng = json["t_gps_lng"]?.ToString();
+                    device.Id = (int) json["t_id"];
+                    device.Model = json["t_model"]?.ToString();
+                    device.Name = json["t_name"]?.ToString();
+                    device.Node = json["t_node"]?.ToString();
+                    device.Product = json["t_product"]?.ToString();
+                    device.Sn = json["t_sn"]?.ToString();
+                    device.Cpus = (int) json["t_cpus"];
+                    device.Memory = (int) json["t_memory"];
+                    device.LoadTick = loadtick;
+                }
+                else
                 {
-                    try
+                    device = new Device
                     {
-                        using (var client = new WebClient())
+                        ConnectionHash = json["t_connection_hash"]?.ToString(),
+                        Description = json["t_desc"]?.ToString(),
+                        Forward = json["t_forward"]?.ToString(),
+                        NodeUrl = json["t_nodeurl"]?.ToString(),
+                        NodeSerial = json["t_node"]?.ToString(),
+                        GpsLat = json["t_gps_lat"]?.ToString(),
+                        GpsLng = json["t_gps_lng"]?.ToString(),
+                        Id = (int) json["t_id"],
+                        Model = json["t_model"]?.ToString(),
+                        Name = json["t_name"]?.ToString(),
+                        Node = json["t_node"]?.ToString(),
+                        Product = json["t_product"]?.ToString(),
+                        Sn = json["t_sn"]?.ToString(),
+                        Cpus = (int) json["t_cpus"],
+                        Memory = (int) json["t_memory"],
+                        LoadTick = loadtick
+                    };
+
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
                         {
-                            var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
-                                                           ".jpg?x-oss-process=image/resize,h_100,w_52");
-                            MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
+                            using (var client = new WebClient())
+                            {
+                                var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
+                                                               ".jpg?x-oss-process=image/resize,h_100,w_52");
+                                MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                });
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    });
+
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                    PushNode(device.NodeSerial);
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
 
 
-                //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
+                    //用UI线程委托添加，防止报错
+                    MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
+                }
+
+                return device;
             }
-
-
-            return device;
         }
 
         /// <summary>
@@ -366,8 +394,50 @@ namespace Xky.Core
         /// <param name="json"></param>
         private static void RemoveDevice(JToken json)
         {
-            var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-            if (device != null) MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
+            lock ("devices")
+            {
+                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                if (device != null) MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
+            }
+        }
+
+
+        private static async Task<Node> PushNode(string serial)
+        {
+            lock ("nodes")
+            {
+                var node = Nodes.ToList().Find(p => p.Serial == serial);
+                if (node != null)
+                    return node;
+
+                var response = Post("get_node", new JObject {["session"] = License.Session, ["serial"] = serial})
+                    .Result;
+
+                if (!response.Result)
+                {
+                    Console.WriteLine(response.Message);
+                    return null;
+                }
+
+                var json = response.Json["node"];
+
+
+                node = new Node
+                {
+                    Serial = json["t_serial"]?.ToString(),
+                    Name = json["t_name"]?.ToString(),
+                    ConnectionHash = json["t_connection_hash"]?.ToString(),
+                    Forward = json["t_forward"]?.ToString(),
+                    NodeUrl = json["t_nodeurl"]?.ToString(),
+                    DeviceCount = int.Parse(json["t_online_devices"].ToString()),
+                    Ip = json["t_ip"]?.ToString()
+                };
+                Console.WriteLine("添加：" + node.Serial);
+                //用UI线程委托添加，防止报错
+                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
+
+                return node;
+            }
         }
 
         /// <summary>

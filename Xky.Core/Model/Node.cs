@@ -14,6 +14,10 @@ namespace Xky.Core.Model
         private string _forward;
         private int _deviceCount;
 
+        public long LoadTick { get; set; }
+
+
+
         public string Name
         {
             get => _name;
