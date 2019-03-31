@@ -192,7 +192,7 @@
 
             </Grid>
 
-            <ListBox x:Name="DeviceListBox" Grid.Row="1" HorizontalContentAlignment="Stretch"
+            <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" 
                      SelectionChanged="DeviceListBox_OnSelectionChanged">
                 <ListBox.ContextMenu>
                     <ContextMenu>
@@ -369,8 +369,8 @@
                 <ListBox.Template>
                     <ControlTemplate TargetType="ListBox">
 
-                        <ScrollViewer
-                            Focusable="false" HorizontalScrollBarVisibility="Disabled"
+                        <ScrollViewer 
+                            HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
 
                             <StackPanel

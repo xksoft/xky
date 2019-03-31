@@ -25,7 +25,7 @@
                  HorizontalScrollBarVisibility="Auto" PreviewTextInput="MyInput_PreviewTextInput" UndoLimit="0"
                  PreviewKeyDown="MyInput_PreviewKeyDown" Style="{x:Null}" />
         <Image x:Name="ScreenImage" MouseDown="Image_OnMouseDown" MouseUp="Image_OnMouseUp"
-               MouseMove="Image_OnMouseMove" MouseLeave="Image_OnMouseLeave" Stretch="Fill" Style="{x:Null}"  />
+               MouseMove="Image_OnMouseMove" MouseLeave="Image_OnMouseLeave" Stretch="Fill" Style="{x:Null}" MouseWheel="ScreenImage_MouseWheel"  />
         <loading:LoadingIndicator x:Name="ScreenLoading" SpeedRatio="1" IsActive="True"
                                   Style="{DynamicResource LoadingIndicatorWaveStyleKey}"
                                   Foreground="White" Height="15" IsHitTestVisible="False">

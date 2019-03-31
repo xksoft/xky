@@ -159,7 +159,13 @@ namespace Xky.Core
             _socket.On(Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
             _socket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
-            _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
+            _socket.On("h264", data =>
+            {
+                lock ("decode")
+                {
+                    _decoder?.Decode((byte[]) data);
+                }
+            });
         }
 
 
@@ -301,7 +307,6 @@ namespace Xky.Core
             if (IsShowArrow) Tap.Visibility = Visibility.Collapsed;
         }
 
-
         private void Image_OnMouseLeave(object sender, MouseEventArgs e)
         {
             var postion = e.GetPosition(ScreenImage);
@@ -313,6 +318,20 @@ namespace Xky.Core
             };
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
+            EmitEvent(json);
+        }
+
+        private void ScreenImage_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var postion = e.GetPosition(ScreenImage);
+            var json = new JObject
+            {
+                {"type", "wheel"},
+                {"x", (postion.X / RenderSize.Width).ToString("F4")},
+                {"y", (postion.Y / RenderSize.Height).ToString("F4")},
+                {"dx", (e.Delta / 100)},
+                {"dy", (e.Delta / 100)}
+            };
             EmitEvent(json);
         }
 
