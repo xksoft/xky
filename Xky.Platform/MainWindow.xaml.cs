@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -103,7 +104,7 @@ namespace Xky.Platform
                     bitspeed = bitcount + " bps";
                 }
 
-                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count;
+                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count +" 线程：" + Process.GetCurrentProcess().Threads.Count;
             });
         }
 

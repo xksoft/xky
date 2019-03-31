@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -40,7 +42,6 @@ namespace Xky.Core
                 var responseMessage = await httpClient.PostAsync("https://api.xky.com/" + api, content);
                 var jsonResult =
                     JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
-                Console.WriteLine(jsonResult);
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
                     return new Response
                     {
@@ -99,7 +100,7 @@ namespace Xky.Core
 
         internal static void SearchLocalNode()
         {
-            Task.Factory.StartNew(() =>
+            StartAction(() =>
             {
                 try
                 {
@@ -131,8 +132,6 @@ namespace Xky.Core
                                 LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
                             }
                         }
-
-                        Console.WriteLine(LocalNodes.Count);
                     }
                 }
                 catch (Exception e)
@@ -267,12 +266,28 @@ namespace Xky.Core
             }
         }
 
-
-        public static async Task<Device> GetDevice(string sn)
+        /// <summary>
+        /// 获取设备连接信息
+        /// </summary>
+        /// <param name="sn"></param>
+        /// <returns></returns>
+        public static Device GetDevice(string sn)
         {
-            var response = await Post("get_device",
-                new JObject {["sn"] = sn, ["session"] = License.Session});
+            var response = Post("get_device",
+                new JObject {["sn"] = sn, ["session"] = License.Session}).Result;
             return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
+        }
+
+        /// <summary>
+        /// 启动一个任务
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static Thread StartAction(Action action)
+        {
+            var thread = new Thread(new ThreadStart(action)) {IsBackground = true};
+            thread.Start();
+            return thread;
         }
 
 
@@ -358,7 +373,7 @@ namespace Xky.Core
                         LoadTick = loadtick
                     };
 
-                    Task.Factory.StartNew(() =>
+                    StartAction(() =>
                     {
                         try
                         {
@@ -375,9 +390,8 @@ namespace Xky.Core
                         }
                     });
 
-#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                    PushNode(device.NodeSerial);
-#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                    //添加节点服务器
+                    StartAction(() => { PushNode(device.NodeSerial); });
 
 
                     //用UI线程委托添加，防止报错
@@ -402,7 +416,7 @@ namespace Xky.Core
         }
 
 
-        private static async Task<Node> PushNode(string serial)
+        private static Node PushNode(string serial)
         {
             lock ("nodes")
             {
@@ -410,17 +424,16 @@ namespace Xky.Core
                 if (node != null)
                     return node;
 
+
                 var response = Post("get_node", new JObject {["session"] = License.Session, ["serial"] = serial})
                     .Result;
 
                 if (!response.Result)
                 {
-                    Console.WriteLine(response.Message);
                     return null;
                 }
 
                 var json = response.Json["node"];
-
 
                 node = new Node
                 {
@@ -432,10 +445,8 @@ namespace Xky.Core
                     DeviceCount = int.Parse(json["t_online_devices"].ToString()),
                     Ip = json["t_ip"]?.ToString()
                 };
-                Console.WriteLine("添加：" + node.Serial);
                 //用UI线程委托添加，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
-
                 return node;
             }
         }
@@ -446,7 +457,6 @@ namespace Xky.Core
         /// <param name="json"></param>
         private static void CoreEvent(JObject json)
         {
-            Console.WriteLine(json);
             var type = json["type"]?.ToString();
             switch (type)
             {

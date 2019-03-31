@@ -20,7 +20,7 @@ namespace Xky.Platform.UserControl.Pages
         {
             InitializeComponent();
             BtnLogin.Button1.Click += Login_Click;
-            Task.Factory.StartNew(() =>
+            Client.StartAction(() =>
             {
                 var json = Common.LoadJson("license");
                 if (json != null)
@@ -35,7 +35,7 @@ namespace Xky.Platform.UserControl.Pages
         {
             var licensekey = LicenseKey.TextBoxText;
 
-            Task.Factory.StartNew(async () =>
+            Client.StartAction(async () =>
             {
                 Common.UiAction(() =>
                 {

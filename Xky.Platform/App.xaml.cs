@@ -14,7 +14,7 @@ namespace Xky.Platform
             base.OnStartup(e);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-    
+   
 
         }
 

@@ -32,7 +32,7 @@ namespace Xky.Platform.UserControl.Pages
         /// </summary>
         public void LoadDevices()
         {
-            Task.Factory.StartNew(async () =>
+            Client.StartAction(async () =>
             {
                 Common.ShowToast("正在加载设备列表...");
 
@@ -56,8 +56,8 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                
-                Task.Factory.StartNew(() =>
+
+                Client.StartAction(() =>
                 {
                     //连接屏幕
                     MyMirrorScreen.Connect(device);

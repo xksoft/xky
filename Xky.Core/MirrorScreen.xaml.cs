@@ -105,7 +105,7 @@ namespace Xky.Core
         private int _bindingSource;
 
 
-        public async void Connect(Device model)
+        public void Connect(Device model)
         {
             if (_decoder == null)
             {
@@ -114,11 +114,16 @@ namespace Xky.Core
             }
 
             if (_device != null && model.Sn != _device.Sn)
-                Dispatcher.Invoke(() => { _device.ScreenShot = _device.ScreenShot.Clone(); });
-
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (_device.ScreenShot != null)
+                        _device.ScreenShot = _device.ScreenShot.Clone();
+                });
+            }
 
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
-            _device = await Client.GetDevice(model.Sn);
+            _device = Client.GetDevice(model.Sn);
 
 
             if (_device == null) throw new Exception("无法获取这个设备的信息");

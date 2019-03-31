@@ -66,7 +66,7 @@ namespace Xky.Platform
 
         public static void ShowToast(string toast, Color color, string sound = null)
         {
-            Task.Factory.StartNew(async () =>
+            Client.StartAction(async () =>
             {
                 _showToastStep++;
                 var currentStep = _showToastStep;
