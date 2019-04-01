@@ -487,7 +487,12 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions> 
+                                    </Grid.RowDefinitions>
+                                    <Ellipse Width="20" Height="20"  Panel.ZIndex="100">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="#999"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
                                     <Ellipse Width="16" Height="16"  Panel.ZIndex="100">
                                         <Ellipse.Fill>
                                             <SolidColorBrush Color="#373d45"></SolidColorBrush>
@@ -548,6 +553,16 @@
 
 
                                     </Viewbox>
+                                    <Ellipse Width="8" Height="8"  Panel.ZIndex="100" Margin="31,0,0,30">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush  Color="#999"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Width="4" Height="4"  Panel.ZIndex="100" Margin="31,0,0,30">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush  Color="#666"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
                                     <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="2" >
                                         <Border.Background>
                                             <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app.jpg" />
