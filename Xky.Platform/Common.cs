@@ -120,7 +120,7 @@ namespace Xky.Platform
         {
             try
             {
-                MainWindow?.Dispatcher.Invoke(callback);
+                MainWindow?.Dispatcher.BeginInvoke(callback);
             }
             catch (Exception e)
             {

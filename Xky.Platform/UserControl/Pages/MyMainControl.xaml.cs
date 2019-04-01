@@ -23,10 +23,6 @@ namespace Xky.Platform.UserControl.Pages
         }
 
 
-
-
-
-
         /// <summary>
         /// 加载设备列表
         /// </summary>
@@ -56,13 +52,15 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-
                 Client.StartAction(() =>
                 {
-                    //连接屏幕
-                    MyMirrorScreen.Connect(device);
+                    //加锁，避免出现线程安全问题
+                    lock ("connect")
+                    {
+                        //连接屏幕
+                        MyMirrorScreen.Connect(device);
+                    }
                 });
-     
             }
         }
     }

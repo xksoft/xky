@@ -103,42 +103,34 @@ namespace Xky.Core
         {
             StartAction(() =>
             {
-                try
+                var udp = new UdpClient(18866);
+                var ip = new IPEndPoint(IPAddress.Any, 18866);
+                while (true)
                 {
-                    var udp = new UdpClient(18866);
-                    var ip = new IPEndPoint(IPAddress.Any, 18866);
-                    while (true)
+                    var bytes = udp.Receive(ref ip);
+                    var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
+                    var serial = json["serial"]?.ToString();
+                    if (serial != null)
                     {
-                        var bytes = udp.Receive(ref ip);
-                        var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
-                        var serial = json["serial"]?.ToString();
-                        if (serial != null)
+                        if (!LocalNodes.ContainsKey(serial))
                         {
-                            if (!LocalNodes.ContainsKey(serial))
+                            var node = new Node
                             {
-                                var node = new Node
-                                {
-                                    Serial = json["serial"]?.ToString(),
-                                    Name = json["name"].ToString(),
-                                    Ip = ip.Address.ToString(),
-                                    LoadTick = DateTime.Now.Ticks
-                                };
-                                LocalNodes.Add(node.Serial, node);
-                            }
-                            else
-                            {
-                                LocalNodes[serial].Serial = json["serial"]?.ToString();
-                                LocalNodes[serial].Name = json["name"].ToString();
-                                LocalNodes[serial].Ip = ip.Address.ToString();
-                                LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
-                            }
+                                Serial = json["serial"]?.ToString(),
+                                Name = json["name"].ToString(),
+                                Ip = ip.Address.ToString(),
+                                LoadTick = DateTime.Now.Ticks
+                            };
+                            LocalNodes.Add(node.Serial, node);
+                        }
+                        else
+                        {
+                            LocalNodes[serial].Serial = json["serial"]?.ToString();
+                            LocalNodes[serial].Name = json["name"].ToString();
+                            LocalNodes[serial].Ip = ip.Address.ToString();
+                            LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // throw;
                 }
             });
         }
@@ -296,7 +288,6 @@ namespace Xky.Core
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    throw;
                 }
                 finally
                 {

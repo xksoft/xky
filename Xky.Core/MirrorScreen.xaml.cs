@@ -57,36 +57,39 @@ namespace Xky.Core
         {
             try
             {
-                Dispatcher.Invoke(() =>
+                lock ("connect")
                 {
-                    //第一次初始化
-                    if (ScreenImage.Source == null)
+                    Dispatcher.Invoke(() =>
                     {
-                        _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
-                        ScreenImage.Source = _writeableBitmap;
-                    }
+                        //第一次初始化
+                        if (ScreenImage.Source == null)
+                        {
+                            _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
+                            ScreenImage.Source = _writeableBitmap;
+                        }
 
 
-                    //5帧过后再绑定图像源
-                    if (_bindingSource < 5)
-                    {
-                        _bindingSource++;
-                        if (_bindingSource == 5) _device.ScreenShot = _writeableBitmap;
-                    }
+                        //5帧过后再绑定图像源
+                        if (_bindingSource < 20)
+                        {
+                            _bindingSource++;
+                            if (_bindingSource == 20) _device.ScreenShot = _writeableBitmap;
+                        }
 
 
-                    _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
-                        stride);
+                        _writeableBitmap?.WritePixels(new Int32Rect(0, 0, width, height), intprt, width * height * 4,
+                            stride);
 
-                    if (IsShowFps) _averageNumber.Push(1);
+                        if (IsShowFps) _averageNumber.Push(1);
 
-                    if (!_isShow)
-                    {
-                        AddLabel("成功解析画面..", Colors.Lime);
-                        _isShow = true;
-                        HideLoading();
-                    }
-                });
+                        if (!_isShow)
+                        {
+                            AddLabel("成功解析画面..", Colors.Lime);
+                            _isShow = true;
+                            HideLoading();
+                        }
+                    });
+                }
             }
             catch (Exception e)
             {
