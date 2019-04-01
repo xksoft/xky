@@ -27,6 +27,7 @@ namespace Xky.Core
     {
         internal static Socket CoreSocket;
 
+
         internal static async Task<Response> Post(string api, JObject json)
         {
             try
@@ -137,7 +138,7 @@ namespace Xky.Core
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                   // throw;
+                    // throw;
                 }
             });
         }
@@ -285,7 +286,23 @@ namespace Xky.Core
         /// <returns></returns>
         public static Thread StartAction(Action action)
         {
-            var thread = new Thread(new ThreadStart(action)) {IsBackground = true};
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    Threads++;
+                    action.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    Threads--;
+                }
+            }) {IsBackground = true};
             thread.Start();
             return thread;
         }
@@ -296,6 +313,8 @@ namespace Xky.Core
         public static License License;
         public static bool CoreConnected;
         public static Window MainWindow;
+
+        public static int Threads;
 
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
