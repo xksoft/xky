@@ -193,7 +193,7 @@
             </Grid>
 
             <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" 
-                     SelectionChanged="DeviceListBox_OnSelectionChanged">
+                     SelectionChanged="DeviceListBox_OnSelectionChanged" >
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
@@ -240,9 +240,7 @@
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120"
-
-                              Margin="0">
+                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120"  Margin="0" Cursor="Hand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
                                 <ColumnDefinition Width="*" />
