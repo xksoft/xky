@@ -322,5 +322,18 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\app_5.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Device\back.png" />
+    <Resource Include="Resources\Icon\Device\home.png" />
+    <Resource Include="Resources\Icon\Device\task.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Device\back_click.png" />
+    <Resource Include="Resources\Icon\Device\back_hover.png" />
+    <Resource Include="Resources\Icon\Device\home_click.png" />
+    <Resource Include="Resources\Icon\Device\home_hover.png" />
+    <Resource Include="Resources\Icon\Device\task_click.png" />
+    <Resource Include="Resources\Icon\Device\task_hover.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

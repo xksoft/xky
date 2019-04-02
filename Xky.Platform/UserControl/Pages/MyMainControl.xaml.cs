@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Model;
 
@@ -69,6 +70,19 @@ namespace Xky.Platform.UserControl.Pages
             Common.ShowToast(log, color);
         }
 
+        private void Btn_back(object sender, RoutedEventArgs e)
+        {
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+        }
 
+        private void Btn_home(object sender, RoutedEventArgs e)
+        {
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+        }
+
+        private void Btn_task(object sender, RoutedEventArgs e)
+        {
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+        }
     }
 }
