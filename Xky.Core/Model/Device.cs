@@ -16,11 +16,11 @@ namespace Xky.Core.Model
         private string _model;
         private string _name;
         private string _node;
+        private string _nodeSerial;
         private string _nodeUrl;
         private string _product;
         private ImageSource _screenShot;
         private string _sn;
-        private string _nodeSerial;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -58,7 +58,7 @@ namespace Xky.Core.Model
         }
 
         /// <summary>
-        /// 节点信息
+        ///     节点信息
         /// </summary>
         public string NodeSerial
         {

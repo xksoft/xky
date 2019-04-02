@@ -86,7 +86,7 @@ namespace Xky.Core
                         {
                             AddLabel("成功解析画面..", Colors.Lime);
                             _isShow = true;
-                            HideLoading();
+                            //  HideLoading();
                         }
                     });
                 }
@@ -117,13 +117,11 @@ namespace Xky.Core
             }
 
             if (_device != null && model.Sn != _device.Sn)
-            {
                 Dispatcher.Invoke(() =>
                 {
                     if (_device.ScreenShot != null)
                         _device.ScreenShot = _device.ScreenShot.Clone();
                 });
-            }
 
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
             _device = Client.GetDevice(model.Sn);
@@ -332,8 +330,8 @@ namespace Xky.Core
                 {"type", "wheel"},
                 {"x", (postion.X / RenderSize.Width).ToString("F4")},
                 {"y", (postion.Y / RenderSize.Height).ToString("F4")},
-                {"dx", (e.Delta / 100)},
-                {"dy", (e.Delta / 100)}
+                {"dx", e.Delta / 100},
+                {"dy", e.Delta / 100}
             };
             EmitEvent(json);
         }
@@ -447,44 +445,33 @@ namespace Xky.Core
 
         #region  Loading和日志
 
-        private void HideLoading()
-        {
-            var myBrush = new SolidColorBrush();
-            var myColorAnimation = new ColorAnimation
-            {
-                From = Colors.White,
-                To = Colors.Transparent,
-                Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-                AutoReverse = false
-            };
-            myColorAnimation.Completed += MyColorAnimation_Completed;
-
-            myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-
-            ScreenLoading.Foreground = myBrush;
-        }
-
-        public void ShowLoading()
-        {
-            //  ScreenLoading.Visibility = Visibility.Visible;
-        }
-
-
-        private void MyColorAnimation_Completed(object sender, EventArgs e)
-        {
-            // ScreenLoading.Visibility = Visibility.Collapsed;
-        }
+//        private void HideLoading()
+//        {
+//            var myBrush = new SolidColorBrush();
+//            var myColorAnimation = new ColorAnimation
+//            {
+//                From = Colors.White,
+//                To = Colors.Transparent,
+//                Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
+//                AutoReverse = false
+//            };
+//            myColorAnimation.Completed += MyColorAnimation_Completed;
+//
+//            myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
+//
+//            ScreenLoading.Foreground = myBrush;
+//        }
 
 
         private void HideLabel(Label label)
         {
-            Task.Run(async () =>
+            Client.StartAction(async () =>
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
                 Dispatcher.Invoke(() =>
                 {
                     var myBrush = new SolidColorBrush();
-                    ScreenLoading.IsActive = false;
+                    // ScreenLoading.IsActive = false;
                     var myColorAnimation = new ColorAnimation
                     {
                         From = ((SolidColorBrush) label.Foreground).Color,

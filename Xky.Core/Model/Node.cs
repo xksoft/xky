@@ -1,21 +1,18 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xky.Core.Annotations;
 
 namespace Xky.Core.Model
 {
     public class Node : INotifyPropertyChanged
     {
-        private string _name;
-        private string _serial;
-        private string _nodeUrl;
         private string _connectionHash;
-        private string _ip;
-        private string _forward;
         private int _deviceCount;
+        private string _forward;
+        private string _ip;
+        private string _name;
+        private string _nodeUrl;
+        private string _serial;
 
         public long LoadTick { get; set; }
-
 
 
         public string Name

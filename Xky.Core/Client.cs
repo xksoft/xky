@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -18,7 +17,6 @@ using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
 using Xky.Core.Model;
-using Zeroconf;
 using Socket = Quobject.SocketIoClientDotNet.Client.Socket;
 
 namespace Xky.Core
@@ -260,7 +258,7 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 获取设备连接信息
+        ///     获取设备连接信息
         /// </summary>
         /// <param name="sn"></param>
         /// <returns></returns>
@@ -272,7 +270,7 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 启动一个任务
+        ///     启动一个任务
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
@@ -282,7 +280,11 @@ namespace Xky.Core
             {
                 try
                 {
-                    Threads++;
+                    lock ("thread_count")
+                    {
+                        Threads++;
+                    }
+
                     action.Invoke();
                 }
                 catch (Exception e)
@@ -291,7 +293,10 @@ namespace Xky.Core
                 }
                 finally
                 {
-                    Threads--;
+                    lock ("thread_count")
+                    {
+                        Threads--;
+                    }
                 }
             }) {IsBackground = true};
             thread.Start();
@@ -438,10 +443,7 @@ namespace Xky.Core
                 var response = Post("get_node", new JObject {["session"] = License.Session, ["serial"] = serial})
                     .Result;
 
-                if (!response.Result)
-                {
-                    return null;
-                }
+                if (!response.Result) return null;
 
                 var json = response.Json["node"];
 

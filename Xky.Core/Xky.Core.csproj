@@ -90,7 +90,6 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Common\AverageNumber.cs" />
-    <Compile Include="Controls\Loading\LoadingIndicator.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />
     <Compile Include="MirrorScreen.xaml.cs">
@@ -110,10 +109,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Loading\Styles\LoadingWave.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MirrorScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
