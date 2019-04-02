@@ -175,6 +175,11 @@ namespace Xky.Core
             _socket?.Emit("event", jObject);
         }
 
+
+        public event ShowLog OnShowLog;
+
+        public delegate void ShowLog(object sender, string log,Color color);
+
         #endregion
 
         #region 属性
@@ -463,54 +468,55 @@ namespace Xky.Core
 //        }
 
 
-        private void HideLabel(Label label)
-        {
-            Client.StartAction(async () =>
-            {
-                await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
-                Dispatcher.Invoke(() =>
-                {
-                    var myBrush = new SolidColorBrush();
-                    // ScreenLoading.IsActive = false;
-                    var myColorAnimation = new ColorAnimation
-                    {
-                        From = ((SolidColorBrush) label.Foreground).Color,
-                        To = Colors.Transparent,
-                        Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-                        AutoReverse = false
-                    };
-                    myColorAnimation.Completed += delegate { LogPanel.Children.Remove(label); };
-                    myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-                    label.Foreground = myBrush;
-                });
-            });
-        }
+//        private void HideLabel(Label label)
+//        {
+//            Client.StartAction(async () =>
+//            {
+//                await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
+//                Dispatcher.Invoke(() =>
+//                {
+//                    var myBrush = new SolidColorBrush();
+//                    // ScreenLoading.IsActive = false;
+//                    var myColorAnimation = new ColorAnimation
+//                    {
+//                        From = ((SolidColorBrush) label.Foreground).Color,
+//                        To = Colors.Transparent,
+//                        Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
+//                        AutoReverse = false
+//                    };
+//                    myColorAnimation.Completed += delegate { LogPanel.Children.Remove(label); };
+//                    myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
+//                    label.Foreground = myBrush;
+//                });
+//            });
+//        }
 
         public void AddLabel(string msg, Color color)
         {
-            Dispatcher.Invoke(() =>
-            {
-                if (IsShowLog)
-                {
-                    var label = new Label
-                    {
-                        Content = msg,
-                        Effect = new DropShadowEffect
-                        {
-                            Color = Colors.Black,
-                            Direction = 300,
-                            ShadowDepth = 1,
-                            BlurRadius = 0,
-                            Opacity = 1
-                        },
-                        FontSize = 14,
-                        Foreground = new SolidColorBrush(color),
-                        Style = null
-                    };
-                    LogPanel.Children.Add(label);
-                    HideLabel(label);
-                }
-            });
+            OnShowLog?.Invoke(this, msg, color);
+//            Dispatcher.Invoke(() =>
+//            {
+//                if (IsShowLog)
+//                {
+//                    var label = new Label
+//                    {
+//                        Content = msg,
+//                        Effect = new DropShadowEffect
+//                        {
+//                            Color = Colors.Black,
+//                            Direction = 300,
+//                            ShadowDepth = 1,
+//                            BlurRadius = 0,
+//                            Opacity = 1
+//                        },
+//                        FontSize = 14,
+//                        Foreground = new SolidColorBrush(color),
+//                        Style = null
+//                    };
+//                    LogPanel.Children.Add(label);
+//                    HideLabel(label);
+//                }
+//            });
         }
 
         #endregion

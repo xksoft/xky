@@ -63,5 +63,10 @@ namespace Xky.Platform.UserControl.Pages
                 });
             }
         }
+
+        private void MyMirrorScreen_OnOnShowLog(object sender, string log, Color color)
+        {
+            Common.ShowToast(log, color);
+        }
     }
 }
