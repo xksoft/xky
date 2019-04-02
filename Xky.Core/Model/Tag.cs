@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
-using System.Windows.Media;
 
 namespace Xky.Core.Model
 {
     public class Tag : INotifyPropertyChanged
     {
-        private string _name;
         private int _count;
+        private string _name;
 
         public string Name
         {
