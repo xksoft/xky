@@ -668,7 +668,7 @@
                                 
                                 <!--测试重复数据-->
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -683,11 +683,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -702,11 +702,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -721,11 +721,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock  Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -740,11 +740,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -759,11 +759,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -778,11 +778,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -797,11 +797,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock  Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -816,11 +816,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -835,11 +835,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -854,11 +854,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -873,11 +873,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock  Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -892,11 +892,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -911,11 +911,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -930,11 +930,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -949,11 +949,11 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock  Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -968,7 +968,235 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                             </WrapPanel>
