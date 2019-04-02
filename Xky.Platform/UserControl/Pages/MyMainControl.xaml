@@ -521,7 +521,8 @@
                                                         <Storyboard>
                                                             <DoubleAnimation
             Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
-            To="360" Duration="0:0:2" RepeatBehavior="Forever" />
+                                                                From="0"
+            To="90" Duration="0:0:0.5" RepeatBehavior="Forever" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
@@ -541,8 +542,8 @@
                                                     <BeginStoryboard>
                                                         <Storyboard>
                                                             <DoubleAnimation
-            Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
-            To="-360" Duration="0:0:1" RepeatBehavior="Forever" />
+            Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)" From="0"
+            To="-60" Duration="0:0:0.25" RepeatBehavior="Forever" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
@@ -624,7 +625,7 @@
                                                 <EventTrigger RoutedEvent="Border.Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation  Duration="0:0:0.5"  To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                                            <DoubleAnimation  Duration="0:0:0.5" From="0.8"  To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
@@ -666,12 +667,26 @@
                                         <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                <Border Background="#DFE5Eb" CornerRadius="5" Margin="5">
                                     <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
+                                        <Border Width="60" Height="60"  Panel.ZIndex="99" CornerRadius="10" Padding="0">
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Border.Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation  Duration="0:0:0.5" From="0.8"  To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
+                                            <Border.Background>
+                                                <SolidColorBrush Opacity="0.8" Color="#000"></SolidColorBrush>
+                                            </Border.Background>
+                                        </Border>
                                         <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
                                                 <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
