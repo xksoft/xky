@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -127,9 +128,17 @@ namespace Xky.Core
             _device = Client.GetDevice(model.Sn);
 
 
+            var node = Client.LocalNodes.Values.ToList().Find(p => p.Serial == _device.NodeSerial);
+            if (node != null)
+            {
+                _device.NodeUrl = "http://" + node.Ip + ":8080";
+                Console.WriteLine(_device.NodeUrl);
+            }
+
+
             if (_device == null) throw new Exception("无法获取这个设备的信息");
 
-            if (_device.NodeUrl == null) throw new Exception("该设备没有设置P2P转发模式");
+            if (_device.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
 
 
             _socket?.Disconnect();
@@ -178,7 +187,7 @@ namespace Xky.Core
 
         public event ShowLog OnShowLog;
 
-        public delegate void ShowLog(object sender, string log,Color color);
+        public delegate void ShowLog(object sender, string log, Color color);
 
         #endregion
 
