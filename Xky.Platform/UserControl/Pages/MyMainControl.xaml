@@ -594,6 +594,7 @@
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
+                                        
                                         <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
                                                 <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
@@ -607,13 +608,32 @@
                                         <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                <Border Background="#DFE5EB" CornerRadius="5" Margin="5">
                                     <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                        <Rectangle Width="16" Height="16"  Panel.ZIndex="100">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#FFE21313"></SolidColorBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Border Width="60" Height="60"  Panel.ZIndex="99" CornerRadius="10" >
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Border.Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation  Duration="0:0:0.5"  To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
+                                            <Border.Background>
+                                                <SolidColorBrush Opacity="0.8" Color="#000"></SolidColorBrush>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#fff" BorderThickness="2" >
                                             <Border.Background>
                                                 <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
                                             </Border.Background>
@@ -623,7 +643,8 @@
                                             <Grid>
                                             </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
