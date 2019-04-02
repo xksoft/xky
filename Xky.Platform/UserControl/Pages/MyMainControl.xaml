@@ -406,7 +406,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Core:MirrorScreen x:Name="MyMirrorScreen"  MaxWidth="432" Grid.ColumnSpan="5"
-                                       MaxHeight="768"  IsShowArrow="False" IsShowFps="False"  />
+                                       MaxHeight="768"  IsShowArrow="False" IsShowFps="False" OnShowLog="MyMirrorScreen_OnOnShowLog" />
 
                 </Grid>
 

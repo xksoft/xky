@@ -68,5 +68,7 @@ namespace Xky.Platform.UserControl.Pages
         {
             Common.ShowToast(log, color);
         }
+
+
     }
 }
