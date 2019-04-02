@@ -28,7 +28,7 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
-            <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15">
+            <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15" >
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -76,13 +76,11 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="DeviceId"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"
-                                                      Margin="0,0,3,0"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"   Margin="0,0,3,0"
 
                                                       TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel x:Name="DeviceName"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"
-                                                      Margin="0,0,3,0"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"   Margin="0,0,3,0"
 
                                                       TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
@@ -194,9 +192,8 @@
 
             </Grid>
 
-            <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"
-                     ScrollViewer.CanContentScroll="False"
-                     SelectionChanged="DeviceListBox_OnSelectionChanged">
+            <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" 
+                     SelectionChanged="DeviceListBox_OnSelectionChanged" >
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
@@ -243,8 +240,7 @@
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120" Margin="0"
-                              Cursor="Hand">
+                        <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120"  Margin="0" Cursor="Hand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
                                 <ColumnDefinition Width="*" />
@@ -286,13 +282,11 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="DeviceId"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"
-                                                      Margin="0,0,3,0"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"   Margin="0,0,3,0"
 
                                                       TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel x:Name="DeviceName"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"
-                                                      Margin="0,0,3,0"
+                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"   Margin="0,0,3,0"
 
                                                       TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
@@ -373,7 +367,7 @@
                 <ListBox.Template>
                     <ControlTemplate TargetType="ListBox">
 
-                        <ScrollViewer
+                        <ScrollViewer 
                             HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
 
@@ -398,7 +392,7 @@
                 </Border.Effect>
             </Border>
             <Viewbox MaxHeight="920" MaxWidth="450" Margin="20">
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" 
                       Height="920" Width="450">
                     <Grid.Background>
                         <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
@@ -411,8 +405,9 @@
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
 
-                    <Core:MirrorScreen x:Name="MyMirrorScreen" MaxWidth="432" Grid.ColumnSpan="5"
-                                       MaxHeight="768" IsShowArrow="False" IsShowFps="False" OnShowLog="MyMirrorScreen_OnOnShowLog"/>
+                    <Core:MirrorScreen x:Name="MyMirrorScreen"  MaxWidth="432" Grid.ColumnSpan="5"
+                                       MaxHeight="768"  IsShowArrow="False" IsShowFps="False"  />
+
                 </Grid>
 
             </Viewbox>
@@ -421,697 +416,808 @@
         <Grid Grid.Column="3" Background="#EFF2F5">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Border Margin="15,60,15,10" CornerRadius="5" Height="30" BorderBrush="#ccc" BorderThickness="1">
-                    <local:MyTextBox Grid.Row="0" BorderThickness="0"
-
-                                     TextBoxBackground="#fff"
-                                     TextBoxForeground="#616161"
-                                     TextBoxWaterText="搜索模块"
-                                     WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Border  Margin="15,60,15,10"  CornerRadius="5" Height="30"  BorderBrush="#ccc" BorderThickness="1" >
+                    <local:MyTextBox  Grid.Row="0"  BorderThickness="0" 
+                             
+                                 TextBoxBackground="#fff"
+                                 TextBoxForeground="#616161" 
+                                 TextBoxWaterText="搜索模块"
+                                 WindowChrome.IsHitTestVisibleInChrome="True" >
+                    </local:MyTextBox>
                 </Border>
-                <WrapPanel Grid.Row="1" Margin="10,10,10,10" Orientation="Horizontal">
+                <WrapPanel     Grid.Row="1" Margin="10,10,10,10"  Orientation="Horizontal">
                     <Border BorderBrush="#999" BorderThickness="1" CornerRadius="4" Padding="1" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="{StaticResource BlueLine}"
-                                        ButtonBackground2="{StaticResource BlueLine}" ButtonText="全部模块" />
+                        <local:MyButton MinWidth="10"  Margin="0" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="全部模块"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="15" Margin="0" ButtonBackground1="#9736f1"
-                                        ButtonBackground2="#9736f1" ButtonText="陌陌" />
+                        <local:MyButton MinWidth="15"  Margin="0" ButtonBackground1="#9736f1" ButtonBackground2="#9736f1"  ButtonText="陌陌"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#0078d7"
-                                        ButtonBackground2="#0078d7" ButtonText="知乎相关" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#0078d7" ButtonBackground2="#0078d7"  ButtonText="知乎相关"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="{StaticResource BlueLine}"
-                                        ButtonBackground2="{StaticResource BlueLine}" ButtonText="陌陌" />
+                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#4291fc"
-                                        ButtonBackground2="#4291fc" ButtonText="QQ好友相关" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#4291fc" ButtonBackground2="#4291fc"  ButtonText="QQ好友相关" />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#e7c000"
-                                        ButtonBackground2="#e7c000" ButtonText="运营组专用" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#e7c000" ButtonBackground2="#e7c000"  ButtonText="运营组专用" />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
 
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#f90100"
-                                        ButtonBackground2="#f90100" ButtonText="今日头条" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#f90100" ButtonBackground2="#f90100"  ButtonText="今日头条"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#300d21"
-                                        ButtonBackground2="#300d21" ButtonText="抖音" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#300d21" ButtonBackground2="#300d21"  ButtonText="抖音"  />
                     </Border>
                     <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="#02950d"
-                                        ButtonBackground2="#02950d" ButtonText="换ip" />
+                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#02950d" ButtonBackground2="#02950d"  ButtonText="换ip"  />
                     </Border>
                 </WrapPanel>
 
                 <Grid Grid.Row="3" Margin="10,0,10,20">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
-                            <RowDefinition />
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ccc" Margin="5,0,5,20">
+                        <Border  Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ccc" Margin="5,0,5,20">
                             <Label HorizontalContentAlignment="Left" Foreground="#999" HorizontalAlignment="Left">“陌陌”下一共有8个模块</Label>
                         </Border>
 
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                            <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,0">
+                        <ScrollViewer  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
+                            <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,0" >
 
                                 <Border Background="#DFE5EB" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10,10,10,10" VerticalAlignment="Center"
-                                          HorizontalAlignment="Left">
+                                <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left" >
+                                    
+                                    <Grid.Triggers>
+                                        <EventTrigger RoutedEvent="Mouse.MouseDown">
 
-                                        <Grid.Triggers>
-                                            <EventTrigger RoutedEvent="Mouse.MouseDown" />
-                                        </Grid.Triggers>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Ellipse Width="20" Height="20" Panel.ZIndex="100">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush Color="#999" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="16" Height="16" Panel.ZIndex="100">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush Color="#373d45" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="4" Height="4" Panel.ZIndex="100">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush Color="#000" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Border Width="60" Height="60" Panel.ZIndex="99" CornerRadius="10">
-                                            <Border.Background>
-                                                <SolidColorBrush Opacity="0.8" Color="#000" />
-                                            </Border.Background>
-                                        </Border>
+                                        </EventTrigger>
+                                    </Grid.Triggers>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Ellipse Width="20" Height="20"  Panel.ZIndex="100">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="#999"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Width="16" Height="16"  Panel.ZIndex="100">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="#373d45"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Width="4" Height="4"  Panel.ZIndex="100">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush  Color="#000"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Border Width="60" Height="60"  Panel.ZIndex="99" CornerRadius="10">
+                                        <Border.Background>
+                                            <SolidColorBrush Opacity="0.8" Color="#000"></SolidColorBrush>
+                                        </Border.Background>
+                                    </Border>
+                                   
+                                    <Viewbox  x:Name="testicon" Width="32" Panel.ZIndex="99">
+                                       
+                                        <Border RenderTransformOrigin="0.5, 0.5">
 
-                                        <Viewbox x:Name="testicon" Width="32" Panel.ZIndex="99">
-
-                                            <Border RenderTransformOrigin="0.5, 0.5">
-
-                                                <Path Fill="#ccc"
-                                                      Data="M109.801714032956,0.481527332780307A100,100,0,0,0,90.1982859670439,0.481527332780307L78.2286492059153,28.2294748200843 64.6452447380502,33.8559051738734 36.5606715836355,22.6989546637263A100,100,0,0,0,22.6989546637263,36.5606715836355L33.8559051738734,64.6452447380502 28.2294748200843,78.2286492059153 0.481527332780318,90.1982859670439A100,100,0,0,0,0.481527332780307,109.801714032956L28.2294748200843,121.771350794085 33.8559051738734,135.35475526195 22.6989546637263,163.439328416365A100,100,0,0,0,36.5606715836354,177.301045336274L64.6452447380502,166.144094826127 78.2286492059153,171.770525179916 90.1982859670439,199.51847266722A100,100,0,0,0,109.801714032956,199.51847266722L121.771350794085,171.770525179916 135.35475526195,166.144094826127 163.439328416365,177.301045336274A100,100,0,0,0,177.301045336274,163.439328416365L166.144094826127,135.35475526195 171.770525179916,121.771350794085 199.51847266722,109.801714032956A100,100,0,0,0,199.51847266722,90.1982859670439L171.770525179916,78.2286492059153 166.144094826127,64.6452447380502 177.301045336274,36.5606715836354A100,100,0,0,0,163.439328416365,22.6989546637263L135.35475526195,33.8559051738734 121.771350794085,28.2294748200843z" />
-                                                <Border.RenderTransform>
-                                                    <RotateTransform x:Name="noFreeze" />
-                                                </Border.RenderTransform>
-                                                <Border.Triggers>
-                                                    <EventTrigger RoutedEvent="Loaded">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
-                                                                    To="360" Duration="0:0:2" RepeatBehavior="Forever" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </Border.Triggers>
-                                            </Border>
-
-
-                                        </Viewbox>
-                                        <Viewbox x:Name="testicon2" Width="16" Panel.ZIndex="99" Margin="31,0,0,30">
-                                            <Border RenderTransformOrigin="0.5, 0.5">
-                                                <Path Fill="#ccc"
-                                                      Data="F1 M1024,1024z M0,0z M512.571429,373.257143C478.4,373.257143 446.4,386.514286 422.171429,410.742857 398.057143,434.971428 384.685715,466.971428 384.685714,501.142857 384.685714,535.314286 398.057143,567.314286 422.171429,591.542857 446.4,615.657143 478.4,629.028571 512.571429,629.028571 546.742858,629.028571 578.742858,615.657142 602.971429,591.542857 627.085715,567.314286 640.457143,535.314286 640.457143,501.142857 640.457143,466.971428 627.085714,434.971428 602.971429,410.742857A126.811429,126.811429,0,0,0,512.571429,373.257143z M983.771429,642.4L909.028571,578.514286C912.571428,556.8 914.4,534.628572 914.4,512.571429 914.4,490.514286 912.571429,468.228572 909.028571,446.628571L983.771429,382.742857A36.605714,36.605714,0,0,0,994.4,342.514286L993.371429,339.542857A505.714286,505.714286,0,0,0,902.4,182.171429L900.342857,179.771429A36.708571,36.708571,0,0,0,860.228571,168.914286L767.428571,201.942857C733.142857,173.828571,694.971428,151.657143,653.6,136.228571L635.657143,39.1999999999999A36.628571,36.628571,0,0,0,606.171429,9.82857099999993L603.085714,9.25714299999993C543.657143,-1.48571400000007,481.028571,-1.48571400000007,421.6,9.25714299999993L418.514286,9.82857099999993A36.628571,36.628571,0,0,0,389.028571,39.1999999999999L370.971429,136.685714A403.931429,403.931429,0,0,0,257.942857,202.171429L164.457143,168.914286A36.571429,36.571429,0,0,0,124.342857,179.771429L122.285714,182.171429A509.634286,509.634286,0,0,0,31.3142859999998,339.542857L30.2857139999998,342.514286C25.1428569999998,356.8,29.3714279999998,372.8,40.9142859999998,382.742857L116.571429,447.314286C113.028572,468.8 111.314286,490.742857 111.314286,512.457143 111.314286,534.4 113.028572,556.342857 116.571429,577.6L41.1428569999999,642.171429A36.605714,36.605714,0,0,0,30.5142859999998,682.4L31.5428569999998,685.371429C52.2285709999998,742.857143,82.7428569999998,796,122.514286,842.742857L124.571429,845.142857A36.708571,36.708571,0,0,0,164.685714,856L258.171429,822.742857C292.228572,850.742857,330.171429,872.914286,371.2,888.228571L389.257143,985.714286A36.628571,36.628571,0,0,0,418.742857,1015.085714L421.828571,1015.657143A512.308571,512.308571,0,0,0,603.314286,1015.657143L606.4,1015.085714A36.628571,36.628571,0,0,0,635.885714,985.714286L653.828571,888.685714C695.2,873.142857,733.371428,851.085714,767.657143,822.971429L860.457143,856A36.571429,36.571429,0,0,0,900.571429,845.142857L902.628571,842.742857C942.4,795.771428,972.914285,742.857143,993.6,685.371429L994.628571,682.4C999.542857,668.228571,995.314285,652.342857,983.771429,642.4z M512.571429,702.057143C401.6,702.057143 311.657143,612.114286 311.657143,501.142857 311.657143,390.171428 401.6,300.228571 512.571429,300.228571 623.542858,300.228571 713.485715,390.171428 713.485714,501.142857 713.485713,612.114286 623.542857,702.057143 512.571429,702.057143z" />
-                                                <Border.RenderTransform>
-                                                    <RotateTransform x:Name="noFreeze2" />
-                                                </Border.RenderTransform>
-                                                <Border.Triggers>
-                                                    <EventTrigger RoutedEvent="Loaded">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
-                                                                    To="-360" Duration="0:0:1" RepeatBehavior="Forever" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </Border.Triggers>
-                                            </Border>
-
-
-                                        </Viewbox>
-                                        <Ellipse Width="8" Height="8" Panel.ZIndex="100" Margin="31,0,0,30">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush Color="#999" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Ellipse Width="4" Height="4" Panel.ZIndex="100" Margin="31,0,0,30">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush Color="#666" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#fff"
-                                                BorderThickness="2">
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app.jpg" />
-                                            </Border.Background>
-                                            <Grid />
-                                        </Border>
-
-                                        <TextBlock x:Name="testapp" Foreground="#424B5C" Margin="0,10,0,0"
-                                                   MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            全自动注册今日头条
-                                            <TextBlock.Triggers>
-
-                                                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                            <Path Fill="#ccc" Data="M109.801714032956,0.481527332780307A100,100,0,0,0,90.1982859670439,0.481527332780307L78.2286492059153,28.2294748200843 64.6452447380502,33.8559051738734 36.5606715836355,22.6989546637263A100,100,0,0,0,22.6989546637263,36.5606715836355L33.8559051738734,64.6452447380502 28.2294748200843,78.2286492059153 0.481527332780318,90.1982859670439A100,100,0,0,0,0.481527332780307,109.801714032956L28.2294748200843,121.771350794085 33.8559051738734,135.35475526195 22.6989546637263,163.439328416365A100,100,0,0,0,36.5606715836354,177.301045336274L64.6452447380502,166.144094826127 78.2286492059153,171.770525179916 90.1982859670439,199.51847266722A100,100,0,0,0,109.801714032956,199.51847266722L121.771350794085,171.770525179916 135.35475526195,166.144094826127 163.439328416365,177.301045336274A100,100,0,0,0,177.301045336274,163.439328416365L166.144094826127,135.35475526195 171.770525179916,121.771350794085 199.51847266722,109.801714032956A100,100,0,0,0,199.51847266722,90.1982859670439L171.770525179916,78.2286492059153 166.144094826127,64.6452447380502 177.301045336274,36.5606715836354A100,100,0,0,0,163.439328416365,22.6989546637263L135.35475526195,33.8559051738734 121.771350794085,28.2294748200843z"></Path>
+                                            <Border.RenderTransform>
+                                                <RotateTransform x:Name="noFreeze" />
+                                            </Border.RenderTransform>
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard>
                                                             <DoubleAnimation
-                                                                Storyboard.TargetName="testapp"
-                                                                Storyboard.TargetProperty="(TextBlock.Opacity)"
-                                                                From="1.0" To="0.2" Duration="0:0:0.5"
-                                                                AutoReverse="True" RepeatBehavior="Forever" />
+            Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
+            To="360" Duration="0:0:2" RepeatBehavior="Forever" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
-                                            </TextBlock.Triggers>
-
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg" />
-                                            </Border.Background>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
-                                            </Border.Effect>
-                                            <Grid />
+                                            </Border.Triggers>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            探探注册
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg" />
-                                            </Border.Background>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
-                                            </Border.Effect>
-                                            <Grid />
+                                       
+                                       
+                                    </Viewbox>
+                                    <Viewbox  x:Name="testicon2" Width="16" Panel.ZIndex="99" Margin="31,0,0,30">
+                                        <Border RenderTransformOrigin="0.5, 0.5">
+                                            <Path Fill="#ccc" Data="F1 M1024,1024z M0,0z M512.571429,373.257143C478.4,373.257143 446.4,386.514286 422.171429,410.742857 398.057143,434.971428 384.685715,466.971428 384.685714,501.142857 384.685714,535.314286 398.057143,567.314286 422.171429,591.542857 446.4,615.657143 478.4,629.028571 512.571429,629.028571 546.742858,629.028571 578.742858,615.657142 602.971429,591.542857 627.085715,567.314286 640.457143,535.314286 640.457143,501.142857 640.457143,466.971428 627.085714,434.971428 602.971429,410.742857A126.811429,126.811429,0,0,0,512.571429,373.257143z M983.771429,642.4L909.028571,578.514286C912.571428,556.8 914.4,534.628572 914.4,512.571429 914.4,490.514286 912.571429,468.228572 909.028571,446.628571L983.771429,382.742857A36.605714,36.605714,0,0,0,994.4,342.514286L993.371429,339.542857A505.714286,505.714286,0,0,0,902.4,182.171429L900.342857,179.771429A36.708571,36.708571,0,0,0,860.228571,168.914286L767.428571,201.942857C733.142857,173.828571,694.971428,151.657143,653.6,136.228571L635.657143,39.1999999999999A36.628571,36.628571,0,0,0,606.171429,9.82857099999993L603.085714,9.25714299999993C543.657143,-1.48571400000007,481.028571,-1.48571400000007,421.6,9.25714299999993L418.514286,9.82857099999993A36.628571,36.628571,0,0,0,389.028571,39.1999999999999L370.971429,136.685714A403.931429,403.931429,0,0,0,257.942857,202.171429L164.457143,168.914286A36.571429,36.571429,0,0,0,124.342857,179.771429L122.285714,182.171429A509.634286,509.634286,0,0,0,31.3142859999998,339.542857L30.2857139999998,342.514286C25.1428569999998,356.8,29.3714279999998,372.8,40.9142859999998,382.742857L116.571429,447.314286C113.028572,468.8 111.314286,490.742857 111.314286,512.457143 111.314286,534.4 113.028572,556.342857 116.571429,577.6L41.1428569999999,642.171429A36.605714,36.605714,0,0,0,30.5142859999998,682.4L31.5428569999998,685.371429C52.2285709999998,742.857143,82.7428569999998,796,122.514286,842.742857L124.571429,845.142857A36.708571,36.708571,0,0,0,164.685714,856L258.171429,822.742857C292.228572,850.742857,330.171429,872.914286,371.2,888.228571L389.257143,985.714286A36.628571,36.628571,0,0,0,418.742857,1015.085714L421.828571,1015.657143A512.308571,512.308571,0,0,0,603.314286,1015.657143L606.4,1015.085714A36.628571,36.628571,0,0,0,635.885714,985.714286L653.828571,888.685714C695.2,873.142857,733.371428,851.085714,767.657143,822.971429L860.457143,856A36.571429,36.571429,0,0,0,900.571429,845.142857L902.628571,842.742857C942.4,795.771428,972.914285,742.857143,993.6,685.371429L994.628571,682.4C999.542857,668.228571,995.314285,652.342857,983.771429,642.4z M512.571429,702.057143C401.6,702.057143 311.657143,612.114286 311.657143,501.142857 311.657143,390.171428 401.6,300.228571 512.571429,300.228571 623.542858,300.228571 713.485715,390.171428 713.485714,501.142857 713.485713,612.114286 623.542857,702.057143 512.571429,702.057143z"></Path>
+                                            <Border.RenderTransform>
+                                                <RotateTransform x:Name="noFreeze2" />
+                                            </Border.RenderTransform>
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+            Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)"
+            To="-360" Duration="0:0:1" RepeatBehavior="Forever" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            加好友并点赞
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg" />
-                                            </Border.Background>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
-                                            </Border.Effect>
-                                            <Grid />
-                                        </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            扫码二维码
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center"
-                                                            AlignmentY="Center"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
-                                            </Border.Background>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
-                                            </Border.Effect>
-                                            <Grid />
-                                        </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            定位
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
 
 
+                                    </Viewbox>
+                                    <Ellipse Width="8" Height="8"  Panel.ZIndex="100" Margin="31,0,0,30">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush  Color="#999"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Width="4" Height="4"  Panel.ZIndex="100" Margin="31,0,0,30">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush  Color="#666"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#fff" BorderThickness="2" >
+                                        <Border.Background>
+                                            <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app.jpg" />
+                                        </Border.Background>
+                                        <Grid>
+                                        </Grid>
+                                    </Border>
+
+                                        <TextBlock  x:Name="testapp" Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">全自动注册今日头条
+                                        <TextBlock.Triggers>
+                                          
+                                           <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+            Storyboard.TargetName="testapp" 
+            Storyboard.TargetProperty="(TextBlock.Opacity)"
+            From="1.0" To="0.2" Duration="0:0:0.5" 
+            AutoReverse="True" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                      
+                                    </TextBlock>
+                                </Grid>
+                               </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="#DFE5EB" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Width="16" Height="16"  Panel.ZIndex="100">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#FFE21313"></SolidColorBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Border Width="60" Height="60"  Panel.ZIndex="99" CornerRadius="10" >
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Border.Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation  Duration="0:0:0.5"  To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
+                                            <Border.Background>
+                                                <SolidColorBrush Opacity="0.8" Color="#000"></SolidColorBrush>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#fff" BorderThickness="2" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                              
+                                
                                 <!--测试重复数据-->
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            探探注册
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg" />
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            加好友并点赞
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            扫码二维码
-                                        </TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center"
-                                                            AlignmentY="Center"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            定位
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            探探注册
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg" />
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            加好友并点赞
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            扫码二维码
-                                        </TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center"
-                                                            AlignmentY="Center"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            定位
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            探探注册
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg" />
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            加好友并点赞
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            扫码二维码
-                                        </TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center"
-                                                            AlignmentY="Center"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            定位
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            探探注册
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg" />
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            加好友并点赞
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            扫码二维码
-                                        </TextBlock>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
                                     </Grid>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="5" Margin="5">
-                                    <Grid Width="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc"
-                                                BorderThickness="0">
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                             <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" AlignmentX="Center"
-                                                            AlignmentY="Center"
-                                                            ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
                                             </Border.Background>
                                             <Border.Effect>
-                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3"
-                                                                  Direction="270" />
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
                                             </Border.Effect>
-                                            <Grid />
+                                            <Grid>
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Foreground="#424B5C" Margin="0,10,0,0" MaxWidth="60"
-                                                   TextWrapping="Wrap" Height="30" Grid.Row="1"
-                                                   VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            定位
-                                        </TextBlock>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"   ImageSource="/Xky.Platform;component/Resources/Icon/app_2.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">探探注册</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush  Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_3.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">加好友并点赞</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  ImageSource="/Xky.Platform;component/Resources/Icon/app_4.jpg"/>
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock  Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">扫码二维码</TextBlock>
+                                    </Grid>
+                                </Border>
+                                <Border Background="Transparent" CornerRadius="5" Margin="5">
+                                    <Grid Width="80" Margin="5,10,5,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                            </Border.Background>
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
+                                            </Border.Effect>
+                                            <Grid>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center">定位</TextBlock>
                                     </Grid>
                                 </Border>
                             </WrapPanel>
@@ -1119,10 +1225,16 @@
                     </Grid>
 
 
+
+
+
+
+
                 </Grid>
 
 
             </Grid>
+
 
 
         </Grid>
