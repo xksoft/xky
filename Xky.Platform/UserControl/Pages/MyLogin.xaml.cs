@@ -48,6 +48,8 @@ namespace Xky.Platform.UserControl.Pages
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
                     Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
+                    //启动局域网节点探查器
+                    Client.SearchLocalNode();
                     await Task.Delay(500);
                     Common.UiAction(() =>
                     {
