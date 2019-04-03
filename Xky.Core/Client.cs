@@ -553,7 +553,7 @@ namespace Xky.Core
                         {
                             using (var client = new WebClient())
                             {
-                                var data = client.DownloadData(json["t_logo"]?.ToString());
+                                var data = client.DownloadData(json["t_logo"]?.ToString()+"@96h");
                                 MainWindow.Dispatcher.Invoke(() => {
                                     module.Logo = ByteToBitmapSource(data);
                                 });
