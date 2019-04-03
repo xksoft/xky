@@ -119,6 +119,7 @@ namespace Xky.Core
                                 Ip = ip.Address.ToString(),
                                 LoadTick = DateTime.Now.Ticks
                             };
+                            Console.WriteLine("找到局域网节点"+serial);
                             LocalNodes.Add(node.Serial, node);
                         }
                         else

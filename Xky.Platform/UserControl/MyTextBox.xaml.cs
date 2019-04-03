@@ -56,7 +56,6 @@ namespace Xky.Platform.UserControl
             {
                 var color = ((SolidColorBrush) TextBoxBackground).Color;
                 color = Color.FromRgb((byte) (color.R + 10), (byte) (color.G + 10), (byte) (color.B + 10));
-
                 return new SolidColorBrush(color);
             }
         }
