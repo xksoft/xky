@@ -61,7 +61,7 @@ namespace Xky.Platform.UserControl.Pages
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
                     Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
-
+                    Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.Modules_Panel_Tags; });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else

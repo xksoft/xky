@@ -354,6 +354,7 @@ namespace Xky.Core
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
         public static readonly ObservableCollection<Module> Modules_Panel = new ObservableCollection<Module>();
+        public static readonly ObservableCollection<string> Modules_Panel_Tags = new ObservableCollection<string> { "所有模块"};
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
@@ -469,7 +470,13 @@ namespace Xky.Core
                 {
                     module.Id = (int)json["t_id"];
                     module.Name = json["t_name"]?.ToString();
-                  
+                    module.Price = (int)json["t_price"];
+                    module.Status= (int)json["t_status"];
+                    module.Uid= (int)json["t_uid"];
+                    module.Type = (int)json["t_type"];
+                    module.Tags = json["t_tags"].Values<string>().ToList();
+
+
                 }
                 else
                 {
@@ -477,16 +484,26 @@ namespace Xky.Core
                     {
                         Id = (int)json["t_id"],
                         Name= json["t_name"]?.ToString(),
-                       
-                    };
+                        Price = (int)json["t_price"],
+                        Status = (int)json["t_status"],
+                        Uid = (int)json["t_uid"],
+                        Type = (int)json["t_type"],
+                        Tags = json["t_tags"].Values<string>().ToList()
 
+                    };
+                    foreach (string tag in module.Tags)
+                    {
+
+
+                        if (!Modules_Panel_Tags.Contains(tag)) { Modules_Panel_Tags.Add(tag); }
+                    }
                     StartAction(() =>
                     {
                         try
                         {
                             using (var client = new WebClient())
                             {
-                                var data = client.DownloadData(json["t_logo"]?.ToString());
+                                var data = client.DownloadData(json["t_logo"]?.ToString()+"@96h");
                                 MainWindow.Dispatcher.Invoke(() => {
                                     module.Logo = ByteToBitmapSource(data);
                                 });
@@ -588,10 +605,11 @@ namespace Xky.Core
                 image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.UriSource = null;
-                image.DecodePixelWidth = 100;
+                
+              //image.DecodePixelWidth = 100;
                 image.EndInit();
             }
-
+            image.Freeze();
             return image;
         }
 
