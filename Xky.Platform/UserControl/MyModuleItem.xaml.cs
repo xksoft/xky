@@ -36,13 +36,22 @@ namespace Xky.Platform.UserControl
             set => SetValue(IsRunningProperty, value);
         }
 
-        public static readonly DependencyProperty ModuleNameProperty = DependencyProperty.Register(
-            "ModuleName", typeof(string), typeof(MyModuleItem), new PropertyMetadata("未命名模块"));
+        public  static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text", typeof(string), typeof(MyModuleItem), new PropertyMetadata("未命名模块"));
 
-        public string ModuleName
+        public  string Text
         {
-            get => (string)GetValue(ModuleNameProperty);
-            set => SetValue(ModuleNameProperty, value);
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
+        public  static readonly DependencyProperty LogoProperty = DependencyProperty.Register(
+            "Logo", typeof(string), typeof(MyModuleItem), new PropertyMetadata((ImageSource)null));
+
+        public ImageSource Logo
+        {
+            get => (ImageSource)GetValue(LogoProperty);
+            set => SetValue(LogoProperty, value);
         }
 
     }
