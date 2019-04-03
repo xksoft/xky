@@ -459,7 +459,6 @@ namespace Xky.Core
         ///     添加或更新模块面板
         /// </summary>
         /// <param name="json"></param>
-        /// <param name="loadtick"></param>
         private static Module PushModule(JToken json)
         {
             lock ("devices")
