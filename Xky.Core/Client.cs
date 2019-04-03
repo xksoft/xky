@@ -358,6 +358,7 @@ namespace Xky.Core
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
         public static readonly ObservableCollection<Module> Modules_Panel = new ObservableCollection<Module>();
+        public static readonly ObservableCollection<string> Modules_Panel_Tags = new ObservableCollection<string> { "所有模块"};
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
@@ -518,15 +519,22 @@ namespace Xky.Core
                 {
                     module.Id = (int) json["t_id"];
                     module.Name = json["t_name"]?.ToString();
+                  
                 }
                 else
                 {
                     module = new Module
                     {
-                        Id = (int) json["t_id"],
-                        Name = json["t_name"]?.ToString(),
+                        Id = (int)json["t_id"],
+                        Name= json["t_name"]?.ToString(),
+                       
                     };
+                    foreach (string tag in module.Tags)
+                    {
 
+
+                        if (!Modules_Panel_Tags.Contains(tag)) { Modules_Panel_Tags.Add(tag); }
+                    }
                     StartAction(() =>
                     {
                         try
@@ -534,7 +542,9 @@ namespace Xky.Core
                             using (var client = new WebClient())
                             {
                                 var data = client.DownloadData(json["t_logo"]?.ToString());
-                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
+                                MainWindow.Dispatcher.Invoke(() => {
+                                    module.Logo = ByteToBitmapSource(data);
+                                });
                             }
                         }
                         catch (Exception e)
@@ -638,10 +648,11 @@ namespace Xky.Core
                 image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.UriSource = null;
-                image.DecodePixelWidth = 100;
+                
+              //image.DecodePixelWidth = 100;
                 image.EndInit();
             }
-
+            image.Freeze();
             return image;
         }
 

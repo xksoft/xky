@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,7 +62,7 @@ namespace Xky.Platform.UserControl.Pages
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
                     Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
-
+                    Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.Modules_Panel_Tags; });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else
@@ -105,6 +106,21 @@ namespace Xky.Platform.UserControl.Pages
         private void Btn_task(object sender, RoutedEventArgs e)
         {
             MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+        }
+
+        private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
+        {
+            RadioButton btn = (RadioButton)e.Source;
+            if (btn.IsChecked.Value) {
+                if (btn.Tag.ToString() == "所有模块")
+                {
+                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
+                }
+                else { Common.UiAction(() => { ModulesPanel.ItemsSource = from module in Client.Modules_Panel where module.Tags.Contains(btn.Tag.ToString()) select module; }); }
+              
+
+            }
+           
         }
     }
 }

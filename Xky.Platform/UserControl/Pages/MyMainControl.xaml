@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
+             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
              mc:Ignorable="d"
              d:DesignHeight="850" d:DesignWidth="1200">
 
@@ -518,38 +519,53 @@
                                  WindowChrome.IsHitTestVisibleInChrome="True" >
                     </local:MyTextBox>
                 </Border>
-                <WrapPanel     Grid.Row="1" Margin="10,10,10,10"  Orientation="Horizontal">
-                    <Border BorderBrush="#999" BorderThickness="1" CornerRadius="4" Padding="1" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"  Margin="0" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="全部模块"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="15"  Margin="0" ButtonBackground1="#9736f1" ButtonBackground2="#9736f1"  ButtonText="陌陌"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#0078d7" ButtonBackground2="#0078d7"  ButtonText="知乎相关"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10" Margin="0" ButtonBackground1="{StaticResource BlueLine}" ButtonBackground2="{StaticResource BlueLine}"  ButtonText="陌陌"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#4291fc" ButtonBackground2="#4291fc"  ButtonText="QQ好友相关" />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#e7c000" ButtonBackground2="#e7c000"  ButtonText="运营组专用" />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
+               
+                <ItemsControl x:Name="ModulesTagsPanel" Grid.Row="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel     Margin="10,10,10,10"  Orientation="Horizontal">
+                            </WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
 
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#f90100" ButtonBackground2="#f90100"  ButtonText="今日头条"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#300d21" ButtonBackground2="#300d21"  ButtonText="抖音"  />
-                    </Border>
-                    <Border BorderBrush="#ccc" BorderThickness="0" CornerRadius="4" Padding="2" Margin="5" Height="30">
-                        <local:MyButton MinWidth="10"   Margin="0" ButtonBackground1="#02950d" ButtonBackground2="#02950d"  ButtonText="换ip"  />
-                    </Border>
-                </WrapPanel>
+                            <RadioButton MinWidth="10" GroupName="tag" Margin="0" Background="#000"  Click="RadioButton_ModuleTag_Click" Tag="{Binding}">
+                                    <RadioButton.Style>
+                                        <Style TargetType="{x:Type RadioButton}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RadioButton">
+                                                    <Border x:Name="TagBorder" BorderBrush="Transparent" Padding="1" BorderThickness="1" Margin="2"  CornerRadius="4" >
+                                                        <Border x:Name="TagBackground" BorderThickness="1"  CornerRadius="4"   Background="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-10}" >
+                                                        <TextBlock Padding="6" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="#fff" ></TextBlock>
+                                                    </Border>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                       
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="TagBackground" Property="Background" Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=+10}"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter  TargetName="TagBorder" Property="BorderBrush" Value="#999"></Setter>
+                                                            <Setter TargetName="TagBackground" Property="Background" Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-40}"></Setter>
+                                                        </Trigger>
 
-                <Grid Grid.Row="3" Margin="10,0,10,20">
+                                                    </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </RadioButton.Style>
+                                   
+                                </RadioButton>
+                            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+           
+
+                <Grid Grid.Row="2" Margin="10,0,10,20">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"></RowDefinition>
