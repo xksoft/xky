@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -105,6 +106,21 @@ namespace Xky.Platform.UserControl.Pages
         private void Btn_task(object sender, RoutedEventArgs e)
         {
             MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+        }
+
+        private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
+        {
+            RadioButton btn = (RadioButton)e.Source;
+            if (btn.IsChecked.Value) {
+                if (btn.Tag.ToString() == "所有模块")
+                {
+                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
+                }
+                else { Common.UiAction(() => { ModulesPanel.ItemsSource = from module in Client.Modules_Panel where module.Tags.Contains(btn.Tag.ToString()) select module; }); }
+              
+
+            }
+           
         }
     }
 }

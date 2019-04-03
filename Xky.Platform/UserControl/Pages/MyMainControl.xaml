@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
+             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
              mc:Ignorable="d"
              d:DesignHeight="850" d:DesignWidth="1200">
 
@@ -528,23 +529,29 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                           
-                                <RadioButton MinWidth="10" GroupName="tag" Margin="0" Background="#000">
+
+                            <RadioButton MinWidth="10" GroupName="tag" Margin="0" Background="#000"  Click="RadioButton_ModuleTag_Click" Tag="{Binding}">
                                     <RadioButton.Style>
                                         <Style TargetType="{x:Type RadioButton}">
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="RadioButton">
                                                     <Border x:Name="TagBorder" BorderBrush="Transparent" Padding="1" BorderThickness="1" Margin="2"  CornerRadius="4" >
-                                                    <Border  BorderThickness="1"  CornerRadius="4"   Background="{StaticResource BlueLine}" >
-                                                        <TextBlock Padding="5" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="#fff" ></TextBlock>
+                                                        <Border x:Name="TagBackground" BorderThickness="1"  CornerRadius="4"   Background="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-10}" >
+                                                        <TextBlock Padding="6" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="#fff" ></TextBlock>
                                                     </Border>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsChecked" Value="True">
+                                                       
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="TagBackground" Property="Background" Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=+10}"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="True">
                                                             <Setter  TargetName="TagBorder" Property="BorderBrush" Value="#999"></Setter>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
+                                                            <Setter TargetName="TagBackground" Property="Background" Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-40}"></Setter>
+                                                        </Trigger>
+
+                                                    </ControlTemplate.Triggers>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
