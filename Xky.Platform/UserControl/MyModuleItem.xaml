@@ -8,6 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="{x:Type local:MyModuleItem}">
+            <Style.Resources>
+                <DropShadowEffect x:Key="HoverShadow" BlurRadius="15" ShadowDepth="2" Opacity="0.5" Direction="270" ></DropShadowEffect>
+                <DropShadowEffect x:Key="NormalShadow" BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" ></DropShadowEffect>
+                <DropShadowEffect x:Key="MouseDownShadow" BlurRadius="15" ShadowDepth="2" Opacity="0.8" Direction="270" ></DropShadowEffect>
+            </Style.Resources>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type local:MyModuleItem}">
@@ -17,25 +22,68 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Border x:Name="RunningView" Width="60" Height="60"  Panel.ZIndex="99" CornerRadius="10" Padding="0">
+                                <Border x:Name="RunningView" Width="60" Height="60"  Panel.ZIndex="2" CornerRadius="10" Padding="0">
                                     <Border.Background>
                                         <SolidColorBrush Opacity="0.8" Color="Transparent"></SolidColorBrush>
                                     </Border.Background>
                                 </Border>
-                                <Border Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                <Border  x:Name="Shadow"  Effect="{StaticResource NormalShadow}" Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                     <Border.Background>
                                         <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
                                     </Border.Background>
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.3" Direction="270" />
-                                    </Border.Effect>
                                     <Grid>
                                     </Grid>
                                 </Border>
-                                <TextBlock Foreground="#424B5C" Margin="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding ModuleName}"></TextBlock>
+                                <TextBlock Foreground="#424B5C" Margin="0,0,0,0" Padding="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding ModuleName}"></TextBlock>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
+                            
+                            <EventTrigger RoutedEvent="Mouse.MouseDown">
+                                <BeginStoryboard >
+                                    <Storyboard >
+                                        <ObjectAnimationUsingKeyFrames 
+                        Storyboard.TargetName="Shadow"
+                        Storyboard.TargetProperty="Effect" >
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MouseDownShadow}"></DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                               
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Mouse.MouseUp">
+                                <BeginStoryboard >
+                                    <Storyboard >
+                                        <ObjectAnimationUsingKeyFrames 
+                        Storyboard.TargetName="Shadow"
+                        Storyboard.TargetProperty="Effect" >
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource HoverShadow}"></DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                                <BeginStoryboard >
+                                    <Storyboard >
+                                        <ObjectAnimationUsingKeyFrames 
+                        Storyboard.TargetName="Shadow"
+                        Storyboard.TargetProperty="Effect" >
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource HoverShadow}"></DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                                <BeginStoryboard >
+                                    <Storyboard >
+                                        <ObjectAnimationUsingKeyFrames 
+                        Storyboard.TargetName="Shadow"
+                        Storyboard.TargetProperty="Effect" >
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NormalShadow}"></DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
                             <Trigger Property="IsRunning" Value="True">
                                 <Setter TargetName="MainBackground" Property="Background" Value="#DFE5Eb"></Setter>
                                 <Setter TargetName="RunningView" Property="Background" Value="#000"></Setter>
