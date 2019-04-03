@@ -75,7 +75,7 @@ namespace Xky.Core
             {
                 AllowAutoRedirect = true
             };
-            var httpClient = new HttpClient(handler) {Timeout = TimeSpan.FromSeconds(15) };
+            var httpClient = new HttpClient(handler) {Timeout = TimeSpan.FromSeconds(15)};
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
             var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
             content.Headers.Add("Content-Type", "application/json");
@@ -142,7 +142,7 @@ namespace Xky.Core
         /// </summary>
         /// <param name="license"></param>
         /// <returns></returns>
-        public static  Response AuthLicense(string license)
+        public static Response AuthLicense(string license)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace Xky.Core
         ///     重新加载设备列表
         /// </summary>
         /// <returns></returns>
-        public static  Response LoadDevices()
+        public static Response LoadDevices()
         {
             try
             {
@@ -232,7 +232,7 @@ namespace Xky.Core
                     };
 
                 var loadtick = DateTime.Now.Ticks;
-                var response =  Post("get_device_list", new JObject {["session"] = License.Session});
+                var response = Post("get_device_list", new JObject {["session"] = License.Session});
 
                 if (response.Result)
                 {
@@ -405,6 +405,8 @@ namespace Xky.Core
                     node.NodeSocket = IO.Socket(url, options);
                     node.NodeSocket.On(Socket.EVENT_CONNECT, () =>
                     {
+                        node.NodeSocket.Emit("hello", (oo) => { Console.WriteLine(oo); });
+
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
                     });
