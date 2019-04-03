@@ -47,7 +47,29 @@ namespace Xky.Platform.UserControl.Pages
                 }
             });
         }
+        /// <summary>
+        /// 加载模块面板上的模块列表
+        /// </summary>
+        public void LoadModules_Panel()
+        {
+            Client.StartAction(async () =>
+            {
+               
 
+                var response = await Client.LoadModules_Panel();
+                if (response.Result)
+                {
+                    Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
+                    Common.UiAction(() => { DeviceListBox.ItemsSource = Client.Modules_Panel; });
+
+                    Common.ShowToast("模块面板加载成功");
+                }
+                else
+                {
+                    Common.ShowToast("模块面板加载失败");
+                }
+            });
+        }
 
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -56,6 +56,7 @@ namespace Xky.Platform.UserControl.Pages
                        // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadDevices();
+                        Common.MyMainControl.LoadModules_Panel();
                     });
                 }
                 else

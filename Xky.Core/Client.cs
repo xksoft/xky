@@ -305,6 +305,42 @@ namespace Xky.Core
         }
 
 
+        /// <summary>
+        ///     重新加载模块列表
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<Response> LoadModules_Panel()
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                    };
+                var response = await Post("get_module_panel", new JObject { ["session"] = License.Session });
+
+                if (response.Result)
+                {
+
+                    foreach (var json in (JArray)response.Json["list"]) PushModule(json);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
+
         #region 公开属性
 
         public static License License;
@@ -317,7 +353,7 @@ namespace Xky.Core
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
-
+        public static readonly ObservableCollection<Module> Modules_Panel = new ObservableCollection<Module>();
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
@@ -415,6 +451,34 @@ namespace Xky.Core
                 }
 
                 return device;
+            }
+        }
+
+        /// <summary>
+        ///     添加或更新模块面板
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="loadtick"></param>
+        private static Module PushModule(JToken json)
+        {
+            lock ("devices")
+            {
+                var module = Modules_Panel.ToList().Find(p => p.Id == (int)json["t_id"]);
+                //如果已经存在就更新
+                if (module != null)
+                {
+                    module.Id = (int)json["t_id"];
+                }
+                else
+                {
+                    module = new Module
+                    {
+                        Id = (int)json["t_id"]
+                    };
+                    MainWindow.Dispatcher.Invoke(() => { Modules_Panel.Add(module); });
+                }
+
+                return module;
             }
         }
 
