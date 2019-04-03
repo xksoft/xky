@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -121,6 +122,23 @@ namespace Xky.Platform.UserControl.Pages
 
             }
            
+        }
+
+        private void MyModuleItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MyModuleItem item = (MyModuleItem)((Border)e.Source).TemplatedParent;
+            item.IsRunning = true;
+            Client.StartAction(() =>
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Thread.Sleep(1000);
+                }
+               Dispatcher.Invoke(() =>
+                {
+                    item.IsRunning = false;
+                });
+            });
         }
     }
 }

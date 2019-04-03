@@ -27,7 +27,7 @@
                                         <SolidColorBrush Opacity="0.8" Color="Transparent"></SolidColorBrush>
                                     </Border.Background>
                                 </Border>
-                                <Border  x:Name="Shadow"  Effect="{StaticResource NormalShadow}" Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
+                                <Border  x:Name="Shadow"  Effect="{StaticResource NormalShadow}" Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#fff" BorderThickness="0" >
                                     <Border.Background>
                                         <ImageBrush RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="{Binding Logo}" />
                                     </Border.Background>
@@ -86,6 +86,7 @@
                             <Trigger Property="IsRunning" Value="True">
                                 <Setter TargetName="MainBackground" Property="Background" Value="#DFE5Eb"></Setter>
                                 <Setter TargetName="RunningView" Property="Background" Value="#000"></Setter>
+                                <Setter TargetName="Shadow" Property="BorderThickness" Value="2"></Setter>
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
