@@ -97,7 +97,7 @@ namespace Xky.Core
             };
         }
 
-        internal static void SearchLocalNode()
+        public static void SearchLocalNode()
         {
             StartAction(() =>
             {

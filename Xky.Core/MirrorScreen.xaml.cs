@@ -31,8 +31,6 @@ namespace Xky.Core
         public MirrorScreen()
         {
             InitializeComponent();
-            //启动局域网节点探查器
-            Client.SearchLocalNode();
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
             _fpsTimer = new Timer {Enabled = true, Interval = 1000};
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
