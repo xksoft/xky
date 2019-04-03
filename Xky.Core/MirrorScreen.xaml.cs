@@ -85,7 +85,6 @@ namespace Xky.Core
                         {
                             AddLabel("成功解析画面..", Colors.Lime);
                             _isShow = true;
-                            //  HideLoading();
                         }
                     });
                 }

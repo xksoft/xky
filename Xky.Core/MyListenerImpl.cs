@@ -9,29 +9,39 @@ namespace Xky.Core
 {
     public class MyListenerImpl : IListener, IComparable<IListener>
     {
-        private static int id_counter;
-        private int Id;
-        private readonly Action fn1;
-        private readonly Action<object> fn;
+        private static int _idCounter;
+        private readonly int Id;
+        private readonly Action _fn;
+        private readonly Action<object> _fn1;
+        private readonly Action<object, object> _fn2;
 
         public MyListenerImpl(Action<object> fn)
         {
-            this.fn = fn;
-            Id = id_counter++;
+            _fn1 = fn;
+            Id = _idCounter++;
+        }
+
+
+        public MyListenerImpl(Action<object, object> fn)
+        {
+            _fn2 = fn;
+            Id = _idCounter++;
         }
 
         public MyListenerImpl(Action fn)
         {
-            fn1 = fn;
-            Id = id_counter++;
+            this._fn = fn;
+            Id = _idCounter++;
         }
 
         public void Call(params object[] args)
         {
-            if (fn != null)
-                fn(args.Length != 0 ? args[0] : (object) null);
+            if (_fn2 != null)
+                _fn2(args[0], args[1]);
+            else if (_fn1 != null)
+                _fn1(args[0]);
             else
-                fn1();
+                _fn();
         }
 
         public int CompareTo(IListener other)

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Xky.Core
                 {
                     AllowAutoRedirect = true
                 };
-                var httpClient = new HttpClient(handler) {Timeout = new TimeSpan(0, 0, 0, 15)};
+                var httpClient = new HttpClient(handler) {Timeout = new TimeSpan(0, 0, 0, 5)};
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
                 var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
                 content.Headers.Add("Content-Type", "application/json");
@@ -358,7 +359,10 @@ namespace Xky.Core
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
         public static readonly ObservableCollection<Module> Modules_Panel = new ObservableCollection<Module>();
-        public static readonly ObservableCollection<string> Modules_Panel_Tags = new ObservableCollection<string> { "所有模块"};
+
+        public static readonly ObservableCollection<string> Modules_Panel_Tags =
+            new ObservableCollection<string> {"所有模块"};
+
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
@@ -379,6 +383,7 @@ namespace Xky.Core
 
 
                 node.NodeSocket?.Close();
+
 
                 var options = new IO.Options
                 {
@@ -407,7 +412,19 @@ namespace Xky.Core
                 });
                 node.NodeSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("node ERROR"); });
                 node.NodeSocket.On("event", json => { Console.WriteLine(json); });
-                node.NodeSocket.On("img", (sn) => { Console.WriteLine("有截图"); });
+                node.NodeSocket.On("img",
+                    new MyListenerImpl((sn, data) =>
+                    {
+                        Console.WriteLine("收到截图" + sn + " 长度:" + ((byte[]) data).Length);
+                        var imgdata = (byte[]) data;
+                        //加入速率计数器
+                        BitAverageNumber.Push(imgdata.Length);
+                        var device = Devices.ToList().Find(p => p.Sn == (string) sn);
+                        if (device != null)
+                        {
+                            device.ScreenShot = ByteToBitmapSource((byte[]) data);
+                        }
+                    }));
             }
         }
 
@@ -517,46 +534,44 @@ namespace Xky.Core
                 //如果已经存在就更新
                 if (module != null)
                 {
-                    module.Id = (int)json["t_id"];
+                    module.Id = (int) json["t_id"];
                     module.Name = json["t_name"]?.ToString();
 
-                    module.Price = (int)json["t_price"];
-                    module.Status = (int)json["t_status"];
-                    module.Uid = (int)json["t_uid"];
-                    module.Type = (int)json["t_type"];
+                    module.Price = (int) json["t_price"];
+                    module.Status = (int) json["t_status"];
+                    module.Uid = (int) json["t_uid"];
+                    module.Type = (int) json["t_type"];
                     module.Tags = json["t_tags"].Values<string>().ToList();
-
                 }
                 else
                 {
                     module = new Module
                     {
-                        Id = (int)json["t_id"],
+                        Id = (int) json["t_id"],
                         Name = json["t_name"]?.ToString(),
 
-                        Price = (int)json["t_price"],
-                        Status = (int)json["t_status"],
-                        Uid = (int)json["t_uid"],
-                        Type = (int)json["t_type"],
+                        Price = (int) json["t_price"],
+                        Status = (int) json["t_status"],
+                        Uid = (int) json["t_uid"],
+                        Type = (int) json["t_type"],
                         Tags = json["t_tags"].Values<string>().ToList()
-
                     };
                     foreach (string tag in module.Tags)
                     {
-
-
-                        if (!Modules_Panel_Tags.Contains(tag)) { Modules_Panel_Tags.Add(tag); }
+                        if (!Modules_Panel_Tags.Contains(tag))
+                        {
+                            Modules_Panel_Tags.Add(tag);
+                        }
                     }
+
                     StartAction(() =>
                     {
                         try
                         {
                             using (var client = new WebClient())
                             {
-                                var data = client.DownloadData(json["t_logo"]?.ToString()+"@96h");
-                                MainWindow.Dispatcher.Invoke(() => {
-                                    module.Logo = ByteToBitmapSource(data);
-                                });
+                                var data = client.DownloadData(json["t_logo"]?.ToString() + "@96h");
+                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
                             }
                         }
                         catch (Exception e)
@@ -642,8 +657,6 @@ namespace Xky.Core
         }
 
 
-
-
         /// <summary>
         ///     byte转图片源
         /// </summary>
@@ -660,10 +673,11 @@ namespace Xky.Core
                 image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.UriSource = null;
-                
-              //image.DecodePixelWidth = 100;
+
+                //image.DecodePixelWidth = 100;
                 image.EndInit();
             }
+
             image.Freeze();
             return image;
         }
