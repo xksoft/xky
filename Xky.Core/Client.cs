@@ -517,17 +517,29 @@ namespace Xky.Core
                 //如果已经存在就更新
                 if (module != null)
                 {
-                    module.Id = (int) json["t_id"];
+                    module.Id = (int)json["t_id"];
                     module.Name = json["t_name"]?.ToString();
-                  
+
+                    module.Price = (int)json["t_price"];
+                    module.Status = (int)json["t_status"];
+                    module.Uid = (int)json["t_uid"];
+                    module.Type = (int)json["t_type"];
+                    module.Tags = json["t_tags"].Values<string>().ToList();
+
                 }
                 else
                 {
                     module = new Module
                     {
                         Id = (int)json["t_id"],
-                        Name= json["t_name"]?.ToString(),
-                       
+                        Name = json["t_name"]?.ToString(),
+
+                        Price = (int)json["t_price"],
+                        Status = (int)json["t_status"],
+                        Uid = (int)json["t_uid"],
+                        Type = (int)json["t_type"],
+                        Tags = json["t_tags"].Values<string>().ToList()
+
                     };
                     foreach (string tag in module.Tags)
                     {
