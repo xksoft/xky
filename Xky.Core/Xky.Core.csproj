@@ -40,9 +40,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="EngineIoClientDotNet, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\EngineIoClientDotNet.dll</HintPath>
+    <Reference Include="EngineIoClientDotNet">
+      <HintPath>..\Libs\EngineIoClientDotNet.dll</HintPath>
     </Reference>
     <Reference Include="FFmpeg.AutoGen, Version=4.1.0.2, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -54,7 +53,7 @@
     </Reference>
     <Reference Include="SocketIoClientDotNet, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\SocketIoClientDotNet.dll</HintPath>
+      <HintPath>..\Libs\SocketIoClientDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

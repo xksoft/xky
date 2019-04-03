@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using Quobject.SocketIoClientDotNet.Client;
+
 
 namespace Xky.Core.Model
 {
@@ -11,6 +13,8 @@ namespace Xky.Core.Model
         private string _name;
         private string _nodeUrl;
         private string _serial;
+        private Socket _nodeSocket;
+        private int _connectStatus;
 
         public long LoadTick { get; set; }
 
@@ -102,6 +106,34 @@ namespace Xky.Core.Model
                 {
                     _deviceCount = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DeviceCount"));
+                }
+            }
+        }
+
+
+
+        public int ConnectStatus
+        {
+            get => _connectStatus;
+            set
+            {
+                if (_connectStatus != value)
+                {
+                    _connectStatus = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ConnectStatus"));
+                }
+            }
+        }
+
+        public Socket NodeSocket
+        {
+            get => _nodeSocket;
+            set
+            {
+                if (_nodeSocket != value)
+                {
+                    _nodeSocket = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NodeSocket"));
                 }
             }
         }

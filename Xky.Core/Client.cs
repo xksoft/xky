@@ -19,6 +19,7 @@ using Xky.Core.Common;
 using Xky.Core.Model;
 using Socket = Quobject.SocketIoClientDotNet.Client.Socket;
 
+
 namespace Xky.Core
 {
     public static class Client
@@ -112,22 +113,26 @@ namespace Xky.Core
                     {
                         if (!LocalNodes.ContainsKey(serial))
                         {
-                            var node = new Node
-                            {
-                                Serial = json["serial"]?.ToString(),
-                                Name = json["name"].ToString(),
-                                Ip = ip.Address.ToString(),
-                                LoadTick = DateTime.Now.Ticks
-                            };
-                            Console.WriteLine("找到局域网节点"+serial);
-                            LocalNodes.Add(node.Serial, node);
+                            Console.WriteLine("找到局域网节点" + serial);
+                            LocalNodes.Add(serial, new Node());
                         }
-                        else
+
+                        LocalNodes[serial].Serial = json["serial"]?.ToString();
+                        LocalNodes[serial].Name = json["name"].ToString();
+                        LocalNodes[serial].Ip = ip.Address.ToString();
+                        LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
+
+                        lock ("nodes")
                         {
-                            LocalNodes[serial].Serial = json["serial"]?.ToString();
-                            LocalNodes[serial].Name = json["name"].ToString();
-                            LocalNodes[serial].Ip = ip.Address.ToString();
-                            LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
+                            var node = Nodes.ToList().Find(p => p.Serial == serial);
+                            if (node != null)
+                            {
+                                StartAction(() =>
+                                {
+                                    ConnectToNode(node, "http://" + LocalNodes[serial].Ip + ":8080",
+                                        node.ConnectionHash);
+                                });
+                            }
                         }
                     }
                 }
@@ -318,14 +323,13 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
                     };
-                var response = await Post("get_module_panel", new JObject { ["session"] = License.Session });
+                var response = await Post("get_module_panel", new JObject {["session"] = License.Session});
 
                 if (response.Result)
                 {
-
-                    foreach (var json in (JArray)response.Json["result"]) PushModule(json);
+                    foreach (var json in (JArray) response.Json["result"]) PushModule(json);
                 }
 
                 return response;
@@ -336,7 +340,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
                 };
             }
         }
@@ -360,6 +364,52 @@ namespace Xky.Core
 
 
         #region  内部方法
+
+        private static void ConnectToNode(Node node, string url, string hash)
+        {
+            lock ("node_connect")
+            {
+                if (node.ConnectStatus > 0 && node.NodeUrl == url)
+                {
+                    return;
+                }
+
+                node.NodeUrl = url;
+
+
+                node.NodeSocket?.Close();
+
+                var options = new IO.Options
+                {
+                    IgnoreServerCertificateValidation = true,
+                    AutoConnect = true,
+                    ForceNew = true,
+                    Query = new Dictionary<string, string>
+                    {
+                        {"hash", hash},
+                        {"action", "client"}
+                    },
+                    Path = "/xky",
+                    Transports = ImmutableList.Create("websocket")
+                };
+
+                node.NodeSocket = IO.Socket(url, options);
+                node.NodeSocket.On(Socket.EVENT_CONNECT, () =>
+                {
+                    node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
+                    Console.WriteLine("node Connected " + url);
+                });
+                node.NodeSocket.On(Socket.EVENT_DISCONNECT, () =>
+                {
+                    node.ConnectStatus = 0;
+                    Console.WriteLine("node Disconnected");
+                });
+                node.NodeSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("node ERROR"); });
+                node.NodeSocket.On("event", json => { Console.WriteLine(json); });
+                node.NodeSocket.On("img", (sn) => { Console.WriteLine("有截图"); });
+            }
+        }
+
 
         /// <summary>
         ///     unix时间戳转换成datetime
@@ -462,21 +512,19 @@ namespace Xky.Core
         {
             lock ("devices")
             {
-                var module = Modules_Panel.ToList().Find(p => p.Id == (int)json["t_id"]);
+                var module = Modules_Panel.ToList().Find(p => p.Id == (int) json["t_id"]);
                 //如果已经存在就更新
                 if (module != null)
                 {
-                    module.Id = (int)json["t_id"];
+                    module.Id = (int) json["t_id"];
                     module.Name = json["t_name"]?.ToString();
-                  
                 }
                 else
                 {
                     module = new Module
                     {
-                        Id = (int)json["t_id"],
-                        Name= json["t_name"]?.ToString(),
-                       
+                        Id = (int) json["t_id"],
+                        Name = json["t_name"]?.ToString(),
                     };
 
                     StartAction(() =>
@@ -486,9 +534,7 @@ namespace Xky.Core
                             using (var client = new WebClient())
                             {
                                 var data = client.DownloadData(json["t_logo"]?.ToString());
-                                MainWindow.Dispatcher.Invoke(() => {
-                                    module.Logo = ByteToBitmapSource(data);
-                                });
+                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
                             }
                         }
                         catch (Exception e)
@@ -539,10 +585,13 @@ namespace Xky.Core
                     Name = json["t_name"]?.ToString(),
                     ConnectionHash = json["t_connection_hash"]?.ToString(),
                     Forward = json["t_forward"]?.ToString(),
-                    NodeUrl = json["t_nodeurl"]?.ToString(),
                     DeviceCount = int.Parse(json["t_online_devices"].ToString()),
                     Ip = json["t_ip"]?.ToString()
                 };
+
+                StartAction(() => { ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash); });
+
+
                 //用UI线程委托添加，防止报错
                 MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
                 return node;
@@ -569,6 +618,8 @@ namespace Xky.Core
                 }
             }
         }
+
+
 
 
         /// <summary>
