@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Media;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
-using Xky.Core.Common;
 using Xky.Platform.Properties;
 using Xky.Platform.UserControl.Pages;
 using File = System.IO.File;

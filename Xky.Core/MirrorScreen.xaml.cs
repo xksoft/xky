@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
@@ -125,15 +120,15 @@ namespace Xky.Core
             _device = Client.GetDevice(model.Sn);
 
 
-            var node = Client.LocalNodes.Values.ToList().Find(p => p.Serial == _device.NodeSerial);
-            if (node != null)
+            if (_device == null) throw new Exception("无法获取这个设备的信息");
+
+            if (Client.LocalNodes.ContainsKey(_device.NodeSerial))
             {
-                _device.NodeUrl = "http://" + node.Ip + ":8080";
+                _device.NodeUrl = "http://" + Client.LocalNodes[_device.NodeSerial].Ip+ ":8080";
                 Console.WriteLine(_device.NodeUrl);
             }
 
 
-            if (_device == null) throw new Exception("无法获取这个设备的信息");
 
             if (_device.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
 

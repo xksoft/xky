@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows;
 
 namespace Xky.Platform
@@ -14,16 +14,15 @@ namespace Xky.Platform
             base.OnStartup(e);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-   
 
+            //最多512个并发
+            ServicePointManager.DefaultConnectionLimit = 512;
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject as Exception;
-            Console.WriteLine(ex.Message+ex.StackTrace);
+            Console.WriteLine(ex.Message + ex.StackTrace);
         }
     }
-
-
 }

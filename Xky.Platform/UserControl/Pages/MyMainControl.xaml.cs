@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Model;
@@ -31,11 +27,11 @@ namespace Xky.Platform.UserControl.Pages
         /// </summary>
         public void LoadDevices()
         {
-            Client.StartAction(async () =>
+            Client.StartAction( () =>
             {
                 Common.ShowToast("正在加载设备列表...");
 
-                var response = await Client.LoadDevices();
+                var response =  Client.LoadDevices();
                 if (response.Result)
                 {
                     Console.WriteLine("设备数：" + Client.Devices.Count);
@@ -49,16 +45,15 @@ namespace Xky.Platform.UserControl.Pages
                 }
             });
         }
+
         /// <summary>
         /// 加载模块面板上的模块列表
         /// </summary>
         public void LoadModules_Panel()
         {
-            Client.StartAction(async () =>
+            Client.StartAction( () =>
             {
-               
-
-                var response = await Client.LoadModules_Panel();
+                var response =  Client.LoadModules_Panel();
                 if (response.Result)
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
@@ -73,11 +68,15 @@ namespace Xky.Platform.UserControl.Pages
             });
         }
 
+        private Thread _lastConnectThread;
+
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Client.StartAction(() =>
+                //上一个线程如果没完成就强制结束
+                _lastConnectThread?.Abort();
+                _lastConnectThread = Client.StartAction(() =>
                 {
                     //加锁，避免出现线程安全问题
                     lock ("connect")
@@ -96,12 +95,12 @@ namespace Xky.Platform.UserControl.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
@@ -111,22 +110,28 @@ namespace Xky.Platform.UserControl.Pages
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-            RadioButton btn = (RadioButton)e.Source;
-            if (btn.IsChecked.Value) {
+            RadioButton btn = (RadioButton) e.Source;
+            if (btn.IsChecked.Value)
+            {
                 if (btn.Tag.ToString() == "所有模块")
                 {
                     Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
                 }
-                else { Common.UiAction(() => { ModulesPanel.ItemsSource = from module in Client.Modules_Panel where module.Tags.Contains(btn.Tag.ToString()) select module; }); }
-              
-
+                else
+                {
+                    Common.UiAction(() =>
+                    {
+                        ModulesPanel.ItemsSource = from module in Client.Modules_Panel
+                            where module.Tags.Contains(btn.Tag.ToString())
+                            select module;
+                    });
+                }
             }
-           
         }
 
         private void MyModuleItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MyModuleItem item = (MyModuleItem)((Border)e.Source).TemplatedParent;
+            MyModuleItem item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -134,10 +139,8 @@ namespace Xky.Platform.UserControl.Pages
                 {
                     Thread.Sleep(1000);
                 }
-               Dispatcher.Invoke(() =>
-                {
-                    item.IsRunning = false;
-                });
+
+                Dispatcher.Invoke(() => { item.IsRunning = false; });
             });
         }
     }

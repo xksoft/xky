@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Threading;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
-using Xky.Core.Model;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -28,14 +22,13 @@ namespace Xky.Platform.UserControl.Pages
                     Common.UiAction(() => { LicenseKey.TextBoxText = json["license"].ToString(); });
                 }
             });
-
         }
 
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var licensekey = LicenseKey.TextBoxText;
 
-            Client.StartAction(async () =>
+            Client.StartAction(() =>
             {
                 Common.UiAction(() =>
                 {
@@ -43,17 +36,17 @@ namespace Xky.Platform.UserControl.Pages
                     BtnLogin.IsEnabled = false;
                 });
 
-                var response = await Client.AuthLicense(licensekey);
+                var response = Client.AuthLicense(licensekey);
                 if (response.Result)
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
                     Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
                     //启动局域网节点探查器
                     Client.SearchLocalNode();
-                    await Task.Delay(500);
+                    Thread.Sleep(500);
                     Common.UiAction(() =>
                     {
-                       // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
+                        // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadDevices();
                         Common.MyMainControl.LoadModules_Panel();
@@ -71,6 +64,5 @@ namespace Xky.Platform.UserControl.Pages
                 });
             });
         }
-
     }
 }
