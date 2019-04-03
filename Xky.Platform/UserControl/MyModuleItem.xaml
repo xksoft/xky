@@ -29,12 +29,11 @@
                                 </Border>
                                 <Border  x:Name="Shadow"  Effect="{StaticResource NormalShadow}" Width="64" Height="64" CornerRadius="10" Margin="0" BorderBrush="#ccc" BorderThickness="0" >
                                     <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="/Xky.Platform;component/Resources/Icon/app_5.jpg" />
+                                        <ImageBrush Stretch="UniformToFill"  AlignmentX="Center" AlignmentY="Center"  ImageSource="{Binding Logo}" />
                                     </Border.Background>
-                                    <Grid>
-                                    </Grid>
+                                    <Grid></Grid>
                                 </Border>
-                                <TextBlock Foreground="#424B5C" Margin="0,0,0,0" Padding="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="30" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding ModuleName}"></TextBlock>
+                                <TextBlock Foreground="#424B5C" Margin="0,0,0,0" Padding="0,8,0,0"  MaxWidth="60" TextWrapping="Wrap" Height="38" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Text}"></TextBlock>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>

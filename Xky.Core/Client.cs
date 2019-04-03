@@ -325,7 +325,7 @@ namespace Xky.Core
                 if (response.Result)
                 {
 
-                    foreach (var json in (JArray)response.Json["list"]) PushModule(json);
+                    foreach (var json in (JArray)response.Json["result"]) PushModule(json);
                 }
 
                 return response;
@@ -467,13 +467,35 @@ namespace Xky.Core
                 if (module != null)
                 {
                     module.Id = (int)json["t_id"];
+                    module.Name = json["t_name"]?.ToString();
+                  
                 }
                 else
                 {
                     module = new Module
                     {
-                        Id = (int)json["t_id"]
+                        Id = (int)json["t_id"],
+                        Name= json["t_name"]?.ToString(),
+                       
                     };
+
+                    StartAction(() =>
+                    {
+                        try
+                        {
+                            using (var client = new WebClient())
+                            {
+                                var data = client.DownloadData(json["t_logo"]?.ToString());
+                                MainWindow.Dispatcher.Invoke(() => {
+                                    module.Logo = ByteToBitmapSource(data);
+                                });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    });
                     MainWindow.Dispatcher.Invoke(() => { Modules_Panel.Add(module); });
                 }
 
@@ -565,6 +587,7 @@ namespace Xky.Core
                 image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.UriSource = null;
+                image.DecodePixelWidth = 100;
                 image.EndInit();
             }
 
