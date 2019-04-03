@@ -29,7 +29,7 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
-            <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15" >
+            <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15" ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -193,8 +193,8 @@
 
             </Grid>
 
-            <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="False" 
-                     SelectionChanged="DeviceListBox_OnSelectionChanged" >
+            <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"  ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True"
+                     SelectionChanged="DeviceListBox_OnSelectionChanged">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
@@ -575,7 +575,7 @@
                             <Label HorizontalContentAlignment="Left" Foreground="#999" HorizontalAlignment="Left">“陌陌”下一共有8个模块</Label>
                         </Border>
 
-                        <ScrollViewer  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
+                        <ScrollViewer  Grid.Row="1"  VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
                             <ItemsControl x:Name="ModulesPanel">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>

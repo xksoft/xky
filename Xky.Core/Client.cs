@@ -374,6 +374,8 @@ namespace Xky.Core
         {
             lock ("node_connect")
             {
+                Console.WriteLine(node.Name+" 连接node:" + url);
+
                 if (node.ConnectStatus > 0 && node.NodeUrl == url)
                 {
                     return;
@@ -415,7 +417,7 @@ namespace Xky.Core
                 node.NodeSocket.On("img",
                     new MyListenerImpl((sn, data) =>
                     {
-                        Console.WriteLine("收到截图" + sn + " 长度:" + ((byte[]) data).Length);
+                        //   Console.WriteLine("收到截图" + sn + " 长度:" + ((byte[]) data).Length);
                         var imgdata = (byte[]) data;
                         //加入速率计数器
                         BitAverageNumber.Push(imgdata.Length);
@@ -566,17 +568,21 @@ namespace Xky.Core
 
                     StartAction(() =>
                     {
-                        try
+                        //得加个锁，不然一下子并发上百个请求，会被服务器堵住
+                        lock ("down_module_image")
                         {
-                            using (var client = new WebClient())
+                            try
                             {
-                                var data = client.DownloadData(json["t_logo"]?.ToString() + "@96h");
-                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
+                                using (var client = new WebClient())
+                                {
+                                    var data = client.DownloadData(json["t_logo"] + "@96h");
+                                    MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
+                                }
                             }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                            }
                         }
                     });
                     MainWindow.Dispatcher.Invoke(() => { Modules_Panel.Add(module); });
