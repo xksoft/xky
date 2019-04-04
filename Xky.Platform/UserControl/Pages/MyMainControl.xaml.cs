@@ -41,7 +41,7 @@ namespace Xky.Platform.UserControl.Pages
                 }
                 else
                 {
-                    Common.ShowToast("设备加载失败");
+                    Common.ShowToast(response.Message);
                 }
             });
         }
@@ -63,7 +63,7 @@ namespace Xky.Platform.UserControl.Pages
                 }
                 else
                 {
-                    Common.ShowToast("模块面板加载失败");
+                    Common.ShowToast(response.Message);
                 }
             });
         }
@@ -142,6 +142,12 @@ namespace Xky.Platform.UserControl.Pages
 
                 Dispatcher.Invoke(() => { item.IsRunning = false; });
             });
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+           var response= Client.CallApi("get_user", new JObject());
+           Console.WriteLine(response.Json);
         }
     }
 }

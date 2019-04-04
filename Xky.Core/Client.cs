@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -96,6 +97,63 @@ namespace Xky.Core
                 Message = resultJson["msg"]?.ToString(),
                 Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
             };
+        }
+
+
+        public static Response CallApi(string api, JObject data)
+        {
+            //同一时刻只允许一个call
+            lock ("call")
+            {
+                var response = new Response
+                {
+                    Result = false,
+                    Message = "调用接口超时",
+                    Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+                };
+                var count = 10000;
+
+                if (CoreSocket == null || !CoreConnected)
+                {
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未连接核心服务器",
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
+                    };
+                }
+
+                CoreSocket.Emit("call", (result) =>
+                {
+                    var jsonResult = (JObject) result;
+                    if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
+                        response = new Response
+                        {
+                            Result = false,
+                            Message = "通讯结果无法解析",
+                            Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
+                        };
+                    var resultJson =
+                        JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+                    response = new Response
+                    {
+                        Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                        Message = resultJson["msg"]?.ToString(),
+                        Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                    };
+                    //设置跳出循环条件
+                    count = 0;
+                }, api, data);
+
+
+                while (count > 0)
+                {
+                    count -= 1;
+                    Thread.Sleep(1);
+                }
+
+                return response;
+            }
         }
 
         public static void SearchLocalNode()
@@ -232,10 +290,11 @@ namespace Xky.Core
                     };
 
                 var loadtick = DateTime.Now.Ticks;
-                var response = Post("get_device_list", new JObject {["session"] = License.Session});
+                var response = CallApi("get_device_list", new JObject());
 
                 if (response.Result)
                 {
+                    Console.WriteLine(response);
                     foreach (var json in (JArray) response.Json["list"]) PushDevice(json, loadtick);
 
                     //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
@@ -267,8 +326,8 @@ namespace Xky.Core
         /// <returns></returns>
         public static Device GetDevice(string sn)
         {
-            var response = Post("get_device",
-                new JObject {["sn"] = sn, ["session"] = License.Session});
+            var response = CallApi("get_device",
+                new JObject {["sn"] = sn});
             if (!response.Result)
             {
                 Console.WriteLine(response.Message);
@@ -327,7 +386,7 @@ namespace Xky.Core
                         Message = "未授权",
                         Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
                     };
-                var response = Post("get_module_panel", new JObject {["session"] = License.Session});
+                var response = CallApi("get_module_panel", new JObject());
 
                 if (response.Result)
                 {
@@ -625,7 +684,7 @@ namespace Xky.Core
                     return node;
 
 
-                var response = Post("get_node", new JObject {["session"] = License.Session, ["serial"] = serial});
+                var response = CallApi("get_node", new JObject {["serial"] = serial});
 
                 if (!response.Result) return null;
 
@@ -656,6 +715,7 @@ namespace Xky.Core
         /// <param name="json"></param>
         private static void CoreEvent(JObject json)
         {
+            Console.WriteLine(json);
             var type = json["type"]?.ToString();
             switch (type)
             {

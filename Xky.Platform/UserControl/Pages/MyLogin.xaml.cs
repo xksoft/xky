@@ -41,9 +41,11 @@ namespace Xky.Platform.UserControl.Pages
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
                     Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
+                    Thread.Sleep(500);
+
                     //启动局域网节点探查器
                     Client.SearchLocalNode();
-                    Thread.Sleep(500);
+
                     Common.UiAction(() =>
                     {
                         // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;

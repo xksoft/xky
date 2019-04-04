@@ -29,6 +29,7 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
+            <Button Click="ButtonBase_OnClick">Test</Button>
             <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15" ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
                 <ListBox.ItemTemplate>
