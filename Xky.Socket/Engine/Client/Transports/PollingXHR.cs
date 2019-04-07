@@ -1,16 +1,13 @@
-﻿
-
-
-using Quobject.EngineIoClientDotNet.ComponentEmitter;
-using Quobject.EngineIoClientDotNet.Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
 
-namespace Quobject.EngineIoClientDotNet.Client.Transports
+namespace Xky.Socket.Engine.Client.Transports
 {
     public class PollingXHR : Polling
     {

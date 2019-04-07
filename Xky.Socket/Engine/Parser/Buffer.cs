@@ -1,4 +1,4 @@
-﻿namespace Quobject.EngineIoClientDotNet.Parser
+﻿namespace Xky.Socket.Engine.Parser
 {
     internal class Buffer
     {

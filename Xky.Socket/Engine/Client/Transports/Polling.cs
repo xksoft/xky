@@ -1,13 +1,12 @@
-﻿
-using System.Collections.Immutable;
-using Quobject.EngineIoClientDotNet.ComponentEmitter;
-using Quobject.EngineIoClientDotNet.Modules;
-using Quobject.EngineIoClientDotNet.Parser;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
 
-namespace Quobject.EngineIoClientDotNet.Client.Transports
+namespace Xky.Socket.Engine.Client.Transports
 {
     public class Polling : Transport
     {

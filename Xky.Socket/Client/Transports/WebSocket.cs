@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using SuperSocket.ClientEngine.Proxy;
 using WebSocket4Net;
-using Xky.EngineIO.Client;
-using Xky.EngineIO.Modules;
-using Xky.EngineIO.Parser;
+using Xky.Socket.Engine.Client;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
 
 namespace Xky.Socket.Client.Transports
 {
@@ -116,7 +116,7 @@ namespace Xky.Socket.Client.Transports
             Writable = false;
             foreach (var packet in packets)
             {
-                EngineIO.Parser.Parser.EncodePacket(packet, new WriteEncodeCallback(this));
+                Xky.Socket.Engine.Parser.Parser.EncodePacket(packet, new WriteEncodeCallback(this));
             }
 
             // fake drain

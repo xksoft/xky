@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace Quobject.EngineIoClientDotNet.Modules
+namespace Xky.Socket.Engine.Modules
 {
     public static class Global
     {

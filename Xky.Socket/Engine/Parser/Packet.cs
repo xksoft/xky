@@ -1,10 +1,10 @@
-﻿using Quobject.EngineIoClientDotNet.Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xky.Socket.Engine.Modules;
 
-namespace Quobject.EngineIoClientDotNet.Parser
+namespace Xky.Socket.Engine.Parser
 {
     /// <remarks>
     /// Packet type which is ported from the JavaScript module.

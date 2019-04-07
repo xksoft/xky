@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Xky.EngineIO.ComponentEmitter;
-using Xky.EngineIO.Modules;
-using Xky.EngineIO.Thread;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Thread;
 
 namespace Xky.Socket.Client
 {
@@ -47,12 +47,12 @@ namespace Xky.Socket.Client
         private Uri Uri;
         private List<Parser.Packet> PacketBuffer;
         private ConcurrentQueue<On.IHandle> Subs;
-        private EngineIO.Client.Socket.Options Opts;
+        private Xky.Socket.Engine.Client.Socket.Options Opts;
         private bool AutoConnect;
         private HashSet<Socket> OpeningSockets;
         /*package*/
 
-        public EngineIO.Client.Socket EngineSocket;
+        public Xky.Socket.Engine.Client.Socket EngineSocket;
         private Parser.Parser.Encoder Encoder;
         private Parser.Parser.Decoder Decoder;
 
@@ -199,7 +199,7 @@ namespace Xky.Socket.Client
 
             log.Info(string.Format("opening {0}", Uri));
             EngineSocket = new Engine(Uri, Opts);
-            EngineIO.Client.Socket socket = EngineSocket;
+            Xky.Socket.Engine.Client.Socket socket = EngineSocket;
             Emit(EVENT_ENGINE, socket);
 
             ReadyState = ReadyStateEnum.OPENING;
@@ -524,7 +524,7 @@ namespace Xky.Socket.Client
 
 
 
-    public class Engine : EngineIO.Client.Socket
+    public class Engine : Xky.Socket.Engine.Client.Socket
     {
         public Engine(Uri uri, Options opts) : base(uri, opts)
         {
@@ -534,7 +534,7 @@ namespace Xky.Socket.Client
 
 
 
-    public class Options : EngineIO.Client.Socket.Options
+    public class Options : Xky.Socket.Engine.Client.Socket.Options
     {
 
         public bool Reconnection = true;

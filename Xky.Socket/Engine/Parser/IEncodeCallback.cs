@@ -1,5 +1,5 @@
 ﻿
-namespace Quobject.EngineIoClientDotNet.Parser
+namespace Xky.Socket.Engine.Parser
 {
     public interface IEncodeCallback
     {

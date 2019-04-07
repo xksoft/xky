@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quobject.EngineIoClientDotNet.Client
+namespace Xky.Socket.Engine.Client
 {
     public class EngineIOException : Exception
     {

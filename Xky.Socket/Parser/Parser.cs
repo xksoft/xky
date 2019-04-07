@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json.Linq;
-using Xky.EngineIO.ComponentEmitter;
-using Xky.EngineIO.Modules;
 using Xky.Socket.Client;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
 
 namespace Xky.Socket.Parser
 {

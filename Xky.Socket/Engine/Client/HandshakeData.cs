@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
+using Newtonsoft.Json.Linq;
 
-
-namespace Quobject.EngineIoClientDotNet.Client
+namespace Xky.Socket.Engine.Client
 {
     public class HandshakeData
     {

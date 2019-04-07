@@ -1,13 +1,12 @@
-﻿using Quobject.EngineIoClientDotNet.Modules;
-using Quobject.EngineIoClientDotNet.Parser;
-using System;
-using System.Net;
+﻿using System;
 using System.Collections.Generic;
-using System.Security.Authentication;
-using WebSocket4Net;
+using System.Net;
 using SuperSocket.ClientEngine.Proxy;
+using WebSocket4Net;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
 
-namespace Quobject.EngineIoClientDotNet.Client.Transports
+namespace Xky.Socket.Engine.Client.Transports
 {
     public class WebSocket : Transport
     {

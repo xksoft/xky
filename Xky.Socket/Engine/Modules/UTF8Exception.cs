@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quobject.EngineIoClientDotNet.Modules
+namespace Xky.Socket.Engine.Modules
 {
     public class UTF8Exception : Exception
     {

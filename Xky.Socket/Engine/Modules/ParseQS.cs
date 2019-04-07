@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace Quobject.EngineIoClientDotNet.Modules
+namespace Xky.Socket.Engine.Modules
 {
     /// <remarks>
     /// Provides methods for parsing a query string into an object, and vice versa.

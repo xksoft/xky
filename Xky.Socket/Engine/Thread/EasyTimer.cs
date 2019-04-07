@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Quobject.EngineIoClientDotNet.Thread
+namespace Xky.Socket.Engine.Thread
 {
     public class EasyTimer
     {

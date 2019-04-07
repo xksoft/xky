@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Xky.EngineIO.ComponentEmitter;
-using Xky.EngineIO.Modules;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
 
 namespace Xky.Socket.Client.Transports
 {

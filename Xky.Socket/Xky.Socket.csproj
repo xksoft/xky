@@ -61,6 +61,27 @@
     <Compile Include="Client\Transports\PollingXHR.cs" />
     <Compile Include="Client\Transports\WebSocket.cs" />
     <Compile Include="Client\Url.cs" />
+    <Compile Include="Engine\Client\EngineIOException.cs" />
+    <Compile Include="Engine\Client\HandshakeData.cs" />
+    <Compile Include="Engine\Client\Socket.cs" />
+    <Compile Include="Engine\Client\Transport.cs" />
+    <Compile Include="Engine\Client\Transports\Polling.cs" />
+    <Compile Include="Engine\Client\Transports\PollingXHR.cs" />
+    <Compile Include="Engine\Client\Transports\WebSocket.cs" />
+    <Compile Include="Engine\ComponentEmitter\Emitter.cs" />
+    <Compile Include="Engine\Modules\Global.cs" />
+    <Compile Include="Engine\Modules\LogManager.cs" />
+    <Compile Include="Engine\Modules\ParseQS.cs" />
+    <Compile Include="Engine\Modules\ServerCertificate.cs" />
+    <Compile Include="Engine\Modules\UTF8.cs" />
+    <Compile Include="Engine\Modules\UTF8Exception.cs" />
+    <Compile Include="Engine\Parser\Buffer.cs" />
+    <Compile Include="Engine\Parser\ByteBuffer.cs" />
+    <Compile Include="Engine\Parser\IDecodePayloadCallback.cs" />
+    <Compile Include="Engine\Parser\IEncodeCallback.cs" />
+    <Compile Include="Engine\Parser\Packet.cs" />
+    <Compile Include="Engine\Parser\Parser.cs" />
+    <Compile Include="Engine\Thread\EasyTimer.cs" />
     <Compile Include="Modules\HasBinaryData.cs" />
     <Compile Include="Parser\Binary.cs" />
     <Compile Include="Parser\Packet.cs" />
@@ -70,12 +91,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xky.EngineIO\Xky.EngineIO.csproj">
-      <Project>{842d8b13-daf3-4919-80a0-03efa3c17178}</Project>
-      <Name>Xky.EngineIO</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

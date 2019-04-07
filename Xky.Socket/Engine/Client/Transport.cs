@@ -1,15 +1,13 @@
-﻿
-using System.Text;
-using System.Collections.Immutable;
-using Quobject.EngineIoClientDotNet.ComponentEmitter;
-using Quobject.EngineIoClientDotNet.Modules;
-using Quobject.EngineIoClientDotNet.Parser;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Security.Authentication;
+using System.Text;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
 
-
-namespace Quobject.EngineIoClientDotNet.Client
+namespace Xky.Socket.Engine.Client
 {
     public abstract class Transport : Emitter
     {

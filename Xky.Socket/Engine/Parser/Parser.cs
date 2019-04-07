@@ -1,5 +1,5 @@
 ﻿
-namespace Quobject.EngineIoClientDotNet.Parser
+namespace Xky.Socket.Engine.Parser
 {
     /// <remarks>
     /// This is the JavaScript parser for the engine.io protocol encoding, 

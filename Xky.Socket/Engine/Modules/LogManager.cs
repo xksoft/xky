@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Quobject.EngineIoClientDotNet.Modules
+namespace Xky.Socket.Engine.Modules
 {
     public class LogManager
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Quobject.EngineIoClientDotNet.Modules
+namespace Xky.Socket.Engine.Modules
 {
     public class ServerCertificate
     {

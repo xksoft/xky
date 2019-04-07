@@ -114,10 +114,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xky.EngineIO\Xky.EngineIO.csproj">
-      <Project>{842d8b13-daf3-4919-80a0-03efa3c17178}</Project>
-      <Name>Xky.EngineIO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Xky.Socket\Xky.Socket.csproj">
       <Project>{b4c79cee-4b09-428a-bfe9-b276df4f57fa}</Project>
       <Name>Xky.Socket</Name>

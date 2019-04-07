@@ -1,9 +1,8 @@
-﻿
+﻿using System;
 using System.Collections.Immutable;
-using Quobject.EngineIoClientDotNet.Modules;
-using System;
+using Xky.Socket.Engine.Modules;
 
-namespace Quobject.EngineIoClientDotNet.ComponentEmitter
+namespace Xky.Socket.Engine.ComponentEmitter
 {
 
     /// <remarks>

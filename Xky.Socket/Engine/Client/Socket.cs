@@ -1,17 +1,15 @@
-﻿using System.Text;
-using System.Collections.Immutable;
-using Quobject.EngineIoClientDotNet.Client.Transports;
-using Quobject.EngineIoClientDotNet.ComponentEmitter;
-using Quobject.EngineIoClientDotNet.Modules;
-using Quobject.EngineIoClientDotNet.Parser;
-using Quobject.EngineIoClientDotNet.Thread;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using Xky.Socket.Engine.Client.Transports;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
+using Xky.Socket.Engine.Thread;
 
-
-namespace Quobject.EngineIoClientDotNet.Client
+namespace Xky.Socket.Engine.Client
 {
     public class Socket : Emitter
     {

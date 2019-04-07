@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Xky.EngineIO.Client;
-using Xky.EngineIO.ComponentEmitter;
-using Xky.EngineIO.Modules;
-using Xky.EngineIO.Parser;
+using Xky.Socket.Engine.Client;
+using Xky.Socket.Engine.ComponentEmitter;
+using Xky.Socket.Engine.Modules;
+using Xky.Socket.Engine.Parser;
 
 namespace Xky.Socket.Client.Transports
 {
@@ -201,11 +201,11 @@ namespace Xky.Socket.Client.Transports
             var callback = new DecodePayloadCallback(this);
             if (data is string)
             {
-                EngineIO.Parser.Parser.DecodePayload((string)data, callback);
+                Xky.Socket.Engine.Parser.Parser.DecodePayload((string)data, callback);
             }
             else if (data is byte[])
             {
-                EngineIO.Parser.Parser.DecodePayload((byte[])data, callback);
+                Xky.Socket.Engine.Parser.Parser.DecodePayload((byte[])data, callback);
             }
 
             if (ReadyState != ReadyStateEnum.CLOSED)
@@ -310,7 +310,7 @@ namespace Xky.Socket.Client.Transports
             Writable = false;
 
             var callback = new SendEncodeCallback(this);
-            EngineIO.Parser.Parser.EncodePayload(packets.ToArray(), callback);
+            Xky.Socket.Engine.Parser.Parser.EncodePayload(packets.ToArray(), callback);
         }
 
         public string Uri()
