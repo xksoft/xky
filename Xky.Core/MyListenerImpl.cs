@@ -1,5 +1,5 @@
 ﻿using System;
-using Quobject.EngineIoClientDotNet.ComponentEmitter;
+using Xky.EngineIO.ComponentEmitter;
 
 namespace Xky.Core
 {

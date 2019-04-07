@@ -14,17 +14,16 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
 using Xky.Core.Model;
-using Socket = Quobject.SocketIoClientDotNet.Client.Socket;
+using Xky.Socket.Client;
 
 
 namespace Xky.Core
 {
     public static class Client
     {
-        internal static Socket CoreSocket;
+        internal static Socket.Client.Socket CoreSocket;
 
 
         internal static Response Post(string api, JObject json)
@@ -241,17 +240,17 @@ namespace Xky.Core
                         Transports = ImmutableList.Create("websocket")
                     };
                     CoreSocket = IO.Socket("wss://api.xky.com", options);
-                    CoreSocket.On(Socket.EVENT_CONNECT, () =>
+                    CoreSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
                     {
                         Console.WriteLine("Connected");
                         CoreConnected = true;
                     });
-                    CoreSocket.On(Socket.EVENT_DISCONNECT, () =>
+                    CoreSocket.On(Socket.Client.Socket.EVENT_DISCONNECT, () =>
                     {
                         Console.WriteLine("Disconnected");
                         CoreConnected = false;
                     });
-                    CoreSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
+                    CoreSocket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
                     CoreSocket.On("event", json => { CoreEvent((JObject) json); });
                 }
                 else
@@ -461,19 +460,19 @@ namespace Xky.Core
                     };
 
                     node.NodeSocket = IO.Socket(url, options);
-                    node.NodeSocket.On(Socket.EVENT_CONNECT, () =>
+                    node.NodeSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
                     {
                         node.NodeSocket.Emit("hello", (oo) => { Console.WriteLine(oo); });
 
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
                     });
-                    node.NodeSocket.On(Socket.EVENT_DISCONNECT, () =>
+                    node.NodeSocket.On(Socket.Client.Socket.EVENT_DISCONNECT, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
                     });
-                    node.NodeSocket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("node ERROR"); });
+                    node.NodeSocket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>

@@ -7,9 +7,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
-using Quobject.SocketIoClientDotNet.Client;
 using Xky.Core.Common;
 using Xky.Core.Model;
+using Xky.Socket.Client;
 
 namespace Xky.Core
 {
@@ -95,7 +95,7 @@ namespace Xky.Core
 
         private H264Decoder _decoder;
 
-        private Socket _socket;
+        private Socket.Client.Socket _socket;
 
         private Device _device;
         private int _bindingSource;
@@ -157,9 +157,9 @@ namespace Xky.Core
             };
             AddLabel("正在连接..", Colors.White);
             _socket = IO.Socket(_device.NodeUrl, options);
-            _socket.On(Socket.EVENT_CONNECT, () => { Console.WriteLine("Connected"); });
-            _socket.On(Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
-            _socket.On(Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
+            _socket.On(Socket.Client.Socket.EVENT_CONNECT, () => { Console.WriteLine("Connected"); });
+            _socket.On(Socket.Client.Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
+            _socket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
             _socket.On("h264", data =>
             {

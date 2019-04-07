@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Quobject.SocketIoClientDotNet.Client;
 
 
 namespace Xky.Core.Model
@@ -13,7 +12,7 @@ namespace Xky.Core.Model
         private string _name;
         private string _nodeUrl;
         private string _serial;
-        private Socket _nodeSocket;
+        private Socket.Client.Socket _nodeSocket;
         private int _connectStatus;
 
         public long LoadTick { get; set; }
@@ -125,7 +124,7 @@ namespace Xky.Core.Model
             }
         }
 
-        public Socket NodeSocket
+        public Socket.Client.Socket NodeSocket
         {
             get => _nodeSocket;
             set
