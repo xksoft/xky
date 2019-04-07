@@ -100,58 +100,54 @@ namespace Xky.Core
 
         public static Response CallApi(string api, JObject data)
         {
-            //同一时刻只允许一个call
-            lock ("call")
+            var response = new Response
             {
-                var response = new Response
+                Result = false,
+                Message = "调用接口超时",
+                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+            };
+            var count = 10000;
+
+            if (CoreSocket == null || !CoreConnected)
+            {
+                return new Response
                 {
                     Result = false,
-                    Message = "调用接口超时",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+                    Message = "未连接核心服务器",
+                    Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
                 };
-                var count = 10000;
+            }
 
-                if (CoreSocket == null || !CoreConnected)
-                {
-                    return new Response
-                    {
-                        Result = false,
-                        Message = "未连接核心服务器",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
-                    };
-                }
-
-                CoreSocket.Emit("call", (result) =>
-                {
-                    var jsonResult = (JObject) result;
-                    if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
-                        response = new Response
-                        {
-                            Result = false,
-                            Message = "通讯结果无法解析",
-                            Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
-                        };
-                    var resultJson =
-                        JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+            CoreSocket.Emit("call", (result) =>
+            {
+                var jsonResult = (JObject) result;
+                if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
                     response = new Response
                     {
-                        Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                        Message = resultJson["msg"]?.ToString(),
-                        Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                        Result = false,
+                        Message = "通讯结果无法解析",
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
                     };
-                    //设置跳出循环条件
-                    count = 0;
-                }, api, data);
-
-
-                while (count > 0)
+                var resultJson =
+                    JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+                response = new Response
                 {
-                    count -= 1;
-                    Thread.Sleep(1);
-                }
+                    Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                    Message = resultJson["msg"]?.ToString(),
+                    Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                };
+                //设置跳出循环条件
+                count = 0;
+            }, api, data);
 
-                return response;
+
+            while (count > 0)
+            {
+                count -= 1;
+                Thread.Sleep(1);
             }
+
+            return response;
         }
 
         public static void SearchLocalNode()
@@ -432,7 +428,7 @@ namespace Xky.Core
         {
             lock ("node_connect")
             {
-                if (node.ConnectStatus > 0 && node.NodeUrl == url)
+                if (url == null || node.ConnectStatus > 0 && node.NodeUrl == url)
                 {
                     return;
                 }
@@ -462,30 +458,6 @@ namespace Xky.Core
                     node.NodeSocket = IO.Socket(url, options);
                     node.NodeSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
                     {
-                        if (url.StartsWith("http://172"))
-                        {
-                            StartAction(() =>
-                            {
-                                while (true)
-                                {
-                                    var tick = DateTime.Now.Ticks;
-                                    node.NodeSocket.Emit("hello", (oo) =>
-                                        {
-                                            if ((long) oo == tick)
-                                            {
-                                                Console.WriteLine("匹配" + tick);
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine("不匹配"+ tick+" "+oo);
-                                            }
-                                            Thread.Sleep(100);
-                                        },
-                                        tick);
-                                }
-                            });
-                        }
-
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
                     });
