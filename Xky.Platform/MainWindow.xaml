@@ -204,7 +204,7 @@
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor2}" Grid.Row="0" Grid.RowSpan="2">
 
 
-            <StackPanel VerticalAlignment="Top">
+            <StackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
                 <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
                                        ImgSource="Resources/Icon/logo.png" PageName="Logo"
                                        IsDarkStyle="True" />
