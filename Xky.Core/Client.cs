@@ -462,7 +462,29 @@ namespace Xky.Core
                     node.NodeSocket = IO.Socket(url, options);
                     node.NodeSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
                     {
-                        node.NodeSocket.Emit("hello", (oo) => { Console.WriteLine(oo); });
+                        if (url.StartsWith("http://172"))
+                        {
+                            StartAction(() =>
+                            {
+                                while (true)
+                                {
+                                    var tick = DateTime.Now.Ticks;
+                                    node.NodeSocket.Emit("hello", (oo) =>
+                                        {
+                                            if ((long) oo == tick)
+                                            {
+                                                Console.WriteLine("匹配" + tick);
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("不匹配"+ tick+" "+oo);
+                                            }
+                                            Thread.Sleep(100);
+                                        },
+                                        tick);
+                                }
+                            });
+                        }
 
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
