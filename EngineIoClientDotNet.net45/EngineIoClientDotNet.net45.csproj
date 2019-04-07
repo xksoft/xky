@@ -48,82 +48,53 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\EngineIOException.cs">
-      <Link>Client\EngineIOException.cs</Link>
-    </Compile>
-    <Compile Include="Client\HandshakeData.cs">
-      <Link>Client\HandshakeData.cs</Link>
-    </Compile>
-    <Compile Include="Client\Socket.cs">
-      <Link>Client\Socket.cs</Link>
-    </Compile>
-    <Compile Include="Client\Transport.cs">
-      <Link>Client\Transport.cs</Link>
-    </Compile>
-    <Compile Include="Client\Transports\Polling.cs">
-      <Link>Client\Transports\Polling.cs</Link>
-    </Compile>
-    <Compile Include="Client\Transports\PollingXHR.cs">
-      <Link>Client\Transports\PollingXHR.cs</Link>
-    </Compile>
-    <Compile Include="Client\Transports\WebSocket.cs">
-      <Link>Client\Transports\WebSocket.cs</Link>
-    </Compile>
-    <Compile Include="ComponentEmitter\Emitter.cs">
-      <Link>ComponentEmitter\Emitter.cs</Link>
-    </Compile>
-    <Compile Include="Modules\Global.cs">
-      <Link>Modules\Global.cs</Link>
-    </Compile>
-    <Compile Include="Modules\LogManager.cs">
-      <Link>Modules\LogManager.cs</Link>
-    </Compile>
-    <Compile Include="Modules\ParseQS.cs">
-      <Link>Modules\ParseQS.cs</Link>
-    </Compile>
-    <Compile Include="Modules\ServerCertificate.cs">
-      <Link>Modules\ServerCertificate.cs</Link>
-    </Compile>
-    <Compile Include="Modules\UTF8.cs">
-      <Link>Modules\UTF8.cs</Link>
-    </Compile>
-    <Compile Include="Modules\UTF8Exception.cs">
-      <Link>Modules\UTF8Exception.cs</Link>
-    </Compile>
-    <Compile Include="Parser\Buffer.cs">
-      <Link>Parser\Buffer.cs</Link>
-    </Compile>
-    <Compile Include="Parser\ByteBuffer.cs">
-      <Link>Parser\ByteBuffer.cs</Link>
-    </Compile>
-    <Compile Include="Parser\IDecodePayloadCallback.cs">
-      <Link>Parser\IDecodePayloadCallback.cs</Link>
-    </Compile>
-    <Compile Include="Parser\IEncodeCallback.cs">
-      <Link>Parser\IEncodeCallback.cs</Link>
-    </Compile>
-    <Compile Include="Parser\Packet.cs">
-      <Link>Parser\Packet.cs</Link>
-    </Compile>
-    <Compile Include="Parser\Parser.cs">
-      <Link>Parser\Parser.cs</Link>
-    </Compile>
-    <Compile Include="Thread\EasyTimer.cs">
-      <Link>Thread\EasyTimer.cs</Link>
-    </Compile>
+
+    <Compile Include="Client\EngineIOException.cs" />
+    <Compile Include="Client\HandshakeData.cs" />
+    <Compile Include="Client\Socket.cs" />
+
+    <Compile Include="Client\Transport.cs" />
+
+    <Compile Include="Client\Transports\Polling.cs" />
+
+    <Compile Include="Client\Transports\PollingXHR.cs" />
+
+    <Compile Include="Client\Transports\WebSocket.cs" />
+
+    <Compile Include="ComponentEmitter\Emitter.cs" />
+
+    <Compile Include="Modules\Global.cs" />
+
+    <Compile Include="Modules\LogManager.cs" />
+
+    <Compile Include="Modules\ParseQS.cs" />
+
+    <Compile Include="Modules\ServerCertificate.cs" />
+
+    <Compile Include="Modules\UTF8.cs" />
+
+    <Compile Include="Modules\UTF8Exception.cs" />
+
+    <Compile Include="Parser\Buffer.cs" />
+
+    <Compile Include="Parser\ByteBuffer.cs" />
+
+    <Compile Include="Parser\IDecodePayloadCallback.cs" />
+
+    <Compile Include="Parser\IEncodeCallback.cs" />
+
+    <Compile Include="Parser\Packet.cs" />
+
+    <Compile Include="Parser\Parser.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Thread\EasyTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Client\Transports\" />
-    <Folder Include="ComponentEmitter\" />
-    <Folder Include="Modules\" />
-    <Folder Include="Parser\" />
-    <Folder Include="Thread\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
