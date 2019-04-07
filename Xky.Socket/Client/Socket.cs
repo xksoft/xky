@@ -13,59 +13,60 @@ namespace Xky.Socket.Client
 {
     public class Socket : Emitter
     {
-        public static readonly string EVENT_CONNECT = "connect";
-        public static readonly string EVENT_DISCONNECT = "disconnect";
-        public static readonly string EVENT_ERROR = "error";
-        public static readonly string EVENT_MESSAGE = "message";
-        public static readonly string EVENT_CONNECT_ERROR = Manager.EVENT_CONNECT_ERROR;
-        public static readonly string EVENT_CONNECT_TIMEOUT = Manager.EVENT_CONNECT_TIMEOUT;
-        public static readonly string EVENT_RECONNECT = Manager.EVENT_RECONNECT;
-        public static readonly string EVENT_RECONNECT_ERROR = Manager.EVENT_RECONNECT_ERROR;
-        public static readonly string EVENT_RECONNECT_FAILED = Manager.EVENT_RECONNECT_FAILED;
-        public static readonly string EVENT_RECONNECT_ATTEMPT = Manager.EVENT_RECONNECT_ATTEMPT;
-        public static readonly string EVENT_RECONNECTING = Manager.EVENT_RECONNECTING;
+        public static readonly string EventConnect = "connect";
+        public static readonly string EventDisconnect = "disconnect";
+        public static readonly string EventError = "error";
+        public static readonly string EventMessage = "message";
+        public static readonly string EventConnectError = Manager.EVENT_CONNECT_ERROR;
+        public static readonly string EventConnectTimeout = Manager.EVENT_CONNECT_TIMEOUT;
+        public static readonly string EventReconnect = Manager.EVENT_RECONNECT;
+        public static readonly string EventReconnectError = Manager.EVENT_RECONNECT_ERROR;
+        public static readonly string EventReconnectFailed = Manager.EVENT_RECONNECT_FAILED;
+        public static readonly string EventReconnectAttempt = Manager.EVENT_RECONNECT_ATTEMPT;
+        public static readonly string EventReconnecting = Manager.EVENT_RECONNECTING;
 
-        private static readonly List<string> Events = new List<string>()
+        private static readonly List<string> Events = new List<string>
         {
-            EVENT_CONNECT,
-            EVENT_CONNECT_ERROR,
-            EVENT_CONNECT_TIMEOUT,
-            EVENT_DISCONNECT,
-            EVENT_ERROR,
-            EVENT_RECONNECT,
-            EVENT_RECONNECT_ATTEMPT,
-            EVENT_RECONNECT_FAILED,
-            EVENT_RECONNECT_ERROR,
-            EVENT_RECONNECTING
+            EventConnect,
+            EventConnectError,
+            EventConnectTimeout,
+            EventDisconnect,
+            EventError,
+            EventReconnect,
+            EventReconnectAttempt,
+            EventReconnectFailed,
+            EventReconnectError,
+            EventReconnecting
         };
 
-        private bool Connected;
+        private readonly Manager _io;
+        private ImmutableDictionary<int, IAck> _acks = ImmutableDictionary.Create<int, IAck>();
+
+        private bool _connected;
 
         //private bool Disconnected = true;
-        private int Ids;
-        private string Nsp;
-        private Manager _io;
-        private ImmutableDictionary<int, IAck> Acks = ImmutableDictionary.Create<int, IAck>();
-        private ImmutableQueue<On.IHandle> Subs;
-        private ImmutableQueue<List<object>> ReceiveBuffer = ImmutableQueue.Create<List<object>>();
-        private ImmutableQueue<Parser.Packet> SendBuffer = ImmutableQueue.Create<Parser.Packet>();
+        private int _ids;
+        private readonly string _nsp;
+        private ImmutableQueue<List<object>> _receiveBuffer = ImmutableQueue.Create<List<object>>();
+        private ImmutableQueue<Packet> _sendBuffer = ImmutableQueue.Create<Packet>();
+        private ImmutableQueue<On.IHandle> _subs;
 
         public Socket(Manager io, string nsp)
         {
             _io = io;
-            Nsp = nsp;
-            this.SubEvents();
+            _nsp = nsp;
+            SubEvents();
         }
 
         private void SubEvents()
         {
-            Manager io = _io;
-            Subs = ImmutableQueue.Create<On.IHandle>();
-            Subs = Subs.Enqueue(Client.On.Create(io, Manager.EVENT_OPEN, new ListenerImpl(OnOpen)));
-            Subs = Subs.Enqueue(Client.On.Create(io, Manager.EVENT_PACKET,
-                new ListenerImpl((data) => OnPacket((Packet) data))));
-            Subs = Subs.Enqueue(Client.On.Create(io, Manager.EVENT_CLOSE,
-                new ListenerImpl((data) => OnClose((string) data))));
+            var io = _io;
+            _subs = ImmutableQueue.Create<On.IHandle>();
+            _subs = _subs.Enqueue(Client.On.Create(io, Manager.EVENT_OPEN, new ListenerImpl(OnOpen)));
+            _subs = _subs.Enqueue(Client.On.Create(io, Manager.EVENT_PACKET,
+                new ListenerImpl(data => OnPacket((Packet) data))));
+            _subs = _subs.Enqueue(Client.On.Create(io, Manager.EVENT_CLOSE,
+                new ListenerImpl(data => OnClose((string) data))));
         }
 
 
@@ -73,13 +74,10 @@ namespace Xky.Socket.Client
         {
             Task.Run(() =>
             {
-                if (!Connected)
+                if (!_connected)
                 {
                     _io.Open();
-                    if (_io.ReadyState == Manager.ReadyStateEnum.OPEN)
-                    {
-                        OnOpen();
-                    }
+                    if (_io.ReadyState == Manager.ReadyStateEnum.OPEN) OnOpen();
                 }
             });
             return this;
@@ -87,12 +85,12 @@ namespace Xky.Socket.Client
 
         public Socket Connect()
         {
-            return this.Open();
+            return Open();
         }
 
         public Socket Send(params object[] args)
         {
-            Emit(EVENT_MESSAGE, args);
+            Emit(EventMessage, args);
             return this;
         }
 
@@ -111,10 +109,7 @@ namespace Xky.Socket.Client
             _args.AddRange(args);
 
             var ack = _args[_args.Count - 1] as IAck;
-            if (ack != null)
-            {
-                _args.RemoveAt(_args.Count - 1);
-            }
+            if (ack != null) _args.RemoveAt(_args.Count - 1);
 
             var jsonArgs = Parser.Packet.Args2JArray(_args);
 
@@ -123,24 +118,20 @@ namespace Xky.Socket.Client
 
             if (ack != null)
             {
-                log.Info($"emitting packet with ack id {Ids}");
+                log.Info($"emitting packet with ack id {_ids}");
 
                 lock ("acks")
                 {
-                    Acks = Acks.Add(Ids, ack);
+                    _acks = _acks.Add(_ids, ack);
                 }
 
-                packet.Id = Ids++;
+                packet.Id = _ids++;
             }
 
-            if (Connected)
-            {
+            if (_connected)
                 Packet(packet);
-            }
             else
-            {
-                SendBuffer = SendBuffer.Enqueue(packet);
-            }
+                _sendBuffer = _sendBuffer.Enqueue(packet);
 
             return this;
         }
@@ -164,22 +155,18 @@ namespace Xky.Socket.Client
             var parserType = HasBinaryData.HasBinary(jsonArgs) ? Parser.Parser.BINARY_EVENT : Parser.Parser.EVENT;
             var packet = new Packet(parserType, jsonArgs);
 
-            log.Info($"emitting packet with ack id {Ids}");
+            log.Info($"emitting packet with ack id {_ids}");
             lock ("acks")
             {
-                Acks = Acks.Add(Ids, ack);
+                _acks = _acks.Add(_ids, ack);
             }
 
-            packet.Id = Ids++;
+            packet.Id = _ids++;
 
-            if (Connected)
-            {
+            if (_connected)
                 Packet(packet);
-            }
             else
-            {
-                SendBuffer = SendBuffer.Enqueue(packet);
-            }
+                _sendBuffer = _sendBuffer.Enqueue(packet);
 
             return this;
         }
@@ -211,62 +198,56 @@ namespace Xky.Socket.Client
 
         public void Packet(Packet packet)
         {
-            packet.Nsp = Nsp;
+            packet.Nsp = _nsp;
             _io.Packet(packet);
         }
 
         private void OnOpen()
         {
             //var log = LogManager.GetLogger(Global.CallerName());
-            if (Nsp != "/")
-            {
-                Packet(new Packet(Parser.Parser.CONNECT));
-            }
+            if (_nsp != "/") Packet(new Packet(Parser.Parser.CONNECT));
         }
 
         private void OnClose(string reason)
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info($"close ({reason})");
-            Connected = false;
-            Emit(EVENT_DISCONNECT, reason);
+            _connected = false;
+            Emit(EventDisconnect, reason);
         }
 
         private void OnPacket(Packet packet)
         {
-            if (Nsp != packet.Nsp)
-            {
-                return;
-            }
+            if (_nsp != packet.Nsp) return;
 
             switch (packet.Type)
             {
                 case Parser.Parser.CONNECT:
-                    this.OnConnect();
+                    OnConnect();
                     break;
 
                 case Parser.Parser.EVENT:
-                    this.OnEvent(packet);
+                    OnEvent(packet);
                     break;
 
                 case Parser.Parser.BINARY_EVENT:
-                    this.OnEvent(packet);
+                    OnEvent(packet);
                     break;
 
                 case Parser.Parser.ACK:
-                    this.OnAck(packet);
+                    OnAck(packet);
                     break;
 
                 case Parser.Parser.BINARY_ACK:
-                    this.OnAck(packet);
+                    OnAck(packet);
                     break;
 
                 case Parser.Parser.DISCONNECT:
-                    this.OnDisconnect();
+                    OnDisconnect();
                     break;
 
                 case Parser.Parser.ERROR:
-                    this.Emit(EVENT_ERROR, packet.Data);
+                    Emit(EventError, packet.Data);
                     break;
             }
         }
@@ -292,7 +273,7 @@ namespace Xky.Socket.Client
                 args.Add(new AckImp(this, packet.Id));
             }
 
-            if (Connected)
+            if (_connected)
             {
                 var eventString = (string) args[0];
                 args.Remove(args[0]);
@@ -300,50 +281,19 @@ namespace Xky.Socket.Client
             }
             else
             {
-                ReceiveBuffer = ReceiveBuffer.Enqueue(args);
+                _receiveBuffer = _receiveBuffer.Enqueue(args);
             }
         }
 
-        private class AckImp : IAck
-        {
-            private Socket socket;
-            private int Id;
-            private readonly bool[] sent = new[] {false};
-
-            public AckImp(Socket socket, int id)
-            {
-                this.socket = socket;
-                this.Id = id;
-            }
-
-            public void Call(params object[] args)
-            {
-                if (sent[0])
-                {
-                    return;
-                }
-
-                sent[0] = true;
-                var log = LogManager.GetLogger(Global.CallerName());
-                var jsonArgs = Parser.Packet.Args2JArray(args);
-                log.Info($"sending ack {(args.Length != 0 ? jsonArgs.ToString() : "null")}");
-
-                var parserType = HasBinaryData.HasBinary(args) ? Parser.Parser.BINARY_ACK : Parser.Parser.ACK;
-                var packet = new Packet(parserType, jsonArgs);
-                packet.Id = Id;
-                socket.Packet(packet);
-            }
-        }
-
-        private void OnAck(Parser.Packet packet)
+        private void OnAck(Packet packet)
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info($"calling ack {packet.Id} with {packet.Data}");
             IAck fn;
             lock ("acks")
             {
-                fn = Acks[packet.Id];
-                Acks = Acks.Remove(packet.Id);
+                fn = _acks[packet.Id];
+                _acks = _acks.Remove(packet.Id);
             }
 
             var args = packet.GetDataAsList();
@@ -354,52 +304,49 @@ namespace Xky.Socket.Client
 
         private void OnConnect()
         {
-            Connected = true;
+            _connected = true;
             //Disconnected = false;
-            Emit(EVENT_CONNECT);
+            Emit(EventConnect);
             EmitBuffered();
         }
 
         private void EmitBuffered()
         {
-            while (ReceiveBuffer.Count() > 0)
+            while (_receiveBuffer.Count() > 0)
             {
                 List<object> data;
-                ReceiveBuffer = ReceiveBuffer.Dequeue(out data);
+                _receiveBuffer = _receiveBuffer.Dequeue(out data);
                 var eventString = (string) data[0];
                 base.Emit(eventString, data.ToArray());
             }
 
-            ReceiveBuffer = ReceiveBuffer.Clear();
+            _receiveBuffer = _receiveBuffer.Clear();
 
 
-            while (SendBuffer.Count() > 0)
+            while (_sendBuffer.Count() > 0)
             {
                 Packet packet;
-                SendBuffer = SendBuffer.Dequeue(out packet);
+                _sendBuffer = _sendBuffer.Dequeue(out packet);
                 Packet(packet);
             }
 
-            SendBuffer = SendBuffer.Clear();
+            _sendBuffer = _sendBuffer.Clear();
         }
 
 
         private void OnDisconnect()
         {
             var log = LogManager.GetLogger(Global.CallerName());
-            log.Info($"server disconnect ({this.Nsp})");
+            log.Info($"server disconnect ({_nsp})");
             Destroy();
             OnClose("io server disconnect");
         }
 
         private void Destroy()
         {
-            foreach (var sub in Subs)
-            {
-                sub.Destroy();
-            }
+            foreach (var sub in _subs) sub.Destroy();
 
-            Subs = Subs.Clear();
+            _subs = _subs.Clear();
 
             _io.Destroy(this);
         }
@@ -408,25 +355,22 @@ namespace Xky.Socket.Client
         {
             var log = LogManager.GetLogger(Global.CallerName());
 
-            if (Connected)
+            if (_connected)
             {
-                log.Info($"performing disconnect ({Nsp})");
+                log.Info($"performing disconnect ({_nsp})");
                 Packet(new Packet(Parser.Parser.DISCONNECT));
             }
 
             Destroy();
 
-            if (Connected)
-            {
-                OnClose("io client disconnect");
-            }
+            if (_connected) OnClose("io client disconnect");
 
             return this;
         }
 
         public Socket Disconnect()
         {
-            return this.Close();
+            return Close();
         }
 
         public Manager Io()
@@ -436,9 +380,9 @@ namespace Xky.Socket.Client
 
         private static IEnumerable<object> ToArray(JArray array)
         {
-            int length = array.Count;
+            var length = array.Count;
             var data = new object[length];
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 object v;
                 try
@@ -454,6 +398,34 @@ namespace Xky.Socket.Client
             }
 
             return data;
+        }
+
+        private class AckImp : IAck
+        {
+            private readonly bool[] _sent = {false};
+            private readonly int _id;
+            private readonly Socket _socket;
+
+            public AckImp(Socket socket, int id)
+            {
+                this._socket = socket;
+                _id = id;
+            }
+
+            public void Call(params object[] args)
+            {
+                if (_sent[0]) return;
+
+                _sent[0] = true;
+                var log = LogManager.GetLogger(Global.CallerName());
+                var jsonArgs = Parser.Packet.Args2JArray(args);
+                log.Info($"sending ack {(args.Length != 0 ? jsonArgs.ToString() : "null")}");
+
+                var parserType = HasBinaryData.HasBinary(args) ? Parser.Parser.BINARY_ACK : Parser.Parser.ACK;
+                var packet = new Packet(parserType, jsonArgs);
+                packet.Id = _id;
+                _socket.Packet(packet);
+            }
         }
     }
 }

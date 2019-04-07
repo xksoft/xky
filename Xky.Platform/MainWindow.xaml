@@ -190,9 +190,9 @@
             </StackPanel.Effect>
             <Border CornerRadius="15" Background="{StaticResource  BackgroundColor1}">
                 <StackPanel Orientation="Horizontal" Margin="8">
-                    <Ellipse x:Name="CoreStatus" Fill="{StaticResource OffLine}" Width="8" Height="8" IsHitTestVisible="False" />
-                    <TextBlock Margin="8,0,0,0" Foreground="White" x:Name="StatusText"
-                               />
+                    <Ellipse x:Name="CoreStatus" Fill="{StaticResource OffLine}" Width="8" Height="8"
+                             IsHitTestVisible="False" />
+                    <TextBlock Margin="8,0,0,0" Foreground="White" x:Name="StatusText" />
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -205,7 +205,7 @@
 
 
             <StackPanel VerticalAlignment="Top">
-                <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False" 
+                <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
                                        ImgSource="Resources/Icon/logo.png" PageName="Logo"
                                        IsDarkStyle="True" />
 
@@ -219,7 +219,8 @@
                 <userControl:MyTabItem ToolTip="节点" ImgSource="Resources/Icon/nodes.png" PageName="Task"
                                        IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
-                <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Setting" IsDarkStyle="True"
+                <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Setting"
+                                       IsDarkStyle="True"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
             </StackPanel>
         </Grid>

@@ -6,7 +6,7 @@ namespace Xky.Socket.Engine.Thread
 {
     public class EasyTimer
     {
-        private CancellationTokenSource ts;    
+        private readonly CancellationTokenSource ts;
 
         public EasyTimer(CancellationTokenSource ts)
         {
@@ -16,20 +16,17 @@ namespace Xky.Socket.Engine.Thread
         public static EasyTimer SetTimeout(Action method, int delayInMilliseconds)
         {
             var ts = new CancellationTokenSource();
-            CancellationToken ct = ts.Token;
-            var task = Task.Delay(delayInMilliseconds,ct);
+            var ct = ts.Token;
+            var task = Task.Delay(delayInMilliseconds, ct);
             var awaiter = task.GetAwaiter();
 
             awaiter.OnCompleted(
                 () =>
                 {
-                    if (!ts.IsCancellationRequested)
-                    {
-                        method();
-                    }
-            });
-           
-            
+                    if (!ts.IsCancellationRequested) method();
+                });
+
+
             // Returns a stop handle which can be used for stopping
             // the timer, if required
             return new EasyTimer(ts);
@@ -39,10 +36,7 @@ namespace Xky.Socket.Engine.Thread
         {
             //var log = LogManager.GetLogger(Global.CallerName());
             //log.Info("EasyTimer stop");
-            if (ts != null)
-            {
-                ts.Cancel();                
-            }           
+            if (ts != null) ts.Cancel();
         }
 
 
@@ -56,6 +50,4 @@ namespace Xky.Socket.Engine.Thread
             Task.Run(action);
         }
     }
-
-
 }

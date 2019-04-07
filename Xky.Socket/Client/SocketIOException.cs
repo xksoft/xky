@@ -4,8 +4,8 @@ namespace Xky.Socket.Client
 {
     public class SocketIOException : Exception
     {
-        public string Transport;
         public object code;
+        public string Transport;
 
         public SocketIOException(string message)
             : base(message)

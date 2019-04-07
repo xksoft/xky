@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using Xky.Socket.Engine.ComponentEmitter;
 using Xky.Socket.Engine.Modules;
 using Xky.Socket.Engine.Thread;
+using Xky.Socket.Parser;
 
 namespace Xky.Socket.Client
 {
@@ -30,92 +31,78 @@ namespace Xky.Socket.Client
         public static readonly string EVENT_RECONNECT_ATTEMPT = "reconnect_attempt";
         public static readonly string EVENT_RECONNECTING = "reconnecting";
 
-
-        /*package*/
-        public ReadyStateEnum ReadyState = ReadyStateEnum.CLOSED;
-
         private bool _reconnection;
-        private bool SkipReconnect;
-        private bool Reconnecting;
-        private bool Encoding;
-        private bool OpenReconnect;
         private int _reconnectionAttempts;
         private long _reconnectionDelay;
         private long _reconnectionDelayMax;
         private long _timeout;
         private int Attempts;
-        private Uri Uri;
-        private List<Parser.Packet> PacketBuffer;
-        private ConcurrentQueue<On.IHandle> Subs;
-        private Xky.Socket.Engine.Client.Socket.Options Opts;
-        private bool AutoConnect;
-        private HashSet<Socket> OpeningSockets;
+        private readonly bool AutoConnect;
+        private readonly Parser.Parser.Decoder Decoder;
+        private readonly Parser.Parser.Encoder Encoder;
+
+        private bool Encoding;
         /*package*/
 
         public Xky.Socket.Engine.Client.Socket EngineSocket;
-        private Parser.Parser.Encoder Encoder;
-        private Parser.Parser.Decoder Decoder;
 
         /**
          * This ImmutableDictionary can be accessed from outside of EventThread.
          */
         private ImmutableDictionary<string, Socket> Nsps;
+        private readonly HashSet<Socket> OpeningSockets;
+        private bool OpenReconnect;
+        private readonly Xky.Socket.Engine.Client.Socket.Options Opts;
+        private readonly List<Packet> PacketBuffer;
+
+
+        /*package*/
+        public ReadyStateEnum ReadyState = ReadyStateEnum.CLOSED;
+        private bool Reconnecting;
+        private bool SkipReconnect;
+        private readonly ConcurrentQueue<On.IHandle> Subs;
+        private readonly Uri Uri;
 
         public Manager() : this(null, null)
         {
-
         }
 
         public Manager(Uri uri) : this(uri, null)
         {
-
         }
 
         public Manager(Options opts) : this(null, opts)
         {
-
         }
 
         public Manager(Uri uri, Options opts)
         {
-            if (opts == null)
-            {
-                opts = new Options();
-            }
-            if (opts.Path == null)
-            {
-                opts.Path = "/socket.io";
-            }
-            this.Opts = opts;
-            this.Nsps = ImmutableDictionary.Create<string, Socket>();
-            this.Subs = new ConcurrentQueue<On.IHandle>();
-            this.Reconnection(opts.Reconnection);
-            this.ReconnectionAttempts(opts.ReconnectionAttempts != 0 ? opts.ReconnectionAttempts : int.MaxValue);
-            this.ReconnectionDelay(opts.ReconnectionDelay != 0 ? opts.ReconnectionDelay : 1000);
-            this.ReconnectionDelayMax(opts.ReconnectionDelayMax != 0 ? opts.ReconnectionDelayMax : 5000);
-            this.Timeout(opts.Timeout < 0 ? 20000 : opts.Timeout);
-            this.ReadyState = ReadyStateEnum.CLOSED;
-            this.Uri = uri;
-            this.Attempts = 0;
-            this.Encoding = false;
-            this.PacketBuffer = new List<Parser.Packet>();
-            this.OpeningSockets = new HashSet<Socket>();
-            this.Encoder = new Parser.Parser.Encoder();
-            this.Decoder = new Parser.Parser.Decoder();
-            this.AutoConnect = opts.AutoConnect;
-            if (AutoConnect)
-            {
-                Open();
-            }
+            if (opts == null) opts = new Options();
+            if (opts.Path == null) opts.Path = "/socket.io";
+            Opts = opts;
+            Nsps = ImmutableDictionary.Create<string, Socket>();
+            Subs = new ConcurrentQueue<On.IHandle>();
+            Reconnection(opts.Reconnection);
+            ReconnectionAttempts(opts.ReconnectionAttempts != 0 ? opts.ReconnectionAttempts : int.MaxValue);
+            ReconnectionDelay(opts.ReconnectionDelay != 0 ? opts.ReconnectionDelay : 1000);
+            ReconnectionDelayMax(opts.ReconnectionDelayMax != 0 ? opts.ReconnectionDelayMax : 5000);
+            Timeout(opts.Timeout < 0 ? 20000 : opts.Timeout);
+            ReadyState = ReadyStateEnum.CLOSED;
+            Uri = uri;
+            Attempts = 0;
+            Encoding = false;
+            PacketBuffer = new List<Packet>();
+            OpeningSockets = new HashSet<Socket>();
+            Encoder = new Parser.Parser.Encoder();
+            Decoder = new Parser.Parser.Decoder();
+            AutoConnect = opts.AutoConnect;
+            if (AutoConnect) Open();
         }
 
         private void EmitAll(string eventString, params object[] args)
         {
             Emit(eventString, args);
-            foreach (var socket in Nsps.Values)
-            {
-                socket.Emit(eventString, args);
-            }
+            foreach (var socket in Nsps.Values) socket.Emit(eventString, args);
         }
 
         public bool Reconnection()
@@ -176,10 +163,10 @@ namespace Xky.Socket.Client
 
         private void MaybeReconnectOnOpen()
         {
-            if (!this.OpenReconnect && !this.Reconnecting && this._reconnection)
+            if (!OpenReconnect && !Reconnecting && _reconnection)
             {
-                this.OpenReconnect = true;
-                this.Reconnect();
+                OpenReconnect = true;
+                Reconnect();
             }
         }
 
@@ -192,43 +179,40 @@ namespace Xky.Socket.Client
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info(string.Format("readyState {0}", ReadyState));
-            if (ReadyState == ReadyStateEnum.OPEN)
-            {
-                return this;
-            }
+            if (ReadyState == ReadyStateEnum.OPEN) return this;
 
             log.Info(string.Format("opening {0}", Uri));
             EngineSocket = new Engine(Uri, Opts);
-            Xky.Socket.Engine.Client.Socket socket = EngineSocket;
+            var socket = EngineSocket;
             Emit(EVENT_ENGINE, socket);
 
             ReadyState = ReadyStateEnum.OPENING;
             OpeningSockets.Add(Socket(Uri.AbsolutePath));
             SkipReconnect = false;
 
-            var openSub = Client.On.Create(socket, Engine.EVENT_OPEN, new ListenerImpl(() =>
+            var openSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_OPEN, new ListenerImpl(() =>
             {
                 OnOpen();
-                if (fn != null)
-                {
-                    fn.Call(null);
-                }
+                if (fn != null) fn.Call(null);
             }));
 
-            var errorSub = Client.On.Create(socket, Engine.EVENT_ERROR, new ListenerImpl((data) =>
-            {
-                log.Info("connect_error");
-                Cleanup();
-                ReadyState = ReadyStateEnum.CLOSED;
-                EmitAll(EVENT_CONNECT_ERROR, data);
-
-                if (fn != null)
+            var errorSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_ERROR, new ListenerImpl(
+                data =>
                 {
-                    var err = new SocketIOException("Connection error", data is Exception ? (Exception) data : null);
-                    fn.Call(err);
-                }
-                MaybeReconnectOnOpen();
-            }));
+                    log.Info("connect_error");
+                    Cleanup();
+                    ReadyState = ReadyStateEnum.CLOSED;
+                    EmitAll(EVENT_CONNECT_ERROR, data);
+
+                    if (fn != null)
+                    {
+                        var err = new SocketIOException("Connection error",
+                            data is Exception ? (Exception) data : null);
+                        fn.Call(err);
+                    }
+
+                    MaybeReconnectOnOpen();
+                }));
 
             if (_timeout >= 0)
             {
@@ -242,15 +226,13 @@ namespace Xky.Socket.Client
                     log2.Info(string.Format("connect attempt timed out after {0}", timeout));
                     openSub.Destroy();
                     socket.Close();
-                    socket.Emit(Engine.EVENT_ERROR, new SocketIOException("timeout"));
+                    socket.Emit(Xky.Socket.Engine.Client.Socket.EVENT_ERROR, new SocketIOException("timeout"));
                     EmitAll(EVENT_CONNECT_TIMEOUT, timeout);
                     log2.Info("Manager Open finish");
-
                 }, timeout);
 
                 Subs.Enqueue(new On.ActionHandleImpl(timer.Stop));
                 ;
-
             }
 
             Subs.Enqueue(openSub);
@@ -272,70 +254,54 @@ namespace Xky.Socket.Client
 
             var socket = EngineSocket;
 
-            var sub = Client.On.Create(socket, Engine.EVENT_DATA, new ListenerImpl((data) =>
+            var sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_DATA, new ListenerImpl(data =>
             {
                 if (data is string)
-                {
-                    OnData((string)data);
-                }
-                else if (data is byte[])
-                {
-                    Ondata((byte[])data);
-                }
+                    OnData((string) data);
+                else if (data is byte[]) Ondata((byte[]) data);
             }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(this.Decoder, Parser.Parser.Decoder.EVENT_DECODED, new ListenerImpl((data) =>
-            {
-                OnDecoded((Parser.Packet)data);
-            }));
+            sub = Client.On.Create(Decoder, Parser.Parser.Decoder.EVENT_DECODED,
+                new ListenerImpl(data => { OnDecoded((Packet) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Engine.EVENT_ERROR, new ListenerImpl((data) =>
-            {
-                OnError((Exception) data);
-            }));
+            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_ERROR,
+                new ListenerImpl(data => { OnError((Exception) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Engine.EVENT_CLOSE, new ListenerImpl((data) =>
-            {
-                OnClose((string) data);
-            }));
+            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_CLOSE,
+                new ListenerImpl(data => { OnClose((string) data); }));
             Subs.Enqueue(sub);
-
-
         }
 
         private void OnData(string data)
         {
-            this.Decoder.Add(data);
+            Decoder.Add(data);
         }
 
         private void Ondata(byte[] data)
         {
-            this.Decoder.Add(data);
+            Decoder.Add(data);
         }
 
-        private void OnDecoded(Parser.Packet packet)
+        private void OnDecoded(Packet packet)
         {
-            this.Emit(EVENT_PACKET, packet);
+            Emit(EVENT_PACKET, packet);
         }
 
         private void OnError(Exception err)
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Error("error", err);
-            this.EmitAll(EVENT_ERROR, err);
+            EmitAll(EVENT_ERROR, err);
         }
 
         public Socket Socket(string nsp)
         {
-            if (Nsps.ContainsKey(nsp))
-            {
-                return Nsps[nsp];
-            }
+            if (Nsps.ContainsKey(nsp)) return Nsps[nsp];
 
-            var socket = new Socket(this,nsp);
+            var socket = new Socket(this, nsp);
             Nsps = Nsps.Add(nsp, socket);
 
             return socket;
@@ -344,14 +310,11 @@ namespace Xky.Socket.Client
         internal void Destroy(Socket socket)
         {
             OpeningSockets.Remove(socket);
-            if (OpeningSockets.Count == 0)
-            {
-                Close();
-            }
+            if (OpeningSockets.Count == 0) Close();
         }
 
 
-        internal void Packet(Parser.Packet packet)
+        internal void Packet(Packet packet)
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info(string.Format("writing packet {0}", packet));
@@ -359,20 +322,13 @@ namespace Xky.Socket.Client
             if (!Encoding)
             {
                 Encoding = true;
-                Encoder.Encode(packet, new Parser.Parser.Encoder.CallbackImp((data) =>
+                Encoder.Encode(packet, new Parser.Parser.Encoder.CallbackImp(data =>
                 {
-                    var encodedPackets = (object[]) data;
+                    var encodedPackets = data;
                     foreach (var packet1 in encodedPackets)
-                    {
                         if (packet1 is string)
-                        {
                             EngineSocket.Write((string) packet1);
-                        }
-                        else if (packet1 is byte[])
-                        {
-                            EngineSocket.Write((byte[]) packet1);
-                        }
-                    }
+                        else if (packet1 is byte[]) EngineSocket.Write((byte[]) packet1);
                     Encoding = false;
                     ProcessPacketQueue();
                 }));
@@ -381,44 +337,34 @@ namespace Xky.Socket.Client
             {
                 PacketBuffer.Add(packet);
             }
-
         }
 
         private void ProcessPacketQueue()
         {
-            if (this.PacketBuffer.Count > 0 && !this.Encoding)
+            if (PacketBuffer.Count > 0 && !Encoding)
             {
-                Parser.Packet pack = this.PacketBuffer[0];
+                var pack = PacketBuffer[0];
                 PacketBuffer.Remove(pack);
-                this.Packet(pack);
+                Packet(pack);
             }
         }
 
         private void Cleanup()
         {
             // dequeue and destroy until empty
-            while (Subs.TryDequeue(out On.IHandle sub))
-            {
-                sub.Destroy();
-            }
+            while (Subs.TryDequeue(out var sub)) sub.Destroy();
         }
 
         public void Close()
         {
-            this.SkipReconnect = true;
-            this.Reconnecting = false;
+            SkipReconnect = true;
+            Reconnecting = false;
 
-            if (ReadyState != ReadyStateEnum.OPEN)
-            {
-                Cleanup();
-            }
+            if (ReadyState != ReadyStateEnum.OPEN) Cleanup();
 
             ReadyState = ReadyStateEnum.CLOSED;
 
-            if (EngineSocket != null)
-            {
-                this.EngineSocket.Close();
-            }
+            if (EngineSocket != null) EngineSocket.Close();
         }
 
 
@@ -429,10 +375,7 @@ namespace Xky.Socket.Client
             Cleanup();
             ReadyState = ReadyStateEnum.CLOSED;
             Emit(EVENT_CLOSE, reason);
-            if (_reconnection && !SkipReconnect)
-            {
-                Reconnect();
-            }
+            if (_reconnection && !SkipReconnect) Reconnect();
         }
 
 
@@ -440,10 +383,7 @@ namespace Xky.Socket.Client
         {
             var log = LogManager.GetLogger(Global.CallerName());
 
-            if (Reconnecting || SkipReconnect)
-            {
-                return;
-            }
+            if (Reconnecting || SkipReconnect) return;
 
             Attempts++;
 
@@ -455,7 +395,7 @@ namespace Xky.Socket.Client
             }
             else
             {
-                var delay = Attempts*ReconnectionDelay();
+                var delay = Attempts * ReconnectionDelay();
                 delay = Math.Min(delay, ReconnectionDelayMax());
                 log.Info(string.Format("will wait {0}ms before reconnect attempt", delay));
 
@@ -464,10 +404,10 @@ namespace Xky.Socket.Client
                 {
                     var log2 = LogManager.GetLogger(Global.CallerName());
                     log2.Info("EasyTimer Reconnect start");
-                    log2.Info(string.Format("attempting reconnect"));
+                    log2.Info("attempting reconnect");
                     EmitAll(EVENT_RECONNECT_ATTEMPT, Attempts);
                     EmitAll(EVENT_RECONNECTING, Attempts);
-                    Open(new OpenCallbackImp((err) =>
+                    Open(new OpenCallbackImp(err =>
                     {
                         if (err != null)
                         {
@@ -483,31 +423,30 @@ namespace Xky.Socket.Client
                         }
                     }));
                     log2.Info("EasyTimer Reconnect finish");
-                }, (int)delay);
+                }, (int) delay);
 
-                Subs.Enqueue(new On.ActionHandleImpl(timer.Stop));                
+                Subs.Enqueue(new On.ActionHandleImpl(timer.Stop));
             }
         }
 
 
         private void OnReconnect()
         {
-            int attempts = this.Attempts;
-            this.Attempts = 0;
-            this.Reconnecting = false;
-            this.EmitAll(EVENT_RECONNECT, attempts);
+            var attempts = Attempts;
+            Attempts = 0;
+            Reconnecting = false;
+            EmitAll(EVENT_RECONNECT, attempts);
         }
 
 
         public interface IOpenCallback
         {
-
             void Call(Exception err);
         }
 
         public class OpenCallbackImp : IOpenCallback
         {
-            private Action<object> Fn;
+            private readonly Action<object> Fn;
 
             public OpenCallbackImp(Action<object> fn)
             {
@@ -519,33 +458,25 @@ namespace Xky.Socket.Client
                 Fn(err);
             }
         }
-
     }
-
 
 
     public class Engine : Xky.Socket.Engine.Client.Socket
     {
         public Engine(Uri uri, Options opts) : base(uri, opts)
         {
-
         }
     }
 
 
-
     public class Options : Xky.Socket.Engine.Client.Socket.Options
     {
+        public bool AutoConnect = true;
 
         public bool Reconnection = true;
         public int ReconnectionAttempts;
         public long ReconnectionDelay;
         public long ReconnectionDelayMax;
         public long Timeout = -1;
-        public bool AutoConnect = true;
     }
-
-
 }
-
-

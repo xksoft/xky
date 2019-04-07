@@ -1,14 +1,12 @@
-﻿
-namespace Xky.Socket.Engine.Parser
+﻿namespace Xky.Socket.Engine.Parser
 {
     /// <remarks>
-    /// This is the JavaScript parser for the engine.io protocol encoding, 
-    /// shared by both engine.io-client and engine.io.
-    /// <see href="https://github.com/Automattic/engine.io-parser">https://github.com/Automattic/engine.io-parser</see>
+    ///     This is the JavaScript parser for the engine.io protocol encoding,
+    ///     shared by both engine.io-client and engine.io.
+    ///     <see href="https://github.com/Automattic/engine.io-parser">https://github.com/Automattic/engine.io-parser</see>
     /// </remarks>
     public class Parser
-    {        
-
+    {
         public static readonly int Protocol = 3;
 
 
@@ -46,6 +44,5 @@ namespace Xky.Socket.Engine.Parser
         {
             Packet.DecodePayload(data, callback);
         }
-
     }
 }

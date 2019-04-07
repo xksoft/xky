@@ -29,7 +29,7 @@
                                      Height="{Binding ElementName=MainRow,
                                                       Path=ActualHeight}"
                                      HorizontalAlignment="Left"
-                                    
+
                                      Fill="#666" />
                             <Ellipse x:Name="BackgroundEllipse2"
                                      Grid.Row="0"
@@ -55,9 +55,9 @@
                             </Grid.ColumnDefinitions>
                             <Border x:Name="AnimationSizeBorder"
                                     Grid.Column="0" />
-                           
+
                         </Grid>
-                        
+
                         <Grid Background="Transparent">
                             <StackPanel HorizontalAlignment="Left"
                                         Orientation="Horizontal">
@@ -73,38 +73,52 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
-                       
+
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{Binding Source={StaticResource BlueLine}}" />
+                            <Setter TargetName="BackgroundBorder" Property="Background"
+                                    Value="{Binding Source={StaticResource BlueLine}}" />
                             <Setter TargetName="ForegroundEllipse" Property="Fill" Value="#fff" />
-                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{Binding Source={StaticResource BlueLine}}"/>
-                            <Setter TargetName="BackgroundEllipse2" Property="Fill" Value="{Binding Source={StaticResource BlueLine}}" />
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill"
+                                    Value="{Binding Source={StaticResource BlueLine}}" />
+                            <Setter TargetName="BackgroundEllipse2" Property="Fill"
+                                    Value="{Binding Source={StaticResource BlueLine}}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="BackgroundBorder" Property="Background"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
                             <Setter TargetName="ForegroundEllipse" Property="Fill" Value="#fff" />
-                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
-                            <Setter TargetName="BackgroundEllipse2" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="BackgroundEllipse2" Property="Fill"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder" Storyboard.TargetProperty="Width" To="0" From="20"  Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder"
+                                                         Storyboard.TargetProperty="Width" To="0" From="20"
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder" Storyboard.TargetProperty="Width"  From="0" To="20" Duration="0:0:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="AnimationSizeBorder"
+                                                         Storyboard.TargetProperty="Width" From="0" To="20"
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="BackgroundBorder" Property="Background" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}"/>
-                            <Setter TargetName="ForegroundEllipse" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=-1}" />
-                            <Setter TargetName="BackgroundEllipse1" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
-                            <Setter TargetName="BackgroundEllipse2" Property="Fill" Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="BackgroundBorder" Property="Background"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="ForegroundEllipse" Property="Fill"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=-1}" />
+                            <Setter TargetName="BackgroundEllipse1" Property="Fill"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
+                            <Setter TargetName="BackgroundEllipse2" Property="Fill"
+                                    Value="{Binding Source={StaticResource BackgroundColor1},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

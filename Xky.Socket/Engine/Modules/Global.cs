@@ -18,30 +18,25 @@ namespace Xky.Socket.Engine.Modules
             return Uri.UnescapeDataString(str);
         }
 
-        public static string CallerName([CallerMemberName]string caller = "", [CallerLineNumber]int number = 0, [CallerFilePath]string path = "")
+        public static string CallerName([CallerMemberName] string caller = "", [CallerLineNumber] int number = 0,
+            [CallerFilePath] string path = "")
         {
             var s = path.Split('\\');
             var fileName = s.LastOrDefault();
             if (path.Contains("SocketIoClientDotNet.Tests"))
-            {
                 path = "SocketIoClientDotNet.Tests";
-            }
             else if (path.Contains("SocketIoClientDotNet"))
-            {
                 path = "SocketIoClientDotNet";
-            }
-            else if (path.Contains("EngineIoClientDotNet"))
-            {
-                path = "EngineIoClientDotNet";
-            }
+            else if (path.Contains("EngineIoClientDotNet")) path = "EngineIoClientDotNet";
 
-            return string.Format("{0}-{1}:{2}#{3}",path, fileName, caller, number);
+            return string.Format("{0}-{1}:{2}#{3}", path, fileName, caller, number);
         }
 
         //from http://stackoverflow.com/questions/8767103/how-to-remove-invalid-code-points-from-a-string
         public static string StripInvalidUnicodeCharacters(string str)
         {
-            var invalidCharactersRegex = new Regex("([\ud800-\udbff](?![\udc00-\udfff]))|((?<![\ud800-\udbff])[\udc00-\udfff])");
+            var invalidCharactersRegex =
+                new Regex("([\ud800-\udbff](?![\udc00-\udfff]))|((?<![\ud800-\udbff])[\udc00-\udfff])");
             return invalidCharactersRegex.Replace(str, "");
         }
     }

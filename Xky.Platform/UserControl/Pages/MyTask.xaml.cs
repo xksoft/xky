@@ -4,35 +4,28 @@ using System.Collections.Generic;
 namespace Xky.Platform.UserControl.Pages
 {
     /// <summary>
-    /// MyTask.xaml 的交互逻辑
+    ///     MyTask.xaml 的交互逻辑
     /// </summary>
-    public partial class MyTask 
+    public partial class MyTask
     {
         public MyTask()
         {
-            Random R = new Random();
+            var R = new Random();
             InitializeComponent();
-            List<XkyTask> list = new List<XkyTask>();
-            for (int i = 1; i < 9999; i++)
-            {
-                list.Add(new XkyTask { Id = i, Name = "点赞加好友", State = "执行中", Process = R.Next(500,9999) });
-            }
-           
-          
+            var list = new List<XkyTask>();
+            for (var i = 1; i < 9999; i++)
+                list.Add(new XkyTask {Id = i, Name = "点赞加好友", State = "执行中", Process = R.Next(500, 9999)});
+
 
             datagrid_task.ItemsSource = list;
         }
     }
-    public class XkyTask {
-        private int _id =1;
-        private string _name = "加好友并点赞";
-        private string _state = "执行中";
-        private int _process = 0;
-      
 
-        public int Id { get => _id; set => _id = value; }
-        public string Name { get => _name; set => _name = value; }
-        public string State { get => _state; set => _state = value; }
-        public int Process { get => _process; set => _process = value; }
+    public class XkyTask
+    {
+        public int Id { get; set; } = 1;
+        public string Name { get; set; } = "加好友并点赞";
+        public string State { get; set; } = "执行中";
+        public int Process { get; set; }
     }
 }

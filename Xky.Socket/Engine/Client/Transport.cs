@@ -11,14 +11,6 @@ namespace Xky.Socket.Engine.Client
 {
     public abstract class Transport : Emitter
     {
-        protected enum ReadyStateEnum
-        {
-            OPENING,
-            OPEN,
-            CLOSED,
-            PAUSED
-        }
-
         public static readonly string EVENT_OPEN = "open";
         public static readonly string EVENT_CLOSE = "close";
         public static readonly string EVENT_PACKET = "packet";
@@ -31,68 +23,64 @@ namespace Xky.Socket.Engine.Client
 
         protected static int Timestamps = 0;
 
-        private bool _writeable ;
-        public bool Writable {
-            get { return _writeable; } 
-            set
-            {
-                var log = LogManager.GetLogger(Global.CallerName());
-                log.Info(string.Format("Writable: {0} sid={1}", value, this.Socket.Id));
-                _writeable = value;
-            } 
-        }
-
-        private int myVar;
-
-        public int MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; }
-        }
-        
-        public string Name;
-        public Dictionary<string, string> Query;
-
-        protected bool Secure;
-        protected SslProtocols SslProtocols;
-        protected bool TimestampRequests;
-        protected int Port;
-        protected string Path;
-        protected string Hostname;
-        protected string TimestampParam;
-        protected Socket Socket;
-        protected bool Agent = false;
-        protected bool ForceBase64 = false;
-        protected bool ForceJsonp = false;
+        private bool _writeable;
+        protected bool Agent;
         protected string Cookie;
 
         protected Dictionary<string, string> ExtraHeaders;
+        protected bool ForceBase64;
+        protected bool ForceJsonp;
+        protected string Hostname;
+
+        public string Name;
+        protected string Path;
+        protected int Port;
+        public Dictionary<string, string> Query;
 
 
         protected ReadyStateEnum ReadyState = ReadyStateEnum.CLOSED;
 
+        protected bool Secure;
+        protected Socket Socket;
+        protected SslProtocols SslProtocols;
+        protected string TimestampParam;
+        protected bool TimestampRequests;
+
         protected Transport(Options options)
         {
-            this.Path = options.Path;
-            this.Hostname = options.Hostname;
-            this.Port = options.Port;
-            this.Secure = options.Secure;
-            this.SslProtocols = options.SslProtocols;
-            this.Query = options.Query;
-            this.TimestampParam = options.TimestampParam;
-            this.TimestampRequests = options.TimestampRequests;
-            this.Socket = options.Socket;
-            this.Agent = options.Agent;
-            this.ForceBase64 = options.ForceBase64;
-            this.ForceJsonp = options.ForceJsonp;
-            this.Cookie = options.GetCookiesAsString();
-            this.ExtraHeaders = options.ExtraHeaders;
+            Path = options.Path;
+            Hostname = options.Hostname;
+            Port = options.Port;
+            Secure = options.Secure;
+            SslProtocols = options.SslProtocols;
+            Query = options.Query;
+            TimestampParam = options.TimestampParam;
+            TimestampRequests = options.TimestampRequests;
+            Socket = options.Socket;
+            Agent = options.Agent;
+            ForceBase64 = options.ForceBase64;
+            ForceJsonp = options.ForceJsonp;
+            Cookie = options.GetCookiesAsString();
+            ExtraHeaders = options.ExtraHeaders;
         }
+
+        public bool Writable
+        {
+            get => _writeable;
+            set
+            {
+                var log = LogManager.GetLogger(Global.CallerName());
+                log.Info(string.Format("Writable: {0} sid={1}", value, Socket.Id));
+                _writeable = value;
+            }
+        }
+
+        public int MyProperty { get; set; }
 
         protected Transport OnError(string message, Exception exception)
         {
             Exception err = new EngineIOException(message, exception);
-            this.Emit(EVENT_ERROR, err);
+            Emit(EVENT_ERROR, err);
             return this;
         }
 
@@ -112,17 +100,17 @@ namespace Xky.Socket.Engine.Client
 
         protected virtual void OnData(string data)
         {
-            this.OnPacket(Parser.Parser.DecodePacket(data));
+            OnPacket(Parser.Parser.DecodePacket(data));
         }
 
         protected virtual void OnData(byte[] data)
         {
-            this.OnPacket(Parser.Parser.DecodePacket(data));
+            OnPacket(Parser.Parser.DecodePacket(data));
         }
 
         protected void OnPacket(Packet packet)
         {
-            this.Emit(EVENT_PACKET, packet);
+            Emit(EVENT_PACKET, packet);
         }
 
 
@@ -133,6 +121,7 @@ namespace Xky.Socket.Engine.Client
                 ReadyState = ReadyStateEnum.OPENING;
                 DoOpen();
             }
+
             return this;
         }
 
@@ -143,6 +132,7 @@ namespace Xky.Socket.Engine.Client
                 DoClose();
                 OnClose();
             }
+
             return this;
         }
 
@@ -152,20 +142,11 @@ namespace Xky.Socket.Engine.Client
             log.Info("Send called with packets.Count: " + packets.Count);
             var count = packets.Count;
             if (ReadyState == ReadyStateEnum.OPEN)
-            {
-                //PollTasks.Exec((n) =>
-                //{
-                    Write(packets);
-                //});
-            }
+                Write(packets);
             else
-            {
                 throw new EngineIOException("Transport not open");
-                //log.Info("Transport not open");
-            }
             return this;
         }
-
 
 
         protected abstract void DoOpen();
@@ -174,25 +155,33 @@ namespace Xky.Socket.Engine.Client
 
         protected abstract void Write(ImmutableList<Packet> packets);
 
+        protected enum ReadyStateEnum
+        {
+            OPENING,
+            OPEN,
+            CLOSED,
+            PAUSED
+        }
+
 
         public class Options
         {
             public bool Agent = false;
+            public Dictionary<string, string> Cookies = new Dictionary<string, string>();
+            public Dictionary<string, string> ExtraHeaders = new Dictionary<string, string>();
             public bool ForceBase64 = false;
             public bool ForceJsonp = false;
             public string Hostname;
-            public string Path;
-            public string TimestampParam;
-            public bool Secure = false;
-            public SslProtocols SslProtocols;
-            public bool TimestampRequests = true;
-            public int Port;
-            public int PolicyPort;
-            public Dictionary<string, string> Query;
             public bool IgnoreServerCertificateValidation = false;
+            public string Path;
+            public int PolicyPort;
+            public int Port;
+            public Dictionary<string, string> Query;
+            public bool Secure = false;
             internal Socket Socket;
-            public Dictionary<string, string> Cookies = new Dictionary<string, string>();
-            public Dictionary<string, string> ExtraHeaders = new Dictionary<string, string>();
+            public SslProtocols SslProtocols;
+            public string TimestampParam;
+            public bool TimestampRequests = true;
 
             public string GetCookiesAsString()
             {
@@ -200,13 +189,11 @@ namespace Xky.Socket.Engine.Client
                 var first = true;
                 foreach (var item in Cookies)
                 {
-                    if (!first)
-                    {
-                        result.Append("; ");
-                    }
+                    if (!first) result.Append("; ");
                     result.Append(string.Format("{0}={1}", item.Key, item.Value));
                     first = false;
                 }
+
                 return result.ToString();
             }
         }

@@ -37,16 +37,16 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border Height="60" Style="{StaticResource MyTabItemStyle}" Cursor="Hand" >
+    <Border Height="60" Style="{StaticResource MyTabItemStyle}" Cursor="Hand">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Canvas x:Name="MyCanvas" Grid.Column="0" ></Canvas>
+            <Canvas x:Name="MyCanvas" Grid.Column="0" />
             <Image x:Name="MyIcon"
                    Source="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MyTabItem},AncestorLevel=1},Path=ImgSource}"
-                   Height="32" Width="32" Grid.Column="0" Grid.ColumnSpan="2"/>
+                   Height="32" Width="32" Grid.Column="0" Grid.ColumnSpan="2" />
         </Grid>
     </Border>
 

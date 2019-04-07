@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
@@ -6,7 +7,7 @@ using Xky.Core;
 namespace Xky.Platform.UserControl.Pages
 {
     /// <summary>
-    /// MyLogin.xaml 的交互逻辑
+    ///     MyLogin.xaml 的交互逻辑
     /// </summary>
     public partial class MyLogin
     {
@@ -17,14 +18,11 @@ namespace Xky.Platform.UserControl.Pages
             Client.StartAction(() =>
             {
                 var json = Common.LoadJson("license");
-                if (json != null)
-                {
-                    Common.UiAction(() => { LicenseKey.TextBoxText = json["license"].ToString(); });
-                }
+                if (json != null) Common.UiAction(() => { LicenseKey.TextBoxText = json["license"].ToString(); });
             });
         }
 
-        private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
             var licensekey = LicenseKey.TextBoxText;
 

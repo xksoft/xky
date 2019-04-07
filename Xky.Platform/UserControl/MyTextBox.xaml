@@ -21,7 +21,8 @@
             </Style>
         </Border.Style>
         <Grid>
-            <Label x:Name="WaterLabel" Margin="5,0,0,0" VerticalContentAlignment="Center" Foreground="{StaticResource  DescriptionColor}"
+            <Label x:Name="WaterLabel" Margin="5,0,0,0" VerticalContentAlignment="Center"
+                   Foreground="{StaticResource  DescriptionColor}"
                    Content="{Binding Path=TextBoxWaterText}" />
             <TextBox x:Name="TextBox1" Background="Transparent" BorderThickness="0" Margin="5,0,0,0"
                      Foreground="{Binding Path=TextBoxForeground}"

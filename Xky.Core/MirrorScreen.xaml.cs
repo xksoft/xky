@@ -90,6 +90,79 @@ namespace Xky.Core
             }
         }
 
+        #region  Loading和日志
+
+//        private void HideLoading()
+//        {
+//            var myBrush = new SolidColorBrush();
+//            var myColorAnimation = new ColorAnimation
+//            {
+//                From = Colors.White,
+//                To = Colors.Transparent,
+//                Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
+//                AutoReverse = false
+//            };
+//            myColorAnimation.Completed += MyColorAnimation_Completed;
+//
+//            myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
+//
+//            ScreenLoading.Foreground = myBrush;
+//        }
+
+
+//        private void HideLabel(Label label)
+//        {
+//            Client.StartAction(async () =>
+//            {
+//                await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
+//                Dispatcher.Invoke(() =>
+//                {
+//                    var myBrush = new SolidColorBrush();
+//                    // ScreenLoading.IsActive = false;
+//                    var myColorAnimation = new ColorAnimation
+//                    {
+//                        From = ((SolidColorBrush) label.Foreground).Color,
+//                        To = Colors.Transparent,
+//                        Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
+//                        AutoReverse = false
+//                    };
+//                    myColorAnimation.Completed += delegate { LogPanel.Children.Remove(label); };
+//                    myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
+//                    label.Foreground = myBrush;
+//                });
+//            });
+//        }
+
+        public void AddLabel(string msg, Color color)
+        {
+            OnShowLog?.Invoke(this, msg, color);
+//            Dispatcher.Invoke(() =>
+//            {
+//                if (IsShowLog)
+//                {
+//                    var label = new Label
+//                    {
+//                        Content = msg,
+//                        Effect = new DropShadowEffect
+//                        {
+//                            Color = Colors.Black,
+//                            Direction = 300,
+//                            ShadowDepth = 1,
+//                            BlurRadius = 0,
+//                            Opacity = 1
+//                        },
+//                        FontSize = 14,
+//                        Foreground = new SolidColorBrush(color),
+//                        Style = null
+//                    };
+//                    LogPanel.Children.Add(label);
+//                    HideLabel(label);
+//                }
+//            });
+        }
+
+        #endregion
+
 
         #region 屏幕连接
 
@@ -124,10 +197,9 @@ namespace Xky.Core
 
             if (Client.LocalNodes.ContainsKey(_device.NodeSerial))
             {
-                _device.NodeUrl = "http://" + Client.LocalNodes[_device.NodeSerial].Ip+ ":8080";
+                _device.NodeUrl = "http://" + Client.LocalNodes[_device.NodeSerial].Ip + ":8080";
                 Console.WriteLine(_device.NodeUrl);
             }
-
 
 
             if (_device.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
@@ -157,9 +229,9 @@ namespace Xky.Core
             };
             AddLabel("正在连接..", Colors.White);
             _socket = IO.Socket(_device.NodeUrl, options);
-            _socket.On(Socket.Client.Socket.EVENT_CONNECT, () => { Console.WriteLine("Connected"); });
-            _socket.On(Socket.Client.Socket.EVENT_DISCONNECT, () => { Console.WriteLine("Disconnected"); });
-            _socket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
+            _socket.On(Socket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
+            _socket.On(Socket.Client.Socket.EventDisconnect, () => { Console.WriteLine("Disconnected"); });
+            _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
             _socket.On("h264", data =>
             {
@@ -445,79 +517,6 @@ namespace Xky.Core
                     {"text", text},
                     {"type", "input"}
                 });
-        }
-
-        #endregion
-
-        #region  Loading和日志
-
-//        private void HideLoading()
-//        {
-//            var myBrush = new SolidColorBrush();
-//            var myColorAnimation = new ColorAnimation
-//            {
-//                From = Colors.White,
-//                To = Colors.Transparent,
-//                Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-//                AutoReverse = false
-//            };
-//            myColorAnimation.Completed += MyColorAnimation_Completed;
-//
-//            myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-//
-//            ScreenLoading.Foreground = myBrush;
-//        }
-
-
-//        private void HideLabel(Label label)
-//        {
-//            Client.StartAction(async () =>
-//            {
-//                await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
-//                Dispatcher.Invoke(() =>
-//                {
-//                    var myBrush = new SolidColorBrush();
-//                    // ScreenLoading.IsActive = false;
-//                    var myColorAnimation = new ColorAnimation
-//                    {
-//                        From = ((SolidColorBrush) label.Foreground).Color,
-//                        To = Colors.Transparent,
-//                        Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-//                        AutoReverse = false
-//                    };
-//                    myColorAnimation.Completed += delegate { LogPanel.Children.Remove(label); };
-//                    myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-//                    label.Foreground = myBrush;
-//                });
-//            });
-//        }
-
-        public void AddLabel(string msg, Color color)
-        {
-            OnShowLog?.Invoke(this, msg, color);
-//            Dispatcher.Invoke(() =>
-//            {
-//                if (IsShowLog)
-//                {
-//                    var label = new Label
-//                    {
-//                        Content = msg,
-//                        Effect = new DropShadowEffect
-//                        {
-//                            Color = Colors.Black,
-//                            Direction = 300,
-//                            ShadowDepth = 1,
-//                            BlurRadius = 0,
-//                            Opacity = 1
-//                        },
-//                        FontSize = 14,
-//                        Foreground = new SolidColorBrush(color),
-//                        Style = null
-//                    };
-//                    LogPanel.Children.Add(label);
-//                    HideLabel(label);
-//                }
-//            });
         }
 
         #endregion

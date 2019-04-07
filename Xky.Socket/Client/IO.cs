@@ -9,13 +9,12 @@ namespace Xky.Socket.Client
         private static ImmutableDictionary<string, Manager> Managers = ImmutableDictionary.Create<string, Manager>();
 
         /// <summary>
-        /// Protocol version
+        ///     Protocol version
         /// </summary>
         public static int Protocol = Parser.Parser.protocol;
 
         private IO()
         {
-
         }
 
         public static Socket Socket(string uri)
@@ -31,22 +30,18 @@ namespace Xky.Socket.Client
         public static Socket Socket(Uri uri)
         {
             return Socket(uri, null);
-
         }
+
         public static Socket Socket(Uri uri, Options opts)
         {
-
             var log = LogManager.GetLogger(Global.CallerName());
-            if (opts == null)
-            {
-                opts = new Options();
-            }
+            if (opts == null) opts = new Options();
 
             Manager io;
 
             if (opts.ForceNew || !opts.Multiplex)
             {
-                log.Info(string.Format("ignoring socket cache for {0}", uri.ToString()));
+                log.Info(string.Format("ignoring socket cache for {0}", uri));
                 io = new Manager(uri, opts);
             }
             else
@@ -56,8 +51,8 @@ namespace Xky.Socket.Client
                 {
                     log.Info(string.Format("new io instance for {0}", id));
                     Managers = Managers.Add(id, new Manager(uri, opts));
-
                 }
+
                 io = Managers[id];
             }
 
@@ -68,7 +63,6 @@ namespace Xky.Socket.Client
 
         public class Options : Client.Options
         {
-
             public bool ForceNew = true;
             public bool Multiplex = true;
         }

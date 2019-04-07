@@ -18,7 +18,6 @@ using Xky.Core.Common;
 using Xky.Core.Model;
 using Xky.Socket.Client;
 
-
 namespace Xky.Core
 {
     public static class Client
@@ -109,16 +108,14 @@ namespace Xky.Core
             var count = 10000;
 
             if (CoreSocket == null || !CoreConnected)
-            {
                 return new Response
                 {
                     Result = false,
                     Message = "未连接核心服务器",
                     Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
                 };
-            }
 
-            CoreSocket.Emit("call", (result) =>
+            CoreSocket.Emit("call", result =>
             {
                 var jsonResult = (JObject) result;
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
@@ -178,10 +175,8 @@ namespace Xky.Core
                         {
                             var node = Nodes.ToList().Find(p => p.Serial == serial);
                             if (node != null)
-                            {
                                 ConnectToNode(node, "http://" + LocalNodes[serial].Ip + ":8080",
                                     node.ConnectionHash);
-                            }
                         }
                     }
                 }
@@ -236,17 +231,17 @@ namespace Xky.Core
                         Transports = ImmutableList.Create("websocket")
                     };
                     CoreSocket = IO.Socket("wss://api.xky.com", options);
-                    CoreSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
+                    CoreSocket.On(Socket.Client.Socket.EventConnect, () =>
                     {
                         Console.WriteLine("Connected");
                         CoreConnected = true;
                     });
-                    CoreSocket.On(Socket.Client.Socket.EVENT_DISCONNECT, () =>
+                    CoreSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         Console.WriteLine("Disconnected");
                         CoreConnected = false;
                     });
-                    CoreSocket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("ERROR"); });
+                    CoreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
                     CoreSocket.On("event", json => { CoreEvent((JObject) json); });
                 }
                 else
@@ -322,10 +317,7 @@ namespace Xky.Core
         {
             var response = CallApi("get_device",
                 new JObject {["sn"] = sn});
-            if (!response.Result)
-            {
-                Console.WriteLine(response.Message);
-            }
+            if (!response.Result) Console.WriteLine(response.Message);
 
             return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
         }
@@ -383,9 +375,8 @@ namespace Xky.Core
                 var response = CallApi("get_module_panel", new JObject());
 
                 if (response.Result)
-                {
-                    foreach (var json in (JArray) response.Json["result"]) PushModule(json);
-                }
+                    foreach (var json in (JArray) response.Json["result"])
+                        PushModule(json);
 
                 return response;
             }
@@ -428,10 +419,7 @@ namespace Xky.Core
         {
             lock ("node_connect")
             {
-                if (url == null || node.ConnectStatus > 0 && node.NodeUrl == url)
-                {
-                    return;
-                }
+                if (url == null || node.ConnectStatus > 0 && node.NodeUrl == url) return;
 
                 StartAction(() =>
                 {
@@ -456,17 +444,17 @@ namespace Xky.Core
                     };
 
                     node.NodeSocket = IO.Socket(url, options);
-                    node.NodeSocket.On(Socket.Client.Socket.EVENT_CONNECT, () =>
+                    node.NodeSocket.On(Socket.Client.Socket.EventConnect, () =>
                     {
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
                     });
-                    node.NodeSocket.On(Socket.Client.Socket.EVENT_DISCONNECT, () =>
+                    node.NodeSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
                     });
-                    node.NodeSocket.On(Socket.Client.Socket.EVENT_ERROR, () => { Console.WriteLine("node ERROR"); });
+                    node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>
@@ -476,10 +464,7 @@ namespace Xky.Core
                             //加入速率计数器
                             BitAverageNumber.Push(imgdata.Length);
                             var device = Devices.ToList().Find(p => p.Sn == (string) sn);
-                            if (device != null)
-                            {
-                                device.ScreenShot = ByteToBitmapSource((byte[]) data);
-                            }
+                            if (device != null) device.ScreenShot = ByteToBitmapSource((byte[]) data);
                         }));
                 });
             }
@@ -613,13 +598,9 @@ namespace Xky.Core
                         Type = (int) json["t_type"],
                         Tags = json["t_tags"].Values<string>().ToList()
                     };
-                    foreach (string tag in module.Tags)
-                    {
+                    foreach (var tag in module.Tags)
                         if (!Modules_Panel_Tags.Contains(tag))
-                        {
                             Modules_Panel_Tags.Add(tag);
-                        }
-                    }
 
                     StartAction(() =>
                     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Xky.Socket.Engine.Client.Transports;
@@ -13,14 +14,6 @@ namespace Xky.Socket.Engine.Client
 {
     public class Socket : Emitter
     {
-        private enum ReadyStateEnum
-        {
-            OPENING,
-            OPEN,
-            CLOSING,
-            CLOSED
-        }
-
         public static readonly string EVENT_OPEN = "open";
         public static readonly string EVENT_CLOSE = "close";
         public static readonly string EVENT_PACKET = "packet";
@@ -39,41 +32,45 @@ namespace Xky.Socket.Engine.Client
 
         public static readonly int Protocol = Parser.Parser.Protocol;
 
-        public static bool PriorWebsocketSuccess = false;
+        public static bool PriorWebsocketSuccess;
 
-
-        private bool Secure;
-        private SslProtocols SslProtocols;
-        private bool Upgrade;
-        private bool TimestampRequests = true;
-        private bool Upgrading;
-        private bool RememberUpgrade;
-        private int Port;
-        private int PolicyPort;
-        private int PrevBufferLen;
-        private long PingInterval;
-        private long PingTimeout;
-        public string Id;
-        private string Hostname;
-        private string Path;
-        private string TimestampParam;
-        private ImmutableList<string> Transports;
-        private ImmutableList<string> Upgrades;
-        private Dictionary<string, string> Query;
-        private ImmutableList<Packet> WriteBuffer = ImmutableList<Packet>.Empty;
+        private int _errorCount;
+        private readonly bool Agent = false;
         private ImmutableList<Action> CallbackBuffer = ImmutableList<Action>.Empty;
-        private Dictionary<string, string> Cookies = new Dictionary<string, string>();
-        /*package*/
-        public Transport Transport;
-        private EasyTimer PingTimeoutTimer;
-        private EasyTimer PingIntervalTimer;
-
-        private ReadyStateEnum ReadyState;
-        private bool Agent = false;
-        private bool ForceBase64 = false;
-        private bool ForceJsonp = false;
+        private readonly Dictionary<string, string> Cookies = new Dictionary<string, string>();
 
         public Dictionary<string, string> ExtraHeaders;
+        private readonly bool ForceBase64 = false;
+        private readonly bool ForceJsonp = false;
+        private readonly string Hostname;
+        public string Id;
+        private readonly string Path;
+        private long PingInterval;
+        private EasyTimer PingIntervalTimer;
+        private long PingTimeout;
+        private EasyTimer PingTimeoutTimer;
+        private readonly int PolicyPort;
+        private readonly int Port;
+        private int PrevBufferLen;
+        private readonly Dictionary<string, string> Query;
+
+        private ReadyStateEnum ReadyState;
+        private readonly bool RememberUpgrade;
+
+
+        private readonly bool Secure;
+        private readonly SslProtocols SslProtocols;
+        private readonly string TimestampParam;
+
+        private readonly bool TimestampRequests = true;
+
+        /*package*/
+        public Transport Transport;
+        private readonly ImmutableList<string> Transports;
+        private readonly bool Upgrade;
+        private ImmutableList<string> Upgrades;
+        private bool Upgrading;
+        private ImmutableList<Packet> WriteBuffer = ImmutableList<Packet>.Empty;
 
 
         //public static void SetupLog4Net()
@@ -106,19 +103,6 @@ namespace Xky.Socket.Engine.Client
         public Socket(string uri, Options options)
             : this(uri == null ? null : String2Uri(uri), options)
         {
-            
-        }
-
-        private static Uri String2Uri(string uri)
-        {
-            if (uri.StartsWith("http") || uri.StartsWith("ws"))
-            {
-                return new Uri(uri);
-            }
-            else
-            {
-                return new Uri("http://" + uri);
-            }
         }
 
         public Socket(Uri uri, Options options)
@@ -133,54 +117,48 @@ namespace Xky.Socket.Engine.Client
             {
                 var pieces = options.Host.Split(':');
                 options.Hostname = pieces[0];
-                if (pieces.Length > 1)
-                {
-                    options.Port = int.Parse(pieces[pieces.Length - 1]);
-                }
+                if (pieces.Length > 1) options.Port = int.Parse(pieces[pieces.Length - 1]);
             }
 
             Secure = options.Secure;
             SslProtocols = options.SslProtocols;
             Hostname = options.Hostname;
             Port = options.Port;
-            Query = options.QueryString != null ? ParseQS.Decode(options.QueryString) : new Dictionary<string, string>();
+            Query = options.QueryString != null
+                ? ParseQS.Decode(options.QueryString)
+                : new Dictionary<string, string>();
 
             if (options.Query != null)
-            {
                 foreach (var item in options.Query)
-                {
-                    Query.Add(item.Key,item.Value);
-                }
-            }
+                    Query.Add(item.Key, item.Value);
 
 
             Upgrade = options.Upgrade;
             Path = (options.Path ?? "/engine.io").Replace("/$", "") + "/";
-            TimestampParam = (options.TimestampParam ?? "t");
+            TimestampParam = options.TimestampParam ?? "t";
             TimestampRequests = options.TimestampRequests;
             Transports = options.Transports ?? ImmutableList<string>.Empty.Add(Polling.NAME).Add(WebSocket.NAME);
             PolicyPort = options.PolicyPort != 0 ? options.PolicyPort : 843;
             RememberUpgrade = options.RememberUpgrade;
             Cookies = options.Cookies;
-            if (options.IgnoreServerCertificateValidation)
-            {
-                ServerCertificate.IgnoreServerCertificateValidation();
-            }
+            if (options.IgnoreServerCertificateValidation) ServerCertificate.IgnoreServerCertificateValidation();
             ExtraHeaders = options.ExtraHeaders;
+        }
 
+        private static Uri String2Uri(string uri)
+        {
+            if (uri.StartsWith("http") || uri.StartsWith("ws"))
+                return new Uri(uri);
+            return new Uri("http://" + uri);
         }
 
         public Socket Open()
         {
             string transportName;
             if (RememberUpgrade && PriorWebsocketSuccess && Transports.Contains(WebSocket.NAME))
-            {
                 transportName = WebSocket.NAME;
-            }
             else
-            {
                 transportName = Transports[0];
-            }
             ReadyState = ReadyStateEnum.OPENING;
             var transport = CreateTransport(transportName);
             SetTransport(transport);
@@ -200,10 +178,7 @@ namespace Xky.Socket.Engine.Client
             var query = new Dictionary<string, string>(Query);
             query.Add("EIO", Parser.Parser.Protocol.ToString());
             query.Add("transport", name);
-            if (Id != null)
-            {
-                query.Add("sid", Id);
-            }
+            if (Id != null) query.Add("sid", Id);
             var options = new Transport.Options
             {
                 Hostname = Hostname,
@@ -216,21 +191,16 @@ namespace Xky.Socket.Engine.Client
                 TimestampParam = TimestampParam,
                 PolicyPort = PolicyPort,
                 Socket = this,
-                Agent = this.Agent,
-                ForceBase64 = this.ForceBase64,
-                ForceJsonp = this.ForceJsonp,
-                Cookies = this.Cookies,
-                ExtraHeaders = this.ExtraHeaders
+                Agent = Agent,
+                ForceBase64 = ForceBase64,
+                ForceJsonp = ForceJsonp,
+                Cookies = Cookies,
+                ExtraHeaders = ExtraHeaders
             };
 
             if (name == WebSocket.NAME)
-            {
                 return new WebSocket(options);
-            }
-            else if (name == Polling.NAME)
-            {
-                return new PollingXHR(options);
-            }
+            if (name == Polling.NAME) return new PollingXHR(options);
 
             throw new EngineIOException("CreateTransport failed");
         }
@@ -240,10 +210,10 @@ namespace Xky.Socket.Engine.Client
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info(string.Format("SetTransport setting transport '{0}'", transport.Name));
 
-            if (this.Transport != null)
+            if (Transport != null)
             {
                 log.Info(string.Format("SetTransport clearing existing transport '{0}'", transport.Name));
-                this.Transport.Off();
+                Transport.Off();
             }
 
             Transport = transport;
@@ -256,155 +226,17 @@ namespace Xky.Socket.Engine.Client
             transport.On(EVENT_CLOSE, new EventCloseListener(this));
         }
 
-        private class EventDrainListener : IListener
-        {
-            private Socket socket;
-
-            public EventDrainListener(Socket socket)
-            {
-                this.socket = socket;
-            }
-
-            void IListener.Call(params object[] args)
-            {
-                socket.OnDrain();
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
-        private class EventPacketListener : IListener
-        {
-            private Socket socket;
-
-            public EventPacketListener(Socket socket)
-            {
-                this.socket = socket;
-            }
-
-            void IListener.Call(params object[] args)
-            {
-                socket.OnPacket(args.Length > 0 ? (Packet)args[0] : null);
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
-        private class EventErrorListener : IListener
-        {
-            private Socket socket;
-
-            public EventErrorListener(Socket socket)
-            {
-                this.socket = socket;
-            }
-
-            public void Call(params object[] args)
-            {
-                socket.OnError(args.Length > 0 ? (Exception)args[0] : null);
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
-        private class EventCloseListener : IListener
-        {
-            private Socket socket;
-
-            public EventCloseListener(Socket socket)
-            {
-                this.socket = socket;
-            }
-
-            public void Call(params object[] args)
-            {
-                socket.OnClose("transport close");
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
-
-        public class Options : Transport.Options
-        {
-
-            public ImmutableList<string> Transports;
-
-            public bool Upgrade = true;
-
-            public bool RememberUpgrade;
-            public string Host;
-            public string QueryString;
-
-            public static Options FromURI(Uri uri, Options opts)
-            {
-                if (opts == null)
-                {
-                    opts = new Options();
-                }
-
-                opts.Host = uri.Host;
-                opts.Secure = uri.Scheme == "https" || uri.Scheme == "wss";
-                opts.Port = uri.Port;
-
-                if (!string.IsNullOrEmpty(uri.Query))
-                {
-                    opts.QueryString = uri.Query;
-                }
-
-                return opts;
-            }
-
-    
-        }
-
 
         internal void OnDrain()
         {
             //var log = LogManager.GetLogger(Global.CallerName());
             //log.Info(string.Format("OnDrain1 PrevBufferLen={0} WriteBuffer.Count={1}", PrevBufferLen, WriteBuffer.Count));
 
-            for (int i = 0; i < this.PrevBufferLen; i++)
-            {
+            for (var i = 0; i < PrevBufferLen; i++)
                 try
                 {
-                    var callback = this.CallbackBuffer[i];
-                    if (callback != null)
-                    {
-                        callback();
-                    }
+                    var callback = CallbackBuffer[i];
+                    if (callback != null) callback();
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -412,7 +244,6 @@ namespace Xky.Socket.Engine.Client
                     CallbackBuffer = CallbackBuffer.Clear();
                     PrevBufferLen = 0;
                 }
-            }
             //log.Info(string.Format("OnDrain2 PrevBufferLen={0} WriteBuffer.Count={1}", PrevBufferLen, WriteBuffer.Count));
 
 
@@ -426,27 +257,25 @@ namespace Xky.Socket.Engine.Client
                 WriteBuffer = WriteBuffer.Clear();
                 CallbackBuffer = CallbackBuffer.Clear();
             }
-           
 
-            this.PrevBufferLen = 0;
+
+            PrevBufferLen = 0;
             //log.Info(string.Format("OnDrain3 PrevBufferLen={0} WriteBuffer.Count={1}", PrevBufferLen, WriteBuffer.Count));
 
-            if (this.WriteBuffer.Count == 0)
-            {
-                this.Emit(EVENT_DRAIN);
-            }
+            if (WriteBuffer.Count == 0)
+                Emit(EVENT_DRAIN);
             else
-            {
-                this.Flush();
-            }
+                Flush();
         }
 
         private bool Flush()
         {
             var log = LogManager.GetLogger(Global.CallerName());
 
-            log.Info(string.Format("ReadyState={0} Transport.Writeable={1} Upgrading={2} WriteBuffer.Count={3}",ReadyState,Transport.Writable,Upgrading, WriteBuffer.Count));
-            if (ReadyState != ReadyStateEnum.CLOSED && ReadyState == ReadyStateEnum.OPEN && this.Transport.Writable && !Upgrading && WriteBuffer.Count != 0)
+            log.Info(string.Format("ReadyState={0} Transport.Writeable={1} Upgrading={2} WriteBuffer.Count={3}",
+                ReadyState, Transport.Writable, Upgrading, WriteBuffer.Count));
+            if (ReadyState != ReadyStateEnum.CLOSED && ReadyState == ReadyStateEnum.OPEN && Transport.Writable &&
+                !Upgrading && WriteBuffer.Count != 0)
             {
                 log.Info(string.Format("Flush {0} packets in socket", WriteBuffer.Count));
                 PrevBufferLen = WriteBuffer.Count;
@@ -454,11 +283,9 @@ namespace Xky.Socket.Engine.Client
                 Emit(EVENT_FLUSH);
                 return true;
             }
-            else
-            {
-                log.Info(string.Format("Flush Not Send"));
-                return false;
-            }
+
+            log.Info("Flush Not Send");
+            return false;
         }
 
         public void OnPacket(Packet packet)
@@ -475,12 +302,11 @@ namespace Xky.Socket.Engine.Client
 
                 if (packet.Type == Packet.OPEN)
                 {
-                    OnHandshake(new HandshakeData((string)packet.Data));
-
+                    OnHandshake(new HandshakeData((string) packet.Data));
                 }
                 else if (packet.Type == Packet.PONG)
                 {
-                    this.SetPing();
+                    SetPing();
                 }
                 else if (packet.Type == Packet.ERROR)
                 {
@@ -488,7 +314,7 @@ namespace Xky.Socket.Engine.Client
                     {
                         code = packet.Data
                     };
-                    this.Emit(EVENT_ERROR, err);
+                    Emit(EVENT_ERROR, err);
                 }
                 else if (packet.Type == Packet.MESSAGE)
                 {
@@ -500,7 +326,6 @@ namespace Xky.Socket.Engine.Client
             {
                 log.Info(string.Format("OnPacket packet received with socket readyState '{0}'", ReadyState));
             }
-
         }
 
         private void OnHandshake(HandshakeData handshakeData)
@@ -515,52 +340,19 @@ namespace Xky.Socket.Engine.Client
             PingTimeout = handshakeData.PingTimeout;
             OnOpen();
             // In case open handler closes socket
-            if (ReadyStateEnum.CLOSED == this.ReadyState)
-            {
-                return;
-            }
-            this.SetPing();
+            if (ReadyStateEnum.CLOSED == ReadyState) return;
+            SetPing();
 
-            this.Off(EVENT_HEARTBEAT, new OnHeartbeatAsListener(this));
-            this.On(EVENT_HEARTBEAT, new OnHeartbeatAsListener(this));
-
+            Off(EVENT_HEARTBEAT, new OnHeartbeatAsListener(this));
+            On(EVENT_HEARTBEAT, new OnHeartbeatAsListener(this));
         }
-
-        private class OnHeartbeatAsListener : IListener
-        {
-            private Socket socket;
-
-            public OnHeartbeatAsListener(Socket socket)
-            {
-                this.socket = socket;
-            }
-
-            void IListener.Call(params object[] args)
-            {
-                socket.OnHeartbeat(args.Length > 0 ? (long)args[0] : 0);
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
 
 
         private void SetPing()
         {
             //var log = LogManager.GetLogger(Global.CallerName());
 
-            if (this.PingIntervalTimer != null)
-            {
-                PingIntervalTimer.Stop();
-            }
+            if (PingIntervalTimer != null) PingIntervalTimer.Stop();
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info(string.Format("writing ping packet - expecting pong within {0}ms", PingTimeout));
 
@@ -575,13 +367,13 @@ namespace Xky.Socket.Engine.Client
                     SetPing();
                     log2.Info("skipping Ping during upgrade");
                 }
-                else if(ReadyState == ReadyStateEnum.OPEN)
+                else if (ReadyState == ReadyStateEnum.OPEN)
                 {
                     Ping();
                     OnHeartbeat(PingTimeout);
                     log2.Info("EasyTimer SetPing finish");
                 }
-            }, (int)PingInterval);
+            }, (int) PingInterval);
         }
 
         private void Ping()
@@ -620,7 +412,6 @@ namespace Xky.Socket.Engine.Client
         }
 
 
-
         private void SendPacket(string type)
         {
             SendPacket(new Packet(type), null);
@@ -638,15 +429,9 @@ namespace Xky.Socket.Engine.Client
 
         private void SendPacket(Packet packet, Action fn)
         {
-            if (fn == null)
-            {
-                fn = () => { };
-            }
+            if (fn == null) fn = () => { };
 
-            if (Upgrading)
-            {
-                WaitForUpgrade().Wait();
-            }
+            if (Upgrading) WaitForUpgrade().Wait();
 
             Emit(EVENT_PACKET_CREATE, packet);
             //var log = LogManager.GetLogger(Global.CallerName());
@@ -674,19 +459,18 @@ namespace Xky.Socket.Engine.Client
 
             var tcs = new TaskCompletionSource<object>();
             const int TIMEOUT = 1000;
-            var sw = new System.Diagnostics.Stopwatch();
+            var sw = new Stopwatch();
 
             try
             {
                 sw.Start();
                 while (Upgrading)
-                {
                     if (sw.ElapsedMilliseconds > TIMEOUT)
                     {
                         log.Info("Wait for upgrade timeout");
                         break;
                     }
-                }
+
                 tcs.SetResult(null);
             }
             finally
@@ -710,14 +494,11 @@ namespace Xky.Socket.Engine.Client
 
 
             if (ReadyState == ReadyStateEnum.OPEN && Upgrade && Transport is Polling)
-            //if (ReadyState == ReadyStateEnum.OPEN && Upgrade && this.Transport)
+                //if (ReadyState == ReadyStateEnum.OPEN && Upgrade && this.Transport)
             {
                 log.Info("OnOpen starting upgrade probes");
                 _errorCount = 0;
-                foreach (var upgrade in Upgrades)
-                {
-                    Probe(upgrade);
-                }
+                foreach (var upgrade in Upgrades) Probe(upgrade);
             }
         }
 
@@ -751,13 +532,9 @@ namespace Xky.Socket.Engine.Client
             var onUpgrade = new ProbingOnUpgradeListener(freezeTransport, parameters.Transport);
 
 
-
             parameters.Cleanup = parameters.Cleanup.Add(() =>
             {
-                if (parameters.Transport.Count < 1)
-                {
-                    return;
-                }
+                if (parameters.Transport.Count < 1) return;
 
                 parameters.Transport[0].Off(Transport.EVENT_OPEN, onTransportOpen);
                 parameters.Transport[0].Off(Transport.EVENT_ERROR, onError);
@@ -770,10 +547,283 @@ namespace Xky.Socket.Engine.Client
             parameters.Transport[0].Once(Transport.EVENT_ERROR, onError);
             parameters.Transport[0].Once(Transport.EVENT_CLOSE, onTransportClose);
 
-            this.Once(EVENT_CLOSE, onClose);
-            this.Once(EVENT_UPGRADING, onUpgrade);
+            Once(EVENT_CLOSE, onClose);
+            Once(EVENT_UPGRADING, onUpgrade);
 
             parameters.Transport[0].Open();
+        }
+
+        public Socket Close()
+        {
+            if (ReadyState == ReadyStateEnum.OPENING || ReadyState == ReadyStateEnum.OPEN)
+            {
+                var log = LogManager.GetLogger(Global.CallerName());
+                log.Info("Start");
+                OnClose("forced close");
+
+                log.Info("socket closing - telling transport to close");
+                Transport.Close();
+            }
+
+            return this;
+        }
+
+        private void OnClose(string reason, Exception desc = null)
+        {
+            if (ReadyState == ReadyStateEnum.OPENING || ReadyState == ReadyStateEnum.OPEN)
+            {
+                var log = LogManager.GetLogger(Global.CallerName());
+
+                log.Info(string.Format("OnClose socket close with reason: {0}", reason));
+
+                // clear timers
+                if (PingIntervalTimer != null) PingIntervalTimer.Stop();
+                if (PingTimeoutTimer != null) PingTimeoutTimer.Stop();
+
+
+                //WriteBuffer = WriteBuffer.Clear();
+                //CallbackBuffer = CallbackBuffer.Clear();
+                //PrevBufferLen = 0;
+
+                EasyTimer.SetTimeout(() =>
+                {
+                    WriteBuffer = ImmutableList<Packet>.Empty;
+                    CallbackBuffer = ImmutableList<Action>.Empty;
+                    PrevBufferLen = 0;
+                }, 1);
+
+
+                if (Transport != null)
+                {
+                    // stop event from firing again for transport
+                    Transport.Off(EVENT_CLOSE);
+
+                    // ensure transport won't stay open
+                    Transport.Close();
+
+                    // ignore further transport communication
+                    Transport.Off();
+                }
+
+                // set ready state
+                ReadyState = ReadyStateEnum.CLOSED;
+
+                // clear session id
+                Id = null;
+
+                // emit close events
+                Emit(EVENT_CLOSE, reason, desc);
+            }
+        }
+
+        public ImmutableList<string> FilterUpgrades(IEnumerable<string> upgrades)
+        {
+            var filterUpgrades = ImmutableList<string>.Empty;
+            foreach (var upgrade in upgrades)
+                if (Transports.Contains(upgrade))
+                    filterUpgrades = filterUpgrades.Add(upgrade);
+            return filterUpgrades;
+        }
+
+
+        internal void OnHeartbeat(long timeout)
+        {
+            if (PingTimeoutTimer != null)
+            {
+                PingTimeoutTimer.Stop();
+                PingTimeoutTimer = null;
+            }
+
+            if (timeout <= 0) timeout = PingInterval + PingTimeout;
+
+            PingTimeoutTimer = EasyTimer.SetTimeout(() =>
+            {
+                var log2 = LogManager.GetLogger(Global.CallerName());
+                log2.Info("EasyTimer OnHeartbeat start");
+                if (ReadyState == ReadyStateEnum.CLOSED)
+                {
+                    log2.Info("EasyTimer OnHeartbeat ReadyState == ReadyStateEnum.CLOSED finish");
+                    return;
+                }
+
+                OnClose("ping timeout");
+                log2.Info("EasyTimer OnHeartbeat finish");
+            }, (int) timeout);
+        }
+
+        internal void OnError(Exception exception)
+        {
+            var log = LogManager.GetLogger(Global.CallerName());
+
+            log.Error("socket error", exception);
+            PriorWebsocketSuccess = false;
+
+            //prevent endless loop
+            if (_errorCount == 0)
+            {
+                _errorCount++;
+                Emit(EVENT_ERROR, exception);
+                OnClose("transport error", exception);
+            }
+        }
+
+        private enum ReadyStateEnum
+        {
+            OPENING,
+            OPEN,
+            CLOSING,
+            CLOSED
+        }
+
+        private class EventDrainListener : IListener
+        {
+            private readonly Socket socket;
+
+            public EventDrainListener(Socket socket)
+            {
+                this.socket = socket;
+            }
+
+            void IListener.Call(params object[] args)
+            {
+                socket.OnDrain();
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
+
+        private class EventPacketListener : IListener
+        {
+            private readonly Socket socket;
+
+            public EventPacketListener(Socket socket)
+            {
+                this.socket = socket;
+            }
+
+            void IListener.Call(params object[] args)
+            {
+                socket.OnPacket(args.Length > 0 ? (Packet) args[0] : null);
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
+
+        private class EventErrorListener : IListener
+        {
+            private readonly Socket socket;
+
+            public EventErrorListener(Socket socket)
+            {
+                this.socket = socket;
+            }
+
+            public void Call(params object[] args)
+            {
+                socket.OnError(args.Length > 0 ? (Exception) args[0] : null);
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
+
+        private class EventCloseListener : IListener
+        {
+            private readonly Socket socket;
+
+            public EventCloseListener(Socket socket)
+            {
+                this.socket = socket;
+            }
+
+            public void Call(params object[] args)
+            {
+                socket.OnClose("transport close");
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
+
+
+        public class Options : Transport.Options
+        {
+            public string Host;
+            public string QueryString;
+
+            public bool RememberUpgrade;
+
+            public ImmutableList<string> Transports;
+
+            public bool Upgrade = true;
+
+            public static Options FromURI(Uri uri, Options opts)
+            {
+                if (opts == null) opts = new Options();
+
+                opts.Host = uri.Host;
+                opts.Secure = uri.Scheme == "https" || uri.Scheme == "wss";
+                opts.Port = uri.Port;
+
+                if (!string.IsNullOrEmpty(uri.Query)) opts.QueryString = uri.Query;
+
+                return opts;
+            }
+        }
+
+        private class OnHeartbeatAsListener : IListener
+        {
+            private readonly Socket socket;
+
+            public OnHeartbeatAsListener(Socket socket)
+            {
+                this.socket = socket;
+            }
+
+            void IListener.Call(params object[] args)
+            {
+                socket.OnHeartbeat(args.Length > 0 ? (long) args[0] : 0);
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
         }
 
         private class ProbeParameters
@@ -786,42 +836,46 @@ namespace Xky.Socket.Engine.Client
 
         private class OnTransportOpenListener : IListener
         {
-            private ProbeParameters Parameters;
+            private readonly ProbeParameters Parameters;
 
 
             public OnTransportOpenListener(ProbeParameters parameters)
             {
-                this.Parameters = parameters;
+                Parameters = parameters;
             }
 
             void IListener.Call(params object[] args)
             {
-                if (Parameters.Failed[0])
-                {
-                    return;
-                }
+                if (Parameters.Failed[0]) return;
 
                 var packet = new Packet(Packet.PING, "probe");
-                Parameters.Transport[0].Once(Client.Transport.EVENT_PACKET, new ProbeEventPacketListener(this));
+                Parameters.Transport[0].Once(Transport.EVENT_PACKET, new ProbeEventPacketListener(this));
                 Parameters.Transport[0].Send(ImmutableList<Packet>.Empty.Add(packet));
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
             }
 
             private class ProbeEventPacketListener : IListener
             {
-                private OnTransportOpenListener _onTransportOpenListener;
+                private readonly OnTransportOpenListener _onTransportOpenListener;
 
                 public ProbeEventPacketListener(OnTransportOpenListener onTransportOpenListener)
                 {
-                    this._onTransportOpenListener = onTransportOpenListener;
+                    _onTransportOpenListener = onTransportOpenListener;
                 }
 
 
                 void IListener.Call(params object[] args)
                 {
-                    if (_onTransportOpenListener.Parameters.Failed[0])
-                    {
-                        return;
-                    }
+                    if (_onTransportOpenListener.Parameters.Failed[0]) return;
                     var log = LogManager.GetLogger(Global.CallerName());
 
                     var msg = (Packet) args[0];
@@ -834,8 +888,8 @@ namespace Xky.Socket.Engine.Client
                         _onTransportOpenListener.Parameters.Socket.Upgrading = true;
                         _onTransportOpenListener.Parameters.Socket.Emit(EVENT_UPGRADING,
                             _onTransportOpenListener.Parameters.Transport[0]);
-                        Socket.PriorWebsocketSuccess = WebSocket.NAME ==
-                                                       _onTransportOpenListener.Parameters.Transport[0].Name;
+                        PriorWebsocketSuccess = WebSocket.NAME ==
+                                                _onTransportOpenListener.Parameters.Transport[0].Name;
 
                         //log.Info(
                         //    string.Format("pausing current transport '{0}'",
@@ -846,16 +900,15 @@ namespace Xky.Socket.Engine.Client
                                 if (_onTransportOpenListener.Parameters.Failed[0])
                                 {
                                     // reset upgrading flag and resume polling
-                                    ((Polling)_onTransportOpenListener.Parameters.Socket.Transport).Resume();
+                                    ((Polling) _onTransportOpenListener.Parameters.Socket.Transport).Resume();
                                     _onTransportOpenListener.Parameters.Socket.Upgrading = false;
                                     _onTransportOpenListener.Parameters.Socket.Flush();
                                     return;
                                 }
+
                                 if (ReadyStateEnum.CLOSED == _onTransportOpenListener.Parameters.Socket.ReadyState ||
                                     ReadyStateEnum.CLOSING == _onTransportOpenListener.Parameters.Socket.ReadyState)
-                                {
                                     return;
-                                }
 
                                 log.Info("changing transport and sending upgrade packet");
 
@@ -876,15 +929,12 @@ namespace Xky.Socket.Engine.Client
                                         _onTransportOpenListener.Parameters.Transport[0]);
                                     _onTransportOpenListener.Parameters.Transport =
                                         _onTransportOpenListener.Parameters.Transport.RemoveAt(0);
-
                                 }
                                 catch (Exception e)
                                 {
-                                    log.Error("",e);
+                                    log.Error("", e);
                                 }
-
                             });
-
                     }
                     else
                     {
@@ -894,13 +944,12 @@ namespace Xky.Socket.Engine.Client
                         var err = new EngineIOException("probe error");
                         _onTransportOpenListener.Parameters.Socket.Emit(EVENT_UPGRADE_ERROR, err);
                     }
-
                 }
 
 
                 public int CompareTo(IListener other)
                 {
-                    return this.GetId().CompareTo(other.GetId());
+                    return GetId().CompareTo(other.GetId());
                 }
 
                 public int GetId()
@@ -908,42 +957,26 @@ namespace Xky.Socket.Engine.Client
                     return 0;
                 }
             }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
         }
 
         private class FreezeTransportListener : IListener
         {
-            private ProbeParameters Parameters;
+            private readonly ProbeParameters Parameters;
 
             public FreezeTransportListener(ProbeParameters parameters)
             {
-                this.Parameters = parameters;
+                Parameters = parameters;
             }
 
             void IListener.Call(params object[] args)
             {
-                if (Parameters.Failed[0])
-                {
-                    return;
-                }
+                if (Parameters.Failed[0]) return;
 
                 Parameters.Failed = Parameters.Failed.SetItem(0, true);
 
                 Parameters.Cleanup[0]();
 
-                if (Parameters.Transport.Count < 1)
-                {
-                    return;
-                }
+                if (Parameters.Transport.Count < 1) return;
 
                 Parameters.Transport[0].Close();
                 Parameters.Transport = ImmutableList<Transport>.Empty;
@@ -951,7 +984,7 @@ namespace Xky.Socket.Engine.Client
 
             public int CompareTo(IListener other)
             {
-                return this.GetId().CompareTo(other.GetId());
+                return GetId().CompareTo(other.GetId());
             }
 
             public int GetId()
@@ -962,15 +995,15 @@ namespace Xky.Socket.Engine.Client
 
         private class ProbingOnErrorListener : IListener
         {
+            private readonly IListener _freezeTransport;
             private readonly Socket _socket;
             private readonly ImmutableList<Transport> _transport;
-            private readonly IListener _freezeTransport;
 
             public ProbingOnErrorListener(Socket socket, ImmutableList<Transport> transport, IListener freezeTransport)
             {
-                this._socket = socket;
-                this._transport = transport;
-                this._freezeTransport = freezeTransport;
+                _socket = socket;
+                _transport = transport;
+                _freezeTransport = freezeTransport;
             }
 
             void IListener.Call(params object[] args)
@@ -978,17 +1011,11 @@ namespace Xky.Socket.Engine.Client
                 var err = args[0];
                 EngineIOException error;
                 if (err is Exception)
-                {
-                    error = new EngineIOException("probe error", (Exception)err);
-                }
+                    error = new EngineIOException("probe error", (Exception) err);
                 else if (err is string)
-                {
-                    error = new EngineIOException("probe error: " + (string)err);
-                }
+                    error = new EngineIOException("probe error: " + (string) err);
                 else
-                {
                     error = new EngineIOException("probe error");
-                }
                 error.Transport = _transport[0].Name;
 
                 _freezeTransport.Call();
@@ -1001,7 +1028,7 @@ namespace Xky.Socket.Engine.Client
 
             public int CompareTo(IListener other)
             {
-                return this.GetId().CompareTo(other.GetId());
+                return GetId().CompareTo(other.GetId());
             }
 
             public int GetId()
@@ -1016,7 +1043,7 @@ namespace Xky.Socket.Engine.Client
 
             public ProbingOnTransportCloseListener(ProbingOnErrorListener onError)
             {
-                this._onError = onError;
+                _onError = onError;
             }
 
             void IListener.Call(params object[] args)
@@ -1026,7 +1053,7 @@ namespace Xky.Socket.Engine.Client
 
             public int CompareTo(IListener other)
             {
-                return this.GetId().CompareTo(other.GetId());
+                return GetId().CompareTo(other.GetId());
             }
 
             public int GetId()
@@ -1037,11 +1064,11 @@ namespace Xky.Socket.Engine.Client
 
         private class ProbingOnCloseListener : IListener
         {
-            private IListener _onError;
+            private readonly IListener _onError;
 
             public ProbingOnCloseListener(ProbingOnErrorListener onError)
             {
-                this._onError = onError;
+                _onError = onError;
             }
 
             void IListener.Call(params object[] args)
@@ -1051,7 +1078,7 @@ namespace Xky.Socket.Engine.Client
 
             public int CompareTo(IListener other)
             {
-                return this.GetId().CompareTo(other.GetId());
+                return GetId().CompareTo(other.GetId());
             }
 
             public int GetId()
@@ -1067,13 +1094,13 @@ namespace Xky.Socket.Engine.Client
 
             public ProbingOnUpgradeListener(FreezeTransportListener freezeTransport, ImmutableList<Transport> transport)
             {
-                this._freezeTransport = freezeTransport;
-                this._transport = transport;
+                _freezeTransport = freezeTransport;
+                _transport = transport;
             }
 
             void IListener.Call(params object[] args)
             {
-                var to = (Transport)args[0];
+                var to = (Transport) args[0];
                 if (_transport[0] != null && to.Name != _transport[0].Name)
                 {
                     var log = LogManager.GetLogger(Global.CallerName());
@@ -1085,7 +1112,7 @@ namespace Xky.Socket.Engine.Client
 
             public int CompareTo(IListener other)
             {
-                return this.GetId().CompareTo(other.GetId());
+                return GetId().CompareTo(other.GetId());
             }
 
             public int GetId()
@@ -1093,137 +1120,5 @@ namespace Xky.Socket.Engine.Client
                 return 0;
             }
         }
-
-        public Socket Close()
-        {
-            if (this.ReadyState == ReadyStateEnum.OPENING || this.ReadyState == ReadyStateEnum.OPEN)
-            {
-                var log = LogManager.GetLogger(Global.CallerName());
-                log.Info("Start");                
-                this.OnClose("forced close");
-
-                log.Info("socket closing - telling transport to close");
-                Transport.Close();
-
-            }
-            return this;
-        }
-
-        private void OnClose(string reason, Exception desc = null)
-        {
-            if (this.ReadyState == ReadyStateEnum.OPENING || this.ReadyState == ReadyStateEnum.OPEN)
-            {
-                var log = LogManager.GetLogger(Global.CallerName());
-
-                log.Info(string.Format("OnClose socket close with reason: {0}", reason));
-
-                // clear timers
-                if (this.PingIntervalTimer != null)
-                {
-                    this.PingIntervalTimer.Stop();
-                }
-                if (this.PingTimeoutTimer != null)
-                {
-                    this.PingTimeoutTimer.Stop();
-                }
-                
-
-                //WriteBuffer = WriteBuffer.Clear();
-                //CallbackBuffer = CallbackBuffer.Clear();
-                //PrevBufferLen = 0;
-
-                EasyTimer.SetTimeout(() =>
-                {
-                    WriteBuffer = ImmutableList<Packet>.Empty;
-                    CallbackBuffer = ImmutableList<Action>.Empty;
-                    PrevBufferLen = 0;
-                }, 1);
-
-              
-                if (this.Transport != null)
-                {
-                    // stop event from firing again for transport
-                    this.Transport.Off(EVENT_CLOSE);
-
-                    // ensure transport won't stay open
-                    this.Transport.Close();
-
-                    // ignore further transport communication
-                    this.Transport.Off();
-                }
-
-                // set ready state
-                this.ReadyState = ReadyStateEnum.CLOSED;
-
-                // clear session id
-                this.Id = null;
-
-                // emit close events
-                this.Emit(EVENT_CLOSE, reason, desc);
-            }
-        }
-
-        public ImmutableList<string> FilterUpgrades(IEnumerable<string> upgrades)
-        {
-            var filterUpgrades = ImmutableList<string>.Empty;
-            foreach (var upgrade in upgrades)
-            {
-                if (Transports.Contains(upgrade))
-                {
-                    filterUpgrades = filterUpgrades.Add(upgrade);
-                }
-            }
-            return filterUpgrades;
-        }
-
-
-
-        internal void OnHeartbeat(long timeout)
-        {
-            if (this.PingTimeoutTimer != null)
-            {
-                PingTimeoutTimer.Stop();
-                PingTimeoutTimer = null;
-            }
-
-            if (timeout <= 0)
-            {
-                timeout = this.PingInterval + this.PingTimeout;
-            }
-
-            PingTimeoutTimer = EasyTimer.SetTimeout(() =>
-            {
-                var log2 = LogManager.GetLogger(Global.CallerName());
-                log2.Info("EasyTimer OnHeartbeat start");
-                if (ReadyState == ReadyStateEnum.CLOSED)
-                {
-                    log2.Info("EasyTimer OnHeartbeat ReadyState == ReadyStateEnum.CLOSED finish");
-                    return;
-                }
-                OnClose("ping timeout");
-                log2.Info("EasyTimer OnHeartbeat finish");
-            },(int) timeout);
-
-        }
-
-        private int _errorCount = 0;
-
-        internal void OnError(Exception exception)
-        {
-            var log = LogManager.GetLogger(Global.CallerName());
-
-            log.Error("socket error", exception);
-            PriorWebsocketSuccess = false;
-
-            //prevent endless loop
-            if (_errorCount == 0)
-            {
-                _errorCount++;
-                Emit(EVENT_ERROR, exception);
-                OnClose("transport error", exception);                
-            }
-        }
-
-
     }
 }

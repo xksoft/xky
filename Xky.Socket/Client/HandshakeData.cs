@@ -5,10 +5,10 @@ namespace Xky.Socket.Client
 {
     public class HandshakeData
     {
-        public string Sid;
-        public ImmutableList<string> Upgrades = ImmutableList<string>.Empty;
         public long PingInterval;
         public long PingTimeout;
+        public string Sid;
+        public ImmutableList<string> Upgrades = ImmutableList<string>.Empty;
 
         public HandshakeData(string data)
             : this(JObject.Parse(data))
@@ -19,10 +19,7 @@ namespace Xky.Socket.Client
         {
             var upgrades = data.GetValue("upgrades");
 
-            foreach (var e in upgrades)
-            {
-                Upgrades = Upgrades.Add(e.ToString());
-            }
+            foreach (var e in upgrades) Upgrades = Upgrades.Add(e.ToString());
 
             Sid = data.GetValue("sid").Value<string>();
             PingInterval = data.GetValue("pingInterval").Value<long>();

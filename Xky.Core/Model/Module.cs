@@ -4,19 +4,21 @@ using System.Windows.Media;
 
 namespace Xky.Core.Model
 {
-   public class Module : INotifyPropertyChanged
+    public class Module : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private int _id = 0;
-        private int _type = 0;
-        private int _status = 0;
-        private int _uid = 0;
-        private int _price = 0;
-        private string _name = "";
         private string _description = "";
-        private ImageSource _logo ;
-        private List<string> _tags =new List<string>();
-        public int Id { get => _id; set
+        private int _id;
+        private ImageSource _logo;
+        private string _name = "";
+        private int _price;
+        private int _status;
+        private int _type;
+        private int _uid;
+
+        public int Id
+        {
+            get => _id;
+            set
             {
                 if (_id != value)
                 {
@@ -26,7 +28,10 @@ namespace Xky.Core.Model
             }
         }
 
-        public int Type { get => _type; set
+        public int Type
+        {
+            get => _type;
+            set
             {
                 if (_type != value)
                 {
@@ -35,7 +40,11 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public int Status { get => _status; set
+
+        public int Status
+        {
+            get => _status;
+            set
             {
                 if (_status != value)
                 {
@@ -44,7 +53,11 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public int Uid { get => _uid; set
+
+        public int Uid
+        {
+            get => _uid;
+            set
             {
                 if (_uid != value)
                 {
@@ -53,7 +66,11 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public int Price { get => _price; set
+
+        public int Price
+        {
+            get => _price;
+            set
             {
                 if (_price != value)
                 {
@@ -62,7 +79,11 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public string Name { get => _name; set
+
+        public string Name
+        {
+            get => _name;
+            set
             {
                 if (_name != value)
                 {
@@ -71,7 +92,11 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public string Description { get => _description; set
+
+        public string Description
+        {
+            get => _description;
+            set
             {
                 if (_description != value)
                 {
@@ -80,15 +105,21 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public ImageSource Logo { get => _logo; set
+
+        public ImageSource Logo
+        {
+            get => _logo;
+            set
             {
                 if (_logo != value)
                 {
-                    _logo =value;
+                    _logo = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Logo"));
                 }
             }
         }
-        public List<string> Tags { get => _tags; set => _tags = value; }
+
+        public List<string> Tags { get; set; } = new List<string>();
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

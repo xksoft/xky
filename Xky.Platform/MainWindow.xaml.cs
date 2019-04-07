@@ -85,21 +85,62 @@ namespace Xky.Platform
                 var bitcount = Client.BitAverageNumber.GetAverageNumber() * 8;
                 string bitspeed;
                 if (bitcount > 1024 * 1024)
-                {
                     bitspeed = (bitcount / (decimal) 1024 / 1024).ToString("F2") + " Mbps";
-                }
                 else if (bitcount > 1024)
-                {
                     bitspeed = (bitcount / (decimal) 1024).ToString("F2") + " Kbps";
-                }
                 else
-                {
                     bitspeed = bitcount + " bps";
-                }
 
-                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count +" 线程：" + Client.Threads;
+                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count +
+                                  " 线程：" + Client.Threads;
             });
         }
+
+        #region 事件
+
+        private void MyTabItem_OnOnClickEvent(MyTabItem sender, string pagename, bool dark)
+        {
+            _buttonStatus.Baseurl = dark ? "Resources/Icon/ControlBox/dark/" : "Resources/Icon/ControlBox/default/";
+            if (pagename == null)
+                return;
+            if (_userControlDic.ContainsKey(pagename))
+                MainContent.Content = _userControlDic[pagename];
+            else
+                switch (pagename)
+                {
+                    case "Login":
+                    {
+                        var page = new MyLogin();
+                        _userControlDic.Add(pagename, page);
+
+                        MainContent.Content = page;
+                        break;
+                    }
+                    case "MainControl":
+                    {
+                        var page = new MyMainControl();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
+                    case "Task":
+                    {
+                        var page = new MyTask();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
+                    case "Setting":
+                    {
+                        var page = new MySetting();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
+                }
+        }
+
+        #endregion
 
         #region 基础属性
 
@@ -177,56 +218,6 @@ namespace Xky.Platform
         private void Btn_min(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }
-
-        #endregion
-
-        #region 事件
-
-        private void MyTabItem_OnOnClickEvent(MyTabItem sender, string pagename, bool dark)
-        {
-            _buttonStatus.Baseurl = dark ? "Resources/Icon/ControlBox/dark/" : "Resources/Icon/ControlBox/default/";
-            if (pagename == null)
-                return;
-            if (_userControlDic.ContainsKey(pagename))
-            {
-                MainContent.Content = _userControlDic[pagename];
-            }
-            else
-            {
-                switch (pagename)
-                {
-                    case "Login":
-                    {
-                        var page = new MyLogin();
-                        _userControlDic.Add(pagename, page);
-
-                        MainContent.Content = page;
-                        break;
-                    }
-                    case "MainControl":
-                    {
-                        var page = new MyMainControl();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
-                    case "Task":
-                    {
-                        var page = new MyTask();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
-                    case "Setting":
-                    {
-                        var page = new MySetting();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
-                }
-            }
         }
 
         #endregion

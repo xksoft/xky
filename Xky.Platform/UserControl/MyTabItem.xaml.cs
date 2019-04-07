@@ -7,18 +7,45 @@ using Xky.Core;
 namespace Xky.Platform.UserControl
 {
     /// <summary>
-    /// MyTabItem.xaml 的交互逻辑
+    ///     MyTabItem.xaml 的交互逻辑
     /// </summary>
     public partial class MyTabItem
     {
+        //用于判断选中状态
+        private static readonly List<MyTabItem> ItemList = new List<MyTabItem>();
+
         public MyTabItem()
         {
             InitializeComponent();
             ItemList.Add(this);
         }
 
-        //用于判断选中状态
-        private static readonly List<MyTabItem> ItemList = new List<MyTabItem>();
+        #region 事件
+
+        public void ClickDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e == null || e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (CheckLicense && Client.License == null)
+                {
+                    Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255, 36, 50), "off");
+                    return;
+                }
+
+
+                foreach (var myTabItem in ItemList)
+                {
+                    myTabItem.IsSelected = Equals(myTabItem, this);
+                    myTabItem.MyCanvas.Background = myTabItem.IsSelected
+                        ? FindResource("BlueLine") as SolidColorBrush
+                        : new SolidColorBrush(Colors.Transparent);
+                }
+
+                if (IsSelected) OnClickEvent?.Invoke(this, PageName, IsDarkStyle);
+            }
+        }
+
+        #endregion
 
         #region  自定义事件
 
@@ -80,37 +107,6 @@ namespace Xky.Platform.UserControl
         public static readonly DependencyProperty ImgSourceProperty =
             DependencyProperty.Register("ImgSource", typeof(ImageSource), typeof(MyTabItem),
                 new PropertyMetadata(null, null));
-
-        #endregion
-
-        #region 事件
-
-        public void ClickDown(object sender, MouseButtonEventArgs e)
-        {
-   
-            if (e == null || e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (CheckLicense && Client.License == null)
-                {
-                    Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255,36,50),"off");
-                    return;
-                }
-
-
-                foreach (var myTabItem in ItemList)
-                {
-                    myTabItem.IsSelected = Equals(myTabItem, this);
-                    myTabItem.MyCanvas.Background = myTabItem.IsSelected
-                        ? FindResource("BlueLine") as SolidColorBrush
-                        : new SolidColorBrush(Colors.Transparent);
-                }
-
-                if (IsSelected)
-                {
-                    OnClickEvent?.Invoke(this, PageName, IsDarkStyle);
-                }
-            }
-        }
 
         #endregion
     }

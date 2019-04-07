@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel;
 
-
 namespace Xky.Core.Model
 {
     public class Node : INotifyPropertyChanged
     {
         private string _connectionHash;
+        private int _connectStatus;
         private int _deviceCount;
         private string _forward;
         private string _ip;
         private string _name;
+        private Socket.Client.Socket _nodeSocket;
         private string _nodeUrl;
         private string _serial;
-        private Socket.Client.Socket _nodeSocket;
-        private int _connectStatus;
 
         public long LoadTick { get; set; }
 
@@ -108,7 +107,6 @@ namespace Xky.Core.Model
                 }
             }
         }
-
 
 
         public int ConnectStatus

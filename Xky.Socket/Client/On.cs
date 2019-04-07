@@ -5,45 +5,47 @@ namespace Xky.Socket.Client
 {
     public class On
     {
-        private On() { }
+        private On()
+        {
+        }
 
         public static IHandle Create(Emitter obj, string ev, IListener fn)
         {
             obj.On(ev, fn);
-            return new HandleImpl(obj,ev,fn);
+            return new HandleImpl(obj, ev, fn);
         }
 
         public class HandleImpl : IHandle
         {
-            private Emitter obj;
-            private string ev;
-            private IListener fn;
+            private readonly string _ev;
+            private readonly IListener _fn;
+            private readonly Emitter _obj;
 
             public HandleImpl(Emitter obj, string ev, IListener fn)
             {
-                this.obj = obj;
-                this.ev = ev;
-                this.fn = fn;
+                _obj = obj;
+                _ev = ev;
+                _fn = fn;
             }
 
             public void Destroy()
             {
-                obj.Off(ev, fn);
+                _obj.Off(_ev, _fn);
             }
         }
 
         public class ActionHandleImpl : IHandle
         {
-            private Action fn;
+            private readonly Action _fn;
 
             public ActionHandleImpl(Action fn)
             {
-                this.fn = fn;
+                _fn = fn;
             }
 
             public void Destroy()
             {
-                fn();
+                _fn();
             }
         }
 
@@ -51,7 +53,5 @@ namespace Xky.Socket.Client
         {
             void Destroy();
         }
-     
     }
-
 }

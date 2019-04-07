@@ -448,9 +448,9 @@ namespace Xky.Core.Properties
             TargetFlags = targetFlags;
         }
 
-        [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; private set; }
+        [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; }
 
-        [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; private set; }
+        [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; }
     }
 
     [Flags]

@@ -15,7 +15,7 @@ namespace Xky.Socket.Client.Transports
         public static readonly string EVENT_POLL = "poll";
         public static readonly string EVENT_POLL_COMPLETE = "pollComplete";
 
-        private bool IsPolling = false;
+        private bool IsPolling;
 
         public Polling(Options opts) : base(opts)
         {
@@ -42,7 +42,7 @@ namespace Xky.Socket.Client.Transports
 
             if (IsPolling || !Writable)
             {
-                var total = new[] { 0 };
+                var total = new[] {0};
 
 
                 if (IsPolling)
@@ -50,7 +50,6 @@ namespace Xky.Socket.Client.Transports
                     //log.Info("we are currently polling - waiting to pause");
                     total[0]++;
                     Once(EVENT_POLL_COMPLETE, new PauseEventPollCompleteListener(total, pause));
-
                 }
 
                 if (!Writable)
@@ -59,7 +58,6 @@ namespace Xky.Socket.Client.Transports
                     total[0]++;
                     Once(EVENT_DRAIN, new PauseEventDrainListener(total, pause));
                 }
-
             }
             else
             {
@@ -71,75 +69,6 @@ namespace Xky.Socket.Client.Transports
         {
             if (ReadyState == ReadyStateEnum.PAUSED)
                 ReadyState = ReadyStateEnum.OPEN;
-        }
-
-        private class PauseEventDrainListener : IListener
-        {
-            private int[] total;
-            private Action pause;
-
-            public PauseEventDrainListener(int[] total, Action pause)
-            {
-                this.total = total;
-                this.pause = pause;
-            }
-
-            public void Call(params object[] args)
-            {
-                //var log = LogManager.GetLogger(Global.CallerName());
-
-                //log.Info("pre-pause writing complete");
-                if (--total[0] == 0)
-                {
-                    pause();
-                }
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-        }
-
-        class PauseEventPollCompleteListener : IListener
-        {
-            private int[] total;
-            private Action pause;
-
-            public PauseEventPollCompleteListener(int[] total, Action pause)
-            {
-
-                this.total = total;
-                this.pause = pause;
-            }
-
-            public void Call(params object[] args)
-            {
-                //var log = LogManager.GetLogger(Global.CallerName());
-
-                //log.Info("pre-pause polling complete");
-                if (--total[0] == 0)
-                {
-                    pause();
-                }
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
-            }
-
-
         }
 
 
@@ -154,7 +83,6 @@ namespace Xky.Socket.Client.Transports
         }
 
 
-
         protected override void OnData(string data)
         {
             _onData(data);
@@ -166,33 +94,6 @@ namespace Xky.Socket.Client.Transports
         }
 
 
-        private class DecodePayloadCallback : IDecodePayloadCallback
-        {
-            private Polling polling;
-
-            public DecodePayloadCallback(Polling polling)
-            {
-                this.polling = polling;
-            }
-            public bool Call(Packet packet, int index, int total)
-            {
-                if (polling.ReadyState == ReadyStateEnum.OPENING)
-                {
-                    polling.OnOpen();
-                }
-
-                if (packet.Type == Packet.CLOSE)
-                {
-                    polling.OnClose();
-                    return false;
-                }
-
-                polling.OnPacket(packet);
-                return true;
-            }
-        }
-
-
         private void _onData(object data)
         {
             var log = LogManager.GetLogger(Global.CallerName());
@@ -200,13 +101,8 @@ namespace Xky.Socket.Client.Transports
             log.Info(string.Format("polling got data {0}", data));
             var callback = new DecodePayloadCallback(this);
             if (data is string)
-            {
-                Xky.Socket.Engine.Parser.Parser.DecodePayload((string)data, callback);
-            }
-            else if (data is byte[])
-            {
-                Xky.Socket.Engine.Parser.Parser.DecodePayload((byte[])data, callback);
-            }
+                Xky.Socket.Engine.Parser.Parser.DecodePayload((string) data, callback);
+            else if (data is byte[]) Xky.Socket.Engine.Parser.Parser.DecodePayload((byte[]) data, callback);
 
             if (ReadyState != ReadyStateEnum.CLOSED)
             {
@@ -215,44 +111,9 @@ namespace Xky.Socket.Client.Transports
                 Emit(EVENT_POLL_COMPLETE);
 
                 if (ReadyState == ReadyStateEnum.OPEN)
-                {
                     Poll();
-                }
                 else
-                {
                     log.Info(string.Format("ignoring poll - transport state {0}", ReadyState));
-                }
-            }
-
-        }
-
-        private class CloseListener : IListener
-        {
-            private Polling polling;
-
-            public CloseListener(Polling polling)
-            {
-                this.polling = polling;
-            }
-
-            public void Call(params object[] args)
-            {
-                //var log = LogManager.GetLogger(Global.CallerName());
-
-                //log.Info("writing close packet");
-                ImmutableList<Packet> packets = ImmutableList<Packet>.Empty;
-                packets = packets.Add(new Packet(Packet.CLOSE));
-                polling.Write(packets);
-            }
-
-            public int CompareTo(IListener other)
-            {
-                return this.GetId().CompareTo(other.GetId());
-            }
-
-            public int GetId()
-            {
-                return 0;
             }
         }
 
@@ -272,33 +133,8 @@ namespace Xky.Socket.Client.Transports
                 // in case we're trying to close while
                 // handshaking is in progress (engine.io-client GH-164)
                 log.Info("transport not open - deferring close");
-                this.Once(EVENT_OPEN, closeListener);
+                Once(EVENT_OPEN, closeListener);
             }
-        }
-
-
-        public class SendEncodeCallback : IEncodeCallback
-        {
-            private Polling polling;
-
-            public SendEncodeCallback(Polling polling)
-            {
-                this.polling = polling;
-            }
-
-            public void Call(object data)
-            {
-                //var log = LogManager.GetLogger(Global.CallerName());
-                //log.Info("SendEncodeCallback data = " + data);
-
-                var byteData = (byte[])data;
-                polling.DoWrite(byteData, () =>
-                {
-                    polling.Writable = true;
-                    polling.Emit(EVENT_DRAIN);
-                });
-            }
-
         }
 
 
@@ -321,46 +157,170 @@ namespace Xky.Socket.Client.Transports
             //{
             //    query = new Dictionary<string, string>();
             //}
-            string schema = this.Secure ? "https" : "http";
-            string portString = "";
+            var schema = Secure ? "https" : "http";
+            var portString = "";
 
-            if (this.TimestampRequests)
-            {
-                query.Add(this.TimestampParam, DateTime.Now.Ticks + "-" + Transport.Timestamps++);
-            }
+            if (TimestampRequests) query.Add(TimestampParam, DateTime.Now.Ticks + "-" + Timestamps++);
 
             query.Add("b64", "1");
 
 
+            var _query = ParseQS.Encode(query);
 
-            string _query = ParseQS.Encode(query);
+            if (Port > 0 && ("https" == schema && Port != 443
+                             || "http" == schema && Port != 80))
+                portString = ":" + Port;
 
-            if (this.Port > 0 && (("https" == schema && this.Port != 443)
-                    || ("http" == schema && this.Port != 80)))
-            {
-                portString = ":" + this.Port;
-            }
+            if (_query.Length > 0) _query = "?" + _query;
 
-            if (_query.Length > 0)
-            {
-                _query = "?" + _query;
-            }
-
-            return schema + "://" + this.Hostname + portString + this.Path + _query;
+            return schema + "://" + Hostname + portString + Path + _query;
         }
 
         protected virtual void DoWrite(byte[] data, Action action)
         {
-
         }
 
         protected virtual void DoPoll()
         {
+        }
 
+        private class PauseEventDrainListener : IListener
+        {
+            private readonly Action pause;
+            private readonly int[] total;
+
+            public PauseEventDrainListener(int[] total, Action pause)
+            {
+                this.total = total;
+                this.pause = pause;
+            }
+
+            public void Call(params object[] args)
+            {
+                //var log = LogManager.GetLogger(Global.CallerName());
+
+                //log.Info("pre-pause writing complete");
+                if (--total[0] == 0) pause();
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
+
+        private class PauseEventPollCompleteListener : IListener
+        {
+            private readonly Action pause;
+            private readonly int[] total;
+
+            public PauseEventPollCompleteListener(int[] total, Action pause)
+            {
+                this.total = total;
+                this.pause = pause;
+            }
+
+            public void Call(params object[] args)
+            {
+                //var log = LogManager.GetLogger(Global.CallerName());
+
+                //log.Info("pre-pause polling complete");
+                if (--total[0] == 0) pause();
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
         }
 
 
+        private class DecodePayloadCallback : IDecodePayloadCallback
+        {
+            private readonly Polling polling;
+
+            public DecodePayloadCallback(Polling polling)
+            {
+                this.polling = polling;
+            }
+
+            public bool Call(Packet packet, int index, int total)
+            {
+                if (polling.ReadyState == ReadyStateEnum.OPENING) polling.OnOpen();
+
+                if (packet.Type == Packet.CLOSE)
+                {
+                    polling.OnClose();
+                    return false;
+                }
+
+                polling.OnPacket(packet);
+                return true;
+            }
+        }
+
+        private class CloseListener : IListener
+        {
+            private readonly Polling polling;
+
+            public CloseListener(Polling polling)
+            {
+                this.polling = polling;
+            }
+
+            public void Call(params object[] args)
+            {
+                //var log = LogManager.GetLogger(Global.CallerName());
+
+                //log.Info("writing close packet");
+                var packets = ImmutableList<Packet>.Empty;
+                packets = packets.Add(new Packet(Packet.CLOSE));
+                polling.Write(packets);
+            }
+
+            public int CompareTo(IListener other)
+            {
+                return GetId().CompareTo(other.GetId());
+            }
+
+            public int GetId()
+            {
+                return 0;
+            }
+        }
 
 
+        public class SendEncodeCallback : IEncodeCallback
+        {
+            private readonly Polling polling;
+
+            public SendEncodeCallback(Polling polling)
+            {
+                this.polling = polling;
+            }
+
+            public void Call(object data)
+            {
+                //var log = LogManager.GetLogger(Global.CallerName());
+                //log.Info("SendEncodeCallback data = " + data);
+
+                var byteData = (byte[]) data;
+                polling.DoWrite(byteData, () =>
+                {
+                    polling.Writable = true;
+                    polling.Emit(EVENT_DRAIN);
+                });
+            }
+        }
     }
 }

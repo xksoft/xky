@@ -14,7 +14,7 @@
                  VerticalAlignment="Bottom" Margin="10,0,0,10"
                  x:Name="MyInput" LostFocus="MyInput_LostFocus" GotFocus="MyInput_GotFocus"
                  HorizontalScrollBarVisibility="Auto" PreviewTextInput="MyInput_PreviewTextInput" UndoLimit="0"
-                 PreviewKeyDown="MyInput_PreviewKeyDown" Style="{x:Null}" Opacity="0"/>
+                 PreviewKeyDown="MyInput_PreviewKeyDown" Style="{x:Null}" Opacity="0" />
         <Image x:Name="ScreenImage" MouseDown="Image_OnMouseDown" MouseUp="Image_OnMouseUp"
                MouseMove="Image_OnMouseMove" MouseLeave="Image_OnMouseLeave" Stretch="Fill" Style="{x:Null}"
                MouseWheel="ScreenImage_MouseWheel" />

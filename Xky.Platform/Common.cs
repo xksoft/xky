@@ -9,7 +9,6 @@ using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Platform.Properties;
 using Xky.Platform.UserControl.Pages;
-using File = System.IO.File;
 
 namespace Xky.Platform
 {
@@ -17,6 +16,8 @@ namespace Xky.Platform
     {
         public static MainWindow MainWindow;
         public static MyMainControl MyMainControl;
+
+        private static int _showToastStep;
 
 
         public static void PlaySound(string name)
@@ -55,8 +56,6 @@ namespace Xky.Platform
                 }
             }
         }
-
-        private static int _showToastStep;
 
         public static void ShowToast(string toast, Color color, string sound = null)
         {

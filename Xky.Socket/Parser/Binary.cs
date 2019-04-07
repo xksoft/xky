@@ -25,30 +25,23 @@ namespace Xky.Socket.Parser
 
         private static JToken _deconstructPacket(object data, List<byte[]> buffers)
         {
-            if (data == null)
-            {
-                return null;
-            }
+            if (data == null) return null;
 
             if (data is byte[])
             {
-                var byteArray = (byte[])data;
+                var byteArray = (byte[]) data;
                 return AddPlaceholder(buffers, byteArray);
             }
 
             var jToken = data as JToken;
-            if (jToken == null)
-            {
-                throw new NotImplementedException();
-            }
+            if (jToken == null) throw new NotImplementedException();
 
             switch (jToken.Type)
             {
                 case JTokenType.Object:
                     var newJObject = new JObject();
-                    var jObject = (JObject)jToken;
+                    var jObject = (JObject) jToken;
                     foreach (var property in jObject.Properties())
-                    {
                         try
                         {
                             newJObject[property.Name] = _deconstructPacket(property.Value, buffers);
@@ -57,14 +50,13 @@ namespace Xky.Socket.Parser
                         {
                             return null;
                         }
-                    }
+
                     return newJObject;
 
                 case JTokenType.Array:
                     var newJArray = new JArray();
-                    var jArray = (JArray)jToken;
-                    for (int i = 0; i < jArray.Count; i++)
-                    {
+                    var jArray = (JArray) jToken;
+                    for (var i = 0; i < jArray.Count; i++)
                         try
                         {
                             newJArray.Add(_deconstructPacket(jArray[i], buffers));
@@ -73,7 +65,7 @@ namespace Xky.Socket.Parser
                         {
                             return null;
                         }
-                    }
+
                     return newJArray;
 
                 case JTokenType.Bytes:
@@ -103,6 +95,7 @@ namespace Xky.Socket.Parser
             {
                 return null;
             }
+
             buffers.Add(byteArray);
             return placeholder;
         }
@@ -121,11 +114,7 @@ namespace Xky.Socket.Parser
             if (data is JValue)
             {
                 var dataStr = data.ToString();
-                if (!dataStr.StartsWith("[") && !dataStr.StartsWith("{"))
-                {
-                    //
-                    return dataStr;
-                }
+                if (!dataStr.StartsWith("[") && !dataStr.StartsWith("{")) return dataStr;
                 var jdata = JToken.Parse(data.ToString());
                 if (jdata.SelectToken(KEY_PLACEHOLDER) != null)
                 {
@@ -147,96 +136,71 @@ namespace Xky.Socket.Parser
                     return recValue;
                 }
 
-             
 
                 //jdata
-            }else if (data is JArray)
+            }
+            else if (data is JArray)
             {
-                var _data = (JArray)data;
-                int len = _data.Count;
+                var _data = (JArray) data;
+                var len = _data.Count;
                 var newData = new JArray();
-                for (int i = 0; i < len; i++)
-                {
+                for (var i = 0; i < len; i++)
                     try
                     {
                         var recValue = _reconstructPacket(_data[i], buffers);
                         if (recValue is string)
-                        {
-                            //newData[i] = (string) recValue;
-                            newData.Add((string)recValue);
-                        }
+                            newData.Add((string) recValue);
                         else if (recValue is byte[])
-                        {
-                            newData.Add((byte[])recValue);
-                        }
+                            newData.Add((byte[]) recValue);
                         else if (recValue is JArray)
-                        {
-                            //newData[i] = (JArray) recValue;
-                            newData.Add((JArray)recValue);
-                        }
-                        else if (recValue is JObject)
-                        {
-                            //newData[i] = (JObject)recValue;
-                            newData.Add((JObject)recValue);
-                        }
+                            newData.Add((JArray) recValue);
+                        else if (recValue is JObject) newData.Add((JObject) recValue);
                     }
                     catch (Exception)
                     {
                         return null;
                     }
-                }
+
                 return newData;
             }
-            if (!(data is JObject))
-            {
-                return data;
-            }
+
+            if (!(data is JObject)) return data;
 
             var newData1 = new JObject();
-            var _data1 = (JObject)data;
+            var _data1 = (JObject) data;
 
             //if ((bool) _data1[KEY_PLACEHOLDER])
             if (_data1.SelectToken(KEY_PLACEHOLDER) != null && (bool) _data1[KEY_PLACEHOLDER])
             {
-                var num = (int)_data1[KEY_NUM];
+                var num = (int) _data1[KEY_NUM];
                 return num >= 0 && num < buffers.Length ? buffers[num] : null;
             }
 
             foreach (var property in _data1.Properties())
-            {               
                 try
                 {
                     var recValue = _reconstructPacket(property.Value, buffers);
                     if (recValue is string)
-                    {
-                        newData1[property.Name] = (string)recValue;
-                    }
+                        newData1[property.Name] = (string) recValue;
                     else if (recValue is byte[])
-                    {
-                        newData1[property.Name] = (byte[])recValue;
-                    }
+                        newData1[property.Name] = (byte[]) recValue;
                     else if (recValue is JArray)
-                    {
-                        newData1[property.Name] = (JArray)recValue;
-                    }
-                    else if (recValue is JObject)
-                    {
-                        newData1[property.Name] = (JObject)recValue;
-                    }
+                        newData1[property.Name] = (JArray) recValue;
+                    else if (recValue is JObject) newData1[property.Name] = (JObject) recValue;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
-            }
-            return newData1;                
+
+            return newData1;
         }
 
 
         public class DeconstructedPacket
         {
-            public Packet Packet;
             public byte[][] Buffers;
+            public Packet Packet;
         }
     }
 }

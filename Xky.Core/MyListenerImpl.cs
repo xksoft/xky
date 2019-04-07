@@ -6,10 +6,10 @@ namespace Xky.Core
     public class MyListenerImpl : IListener, IComparable<IListener>
     {
         private static int _idCounter;
-        private readonly int Id;
         private readonly Action _fn;
         private readonly Action<object> _fn1;
         private readonly Action<object, object> _fn2;
+        private readonly int Id;
 
         public MyListenerImpl(Action<object> fn)
         {
@@ -26,7 +26,7 @@ namespace Xky.Core
 
         public MyListenerImpl(Action fn)
         {
-            this._fn = fn;
+            _fn = fn;
             Id = _idCounter++;
         }
 

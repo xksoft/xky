@@ -1,5 +1,4 @@
-﻿
-namespace Xky.Socket.Client
+﻿namespace Xky.Socket.Client
 {
     public interface IAck
     {

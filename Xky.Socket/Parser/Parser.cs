@@ -21,9 +21,9 @@ namespace Xky.Socket.Parser
 
 
         /// <summary>
-        /// Packet types
+        ///     Packet types
         /// </summary>
-        public static List<string> types = new List<string>()
+        public static List<string> types = new List<string>
         {
             "CONNECT",
             "DISCONNECT",
@@ -34,20 +34,14 @@ namespace Xky.Socket.Parser
             "ERROR"
         };
 
-        private Parser() { }
+        private static readonly Packet ErrorPacket = new Packet(ERROR, "parser error");
 
-        private static Packet ErrorPacket = new Packet(ERROR, "parser error");
+        private Parser()
+        {
+        }
 
         public class Encoder
         {
-            public Encoder() { }
-
-            public interface ICallback
-            {
-                void Call(object[] data);
-            }
-
-
             public void Encode(Packet obj, ICallback callback)
             {
                 var log = LogManager.GetLogger(Global.CallerName());
@@ -59,15 +53,15 @@ namespace Xky.Socket.Parser
                 }
                 else
                 {
-                    String encoding = EncodeAsString(obj);
-                    callback.Call(new object[] { encoding });
+                    var encoding = EncodeAsString(obj);
+                    callback.Call(new object[] {encoding});
                 }
             }
 
             private string EncodeAsString(Packet obj)
             {
                 var str = new StringBuilder();
-                bool nsp = false;
+                var nsp = false;
 
                 str.Append(obj.Type);
 
@@ -90,16 +84,14 @@ namespace Xky.Socket.Parser
                         str.Append(",");
                         nsp = false;
                     }
+
                     str.Append(obj.Id);
                 }
 
                 if (obj.Data != null)
                 {
                     if (nsp) str.Append(",");
-                    if ((obj.Data as JToken).HasValues)
-                    {
-                        str.Append(obj.Data);
-                    }
+                    if ((obj.Data as JToken).HasValues) str.Append(obj.Data);
                 }
 
                 var log = LogManager.GetLogger(Global.CallerName());
@@ -109,16 +101,18 @@ namespace Xky.Socket.Parser
 
             private void EncodeAsBinary(Packet obj, ICallback callback)
             {
-                Binary.DeconstructedPacket deconstruction = Binary.DeconstructPacket(obj);
-                String pack = EncodeAsString(deconstruction.Packet);
+                var deconstruction = Binary.DeconstructPacket(obj);
+                var pack = EncodeAsString(deconstruction.Packet);
                 var buffers = new List<object>();
-                foreach (var item in deconstruction.Buffers)
-                {
-                    buffers.Add(item);
-                }
+                foreach (var item in deconstruction.Buffers) buffers.Add(item);
 
                 buffers.Insert(0, pack);
                 callback.Call(buffers.ToArray());
+            }
+
+            public interface ICallback
+            {
+                void Call(object[] data);
             }
 
             public class CallbackImp : ICallback
@@ -143,64 +137,51 @@ namespace Xky.Socket.Parser
             public const string EVENT_DECODED = "decoded";
 
             /*package*/
-            public BinaryReconstructor Reconstructor = null;
-
-            public Decoder()
-            {
-
-            }
+            public BinaryReconstructor Reconstructor;
 
             public void Add(string obj)
             {
-                Packet packet = decodeString(obj);
+                var packet = decodeString(obj);
                 if (packet.Type == BINARY_EVENT || packet.Type == BINARY_ACK)
                 {
-                    this.Reconstructor = new BinaryReconstructor(packet);
+                    Reconstructor = new BinaryReconstructor(packet);
 
-                    if (this.Reconstructor.reconPack.Attachments == 0)
-                    {
-                        this.Emit(EVENT_DECODED, packet);
-                    }
+                    if (Reconstructor.reconPack.Attachments == 0) Emit(EVENT_DECODED, packet);
                 }
                 else
                 {
-                    this.Emit(EVENT_DECODED, packet);
+                    Emit(EVENT_DECODED, packet);
                 }
             }
 
 
             public void Add(byte[] obj)
             {
-                if (this.Reconstructor == null)
+                if (Reconstructor == null)
                 {
                     throw new SocketIOException("got binary data when not reconstructing a packet");
                 }
-                else
+
+                var packet = Reconstructor.TakeBinaryData(obj);
+                if (packet != null)
                 {
-                    var packet = this.Reconstructor.TakeBinaryData(obj);
-                    if (packet != null)
-                    {
-                        this.Reconstructor = null;
-                        this.Emit(EVENT_DECODED, packet);
-                    }
+                    Reconstructor = null;
+                    Emit(EVENT_DECODED, packet);
                 }
             }
 
             private Packet decodeString(string str)
             {
-                Packet p = new Packet();
-                int i = 0;
+                var p = new Packet();
+                var i = 0;
 
                 p.Type = int.Parse(str.Substring(0, 1));
                 if (p.Type < 0 || p.Type > types.Count - 1) return ErrorPacket;
 
                 if (BINARY_EVENT == p.Type || BINARY_ACK == p.Type)
                 {
-                    StringBuilder attachments = new StringBuilder();
-                    while (str.Substring(++i, 1) != "-")
-                    {
-                        attachments.Append(str.Substring(i, 1));
-                    }
+                    var attachments = new StringBuilder();
+                    while (str.Substring(++i, 1) != "-") attachments.Append(str.Substring(i, 1));
                     p.Attachments = int.Parse(attachments.ToString());
                 }
 
@@ -210,17 +191,12 @@ namespace Xky.Socket.Parser
                     while (true)
                     {
                         ++i;
-                        string c = str.Substring(i, 1);
-                        if ("," == c)
-                        {
-                            break;
-                        }
+                        var c = str.Substring(i, 1);
+                        if ("," == c) break;
                         nsp.Append(c);
-                        if (i + 1 == str.Length)
-                        {
-                            break;
-                        }
+                        if (i + 1 == str.Length) break;
                     }
+
                     p.Nsp = nsp.ToString();
                 }
                 else
@@ -228,7 +204,7 @@ namespace Xky.Socket.Parser
                     p.Nsp = "/";
                 }
 
-                var next = (i + 1) >= str.Length ? null : str.Substring(i + 1, 1);
+                var next = i + 1 >= str.Length ? null : str.Substring(i + 1, 1);
 
                 int unused;
                 if (null != next && int.TryParse(next, out unused))
@@ -244,18 +220,16 @@ namespace Xky.Socket.Parser
                             --i;
                             break;
                         }
+
                         id.Append(c);
-                        if (i + 1 >= str.Length)
-                        {
-                            break;
-                        }
+                        if (i + 1 >= str.Length) break;
                     }
+
                     p.Id = int.Parse(id.ToString());
                 }
 
 
                 if (i++ < str.Length)
-                {
                     try
                     {
                         var t = str.Substring(i);
@@ -269,7 +243,7 @@ namespace Xky.Socket.Parser
                     {
                         return ErrorPacket;
                     }
-                }
+
                 var log = LogManager.GetLogger(Global.CallerName());
                 log.Info(string.Format("decoded {0} as {1}", str, p));
                 return p;
@@ -277,49 +251,43 @@ namespace Xky.Socket.Parser
 
             public void Destroy()
             {
-                if (Reconstructor != null)
-                {
-                    Reconstructor.FinishReconstruction();
-                }
+                if (Reconstructor != null) Reconstructor.FinishReconstruction();
             }
-
-
         }
 
         /*package*/
         public class BinaryReconstructor
         {
-
-            public Packet reconPack;
-
             /*package*/
             public List<byte[]> Buffers;
 
+            public Packet reconPack;
+
             public BinaryReconstructor(Packet packet)
             {
-                this.reconPack = packet;
-                this.Buffers = new List<byte[]>();
+                reconPack = packet;
+                Buffers = new List<byte[]>();
             }
 
             public Packet TakeBinaryData(byte[] binData)
             {
-                this.Buffers.Add(binData);
-                if (this.Buffers.Count == this.reconPack.Attachments)
+                Buffers.Add(binData);
+                if (Buffers.Count == reconPack.Attachments)
                 {
-                    Packet packet = Binary.ReconstructPacket(this.reconPack,
-                            this.Buffers.ToArray());
-                    this.FinishReconstruction();
+                    var packet = Binary.ReconstructPacket(reconPack,
+                        Buffers.ToArray());
+                    FinishReconstruction();
                     return packet;
                 }
+
                 return null;
             }
 
             public void FinishReconstruction()
             {
-                this.reconPack = null;
-                this.Buffers = new List<byte[]>();
+                reconPack = null;
+                Buffers = new List<byte[]>();
             }
         }
-
     }
 }

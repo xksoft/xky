@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
@@ -11,10 +12,12 @@ using Xky.Core.Model;
 namespace Xky.Platform.UserControl.Pages
 {
     /// <summary>
-    /// MyMainControl.xaml 的交互逻辑
+    ///     MyMainControl.xaml 的交互逻辑
     /// </summary>
     public partial class MyMainControl : System.Windows.Controls.UserControl
     {
+        private Thread _lastConnectThread;
+
         public MyMainControl()
         {
             InitializeComponent();
@@ -23,15 +26,15 @@ namespace Xky.Platform.UserControl.Pages
 
 
         /// <summary>
-        /// 加载设备列表
+        ///     加载设备列表
         /// </summary>
         public void LoadDevices()
         {
-            Client.StartAction( () =>
+            Client.StartAction(() =>
             {
                 Common.ShowToast("正在加载设备列表...");
 
-                var response =  Client.LoadDevices();
+                var response = Client.LoadDevices();
                 if (response.Result)
                 {
                     Console.WriteLine("设备数：" + Client.Devices.Count);
@@ -47,13 +50,13 @@ namespace Xky.Platform.UserControl.Pages
         }
 
         /// <summary>
-        /// 加载模块面板上的模块列表
+        ///     加载模块面板上的模块列表
         /// </summary>
         public void LoadModules_Panel()
         {
-            Client.StartAction( () =>
+            Client.StartAction(() =>
             {
-                var response =  Client.LoadModules_Panel();
+                var response = Client.LoadModules_Panel();
                 if (response.Result)
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
@@ -67,8 +70,6 @@ namespace Xky.Platform.UserControl.Pages
                 }
             });
         }
-
-        private Thread _lastConnectThread;
 
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -110,35 +111,28 @@ namespace Xky.Platform.UserControl.Pages
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-            RadioButton btn = (RadioButton) e.Source;
+            var btn = (RadioButton) e.Source;
             if (btn.IsChecked.Value)
             {
                 if (btn.Tag.ToString() == "所有模块")
-                {
                     Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
-                }
                 else
-                {
                     Common.UiAction(() =>
                     {
                         ModulesPanel.ItemsSource = from module in Client.Modules_Panel
                             where module.Tags.Contains(btn.Tag.ToString())
                             select module;
                     });
-                }
             }
         }
 
-        private void MyModuleItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MyModuleItem item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
+            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    Thread.Sleep(1000);
-                }
+                for (var i = 0; i < 5; i++) Thread.Sleep(1000);
 
                 Dispatcher.Invoke(() => { item.IsRunning = false; });
             });
@@ -146,8 +140,8 @@ namespace Xky.Platform.UserControl.Pages
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-           var response= Client.CallApi("get_user", new JObject());
-           Console.WriteLine(response.Json);
+            var response = Client.CallApi("get_user", new JObject());
+            Console.WriteLine(response.Json);
         }
     }
 }

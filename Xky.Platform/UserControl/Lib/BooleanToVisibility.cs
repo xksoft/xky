@@ -1,44 +1,32 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Xky.Platform.UserControl.Lib
 {
-    class BooleanToVisibility : System.Windows.Markup.MarkupExtension, IValueConverter
+    internal class BooleanToVisibility : MarkupExtension, IValueConverter
     {
-        public BooleanToVisibility()
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var ivalue = value as bool?;
 
-        }
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            Boolean? ivalue = value as Boolean?;
+            if (ivalue.HasValue && ivalue.Value) return Visibility.Visible;
 
-            if (ivalue.HasValue && ivalue.Value)
-            {
-                return Visibility.Visible;
-            }
-            else
-            {
-                if (parameter != null)
-                {
-                    return Visibility.Collapsed;
-                }
-                else
-                {
-                    return Visibility.Hidden;
-                }
-            }
+            if (parameter != null)
+                return Visibility.Collapsed;
+            return Visibility.Hidden;
         }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return null;
         }
+
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             return this;
         }
-
-
     }
 }

@@ -4,9 +4,9 @@ using System.Windows.Controls;
 namespace Xky.Platform.UserControl.Pages
 {
     /// <summary>
-    /// MyTask.xaml 的交互逻辑
+    ///     MyTask.xaml 的交互逻辑
     /// </summary>
-    public partial class MySetting 
+    public partial class MySetting
     {
         public MySetting()
         {
@@ -20,7 +20,6 @@ namespace Xky.Platform.UserControl.Pages
 
         private void Togglebutton_test_Checked(object sender, RoutedEventArgs e)
         {
-           
         }
 
         private void Togglebutton_test_Click(object sender, RoutedEventArgs e)

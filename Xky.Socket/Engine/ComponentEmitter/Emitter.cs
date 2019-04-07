@@ -4,71 +4,64 @@ using Xky.Socket.Engine.Modules;
 
 namespace Xky.Socket.Engine.ComponentEmitter
 {
-
     /// <remarks>
-    /// The event emitter which is ported from the JavaScript module.
-    /// <see href="https://github.com/component/emitter">https://github.com/component/emitter</see>
+    ///     The event emitter which is ported from the JavaScript module.
+    ///     <see href="https://github.com/component/emitter">https://github.com/component/emitter</see>
     /// </remarks>
     public class Emitter
     {
-        private ImmutableDictionary<string, ImmutableList<IListener>> callbacks;
-
         private ImmutableDictionary<IListener, IListener> _onceCallbacks;
+        private ImmutableDictionary<string, ImmutableList<IListener>> callbacks;
 
 
         public Emitter()
         {
-            this.Off();
+            Off();
         }
 
         /// <summary>
-        /// Executes each of listeners with the given args.
+        ///     Executes each of listeners with the given args.
         /// </summary>
         /// <param name="eventString">an event name.</param>
         /// <param name="args"></param>
         /// <returns>a reference to this object.</returns>
-        public virtual Emitter Emit(string eventString, params object[] args) 
+        public virtual Emitter Emit(string eventString, params object[] args)
         {
             //var log = LogManager.GetLogger(Global.CallerName());
             //log.Info("Emitter emit event = " + eventString);
-            if (this.callbacks.ContainsKey(eventString))
-            {
+            if (callbacks.ContainsKey(eventString))
                 try
                 {
                     //handle in try/catch the emit
-                    ImmutableList<IListener> callbacksLocal = this.callbacks[eventString];
-                    foreach (var fn in callbacksLocal)
-                    {
-                        fn.Call(args);
-                    }
+                    var callbacksLocal = callbacks[eventString];
+                    foreach (var fn in callbacksLocal) fn.Call(args);
                 }
-                catch { }
-            }
-            return this;            
+                catch
+                {
+                }
+
+            return this;
         }
 
         /// <summary>
-        ///  Listens on the event.
+        ///     Listens on the event.
         /// </summary>
         /// <param name="eventString">event name</param>
         /// <param name="fn"></param>
         /// <returns>a reference to this object</returns>
         public Emitter On(string eventString, IListener fn)
         {
-            if (!this.callbacks.ContainsKey(eventString))
-            {
-                //this.callbacks[eventString] = ImmutableList<IListener>.Empty;
-                this.callbacks = this.callbacks.Add(eventString, ImmutableList<IListener>.Empty);
-            }
-            ImmutableList<IListener> callbacksLocal = this.callbacks[eventString];
+            if (!callbacks.ContainsKey(eventString))
+                callbacks = callbacks.Add(eventString, ImmutableList<IListener>.Empty);
+            var callbacksLocal = callbacks[eventString];
             callbacksLocal = callbacksLocal.Add(fn);
             //this.callbacks[eventString] = callbacksLocal;
-            this.callbacks = this.callbacks.Remove(eventString).Add(eventString, callbacksLocal);
+            callbacks = callbacks.Remove(eventString).Add(eventString, callbacksLocal);
             return this;
         }
 
         /// <summary>
-        ///  Listens on the event.
+        ///     Listens on the event.
         /// </summary>
         /// <param name="eventString">event name</param>
         /// <param name="fn"></param>
@@ -76,11 +69,11 @@ namespace Xky.Socket.Engine.ComponentEmitter
         public Emitter On(string eventString, Action fn)
         {
             var listener = new ListenerImpl(fn);
-            return this.On(eventString, listener);
+            return On(eventString, listener);
         }
 
         /// <summary>
-        ///  Listens on the event.
+        ///     Listens on the event.
         /// </summary>
         /// <param name="eventString">event name</param>
         /// <param name="fn"></param>
@@ -88,12 +81,12 @@ namespace Xky.Socket.Engine.ComponentEmitter
         public Emitter On(string eventString, Action<object> fn)
         {
             var listener = new ListenerImpl(fn);
-            return this.On(eventString, listener);
+            return On(eventString, listener);
         }
 
 
         /// <summary>
-        /// Adds a one time listener for the event.
+        ///     Adds a one time listener for the event.
         /// </summary>
         /// <param name="eventString">an event name.</param>
         /// <param name="fn"></param>
@@ -103,13 +96,12 @@ namespace Xky.Socket.Engine.ComponentEmitter
             var on = new OnceListener(eventString, fn, this);
 
             _onceCallbacks = _onceCallbacks.Add(fn, on);
-            this.On(eventString, on);
+            On(eventString, on);
             return this;
-
         }
 
         /// <summary>
-        /// Adds a one time listener for the event.
+        ///     Adds a one time listener for the event.
         /// </summary>
         /// <param name="eventString">an event name.</param>
         /// <param name="fn"></param>
@@ -117,11 +109,11 @@ namespace Xky.Socket.Engine.ComponentEmitter
         public Emitter Once(string eventString, Action fn)
         {
             var listener = new ListenerImpl(fn);
-            return this.Once(eventString, listener);
+            return Once(eventString, listener);
         }
 
         /// <summary>
-        /// Removes all registered listeners.
+        ///     Removes all registered listeners.
         /// </summary>
         /// <returns>a reference to this object.</returns>
         public Emitter Off()
@@ -132,7 +124,7 @@ namespace Xky.Socket.Engine.ComponentEmitter
         }
 
         /// <summary>
-        /// Removes all listeners of the specified event.
+        ///     Removes all listeners of the specified event.
         /// </summary>
         /// <param name="eventString">an event name</param>
         /// <returns>a reference to this object.</returns>
@@ -140,7 +132,6 @@ namespace Xky.Socket.Engine.ComponentEmitter
         {
             try
             {
-
                 ImmutableList<IListener> retrievedValue;
                 if (!callbacks.TryGetValue(eventString, out retrievedValue))
                 {
@@ -152,15 +143,12 @@ namespace Xky.Socket.Engine.ComponentEmitter
                 {
                     callbacks = callbacks.Remove(eventString);
 
-                    foreach (var listener in retrievedValue)
-                    {
-                        _onceCallbacks.Remove(listener);
-                    }
+                    foreach (var listener in retrievedValue) _onceCallbacks.Remove(listener);
                 }
             }
             catch (Exception)
             {
-                this.Off();
+                Off();
             }
 
             return this;
@@ -168,7 +156,7 @@ namespace Xky.Socket.Engine.ComponentEmitter
 
 
         /// <summary>
-        /// Removes the listener
+        ///     Removes the listener
         /// </summary>
         /// <param name="eventString">an event name</param>
         /// <param name="fn"></param>
@@ -177,9 +165,9 @@ namespace Xky.Socket.Engine.ComponentEmitter
         {
             try
             {
-                if (this.callbacks.ContainsKey(eventString))
+                if (callbacks.ContainsKey(eventString))
                 {
-                    ImmutableList<IListener> callbacksLocal = this.callbacks[eventString];
+                    var callbacksLocal = callbacks[eventString];
                     IListener offListener;
                     _onceCallbacks.TryGetValue(fn, out offListener);
                     _onceCallbacks = _onceCallbacks.Remove(fn);
@@ -188,47 +176,47 @@ namespace Xky.Socket.Engine.ComponentEmitter
                     if (callbacksLocal.Count > 0 && callbacksLocal.Contains(offListener ?? fn))
                     {
                         callbacksLocal = callbacksLocal.Remove(offListener ?? fn);
-                        this.callbacks = this.callbacks.Remove(eventString);
-                        this.callbacks = this.callbacks.Add(eventString, callbacksLocal);
+                        callbacks = callbacks.Remove(eventString);
+                        callbacks = callbacks.Add(eventString, callbacksLocal);
                     }
                 }
-
-            }catch(Exception)
-            {
-                this.Off();
             }
-            
+            catch (Exception)
+            {
+                Off();
+            }
+
             return this;
         }
 
         /// <summary>
-        ///  Returns a list of listeners for the specified event.
+        ///     Returns a list of listeners for the specified event.
         /// </summary>
         /// <param name="eventString">an event name.</param>
         /// <returns>a reference to this object</returns>
         public ImmutableList<IListener> Listeners(string eventString)
         {
-            if (this.callbacks.ContainsKey(eventString))
+            if (callbacks.ContainsKey(eventString))
             {
-                ImmutableList<IListener> callbacksLocal = this.callbacks[eventString];
+                var callbacksLocal = callbacks[eventString];
                 return callbacksLocal ?? ImmutableList<IListener>.Empty;
             }
+
             return ImmutableList<IListener>.Empty;
         }
 
         /// <summary>
-        /// Check if this emitter has listeners for the specified event.
+        ///     Check if this emitter has listeners for the specified event.
         /// </summary>
         /// <param name="eventString">an event name</param>
         /// <returns>bool</returns>
         public bool HasListeners(string eventString)
         {
-            return this.Listeners(eventString).Count > 0;
+            return Listeners(eventString).Count > 0;
         }
-
     }
 
-    public interface IListener: System.IComparable<IListener>
+    public interface IListener : IComparable<IListener>
     {
         int GetId();
         void Call(params object[] args);
@@ -236,23 +224,21 @@ namespace Xky.Socket.Engine.ComponentEmitter
 
     public class ListenerImpl : IListener
     {
-        private static int id_counter = 0;
-        private int Id;
-        private readonly Action fn1; 
+        private static int id_counter;
         private readonly Action<object> fn;
+        private readonly Action fn1;
+        private readonly int Id;
 
         public ListenerImpl(Action<object> fn)
         {
-
             this.fn = fn;
-            this.Id = id_counter++;
+            Id = id_counter++;
         }
 
         public ListenerImpl(Action fn)
         {
-
-            this.fn1 = fn;
-            this.Id = id_counter++;
+            fn1 = fn;
+            Id = id_counter++;
         }
 
         public void Call(params object[] args)
@@ -268,11 +254,10 @@ namespace Xky.Socket.Engine.ComponentEmitter
             }
         }
 
-        
 
         public int CompareTo(IListener other)
         {
-            return this.GetId().CompareTo(other.GetId());
+            return GetId().CompareTo(other.GetId());
         }
 
         public int GetId()
@@ -283,17 +268,17 @@ namespace Xky.Socket.Engine.ComponentEmitter
 
     public class OnceListener : IListener
     {
-        private static int id_counter = 0;
-        private int Id;
+        private static int id_counter;
+        private readonly Emitter _emitter;
         private readonly string _eventString;
         private readonly IListener _fn;
-        private readonly Emitter _emitter;
+        private readonly int Id;
 
         public OnceListener(string eventString, IListener fn, Emitter emitter)
         {
-            this._eventString = eventString;
-            this._fn = fn;
-            this._emitter = emitter;
+            _eventString = eventString;
+            _fn = fn;
+            _emitter = emitter;
             Id = id_counter++;
         }
 
@@ -305,7 +290,7 @@ namespace Xky.Socket.Engine.ComponentEmitter
 
         public int CompareTo(IListener other)
         {
-            return this.GetId().CompareTo(other.GetId());
+            return GetId().CompareTo(other.GetId());
         }
 
         public int GetId()
