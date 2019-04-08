@@ -11,15 +11,15 @@ namespace Xky.Socket.Engine.Client
 {
     public abstract class Transport : Emitter
     {
-        public static readonly string EVENT_OPEN = "open";
-        public static readonly string EVENT_CLOSE = "close";
-        public static readonly string EVENT_PACKET = "packet";
-        public static readonly string EVENT_DRAIN = "drain";
-        public static readonly string EVENT_ERROR = "error";
-        public static readonly string EVENT_SUCCESS = "success";
-        public static readonly string EVENT_DATA = "data";
-        public static readonly string EVENT_REQUEST_HEADERS = "requestHeaders";
-        public static readonly string EVENT_RESPONSE_HEADERS = "responseHeaders";
+        public static readonly string EventOpen = "open";
+        public static readonly string EventClose = "close";
+        public static readonly string EventPacket = "packet";
+        public static readonly string EventDrain = "drain";
+        public static readonly string EventError = "error";
+        public static readonly string EventSuccess = "success";
+        public static readonly string EventData = "data";
+        public static readonly string EventRequestHeaders = "requestHeaders";
+        public static readonly string EventResponseHeaders = "responseHeaders";
 
         protected static int Timestamps = 0;
 
@@ -38,7 +38,7 @@ namespace Xky.Socket.Engine.Client
         public Dictionary<string, string> Query;
 
 
-        protected ReadyStateEnum ReadyState = ReadyStateEnum.CLOSED;
+        protected ReadyStateEnum ReadyState = ReadyStateEnum.Closed;
 
         protected bool Secure;
         protected Socket Socket;
@@ -80,21 +80,21 @@ namespace Xky.Socket.Engine.Client
         protected Transport OnError(string message, Exception exception)
         {
             Exception err = new EngineIOException(message, exception);
-            Emit(EVENT_ERROR, err);
+            Emit(EventError, err);
             return this;
         }
 
         protected void OnOpen()
         {
-            ReadyState = ReadyStateEnum.OPEN;
+            ReadyState = ReadyStateEnum.Open;
             Writable = true;
-            Emit(EVENT_OPEN);
+            Emit(EventOpen);
         }
 
         protected void OnClose()
         {
-            ReadyState = ReadyStateEnum.CLOSED;
-            Emit(EVENT_CLOSE);
+            ReadyState = ReadyStateEnum.Closed;
+            Emit(EventClose);
         }
 
 
@@ -110,15 +110,15 @@ namespace Xky.Socket.Engine.Client
 
         protected void OnPacket(Packet packet)
         {
-            Emit(EVENT_PACKET, packet);
+            Emit(EventPacket, packet);
         }
 
 
         public Transport Open()
         {
-            if (ReadyState == ReadyStateEnum.CLOSED)
+            if (ReadyState == ReadyStateEnum.Closed)
             {
-                ReadyState = ReadyStateEnum.OPENING;
+                ReadyState = ReadyStateEnum.Opening;
                 DoOpen();
             }
 
@@ -127,7 +127,7 @@ namespace Xky.Socket.Engine.Client
 
         public Transport Close()
         {
-            if (ReadyState == ReadyStateEnum.OPENING || ReadyState == ReadyStateEnum.OPEN)
+            if (ReadyState == ReadyStateEnum.Opening || ReadyState == ReadyStateEnum.Open)
             {
                 DoClose();
                 OnClose();
@@ -140,8 +140,7 @@ namespace Xky.Socket.Engine.Client
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info("Send called with packets.Count: " + packets.Count);
-            var count = packets.Count;
-            if (ReadyState == ReadyStateEnum.OPEN)
+            if (ReadyState == ReadyStateEnum.Open)
                 Write(packets);
             else
                 throw new EngineIOException("Transport not open");
@@ -157,10 +156,10 @@ namespace Xky.Socket.Engine.Client
 
         protected enum ReadyStateEnum
         {
-            OPENING,
-            OPEN,
-            CLOSED,
-            PAUSED
+            Opening,
+            Open,
+            Closed,
+            Paused
         }
 
 

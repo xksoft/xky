@@ -233,13 +233,7 @@ namespace Xky.Core
             _socket.On(Socket.Client.Socket.EventDisconnect, () => { Console.WriteLine("Disconnected"); });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
-            _socket.On("h264", data =>
-            {
-                lock ("decode")
-                {
-                    _decoder?.Decode((byte[]) data);
-                }
-            });
+            _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
         }
 
 

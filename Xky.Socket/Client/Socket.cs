@@ -40,13 +40,13 @@ namespace Xky.Socket.Client
         };
 
         private readonly Manager _io;
+        private readonly string _nsp;
         private ImmutableDictionary<int, IAck> _acks = ImmutableDictionary.Create<int, IAck>();
 
         private bool _connected;
 
         //private bool Disconnected = true;
         private int _ids;
-        private readonly string _nsp;
         private ImmutableQueue<List<object>> _receiveBuffer = ImmutableQueue.Create<List<object>>();
         private ImmutableQueue<Packet> _sendBuffer = ImmutableQueue.Create<Packet>();
         private ImmutableQueue<On.IHandle> _subs;
@@ -95,23 +95,23 @@ namespace Xky.Socket.Client
         }
 
 
-        public override Emitter Emit(string eventString, params object[] args)
+        public override Emitter Emit(string eventString, params object[] arg)
         {
             var log = LogManager.GetLogger(Global.CallerName());
 
             if (Events.Contains(eventString))
             {
-                base.Emit(eventString, args);
+                base.Emit(eventString, arg);
                 return this;
             }
 
-            var _args = new List<object> {eventString};
-            _args.AddRange(args);
+            var args = new List<object> {eventString};
+            args.AddRange(arg);
 
-            var ack = _args[_args.Count - 1] as IAck;
-            if (ack != null) _args.RemoveAt(_args.Count - 1);
+            var ack = args[args.Count - 1] as IAck;
+            if (ack != null) args.RemoveAt(args.Count - 1);
 
-            var jsonArgs = Parser.Packet.Args2JArray(_args);
+            var jsonArgs = Parser.Packet.Args2JArray(args);
 
             var parserType = HasBinaryData.HasBinary(jsonArgs) ? Parser.Parser.BINARY_EVENT : Parser.Parser.EVENT;
             var packet = new Packet(parserType, jsonArgs);
@@ -262,7 +262,7 @@ namespace Xky.Socket.Client
 
             //var arr = job.ToArray();
 
-            //var args = job.Select(token => token.Value<string>()).Cast<object>().ToList();
+            //var arg = job.Select(token => token.Value<string>()).Cast<object>().ToList();
             var args = packet.GetDataAsList();
 
 
@@ -402,13 +402,13 @@ namespace Xky.Socket.Client
 
         private class AckImp : IAck
         {
-            private readonly bool[] _sent = {false};
             private readonly int _id;
+            private readonly bool[] _sent = {false};
             private readonly Socket _socket;
 
             public AckImp(Socket socket, int id)
             {
-                this._socket = socket;
+                _socket = socket;
                 _id = id;
             }
 

@@ -95,7 +95,6 @@
     <Compile Include="Client\Manager.cs" />
     <Compile Include="Client\On.cs" />
     <Compile Include="Client\Socket.cs" />
-    <Compile Include="Client\SocketIOException.cs" />
     <Compile Include="Client\Transports\Polling.cs" />
     <Compile Include="Client\Transports\PollingXHR.cs" />
     <Compile Include="Client\Transports\WebSocket.cs" />

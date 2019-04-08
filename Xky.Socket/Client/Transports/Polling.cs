@@ -32,11 +32,11 @@ namespace Xky.Socket.Client.Transports
         {
             //var log = LogManager.GetLogger(Global.CallerName());
 
-            ReadyState = ReadyStateEnum.PAUSED;
+            ReadyState = ReadyStateEnum.Paused;
             Action pause = () =>
             {
                 //log.Info("paused");
-                ReadyState = ReadyStateEnum.PAUSED;
+                ReadyState = ReadyStateEnum.Paused;
                 onPause();
             };
 
@@ -56,7 +56,7 @@ namespace Xky.Socket.Client.Transports
                 {
                     //log.Info("we are currently writing - waiting to pause");
                     total[0]++;
-                    Once(EVENT_DRAIN, new PauseEventDrainListener(total, pause));
+                    Once(EventDrain, new PauseEventDrainListener(total, pause));
                 }
             }
             else
@@ -67,8 +67,8 @@ namespace Xky.Socket.Client.Transports
 
         public void Resume()
         {
-            if (ReadyState == ReadyStateEnum.PAUSED)
-                ReadyState = ReadyStateEnum.OPEN;
+            if (ReadyState == ReadyStateEnum.Paused)
+                ReadyState = ReadyStateEnum.Open;
         }
 
 
@@ -104,13 +104,13 @@ namespace Xky.Socket.Client.Transports
                 Xky.Socket.Engine.Parser.Parser.DecodePayload((string) data, callback);
             else if (data is byte[]) Xky.Socket.Engine.Parser.Parser.DecodePayload((byte[]) data, callback);
 
-            if (ReadyState != ReadyStateEnum.CLOSED)
+            if (ReadyState != ReadyStateEnum.Closed)
             {
                 IsPolling = false;
                 log.Info("ReadyState != ReadyStateEnum.CLOSED");
                 Emit(EVENT_POLL_COMPLETE);
 
-                if (ReadyState == ReadyStateEnum.OPEN)
+                if (ReadyState == ReadyStateEnum.Open)
                     Poll();
                 else
                     log.Info(string.Format("ignoring poll - transport state {0}", ReadyState));
@@ -123,7 +123,7 @@ namespace Xky.Socket.Client.Transports
 
             var closeListener = new CloseListener(this);
 
-            if (ReadyState == ReadyStateEnum.OPEN)
+            if (ReadyState == ReadyStateEnum.Open)
             {
                 log.Info("transport open - closing");
                 closeListener.Call();
@@ -133,7 +133,7 @@ namespace Xky.Socket.Client.Transports
                 // in case we're trying to close while
                 // handshaking is in progress (engine.io-client GH-164)
                 log.Info("transport not open - deferring close");
-                Once(EVENT_OPEN, closeListener);
+                Once(EventOpen, closeListener);
             }
         }
 
@@ -256,7 +256,7 @@ namespace Xky.Socket.Client.Transports
 
             public bool Call(Packet packet, int index, int total)
             {
-                if (polling.ReadyState == ReadyStateEnum.OPENING) polling.OnOpen();
+                if (polling.ReadyState == ReadyStateEnum.Opening) polling.OnOpen();
 
                 if (packet.Type == Packet.CLOSE)
                 {
@@ -318,7 +318,7 @@ namespace Xky.Socket.Client.Transports
                 polling.DoWrite(byteData, () =>
                 {
                     polling.Writable = true;
-                    polling.Emit(EVENT_DRAIN);
+                    polling.Emit(EventDrain);
                 });
             }
         }

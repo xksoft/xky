@@ -403,9 +403,9 @@ namespace Xky.Core
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
-        public static readonly ObservableCollection<Module> Modules_Panel = new ObservableCollection<Module>();
+        public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
 
-        public static readonly ObservableCollection<string> Modules_Panel_Tags =
+        public static readonly ObservableCollection<string> ModulesPanelTags =
             new ObservableCollection<string> {"所有模块"};
 
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
@@ -456,6 +456,7 @@ namespace Xky.Core
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
+                    node.NodeSocket.On("tick", new MyListenerImpl((sn, json) => { Console.WriteLine(json); }));
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>
                         {
@@ -570,9 +571,9 @@ namespace Xky.Core
         /// <param name="json"></param>
         private static Module PushModule(JToken json)
         {
-            lock ("devices")
+            lock ("modules")
             {
-                var module = Modules_Panel.ToList().Find(p => p.Id == (int) json["t_id"]);
+                var module = ModulesPanel.ToList().Find(p => p.Id == (int) json["t_id"]);
                 //如果已经存在就更新
                 if (module != null)
                 {
@@ -599,34 +600,32 @@ namespace Xky.Core
                         Tags = json["t_tags"].Values<string>().ToList()
                     };
                     foreach (var tag in module.Tags)
-                        if (!Modules_Panel_Tags.Contains(tag))
-                            Modules_Panel_Tags.Add(tag);
+                        if (!ModulesPanelTags.Contains(tag))
+                            ModulesPanelTags.Add(tag);
 
                     StartAction(() =>
                     {
-//                        //得加个锁，不然一下子并发上百个请求，会被服务器堵住
-//                        lock ("down_module_image")
-//                        {
-//                            try
-//                            {
-//                                using (var client = new WebClient())
-//                                {
-//                                    var data = client.DownloadData(json["t_logo"] + "@96h");
-//                                    MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
-//                                }
-//                            }
-//                            catch (Exception e)
-//                            {
-//                                Console.WriteLine(e);
-//                            }
-//                        }
+                        //得加个锁，不然一下子并发上百个请求，会被服务器堵住
+
+                        try
+                        {
+                            using (var client = new WebClient())
+                            {
+                                var data = client.DownloadData(json["t_logo"] + "@96h");
+                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     });
                     MainWindow.Dispatcher.Invoke(() =>
                     {
-                        //设置初始屏幕
-                        module.Logo =
-                            new BitmapImage(new Uri(json["t_logo"] + "@96h"));
-                        Modules_Panel.Add(module);
+//                        //设置初始屏幕
+//                        module.Logo =
+//                            new BitmapImage(new Uri(json["t_logo"] + "@96h"));
+                        ModulesPanel.Add(module);
                     });
                 }
 

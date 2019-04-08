@@ -8,7 +8,6 @@ using WebSocket4Net;
 using Xky.Socket.Engine.Modules;
 using Xky.Socket.Engine.Parser;
 
-
 namespace Xky.Socket.Engine.Client.Transports
 {
     public class WebSocket : Transport
@@ -77,7 +76,7 @@ namespace Xky.Socket.Engine.Client.Transports
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info("ws_DataReceived " + e.Data);
-            this.OnData(e.Data);
+            OnData(e.Data);
         }
 
         private void ws_Opened(object sender, EventArgs e)
@@ -103,7 +102,7 @@ namespace Xky.Socket.Engine.Client.Transports
         {
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info("ws_MessageReceived e.Message= " + e.Message);
-            this.OnData(e.Message);
+            OnData(e.Message);
         }
 
         private void ws_Error(object sender, ErrorEventArgs e)
@@ -121,7 +120,7 @@ namespace Xky.Socket.Engine.Client.Transports
             //EasyTimer.SetTimeout(() =>
             //{
             Writable = true;
-            Emit(EVENT_DRAIN);
+            Emit(EventDrain);
             //}, 1);
         }
 

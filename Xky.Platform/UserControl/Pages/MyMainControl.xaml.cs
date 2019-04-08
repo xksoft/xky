@@ -22,6 +22,16 @@ namespace Xky.Platform.UserControl.Pages
         {
             InitializeComponent();
             Common.MyMainControl = this;
+            SearchText.TextBox1.TextChanged += SearchText_TextChanged;
+        }
+
+        private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var source = from d in Client.Devices
+                where d.Name.Contains(SearchText.TextBox1.Text)
+                orderby d.Name
+                select d;
+            DeviceListBox.ItemsSource = source;
         }
 
 
@@ -59,9 +69,9 @@ namespace Xky.Platform.UserControl.Pages
                 var response = Client.LoadModules_Panel();
                 if (response.Result)
                 {
-                    Console.WriteLine("模块面板上的模块数量：" + Client.Modules_Panel.Count);
-                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
-                    Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.Modules_Panel_Tags; });
+                    Console.WriteLine("模块面板上的模块数量：" + Client.ModulesPanel.Count);
+                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
+                    Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else
@@ -115,11 +125,11 @@ namespace Xky.Platform.UserControl.Pages
             if (btn.IsChecked.Value)
             {
                 if (btn.Tag.ToString() == "所有模块")
-                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.Modules_Panel; });
+                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
                 else
                     Common.UiAction(() =>
                     {
-                        ModulesPanel.ItemsSource = from module in Client.Modules_Panel
+                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
                             where module.Tags.Contains(btn.Tag.ToString())
                             select module;
                     });
@@ -142,6 +152,18 @@ namespace Xky.Platform.UserControl.Pages
         {
             var response = Client.CallApi("get_user", new JObject());
             Console.WriteLine(response.Json);
+        }
+
+        private void DeviceListBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
+        private void DeviceListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            //var aaa=  DeviceListBox.Items.Cast<UIElement>().Where(x => x.IsVisible);
+            Console.WriteLine("触发");
+            Console.WriteLine("Visible Item Start Index:{0}", e.VerticalOffset);
+            Console.WriteLine("Visible Item Count:{0}", e.ViewportHeight);
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Xky.Socket.Engine.Client.Transports
             var req = new XHRRequest(opts);
 
 
-            req.On(EVENT_REQUEST_HEADERS, new EventRequestHeadersListener(this))
-                .On(EVENT_RESPONSE_HEADERS, new EventResponseHeadersListener(this));
+            req.On(EventRequestHeaders, new EventRequestHeadersListener(this))
+                .On(EventResponseHeaders, new EventResponseHeadersListener(this));
 
             return req;
         }
@@ -57,8 +57,8 @@ namespace Xky.Socket.Engine.Client.Transports
             //}
 
             sendXhr = Request(opts);
-            sendXhr.On(EVENT_SUCCESS, new SendEventSuccessListener(action));
-            sendXhr.On(EVENT_ERROR, new SendEventErrorListener(this));
+            sendXhr.On(EventSuccess, new SendEventSuccessListener(action));
+            sendXhr.On(EventError, new SendEventErrorListener(this));
             sendXhr.Create();
         }
 
@@ -69,8 +69,8 @@ namespace Xky.Socket.Engine.Client.Transports
             log.Info("xhr DoPoll");
             var opts = new XHRRequest.RequestOptions {CookieHeaderValue = Cookie};
             sendXhr = Request(opts);
-            sendXhr.On(EVENT_DATA, new DoPollEventDataListener(this));
-            sendXhr.On(EVENT_ERROR, new DoPollEventErrorListener(this));
+            sendXhr.On(EventData, new DoPollEventDataListener(this));
+            sendXhr.On(EventError, new DoPollEventErrorListener(this));
 
             sendXhr.Create();
         }
@@ -87,7 +87,7 @@ namespace Xky.Socket.Engine.Client.Transports
             public void Call(params object[] args)
             {
                 // Never execute asynchronously for support to modify headers.
-                pollingXHR.Emit(EVENT_REQUEST_HEADERS, args[0]);
+                pollingXHR.Emit(EventRequestHeaders, args[0]);
             }
 
             public int CompareTo(IListener other)
@@ -112,7 +112,7 @@ namespace Xky.Socket.Engine.Client.Transports
 
             public void Call(params object[] args)
             {
-                pollingXHR.Emit(EVENT_RESPONSE_HEADERS, args[0]);
+                pollingXHR.Emit(EventResponseHeaders, args[0]);
             }
 
             public int CompareTo(IListener other)
@@ -352,14 +352,14 @@ namespace Xky.Socket.Engine.Client.Transports
 
             private void OnSuccess()
             {
-                Emit(EVENT_SUCCESS);
+                Emit(EventSuccess);
             }
 
             private void OnData(string data)
             {
                 var log = LogManager.GetLogger(Global.CallerName());
                 log.Info("OnData string = " + data);
-                Emit(EVENT_DATA, data);
+                Emit(EventData, data);
                 OnSuccess();
             }
 
@@ -367,23 +367,23 @@ namespace Xky.Socket.Engine.Client.Transports
             {
                 var log = LogManager.GetLogger(Global.CallerName());
                 log.Info("OnData byte[] =" + Encoding.UTF8.GetString(data));
-                Emit(EVENT_DATA, data);
+                Emit(EventData, data);
                 OnSuccess();
             }
 
             private void OnError(Exception err)
             {
-                Emit(EVENT_ERROR, err);
+                Emit(EventError, err);
             }
 
             private void OnRequestHeaders(Dictionary<string, string> headers)
             {
-                Emit(EVENT_REQUEST_HEADERS, headers);
+                Emit(EventRequestHeaders, headers);
             }
 
             private void OnResponseHeaders(Dictionary<string, string> headers)
             {
-                Emit(EVENT_RESPONSE_HEADERS, headers);
+                Emit(EventResponseHeaders, headers);
             }
 
             public class RequestOptions

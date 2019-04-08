@@ -30,6 +30,14 @@ namespace Xky.Socket.Client
         public static readonly string EVENT_RECONNECT_FAILED = "reconnect_failed";
         public static readonly string EVENT_RECONNECT_ATTEMPT = "reconnect_attempt";
         public static readonly string EVENT_RECONNECTING = "reconnecting";
+        private readonly bool AutoConnect;
+        private readonly Parser.Parser.Decoder Decoder;
+        private readonly Parser.Parser.Encoder Encoder;
+        private readonly HashSet<Socket> OpeningSockets;
+        private readonly Xky.Socket.Engine.Client.Socket.Options Opts;
+        private readonly List<Packet> PacketBuffer;
+        private readonly ConcurrentQueue<On.IHandle> Subs;
+        private readonly Uri Uri;
 
         private bool _reconnection;
         private int _reconnectionAttempts;
@@ -37,9 +45,6 @@ namespace Xky.Socket.Client
         private long _reconnectionDelayMax;
         private long _timeout;
         private int Attempts;
-        private readonly bool AutoConnect;
-        private readonly Parser.Parser.Decoder Decoder;
-        private readonly Parser.Parser.Encoder Encoder;
 
         private bool Encoding;
         /*package*/
@@ -50,18 +55,13 @@ namespace Xky.Socket.Client
          * This ImmutableDictionary can be accessed from outside of EventThread.
          */
         private ImmutableDictionary<string, Socket> Nsps;
-        private readonly HashSet<Socket> OpeningSockets;
         private bool OpenReconnect;
-        private readonly Xky.Socket.Engine.Client.Socket.Options Opts;
-        private readonly List<Packet> PacketBuffer;
 
 
         /*package*/
         public ReadyStateEnum ReadyState = ReadyStateEnum.CLOSED;
         private bool Reconnecting;
         private bool SkipReconnect;
-        private readonly ConcurrentQueue<On.IHandle> Subs;
-        private readonly Uri Uri;
 
         public Manager() : this(null, null)
         {
@@ -190,13 +190,13 @@ namespace Xky.Socket.Client
             OpeningSockets.Add(Socket(Uri.AbsolutePath));
             SkipReconnect = false;
 
-            var openSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_OPEN, new ListenerImpl(() =>
+            var openSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventOpen, new ListenerImpl(() =>
             {
                 OnOpen();
                 if (fn != null) fn.Call(null);
             }));
 
-            var errorSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_ERROR, new ListenerImpl(
+            var errorSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventError, new ListenerImpl(
                 data =>
                 {
                     log.Info("connect_error");
@@ -206,8 +206,7 @@ namespace Xky.Socket.Client
 
                     if (fn != null)
                     {
-                        var err = new SocketIOException("Connection error",
-                            data is Exception ? (Exception) data : null);
+                        var err = new Exception("Connection error");
                         fn.Call(err);
                     }
 
@@ -226,7 +225,7 @@ namespace Xky.Socket.Client
                     log2.Info(string.Format("connect attempt timed out after {0}", timeout));
                     openSub.Destroy();
                     socket.Close();
-                    socket.Emit(Xky.Socket.Engine.Client.Socket.EVENT_ERROR, new SocketIOException("timeout"));
+                    socket.Emit(Xky.Socket.Engine.Client.Socket.EventError, new Exception("TimeOout"));
                     EmitAll(EVENT_CONNECT_TIMEOUT, timeout);
                     log2.Info("Manager Open finish");
                 }, timeout);
@@ -254,7 +253,7 @@ namespace Xky.Socket.Client
 
             var socket = EngineSocket;
 
-            var sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_DATA, new ListenerImpl(data =>
+            var sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventData, new ListenerImpl(data =>
             {
                 if (data is string)
                     OnData((string) data);
@@ -266,11 +265,11 @@ namespace Xky.Socket.Client
                 new ListenerImpl(data => { OnDecoded((Packet) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_ERROR,
+            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventError,
                 new ListenerImpl(data => { OnError((Exception) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EVENT_CLOSE,
+            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventClose,
                 new ListenerImpl(data => { OnClose((string) data); }));
             Subs.Enqueue(sub);
         }

@@ -20,12 +20,12 @@ namespace Xky.Socket.Engine.ComponentEmitter
         }
 
         /// <summary>
-        ///     Executes each of listeners with the given args.
+        ///     Executes each of listeners with the given arg.
         /// </summary>
         /// <param name="eventString">an event name.</param>
-        /// <param name="args"></param>
+        /// <param name="arg"></param>
         /// <returns>a reference to this object.</returns>
-        public virtual Emitter Emit(string eventString, params object[] args)
+        public virtual Emitter Emit(string eventString, params object[] arg)
         {
             //var log = LogManager.GetLogger(Global.CallerName());
             //log.Info("Emitter emit event = " + eventString);
@@ -34,7 +34,7 @@ namespace Xky.Socket.Engine.ComponentEmitter
                 {
                     //handle in try/catch the emit
                     var callbacksLocal = callbacks[eventString];
-                    foreach (var fn in callbacksLocal) fn.Call(args);
+                    foreach (var fn in callbacksLocal) fn.Call(arg);
                 }
                 catch
                 {

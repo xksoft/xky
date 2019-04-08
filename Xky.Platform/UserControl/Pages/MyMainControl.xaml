@@ -190,7 +190,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <!-- <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/> -->
-                <local:MyTextBox x:Name="LicenseKey" Margin="15" TextBoxCornerRadius="5"
+                <local:MyTextBox x:Name="SearchText" Margin="15" TextBoxCornerRadius="5"
                                  TextBoxBackground="{StaticResource  BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="搜索在线设备"
                                  WindowChrome.IsHitTestVisibleInChrome="True" />
@@ -199,7 +199,8 @@
 
             <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"
                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True"
-                     SelectionChanged="DeviceListBox_OnSelectionChanged">
+                     SelectionChanged="DeviceListBox_OnSelectionChanged"
+                     ScrollViewer.ScrollChanged="DeviceListBox_OnScrollChanged">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
@@ -303,16 +304,16 @@
                                     <local:MyTagLabel
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3" >
                                     <local:MyTagLabel
                                         TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Model}"
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
-                                    <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.GetHardwareDesc}"
-                                        Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
-
+                                    <StackPanel  Orientation="Vertical" VerticalAlignment="Center">
+                                        <ProgressBar Maximum="100" Value="80" Margin="2" />
+                                        <ProgressBar Maximum="100" Value="20" Margin="2"/>
+                                        <ProgressBar Maximum="100" Value="40" Margin="2"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 

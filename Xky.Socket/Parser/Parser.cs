@@ -158,9 +158,7 @@ namespace Xky.Socket.Parser
             public void Add(byte[] obj)
             {
                 if (Reconstructor == null)
-                {
-                    throw new SocketIOException("got binary data when not reconstructing a packet");
-                }
+                    throw new Exception("got binary data when not reconstructing a packet");
 
                 var packet = Reconstructor.TakeBinaryData(obj);
                 if (packet != null)
