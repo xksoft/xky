@@ -71,6 +71,9 @@
     <Compile Include="UserControl\MyModuleItem.xaml.cs">
       <DependentUpon>MyModuleItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\MyProgressbar.xaml.cs">
+      <DependentUpon>MyProgressbar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\MyTagItem.xaml.cs">
       <DependentUpon>MyTagItem.xaml</DependentUpon>
     </Compile>
@@ -95,9 +98,6 @@
     <Compile Include="UserControl\Pages\MyTask.xaml.cs">
       <DependentUpon>MyTask.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Style\ProgressBar.xaml.cs">
-      <DependentUpon>ProgressBar.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MyModuleItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\MyProgressbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,10 +151,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Pages\MyTask.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\ProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -42,9 +42,8 @@
                                               ButtonBackground2="{StaticResource BlueLine}" ButtonText="添加任务"
                                               Width="102" Height="32" />
 
-                        <ProgressBar Width="200" Value="50" Style="{StaticResource ProgressBar}" Background="{StaticResource BackgroundColor4}"  Foreground="{StaticResource BackgroundColor1}">
-                        </ProgressBar>
-                       
+                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="100" />
+
                     </StackPanel>
 
                 </StackPanel>
