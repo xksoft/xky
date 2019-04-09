@@ -119,24 +119,104 @@ namespace Xky.Core
             {
                 var jsonResult = (JObject) result;
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
+                {
                     response = new Response
                     {
                         Result = false,
                         Message = "通讯结果无法解析",
                         Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
                     };
-                var resultJson =
-                    JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
-                response = new Response
+                }
+                else
                 {
-                    Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                    Message = resultJson["msg"]?.ToString(),
-                    Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
-                };
+                    var resultJson =
+                        JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+                    response = new Response
+                    {
+                        Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                        Message = resultJson["msg"]?.ToString(),
+                        Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                    };
+                }
+
                 //设置跳出循环条件
                 count = 0;
             }, api, data);
 
+
+            while (count > 0)
+            {
+                count -= 1;
+                Thread.Sleep(1);
+            }
+
+            return response;
+        }
+
+        public static Response CallNodeApi(string serial, string sn, string api, JArray args)
+        {
+            var node = Nodes.ToList().Find(p => p.Serial == serial);
+            if (node == null)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = "节点服务器不存在",
+                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器不存在"}
+                };
+            }
+
+            if (node.ConnectStatus > 0)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = "节点服务器未连接",
+                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器未连接"}
+                };
+            }
+
+
+            var response = new Response
+            {
+                Result = false,
+                Message = "调用接口超时",
+                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+            };
+            var count = 10000;
+            node.NodeSocket.Emit("call",
+                result =>
+                {
+                    var resultJson = (JObject) result;
+                    if (resultJson == null)
+                    {
+                        response = new Response
+                        {
+                            Result = false,
+                            Message = "通讯结果无法解析",
+                            Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
+                        };
+                    }
+                    else
+                    {
+                        response = new Response
+                        {
+                            Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                            Message = resultJson["msg"]?.ToString(),
+                            Json = JsonConvert.DeserializeObject<JObject>(
+                                Rsa.DecrypteRsa(resultJson["encrypt"].ToString()))
+                        };
+                    }
+
+                    //设置跳出循环条件
+                    count = 0;
+                }, new JObject
+                {
+                    ["sn"] = sn,
+                    ["session"] = License.Session,
+                    ["api"] = api,
+                    ["args"] = args
+                });
 
             while (count > 0)
             {
