@@ -51,10 +51,17 @@ namespace Xky.Platform.UserControl
             get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
+
+       
         public new Brush Foreground
         {
-            get { return (Brush)GetValue(ForegroundProperty); }
-            set { SetValue(ForegroundProperty, value); }
+            get {
+                return (Brush)GetValue(ForegroundProperty);
+            }
+            set {
+                SetValue(ForegroundProperty, value);
+               
+            }
         }
 
         private static readonly new DependencyProperty BorderThicknessProperty = DependencyProperty.Register("BorderThickness", typeof(int), typeof(MyProgressbar), new PropertyMetadata(0));
@@ -108,7 +115,9 @@ namespace Xky.Platform.UserControl
             // may want your template to have variable bits like border width etc which you'd use
             // TemplateBinding for
             ProgressBarWidth = Math.Min((Value / (Maximum + Minimum) * this.ActualWidth) - 2, this.ActualWidth - 2);
-
+            if (Value/Maximum>=0.8) {
+                Foreground = Brushes.Red;
+            }
 
         }
     }
