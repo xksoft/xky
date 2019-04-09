@@ -42,7 +42,7 @@
                                               ButtonBackground2="{StaticResource BlueLine}" ButtonText="添加任务"
                                               Width="102" Height="32" />
 
-                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="100" Background="Green" Foreground="#000"/>
+                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="289" Background="Gray"  Foreground="Red"></UserControl:MyProgressbar>
 
                     </StackPanel>
 
