@@ -540,9 +540,19 @@ namespace Xky.Core
                         var device = Devices.ToList().Find(p => p.Sn == sn.ToString());
                         if (device != null)
                         {
-                            device.CpuUseage = Convert.ToInt32(((JObject) json)["cpu"].ToString());
-                            device.MemoryUseage = Convert.ToInt32(((JObject) json)["memory"].ToString());
-                            device.DiskUseage = Convert.ToInt32(((JObject) json)["disk"].ToString());
+                            try
+                            {
+                                var model = JsonConvert.DeserializeObject<JObject>(json.ToString());
+                                device.CpuUseage = Convert.ToInt32(model["cpu"].ToString());
+                                device.MemoryUseage = Convert.ToInt32(model["memory"].ToString());
+                                device.DiskUseage = Convert.ToInt32(model["disk"].ToString());
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                              
+                            }
+                   
                         }
                     }));
                     node.NodeSocket.On("img",
