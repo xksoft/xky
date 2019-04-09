@@ -39,7 +39,7 @@
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
+            <VirtualizingStackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
                         Margin="0,0,1,0">
 
                 <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
@@ -161,41 +161,41 @@
                         </Style>
                     </Button.Style>
                 </Button>
-            </StackPanel>
+            </VirtualizingStackPanel>
         </Grid>
         <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
                 Grid.Column="0" Panel.ZIndex="999" />
 
         <!-- Toast -->
-        <StackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
+        <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
                     Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998"
                     IsHitTestVisible="False">
-            <StackPanel.Effect>
+            <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
                                   Opacity="0.35" />
-            </StackPanel.Effect>
+            </VirtualizingStackPanel.Effect>
             <Grid>
                 <Border CornerRadius="8" Background="{StaticResource  BackgroundColor1}" />
                 <TextBlock x:Name="ToastText" Margin="10" Foreground="White" />
             </Grid>
-        </StackPanel>
+        </VirtualizingStackPanel>
 
         <!-- Status -->
-        <StackPanel x:Name="StatusPanel" Grid.Row="0" Margin="10,0,0,10" Grid.RowSpan="2" Grid.Column="0"
+        <VirtualizingStackPanel x:Name="StatusPanel" Grid.Row="0" Margin="10,0,0,10" Grid.RowSpan="2" Grid.Column="0"
                     Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998"
                     IsHitTestVisible="False">
-            <StackPanel.Effect>
+            <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
                                   Opacity="0.35" />
-            </StackPanel.Effect>
+            </VirtualizingStackPanel.Effect>
             <Border CornerRadius="15" Background="{StaticResource  BackgroundColor1}">
-                <StackPanel Orientation="Horizontal" Margin="8">
+                <VirtualizingStackPanel Orientation="Horizontal" Margin="8">
                     <Ellipse x:Name="CoreStatus" Fill="{StaticResource OffLine}" Width="8" Height="8"
                              IsHitTestVisible="False" />
                     <TextBlock Margin="8,0,0,0" Foreground="White" x:Name="StatusText" />
-                </StackPanel>
+                </VirtualizingStackPanel>
             </Border>
-        </StackPanel>
+        </VirtualizingStackPanel>
 
         <!-- 内容主题 -->
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" />
@@ -204,7 +204,7 @@
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor2}" Grid.Row="0" Grid.RowSpan="2">
 
 
-            <StackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
+            <VirtualizingStackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
                 <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
                                        ImgSource="Resources/Icon/logo.png" PageName="Logo"
                                        IsDarkStyle="True" />
@@ -222,8 +222,15 @@
                 <userControl:MyTabItem ToolTip="设置" ImgSource="Resources/Icon/setting.png" PageName="Setting"
                                        IsDarkStyle="True"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
-            </StackPanel>
+            </VirtualizingStackPanel>
         </Grid>
+
+
+        <!-- 弹窗内容 -->
+        <Border x:Name="MessageContentBorader" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Background="#81000000" Panel.ZIndex="9999" Visibility="Collapsed">
+            <ContentPresenter x:Name="MessageContent" />
+        </Border>
+  
     </Grid>
 
 </Window>

@@ -71,6 +71,9 @@ namespace Xky.Platform
 
             //启动状态定时器
             new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
+
+//            var msg = new MyMessageBox {Height = 100};
+//            Common.ShowMessageControl(msg);
         }
 
         private void MainWindow_Elapsed(object sender, ElapsedEventArgs e)

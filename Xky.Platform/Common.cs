@@ -3,6 +3,7 @@ using System.IO;
 using System.Media;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -119,6 +120,24 @@ namespace Xky.Platform
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public static void ShowMessageControl(System.Windows.Controls.UserControl myControl)
+        {
+
+                MainWindow.MessageContent.Content = myControl;
+                MainWindow.MessageContentBorader.Visibility = Visibility.Visible;
+                MessageBox.Show("sdf");
+
+        }
+
+        public static void CloseMessageControl()
+        {
+            UiAction(() =>
+            {
+                MainWindow.MessageContent.Content = null;
+                MainWindow.MessageContentBorader.Visibility = Visibility.Collapsed;
+            });
         }
 
         public static void SaveJson(string name, JObject json)

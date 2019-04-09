@@ -80,6 +80,9 @@
     <Compile Include="UserControl\MyTagLabel.xaml.cs">
       <DependentUpon>MyTagLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\MyMessageBox.xaml.cs">
+      <DependentUpon>MyMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Pages\MyLogin.xaml.cs">
       <DependentUpon>MyLogin.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MyTagLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\MyMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
