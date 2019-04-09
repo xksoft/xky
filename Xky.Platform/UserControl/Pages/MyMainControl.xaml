@@ -14,7 +14,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="7*" />
+         
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor4}">
             <Grid.RowDefinitions>
@@ -310,9 +310,9 @@
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <StackPanel  Orientation="Vertical" VerticalAlignment="Center">
-                                        <ProgressBar Maximum="100" Value="80" Margin="2" />
-                                        <ProgressBar Maximum="100" Value="20" Margin="2"/>
-                                        <ProgressBar Maximum="100" Value="40" Margin="2"/>
+                                        <ProgressBar Maximum="100" Value="80" Margin="2" Height="5"/>
+                                        <ProgressBar Maximum="100" Value="20" Margin="2"  Height="5"/>
+                                        <ProgressBar Maximum="100" Value="40" Margin="2"  Height="5"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
@@ -517,7 +517,7 @@
             </Viewbox>
 
         </Grid>
-        <Grid Grid.Column="3" Background="#EFF2F5">
+        <Grid Grid.Column="3" Background="#EFF2F5" Visibility="Hidden">
             <!--模块列表开始-->
             <Grid>
                 <Grid.RowDefinitions>

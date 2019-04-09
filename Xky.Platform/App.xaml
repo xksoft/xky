@@ -20,6 +20,7 @@
                         <ResourceDictionary Source="UserControl/Style/ToggleButton.xaml" />
                         <ResourceDictionary Source="UserControl/Style/ComboBox.xaml" />
                         <ResourceDictionary Source="UserControl/Style/DataGrid.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ProgressBar.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
