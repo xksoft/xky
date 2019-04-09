@@ -21,6 +21,9 @@ namespace Xky.Core.Model
         private string _product;
         private ImageSource _screenShot;
         private string _sn;
+        private int _cpuUseage;
+        private int _memoryUseage;
+        private int _diskUseage;
 
         //加载时序
         public long LoadTick { get; set; }
@@ -279,6 +282,46 @@ namespace Xky.Core.Model
             {
                 _screenShot = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ScreenShot"));
+            }
+        }
+
+
+        public int CpuUseage
+        {
+            get => _cpuUseage;
+            set
+            {
+                if (_cpuUseage != value)
+                {
+                    _cpuUseage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CpuUseage"));
+                }
+            }
+        }
+
+        public int MemoryUseage
+        {
+            get => _memoryUseage;
+            set
+            {
+                if (_memoryUseage != value)
+                {
+                    _memoryUseage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MemoryUseage"));
+                }
+            }
+        }
+
+        public int DiskUseage
+        {
+            get => _diskUseage;
+            set
+            {
+                if (_diskUseage != value)
+                {
+                    _diskUseage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DiskUseage"));
+                }
             }
         }
 

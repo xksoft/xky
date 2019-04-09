@@ -535,7 +535,16 @@ namespace Xky.Core
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
-                    node.NodeSocket.On("tick", new MyListenerImpl((sn, json) => { Console.WriteLine(json); }));
+                    node.NodeSocket.On("tick", new MyListenerImpl((sn, json) =>
+                    {
+                        var device = Devices.ToList().Find(p => p.Sn == sn.ToString());
+                        if (device != null)
+                        {
+                            device.CpuUseage = Convert.ToInt32(((JObject) json)["cpu"].ToString());
+                            device.MemoryUseage = Convert.ToInt32(((JObject) json)["memory"].ToString());
+                            device.DiskUseage = Convert.ToInt32(((JObject) json)["disk"].ToString());
+                        }
+                    }));
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>
                         {
