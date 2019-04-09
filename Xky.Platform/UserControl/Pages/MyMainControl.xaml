@@ -14,7 +14,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10*" />
-         
+
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor4}">
             <Grid.RowDefinitions>
@@ -198,7 +198,9 @@
             </Grid>
 
             <ListBox x:Name="DeviceListBox" Margin="0,0,0,1" Grid.Row="1" HorizontalContentAlignment="Stretch"
-                     ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True"
+                     ScrollViewer.CanContentScroll="True"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.ScrollUnit="Item"
                      SelectionChanged="DeviceListBox_OnSelectionChanged"
                      ScrollViewer.ScrollChanged="DeviceListBox_OnScrollChanged">
                 <ListBox.ContextMenu>
@@ -242,14 +244,14 @@
                                 <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="say hello" Click="MenuItem_OnClick"/>
+                        <MenuItem Header="say hello" Click="MenuItem_OnClick" />
 
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid x:Name="MyBorder" Background="{StaticResource  BackgroundColor3}" Height="120" Margin="0"
-                              Cursor="Hand">
+                              Cursor="Hand" FocusVisualStyle="{x:Null}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
                                 <ColumnDefinition Width="*" />
@@ -305,16 +307,15 @@
                                     <local:MyTagLabel
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                     <local:MyTagLabel
                                         TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Model}"
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
-                                    <StackPanel  Orientation="Vertical" VerticalAlignment="Center">
-                                        <local:MyProgressbar Maximum="100" Value="80" Margin="2" Height="5" Width="100" Background="#868686"/>
-                                        <local:MyProgressbar Maximum="100" Value="20" Margin="2"  Height="5" Width="100" Background="#868686"/>
-                                        <local:MyProgressbar Maximum="100" Value="40" Margin="2"  Height="5" Width="100" Background="#868686"/>
-
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                        <ProgressBar Maximum="100" Value="80" Margin="2" Height="5" />
+                                        <ProgressBar Maximum="100" Value="20" Margin="2" Height="5" />
+                                        <ProgressBar Maximum="100" Value="40" Margin="2" Height="5" />
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
@@ -363,7 +364,7 @@
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel />
+                        <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
@@ -383,7 +384,7 @@
                             HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
 
-                            <StackPanel
+                            <VirtualizingStackPanel
                                 IsItemsHost="True" HorizontalAlignment="Stretch" Orientation="Vertical"
                                 VerticalAlignment="Top" />
 

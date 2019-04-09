@@ -31,7 +31,13 @@ namespace Xky.Platform.UserControl.Pages
                 where d.Name.Contains(SearchText.TextBox1.Text)
                 orderby d.Name
                 select d;
-            DeviceListBox.ItemsSource = source;
+            var list = source.ToList();
+            for (int i = 0; i < 100; i++)
+            {
+                list.AddRange(source.ToList());
+            }
+ 
+            DeviceListBox.ItemsSource = list;
         }
 
 
