@@ -166,7 +166,7 @@ namespace Xky.Core
                 };
             }
 
-            if (node.ConnectStatus > 0)
+            if (node.ConnectStatus == 0)
             {
                 return new Response
                 {
@@ -203,8 +203,7 @@ namespace Xky.Core
                         {
                             Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
                             Message = resultJson["msg"]?.ToString(),
-                            Json = JsonConvert.DeserializeObject<JObject>(
-                                Rsa.DecrypteRsa(resultJson["encrypt"].ToString()))
+                            Json = resultJson
                         };
                     }
 

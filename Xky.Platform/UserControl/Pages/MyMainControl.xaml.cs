@@ -165,5 +165,20 @@ namespace Xky.Platform.UserControl.Pages
             Console.WriteLine("Visible Item Start Index:{0}", e.VerticalOffset);
             Console.WriteLine("Visible Item Count:{0}", e.ViewportHeight);
         }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("1");
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                Console.WriteLine("2");
+                Client.StartAction(() =>
+                {
+                    var response=Client.CallNodeApi(device.NodeSerial, device.Sn, "toast",
+                        new JArray("hello world " + DateTime.Now, 1));
+                    Console.WriteLine(response.Json);
+                });
+            }
+        }
     }
 }
