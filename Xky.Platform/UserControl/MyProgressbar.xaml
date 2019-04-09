@@ -9,19 +9,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <Border Background="White">
-            <Border BorderBrush="Gray" BorderThickness="1">
+        <Border Background="Transparent">
+            <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
                 <Grid>
                     <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFE5E5E5" Offset="0" />
-                            <GradientStop Color="White" Offset="1" />
-                        </LinearGradientBrush>
+                        <SolidColorBrush Color="{Binding Background}"></SolidColorBrush>
                     </Grid.Background>
                     <Grid Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left">
                         <Grid.Background>
+                            <!--<SolidColorBrush Color="{Binding Foreground}"></SolidColorBrush>-->
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                                <GradientStop Color="#FFCBFFD0" Offset="0" />
+                                <GradientStop Color="{Binding Foreground}" Offset="0.0" />
                                 <GradientStop Color="#FF62EF73" Offset="1" />
                                 <GradientStop Color="#FFAEE56D" Offset="0.39" />
                             </LinearGradientBrush>

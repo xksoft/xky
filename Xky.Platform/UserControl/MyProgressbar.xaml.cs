@@ -39,7 +39,30 @@ namespace Xky.Platform.UserControl
             set { SetValue(MaximumProperty, value); }
         }
 
+        private static readonly new DependencyProperty BorderBrushProperty = DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Black));
+        public new Brush BorderBrush
+        {
+            get { return (Brush)GetValue(BorderBrushProperty); }
+            set { SetValue(BorderBrushProperty, value); }
+        }
 
+         public new  Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+        public new Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+
+        private static readonly new DependencyProperty BorderThicknessProperty = DependencyProperty.Register("BorderThickness", typeof(int), typeof(MyProgressbar), new PropertyMetadata(0));
+        public new int BorderThickness
+        {
+            get { return (int)GetValue(BorderThicknessProperty); }
+            set { SetValue(BorderThicknessProperty, value); }
+        }
         private static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(MyProgressbar), new PropertyMetadata(0d, OnMinimumChanged));
         public double Minimum
         {
