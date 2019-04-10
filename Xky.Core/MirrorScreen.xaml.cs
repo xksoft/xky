@@ -32,6 +32,12 @@ namespace Xky.Core
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
         }
 
+        private void MirrorScreen_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _decoder = new H264Decoder();
+            _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
+        }
+
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
@@ -176,11 +182,6 @@ namespace Xky.Core
 
         public void Connect(Device model)
         {
-            if (_decoder == null)
-            {
-                _decoder = new H264Decoder();
-                _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
-            }
 
             if (_device != null && model.Sn != _device.Sn)
                 Dispatcher.Invoke(() =>
@@ -514,5 +515,7 @@ namespace Xky.Core
         }
 
         #endregion
+
+
     }
 }

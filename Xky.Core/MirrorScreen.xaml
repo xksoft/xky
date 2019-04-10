@@ -8,7 +8,7 @@
              RenderOptions.BitmapScalingMode="LowQuality"
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Display"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="MirrorScreen_OnLoaded">
     <Grid>
         <TextBox TextWrapping="NoWrap" MaxLength="1" Height="30" Width="1" HorizontalAlignment="Left"
                  VerticalAlignment="Bottom" Margin="10,0,0,10"
