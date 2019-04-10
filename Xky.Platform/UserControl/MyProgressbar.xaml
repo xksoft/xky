@@ -13,7 +13,7 @@
             <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
                 <Grid>
 
-                    <Rectangle  Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=UserControl}}"></Rectangle>
+                    <Rectangle  Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" Fill="{Binding FForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"></Rectangle>
                     <!--<Grid HorizontalAlignment="Left" Background="{Binding aaa}">-->
                     <!--<Grid Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" >
                         <Grid.Background>

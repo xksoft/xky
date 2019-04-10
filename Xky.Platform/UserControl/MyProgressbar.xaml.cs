@@ -64,6 +64,20 @@ namespace Xky.Platform.UserControl
             }
         }
 
+        private static readonly DependencyProperty DangergroundProperty = DependencyProperty.Register("Dangerground", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Red));
+        public Brush Dangerground
+        {
+            get { return (Brush)GetValue(DangergroundProperty); }
+            set { SetValue(DangergroundProperty, value); }
+        }
+
+        private static readonly  DependencyProperty FForegroundProperty = DependencyProperty.Register("FForeground", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.White));
+        public  Brush FForeground
+        {
+            get { return (Brush)GetValue(FForegroundProperty); }
+            set { SetValue(FForegroundProperty, value); }
+        }
+
         private static readonly new DependencyProperty BorderThicknessProperty = DependencyProperty.Register("BorderThickness", typeof(int), typeof(MyProgressbar), new PropertyMetadata(0));
         public new int BorderThickness
         {
@@ -82,6 +96,13 @@ namespace Xky.Platform.UserControl
         {
             get { return (double)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
+        }
+
+        private static readonly DependencyProperty DangerValueProperty = DependencyProperty.Register("DangerValue", typeof(double), typeof(MyProgressbar), new PropertyMetadata(50d, OnValueChanged));
+        public double DangerValue
+        {
+            get { return (double)GetValue(DangerValueProperty); }
+            set { SetValue(DangerValueProperty, value); }
         }
 
 
@@ -115,8 +136,13 @@ namespace Xky.Platform.UserControl
             // may want your template to have variable bits like border width etc which you'd use
             // TemplateBinding for
             ProgressBarWidth = Math.Min((Value / (Maximum + Minimum) * this.ActualWidth) - 2, this.ActualWidth - 2);
-            if (Value/Maximum>=0.5) {
-               // Foreground = Brushes.Red;
+            if (Value / Maximum >=DangerValue)
+            {
+                 FForeground = Dangerground;
+            }
+            else {
+
+                FForeground = Foreground;
             }
 
         }
