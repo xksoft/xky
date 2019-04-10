@@ -396,7 +396,8 @@ namespace Xky.Core
         {
             _lastSearchKeyword = keyword;
             var list = (from d in Devices
-                where _lastSearchKeyword == null || d.Sn.Contains(keyword) || d.Name.Contains(keyword) ||
+                where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
+                      d.Name.Contains(keyword) ||
                       d.Description.Contains(keyword)
                 orderby d.Name
                 select d).ToList();
@@ -706,7 +707,8 @@ namespace Xky.Core
         /// <param name="isRemove"></param>
         private static void ParsePanelDevice(Device device, bool isRemove)
         {
-            if (_lastSearchKeyword == null || device.Sn.Contains(_lastSearchKeyword) ||
+            if (_lastSearchKeyword == null || device.Id.ToString().Contains(_lastSearchKeyword) ||
+                device.Sn.Contains(_lastSearchKeyword) ||
                 device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword))
             {
                 var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
