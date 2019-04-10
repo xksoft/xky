@@ -40,7 +40,7 @@
 
 
             <VirtualizingStackPanel Orientation="Horizontal" VerticalAlignment="Center" FlowDirection="RightToLeft"
-                        Margin="0,0,1,0">
+                                    Margin="0,0,1,0">
 
                 <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
                         Click="Btn_close" WindowChrome.IsHitTestVisibleInChrome="True">
@@ -167,9 +167,11 @@
                 Grid.Column="0" Panel.ZIndex="999" />
 
         <!-- Toast -->
-        <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0" Opacity="0"
-                    Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" ZIndex="998"
-                    IsHitTestVisible="False">
+        <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0"
+                                Opacity="0"
+                                Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                ZIndex="998"
+                                IsHitTestVisible="False">
             <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
                                   Opacity="0.35" />
@@ -182,8 +184,8 @@
 
         <!-- Status -->
         <VirtualizingStackPanel x:Name="StatusPanel" Grid.Row="0" Margin="10,0,0,10" Grid.RowSpan="2" Grid.Column="0"
-                    Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998"
-                    IsHitTestVisible="False">
+                                Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" ZIndex="998"
+                                IsHitTestVisible="False">
             <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
                                   Opacity="0.35" />
@@ -230,10 +232,16 @@
 
 
         <!-- 弹窗内容 -->
-        <Border x:Name="MessageContentBorader" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Background="#81000000" Panel.ZIndex="9999" Visibility="Collapsed">
-            <ContentPresenter x:Name="MessageContent" />
+        <Border x:Name="MessageContentBorader" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
+                Background="#81000000" Panel.ZIndex="9999" Visibility="Collapsed">
+            <ContentPresenter x:Name="MessageContent">
+                <ContentPresenter.Effect>
+                    <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
+                                      Opacity="0.35" />
+                </ContentPresenter.Effect>
+            </ContentPresenter>
         </Border>
-  
+
     </Grid>
 
 </Window>
