@@ -550,9 +550,7 @@ namespace Xky.Core
                             catch (Exception e)
                             {
                                 Console.WriteLine(e);
-                              
                             }
-                   
                         }
                     }));
                     node.NodeSocket.On("img",
@@ -631,9 +629,10 @@ namespace Xky.Core
                         Sn = json["t_sn"]?.ToString(),
                         Cpus = (int) json["t_cpus"],
                         Memory = (int) json["t_memory"],
-                        LoadTick = loadtick
+                        LoadTick = loadtick,
                     };
-
+                    //初始化脚本引擎
+                    device.ScriptEngine = new Script(device);
                     StartAction(() =>
                     {
                         try

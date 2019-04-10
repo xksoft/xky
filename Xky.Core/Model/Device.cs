@@ -325,6 +325,8 @@ namespace Xky.Core.Model
             }
         }
 
+        public Script ScriptEngine { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
