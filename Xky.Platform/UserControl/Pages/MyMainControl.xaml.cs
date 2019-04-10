@@ -153,11 +153,6 @@ namespace Xky.Platform.UserControl.Pages
             });
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            var response = Client.CallApi("get_user", new JObject());
-            Console.WriteLine(response.Json);
-        }
 
         private void DeviceListBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

@@ -29,7 +29,7 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
-            <Button Click="ButtonBase_OnClick">Test</Button>
+
             <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15"
                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
@@ -308,14 +308,22 @@
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Model}"
-                                        Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="2" Width="50" Background="#868686" Foreground="#17a032" Dangerground="#e30000" DangerValue="0.6"/>
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="2" Width="50" Background="#868686"  Foreground="#17a032"  Dangerground="#e30000" DangerValue="0.6"/>
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="2" Width="50" Background="#868686"  Foreground="#17a032"  Dangerground="#e30000" DangerValue="0.8"/>
+                                        <local:MyProgressbar Maximum="100"
+                                                             Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}"
+                                                             Margin="2" Height="5" Width="150" Background="#868686"
+                                                             Foreground="#17a032" Dangerground="#e30000"
+                                                             DangerValue="0.7" />
+                                        <local:MyProgressbar Maximum="100"
+                                                             Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}"
+                                                             Margin="2" Height="5" Width="150" Background="#868686"
+                                                             Foreground="#17a032" Dangerground="#e30000"
+                                                             DangerValue="0.7" />
+                                        <local:MyProgressbar Maximum="100"
+                                                             Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}"
+                                                             Margin="2" Height="5" Width="150" Background="#868686"
+                                                             Foreground="#17a032" Dangerground="#e30000"
+                                                             DangerValue="0.8" />
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">

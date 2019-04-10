@@ -537,6 +537,7 @@ namespace Xky.Core
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
                     node.NodeSocket.On("tick", new MyListenerImpl((sn, json) =>
                     {
+                        Console.WriteLine(json);
                         var device = Devices.ToList().Find(p => p.Sn == sn.ToString());
                         if (device != null)
                         {
