@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Xky.Platform.UserControl
 {
@@ -7,12 +8,24 @@ namespace Xky.Platform.UserControl
     /// </summary>
     public partial class MyMessageBox : System.Windows.Controls.UserControl
     {
-        public MyMessageBox()
+        public MyMessageBox(MessageBoxButton button)
         {
             InitializeComponent();
             BtnOk.Button1.Click += BtnOk_Click;
             BtnYes.Button1.Click += BtnYes_Click;
             BtnNo.Button1.Click += BtnNo_Click;
+            switch (button)
+            {
+                case MessageBoxButton.OK:
+                    BtnYes.Visibility = Visibility.Collapsed;
+                    BtnNo.Visibility = Visibility.Collapsed;
+                    break;
+                case MessageBoxButton.YesNo:
+                    BtnOk.Visibility = Visibility.Collapsed;
+                    break;
+            }
+
+            DataContext = this;
         }
 
         private void BtnNo_Click(object sender, RoutedEventArgs e)
@@ -34,5 +47,15 @@ namespace Xky.Platform.UserControl
         }
 
         public MessageBoxResult Result = MessageBoxResult.None;
+
+        public string MessageText
+        {
+            get => (string)GetValue(MessageTextProperty);
+            set => SetValue(MessageTextProperty, value);
+        }
+
+        public static readonly DependencyProperty MessageTextProperty =
+            DependencyProperty.Register("MessageText", typeof(string), typeof(MyMessageBox),
+                new PropertyMetadata("hello world"));
     }
 }

@@ -2,9 +2,11 @@
 using System.IO;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
@@ -122,22 +124,32 @@ namespace Xky.Platform
             }
         }
 
+        private static bool _isShowMessage;
+
         public static void ShowMessageControl(System.Windows.Controls.UserControl myControl)
         {
-
-                MainWindow.MessageContent.Content = myControl;
-                MainWindow.MessageContentBorader.Visibility = Visibility.Visible;
-                MessageBox.Show("sdf");
-
+            MainWindow.MessageContent.Content = myControl;
+            MainWindow.MessageContentBorader.Visibility = Visibility.Visible;
+            _isShowMessage = true;
+            //这里是用于堵塞ui达到showdialog的效果
+            var frame = new DispatcherFrame();
+            new Thread(() =>
+            {
+                while (_isShowMessage)
+                {
+                    Thread.Sleep(2);
+                }
+                frame.Continue = false;
+            }).Start();
+            Dispatcher.PushFrame(frame);
         }
+
 
         public static void CloseMessageControl()
         {
-            UiAction(() =>
-            {
-                MainWindow.MessageContent.Content = null;
-                MainWindow.MessageContentBorader.Visibility = Visibility.Collapsed;
-            });
+            MainWindow.MessageContent.Content = null;
+            MainWindow.MessageContentBorader.Visibility = Visibility.Collapsed;
+            _isShowMessage = false;
         }
 
         public static void SaveJson(string name, JObject json)
