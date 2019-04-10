@@ -27,17 +27,17 @@ namespace Xky.Platform.UserControl.Pages
 
         private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var source = from d in Client.Devices
-                where d.Name.Contains(SearchText.TextBox1.Text)
-                orderby d.Name
-                select d;
-            var list = source.ToList();
-            for (int i = 0; i < 100; i++)
+            Client.SearchDevices(SearchText.TextBox1.Text);
+            if (!string.IsNullOrEmpty(SearchText.TextBox1.Text))
             {
-                list.AddRange(source.ToList());
+                SearchResultLabel.Visibility = Visibility.Visible;
+                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count>0 ? new SolidColorBrush(Colors.Lime) : new SolidColorBrush(Color.FromRgb(254,65,53));
+                SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
             }
-
-            DeviceListBox.ItemsSource = list;
+            else
+            {
+                SearchResultLabel.Visibility = Visibility.Collapsed;
+            }
         }
 
 
@@ -54,10 +54,11 @@ namespace Xky.Platform.UserControl.Pages
                     var response = Client.LoadDevices();
                     if (response.Result)
                     {
-                        Common.UiAction(() => { DeviceListBox.ItemsSource = Client.Devices; });
+                        Common.UiAction(() => { DeviceListBox.ItemsSource = Client.PanelDevices; });
                         Common.ShowToast("设备加载成功");
                         break;
                     }
+
                     Common.ShowToast(response.Message);
                     Thread.Sleep(1000);
                 }
@@ -154,9 +155,7 @@ namespace Xky.Platform.UserControl.Pages
         }
 
 
-        private void DeviceListBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-        }
+
 
         private void DeviceListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
@@ -168,11 +167,9 @@ namespace Xky.Platform.UserControl.Pages
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("1");
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Console.WriteLine("2");
-                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.AdbShell("ls").Json); });
+                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.AdbCommand("shell ls").Json); });
             }
         }
     }

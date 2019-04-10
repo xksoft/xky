@@ -17,10 +17,12 @@ namespace Xky.Platform.UserControl
             switch (button)
             {
                 case MessageBoxButton.OK:
+                    BtnOk.Focusable = true;
                     BtnYes.Visibility = Visibility.Collapsed;
                     BtnNo.Visibility = Visibility.Collapsed;
                     break;
                 case MessageBoxButton.YesNo:
+                    BtnYes.Focusable = true;
                     BtnOk.Visibility = Visibility.Collapsed;
                     break;
             }

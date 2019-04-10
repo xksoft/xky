@@ -17,7 +17,7 @@
 
     <SolidColorBrush x:Key="Black">Black</SolidColorBrush>
 
-    <SolidColorBrush x:Key="OffLine">OrangeRed</SolidColorBrush>
+    <SolidColorBrush x:Key="OffLine">#fb423b</SolidColorBrush>
 
     <SolidColorBrush x:Key="OnLine">Lime</SolidColorBrush>
 

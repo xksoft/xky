@@ -186,6 +186,7 @@
         <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}" Width="300">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
+           
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -194,6 +195,10 @@
                                  TextBoxBackground="{StaticResource  BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="搜索在线设备"
                                  WindowChrome.IsHitTestVisibleInChrome="True" />
+                <local:MyTagLabel  x:Name="SearchResultLabel"    Visibility="Collapsed"  HorizontalAlignment="Right"
+                                   TabLabelText="搜索结果" Margin="0,0,20,0"
+                                   TabLabelBackground="{StaticResource BackgroundColor2}"
+                                   TabLabelForeground="Lime" IsHitTestVisible="False"/>
 
             </Grid>
 

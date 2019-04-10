@@ -24,6 +24,8 @@ namespace Xky.Core
     {
         internal static Socket.Client.Socket CoreSocket;
 
+        private static string _lastSearchKeyword;
+
 
         internal static Response Post(string api, JObject json)
         {
@@ -390,6 +392,32 @@ namespace Xky.Core
             }
         }
 
+        public static void SearchDevices(string keyword)
+        {
+            _lastSearchKeyword = keyword;
+            var list = (from d in Devices
+                where _lastSearchKeyword == null || d.Sn.Contains(keyword) || d.Name.Contains(keyword) ||
+                      d.Description.Contains(keyword)
+                orderby d.Name
+                select d).ToList();
+            var list2 = PanelDevices.ToList();
+            foreach (var device in list2)
+            {
+                if (!list.Contains(device))
+                {
+                    PanelDevices.Remove(device);
+                }
+            }
+
+            foreach (var device in list)
+            {
+                if (!list2.Contains(device))
+                {
+                    PanelDevices.Add(device);
+                }
+            }
+        }
+
         /// <summary>
         ///     获取设备连接信息
         /// </summary>
@@ -485,6 +513,7 @@ namespace Xky.Core
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
+        public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
         public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
 
         public static readonly ObservableCollection<string> ModulesPanelTags =
@@ -659,12 +688,41 @@ namespace Xky.Core
 
 
                     //用UI线程委托添加，防止报错
-                    MainWindow.Dispatcher.Invoke(() => { Devices.Add(device); });
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        Devices.Add(device);
+                        ParsePanelDevice(device, false);
+                    });
                 }
 
                 return device;
             }
         }
+
+        /// <summary>
+        /// 解析最新设备决定是否放入面板
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="isRemove"></param>
+        private static void ParsePanelDevice(Device device, bool isRemove)
+        {
+            if (_lastSearchKeyword == null || device.Sn.Contains(_lastSearchKeyword) ||
+                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword))
+            {
+                var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
+                if (isRemove)
+                {
+                    if (find == null) return;
+                    PanelDevices.Remove(device);
+                }
+                else
+                {
+                    if (find != null) return;
+                    PanelDevices.Add(device);
+                }
+            }
+        }
+
 
         /// <summary>
         ///     添加或更新模块面板
@@ -743,7 +801,12 @@ namespace Xky.Core
             lock ("devices")
             {
                 var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-                if (device != null) MainWindow.Dispatcher.Invoke(() => { Devices.Remove(device); });
+                if (device != null)
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        Devices.Remove(device);
+                        ParsePanelDevice(device, true);
+                    });
             }
         }
 
