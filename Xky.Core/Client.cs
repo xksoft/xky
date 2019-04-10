@@ -254,7 +254,10 @@ namespace Xky.Core
                         {
                             var node = Nodes.ToList().Find(p => p.Serial == serial);
                             if (node != null)
-                                ConnectToNode(node, "http://" + LocalNodes[serial].Ip + ":8080",
+                                ConnectToNode(node,
+                                    "http://" + (string.IsNullOrEmpty(LocalNodes[serial].Ip)
+                                        ? "127.0.0.1"
+                                        : LocalNodes[serial].Ip) + ":8080",
                                     node.ConnectionHash);
                         }
                     }
