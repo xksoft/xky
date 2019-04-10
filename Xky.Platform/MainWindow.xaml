@@ -15,7 +15,7 @@
         FontFamily="SimSun"
         MinHeight="768"
         MinWidth="1024"
-        Title="MainWindow" Height="811" Width="1415">
+        Title="MainWindow" Height="811" Width="1415" Closing="MainWindow_OnClosing">
 
     <Window.Resources>
         <platform:ButtonStatus x:Key="ButtonStatus" />

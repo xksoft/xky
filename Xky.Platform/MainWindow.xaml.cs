@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Data;
@@ -71,9 +72,6 @@ namespace Xky.Platform
 
             //启动状态定时器
             new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
-
-//            var msg = new MyMessageBox {Height = 100};
-//            Common.ShowMessageControl(msg);
         }
 
         private void MainWindow_Elapsed(object sender, ElapsedEventArgs e)
@@ -231,6 +229,17 @@ namespace Xky.Platform
         }
 
         #endregion
+
+        private  void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            var msg = new MyMessageBox(MessageBoxButton.YesNo) {Height = 100, MessageText = "您确认要关闭系统吗？"};
+            Common.ShowMessageControl(msg);
+
+            if (msg.Result != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 
     #region 窗体按钮状态转换模型
