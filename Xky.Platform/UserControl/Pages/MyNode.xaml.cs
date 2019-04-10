@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xky.Core;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -23,6 +24,17 @@ namespace Xky.Platform.UserControl.Pages
         public MyNode()
         {
             InitializeComponent();
+            NodeListBox.ItemsSource = Client.Nodes;
+        }
+
+        private void NodeListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void NodeListBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+
         }
     }
 }

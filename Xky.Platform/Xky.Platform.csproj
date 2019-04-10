@@ -359,5 +359,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\task.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\lannode_online.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
