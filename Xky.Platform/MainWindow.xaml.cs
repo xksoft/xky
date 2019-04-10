@@ -223,7 +223,7 @@ namespace Xky.Platform
 
         #endregion
 
-        private async void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        private  void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             var msg = new MyMessageBox(MessageBoxButton.YesNo) {Height = 100, MessageText = "您确认要关闭系统吗？"};
             Common.ShowMessageControl(msg);
