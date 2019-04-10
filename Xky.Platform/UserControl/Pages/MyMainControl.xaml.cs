@@ -36,7 +36,7 @@ namespace Xky.Platform.UserControl.Pages
             {
                 list.AddRange(source.ToList());
             }
- 
+
             DeviceListBox.ItemsSource = list;
         }
 
@@ -48,19 +48,18 @@ namespace Xky.Platform.UserControl.Pages
         {
             Client.StartAction(() =>
             {
-                Common.ShowToast("正在加载设备列表...");
-
-                var response = Client.LoadDevices();
-                if (response.Result)
+                while (true)
                 {
-                    Console.WriteLine("设备数：" + Client.Devices.Count);
-                    Common.UiAction(() => { DeviceListBox.ItemsSource = Client.Devices; });
-
-                    Common.ShowToast("设备加载成功");
-                }
-                else
-                {
+                    Common.ShowToast("正在加载设备列表...");
+                    var response = Client.LoadDevices();
+                    if (response.Result)
+                    {
+                        Common.UiAction(() => { DeviceListBox.ItemsSource = Client.Devices; });
+                        Common.ShowToast("设备加载成功");
+                        break;
+                    }
                     Common.ShowToast(response.Message);
+                    Thread.Sleep(1000);
                 }
             });
         }
@@ -178,12 +177,7 @@ namespace Xky.Platform.UserControl.Pages
             if (DeviceListBox.SelectedItem is Device device)
             {
                 Console.WriteLine("2");
-                Client.StartAction(() =>
-                {
-                    var response=Client.CallNodeApi(device.NodeSerial, device.Sn, "toast",
-                        new JArray("hello world " + DateTime.Now, 1));
-                    Console.WriteLine(response.Json);
-                });
+                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.AdbShell("ls").Json); });
             }
         }
     }
