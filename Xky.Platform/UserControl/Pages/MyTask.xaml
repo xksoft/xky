@@ -42,10 +42,8 @@
                                               ButtonBackground2="{StaticResource BlueLine}" ButtonText="添加任务"
                                               Width="102" Height="32" />
 
-                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="289" Background="Gray" Foreground="Red">
-                            <UserControl:MyProgressbar.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="0" />
-                            </UserControl:MyProgressbar.Effect>
+                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="250"  TrackBrush="Red" IndicatorBrush="Yellow">
+                         
                         </UserControl:MyProgressbar>
 
                     </StackPanel>
