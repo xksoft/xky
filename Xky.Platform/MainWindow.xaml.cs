@@ -126,6 +126,13 @@ namespace Xky.Platform
                         MainContent.Content = page;
                         break;
                     }
+                    case "Node":
+                        {
+                            var page = new MyNode();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                     case "Task":
                     {
                         var page = new MyTask();
