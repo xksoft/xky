@@ -39,20 +39,29 @@ namespace Xky.Platform.UserControl
             set { SetValue(MaximumProperty, value); }
         }
 
-        private static readonly new DependencyProperty BorderBrushProperty = DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Black));
+        private static readonly new DependencyProperty BorderBrushProperty = DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Transparent));
         public new Brush BorderBrush
         {
             get { return (Brush)GetValue(BorderBrushProperty); }
             set { SetValue(BorderBrushProperty, value); }
         }
 
-         public new  Brush Background
+        private static readonly  DependencyProperty TrackBrushProperty = DependencyProperty.Register("TrackBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Black));
+
+        public   Brush TrackBrush
         {
-            get { return (Brush)GetValue(BackgroundProperty); }
-            set { SetValue(BackgroundProperty, value); }
+            get { return (Brush)GetValue(TrackBrushProperty); }
+            set { SetValue(TrackBrushProperty, value); }
         }
 
-       
+        private static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register("IndicatorBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Black));
+
+        public Brush IndicatorBrush
+        {
+            get { return (Brush)GetValue(IndicatorBrushProperty); }
+            set { SetValue(IndicatorBrushProperty, value); }
+        }
+
         public new Brush Foreground
         {
             get {
@@ -64,11 +73,11 @@ namespace Xky.Platform.UserControl
             }
         }
 
-        private static readonly DependencyProperty DangergroundProperty = DependencyProperty.Register("Dangerground", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Red));
-        public Brush Dangerground
+        private static readonly DependencyProperty DangerBrushProperty = DependencyProperty.Register("DangerBrush", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.Red));
+        public Brush DangerBrush
         {
-            get { return (Brush)GetValue(DangergroundProperty); }
-            set { SetValue(DangergroundProperty, value); }
+            get { return (Brush)GetValue(DangerBrushProperty); }
+            set { SetValue(DangerBrushProperty, value); }
         }
 
         private static readonly  DependencyProperty FForegroundProperty = DependencyProperty.Register("FForeground", typeof(Brush), typeof(MyProgressbar), new PropertyMetadata(Brushes.White));
@@ -138,11 +147,11 @@ namespace Xky.Platform.UserControl
             ProgressBarWidth = Math.Min((Value / (Maximum + Minimum) * this.ActualWidth) - 2, this.ActualWidth - 2);
             if (Value / Maximum >=DangerValue)
             {
-                 FForeground = Dangerground;
+                 FForeground = DangerBrush;
             }
             else {
 
-                FForeground = Foreground;
+                FForeground = IndicatorBrush;
             }
 
         }

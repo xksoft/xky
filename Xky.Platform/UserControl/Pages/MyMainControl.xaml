@@ -308,11 +308,11 @@
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                  
-                                 
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="3" Width="260" Background="#1b2025" Foreground="#48bf00" Dangerground="#e30000" DangerValue="0.5"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="3" Width="260" Background="#1b2025"  Foreground="#af00e2"  Dangerground="#e30000" DangerValue="0.5"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="3" Width="260" Background="#1b2025"  Foreground="#3f7dee"  Dangerground="#e30000" DangerValue="0.8"/>
+
+
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="200" TrackBrush="#1b2025" IndicatorBrush="#48bf00" DangerBrush="#e30000" DangerValue="0.5"/>
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#af00e2"  DangerBrush="#e30000" DangerValue="0.5"/>
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#3f7dee"  DangerBrush="#e30000" DangerValue="0.8"/>
                                   
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
