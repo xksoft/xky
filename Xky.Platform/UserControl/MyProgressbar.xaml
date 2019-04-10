@@ -9,17 +9,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <Border Background="Transparent">
-            <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
+        <Border Background="Transparent" >
+            
+            <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}" >
                 <Grid>
-
-                    <Rectangle  Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" Fill="{Binding FForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"></Rectangle>
-                    <!--<Grid HorizontalAlignment="Left" Background="{Binding aaa}">-->
-                    <!--<Grid Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" >
-                        <Grid.Background>
-                            <SolidColorBrush Color="{Binding Foreground, RelativeSource={RelativeSource AncestorType=UserControl}}"></SolidColorBrush>
-                        </Grid.Background>
-                    </Grid>-->
+                    <Border Margin="1" Width="{Binding ProgressBarWidth, ElementName=uc}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="{Binding FForeground, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <!--<Border.Effect>
+                            <DropShadowEffect BlurRadius="2" ShadowDepth="0" Color="#000"/>
+                        </Border.Effect>-->
+                    </Border>
                 </Grid>
             </Border>
         </Border>
