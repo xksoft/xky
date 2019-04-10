@@ -313,9 +313,9 @@
                                         Margin="0,0,3,0"
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="100" Background="#868686" Foreground="#636363"/>
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="100" Background="#868686"  Foreground="#636363"/>
-                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="100" Background="#868686"  Foreground="#636363"/>
+                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="100" Background="#868686" Foreground="#17a032"/>
+                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="100" Background="#868686"  Foreground="#ffad43"/>
+                                        <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="100" Background="#868686"  Foreground="#ff5943"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">

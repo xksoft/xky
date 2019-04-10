@@ -116,7 +116,7 @@ namespace Xky.Platform.UserControl
             // TemplateBinding for
             ProgressBarWidth = Math.Min((Value / (Maximum + Minimum) * this.ActualWidth) - 2, this.ActualWidth - 2);
             if (Value/Maximum>=0.5) {
-                Foreground = Brushes.Red;
+               // Foreground = Brushes.Red;
             }
 
         }
