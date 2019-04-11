@@ -362,5 +362,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\lannode_online.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\btn_setting.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
