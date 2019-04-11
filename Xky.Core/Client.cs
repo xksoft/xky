@@ -251,7 +251,7 @@ namespace Xky.Core
                         LocalNodes[serial].Name = json["name"].ToString();
                         LocalNodes[serial].Ip = ip.Address.ToString();
                         LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
-                       
+                        PushAllNode(LocalNodes[serial]);
                         lock ("nodes")
                         {
                             var node = Nodes.ToList().Find(p => p.Serial == serial);
@@ -819,6 +819,7 @@ namespace Xky.Core
             lock ("nodes")
             {
                 var node = Nodes.ToList().Find(p => p.Serial == serial);
+
                 if (node != null)
                     return node;
 
@@ -843,7 +844,7 @@ namespace Xky.Core
 
 
                 //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
+                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node);   PushAllNode(node);});
                 return node;
             }
         }
@@ -873,7 +874,7 @@ namespace Xky.Core
                         DeviceCount = n.DeviceCount,
                         Ip = n.Ip
                     };
-                    AllNodes.Add(node);
+                    MainWindow.Dispatcher.Invoke(() => { AllNodes.Add(node); });
                 }
 
 
