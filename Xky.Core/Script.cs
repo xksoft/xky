@@ -10,11 +10,11 @@ namespace Xky.Core
 {
     public class Script
     {
-        private readonly ScriptEngine _engine;
+        private readonly Device _device;
 
         public Script(Device device)
         {
-            _engine = new ScriptEngine(device);
+            _device = device;
         }
 
         /// <summary>
@@ -25,40 +25,15 @@ namespace Xky.Core
         /// <returns></returns>
         public Response Toast(string toast, int style = 2)
         {
-            return _engine.Toast(toast, style);
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "toast", new JArray(toast, style));
         }
 
         public Response AdbCommand(string command)
         {
-            return _engine.AdbCommand(command);
-        }
-
-        public Response AdbShell(string command)
-        {
-            return _engine.AdbShell(command);
-        }
-    }
-
-    internal class ScriptEngine
-    {
-        private readonly Device _device;
-
-        internal ScriptEngine(Device device)
-        {
-            _device = device;
-        }
-
-        internal Response Toast(string toast, int style = 1)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "toast", new JArray(toast, style));
-        }
-
-        internal Response AdbCommand(string command)
-        {
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "adbCommand", new JArray(command.Trim()));
         }
 
-        internal Response AdbShell(string command)
+        public Response AdbShell(string command)
         {
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "adbShell", new JArray(command.Trim()));
         }

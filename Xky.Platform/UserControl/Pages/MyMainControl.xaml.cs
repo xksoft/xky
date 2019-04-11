@@ -58,7 +58,6 @@ namespace Xky.Platform.UserControl.Pages
                         Common.ShowToast("设备加载成功");
                         break;
                     }
-
                     Common.ShowToast(response.Message);
                     Thread.Sleep(1000);
                 }
