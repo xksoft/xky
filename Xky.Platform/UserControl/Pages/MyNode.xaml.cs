@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Xky.Platform.UserControl.Pages
     /// </summary>
     public partial class MyNode 
     {
+     
         public MyNode()
         {
         
@@ -42,6 +44,29 @@ namespace Xky.Platform.UserControl.Pages
         private void NodeListBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
 
+        }
+    }
+
+    public partial class ConnectStatusConvertToImageSource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            int connectstatus = (int)value;
+            if (connectstatus == 0)
+            {
+                return new Uri( "/Xky.Platform;component/Resources/Icon/lannode_online.png", UriKind.Absolute);
+            }
+            else
+            {
+                return new Uri("/Xky.Platform;component/Resources/Icon/lannode_online.png", UriKind.Absolute);
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

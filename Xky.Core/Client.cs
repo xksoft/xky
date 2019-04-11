@@ -391,6 +391,45 @@ namespace Xky.Core
                 };
             }
         }
+        public static Response LoadNodes()
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                    };
+
+                var loadtick = DateTime.Now.Ticks;
+                var response = CallApi("get_node_list", new JObject());
+
+                if (response.Result)
+                {
+                    Console.WriteLine(response);
+                    foreach (var json in (JArray)response.Json["nodes"]) {
+                        var ts = json["t_serial"].ToString();
+                        PushNode(json["t_serial"].ToString());
+
+                    }
+
+                 
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
 
         public static void SearchDevices(string keyword)
         {
@@ -855,26 +894,35 @@ namespace Xky.Core
                 var node = AllNodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)
                 {
-                    node.Serial = n.Serial;
-                    node.Name = n.Name;
-                    node.ConnectionHash = n.ConnectionHash;
-                    node.Forward = n.Forward;
-                    node.DeviceCount = n.DeviceCount;
-                    node.Ip = n.Ip;
+                    if (node.ConnectionHash == null && n.ConnectionHash != null)
+                    {
+                        node = n;
+                        //node.Serial = n.Serial;
+                        //node.Name = n.Name;
+                        //node.ConnectionHash = n.ConnectionHash;
+                        //node.Forward = n.Forward;
+                        //node.DeviceCount = n.DeviceCount;
+                        //node.Ip = n.Ip;
+                    }
+                    else {
+
+
+                    }
+
 
                 }
                 else
                 {
-                    node = new Node
-                    {
-                        Serial = n.Serial,
-                        Name = n.Name,
-                        ConnectionHash = n.ConnectionHash,
-                        Forward = n.Forward,
-                        DeviceCount = n.DeviceCount,
-                        Ip = n.Ip
-                    };
-                    MainWindow.Dispatcher.Invoke(() => { AllNodes.Add(node); });
+                    //node = new Node
+                    //{
+                    //    Serial = n.Serial,
+                    //    Name = n.Name,
+                    //    ConnectionHash = n.ConnectionHash,
+                    //    Forward = n.Forward,
+                    //    DeviceCount = n.DeviceCount,
+                    //    Ip = n.Ip
+                    //};
+                    MainWindow.Dispatcher.Invoke(() => { AllNodes.Add(n); });
                 }
 
 

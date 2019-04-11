@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="Common.cs" />
     <Compile Include="UserControl\Lib\BooleanToVisibility.cs" />
+    <Compile Include="UserControl\Lib\SwitchConverter.cs" />
     <Compile Include="UserControl\Lib\HoverColorConverter.cs" />
     <Compile Include="UserControl\MyButton.xaml.cs">
       <DependentUpon>MyButton.xaml</DependentUpon>
@@ -364,6 +365,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\btn_setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\addtocloud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\newnode.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -64,6 +64,15 @@ namespace Xky.Platform.UserControl.Pages
             });
         }
 
+        public void LoadNodes()
+        {
+            Client.StartAction(() =>
+            {
+                var response = Client.LoadNodes();
+               
+            });
+        }
+
         /// <summary>
         ///     加载模块面板上的模块列表
         /// </summary>

@@ -5,19 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Xky.Platform.UserControl.Pages"
              xmlns:UserControl="clr-namespace:Xky.Platform.UserControl"
+             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
              mc:Ignorable="d" 
           
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <lib:SwitchConverter x:Key="ConnectStatusToBursh">
+            <lib:SwitchConverterCase When="0" Then="red" />
+            <lib:SwitchConverterCase When="1" Then="yellow" />
+            <lib:SwitchConverterCase When="2" Then="green" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ConnectStatusToStr">
+            <lib:SwitchConverterCase When="0" Then="离线" />
+            <lib:SwitchConverterCase When="1" Then="连接中..." />
+            <lib:SwitchConverterCase When="2" Then="成功连接" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ConnectionHashToBursh">
+            <lib:SwitchConverterCase When="null" Then="#444642" />
+            <lib:SwitchConverterCase  Then="#343c43" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ConnectionHashToVisible">
+            <lib:SwitchConverterCase When="null" Then="Collapsed" />
+            <lib:SwitchConverterCase  Then="Visible" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ConnectionHashToHidden">
+            <lib:SwitchConverterCase When="null" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+    </UserControl.Resources>
     <Grid Background="{StaticResource BackgroundColor4}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
       
-            <Label Grid.Row="0" FontSize="30" Foreground="White" Margin="20,40,0,20">节点管理</Label>
+            <Label Grid.Row="0" FontSize="30" Foreground="White" Margin="20,40,0,0">节点管理</Label>
 
 
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10"
                                       ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
                 <ItemsControl x:Name="NodeListBox" Margin="0,0,0,1" Grid.Row="1" 
@@ -30,19 +55,21 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                         <Grid Margin="10">
-                            <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>
+                            <Border Background="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToBursh}}" BorderThickness="0"  CornerRadius="5"></Border>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                   
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#038f45" CornerRadius="5,0,0,5">
-                                    <Image Source="/Xky.Platform;component/Resources/Icon/lannode_online.png" Stretch="None" />
-                                </Border>
+                                
                                 <Grid Grid.Column="1">
                                     <Border >
                                         <StackPanel Margin="10">
-                                            <Label Grid.Row="0" Foreground="#fff" Width="300" FontSize="18" Margin="0,0,0,5" Content="{Binding  Path=Name}"></Label>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}" Width="23" Height="23" VerticalAlignment="Center"  Source="/Xky.Platform;component/Resources/Icon/newnode.png"/>
+                                                <Ellipse Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}" Margin="5" Width="12" Height="12" VerticalAlignment="Center" Fill="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToBursh}}"></Ellipse>
+                                                <Label Grid.Row="0"  VerticalAlignment="Center"  Foreground="#fff" Width="300" FontSize="18" Margin="0,5,0,5" Content="{Binding  Path=Name}"></Label></StackPanel>
+                                          
                                             <StackPanel Orientation="Horizontal">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">序列号</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=Serial}"></Label>
@@ -52,22 +79,30 @@
                                                 <Label Foreground="#fff" Content="{Binding  Path=Ip}"></Label>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">在线设备</Label>
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60" >在线设备</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=DeviceCount}"></Label>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">上线时间</Label>
-                                                <Label Foreground="#fff">3天前</Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=LoadTick}"></Label>
                                             </StackPanel>
-                                            <StackPanel HorizontalAlignment="Right"  Orientation="Horizontal" Margin="0,5,0,0">
-                                                <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60" >连接状态</Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToStr}}"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}"></Label>
+                                                <Label Foreground="#fff" Content="已接入当前局域网，尚未添加到侠客云"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
+                                            </StackPanel>
+                                            <StackPanel HorizontalAlignment="Right"  VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,5,0,0">
+                                                <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
                                                     <Image Height="16" Source="/Xky.Platform;component/Resources/Icon/btn_setting.png"/>
                                                 </Button>
-                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
+                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
                                                     <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/edit.png"/>
                                                 </Button>
-                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
-                                                    <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/delete.png"  />
+                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
+                                                    <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/delete.png"/>
+                                                </Button>
+                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}">
+                                                    <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/addtocloud.png"  />
                                                 </Button>
 
                                             </StackPanel>
@@ -108,16 +143,18 @@
                 <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
+                        
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Background="#038f45" CornerRadius="5,0,0,5">
-                        <Image Source="/Xky.Platform;component/Resources/Icon/lannode_online.png" Stretch="None" />
-                    </Border>
+                   
                     <Grid Grid.Column="1">
                         <Border >
-                        <StackPanel Margin="10"> 
-                            <Label Grid.Row="0" Foreground="#fff" FontSize="18" Margin="0,0,0,5">测试节点服务器</Label>
+                        <StackPanel Margin="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Fill="Green" Width="12" Height="12"  VerticalAlignment="Center"></Ellipse>
+                                    <Label  VerticalAlignment="Center" Grid.Row="0" Foreground="#fff" FontSize="18" Margin="5,5,0,5" Padding="0">测试节点服务器</Label>
+                                </StackPanel>
+                          
                                 <StackPanel Orientation="Horizontal">
                                     <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">序列号</Label>
                                     <Label Foreground="#fff">656DFBFFAABC0D55AE7C112BB90678DA</Label>
