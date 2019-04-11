@@ -17,7 +17,7 @@
             <Label Grid.Row="0" FontSize="30" Foreground="White" Margin="20,40,0,20">节点管理</Label>
 
 
-            <!--<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
                                       ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
                 <ItemsControl x:Name="NodeListBox" Margin="0,0,0,1" Grid.Row="1" 
@@ -29,84 +29,57 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="10">
-                                <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>
-                                <Grid Margin="10,5,10,0" VerticalAlignment="Top" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition Width="20"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0">
-                                        <Ellipse Fill="Green" Width="10" Height="10"></Ellipse>
-                                        <Label  Foreground="#fff" FontSize="15">测试节点服务器</Label>
+                        <Grid Margin="10">
+                            <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Background="#038f45" CornerRadius="5,0,0,5">
+                                    <Image Source="/Xky.Platform;component/Resources/Icon/lannode_online.png" Stretch="None" />
+                                </Border>
+                                <Grid Grid.Column="1">
+                                    <Border >
+                                        <StackPanel Margin="10">
+                                            <Label Grid.Row="0" Foreground="#fff" Width="300" FontSize="18" Margin="0,0,0,5" Content="{Binding  Path=Name}"></Label>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">序列号</Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=Serial}"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">IP地址</Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=Ip}"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">在线设备</Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=DeviceCount}"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">上线时间</Label>
+                                                <Label Foreground="#fff">3天前</Label>
+                                            </StackPanel>
+                                            <StackPanel HorizontalAlignment="Right"  Orientation="Horizontal" Margin="0,5,0,0">
+                                                <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5">
+                                                    <Image Height="16" Source="/Xky.Platform;component/Resources/Icon/btn_setting.png"/>
+                                                </Button>
+                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
+                                                    <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/edit.png"/>
+                                                </Button>
+                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
+                                                    <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/delete.png"  />
+                                                </Button>
 
-                                    </StackPanel>
-                                    <Button Grid.Column="1" BorderThickness="0" Background="Transparent" Foreground="#fff" HorizontalAlignment="Right" VerticalAlignment="Center">⋮
-                                        <Button.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="文件">
-                                                    <MenuItem Header="打开" />
-                                                    <MenuItem.Icon>
-                                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/max_btn1.png" />
-                                                    </MenuItem.Icon>
-
-                                                </MenuItem>
-                                                <Separator />
-                                                <MenuItem Header="重启当前设备">
-                                                    <MenuItem.Icon>
-                                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/min_btn1.png" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <Separator />
-                                                <MenuItem Header="删除设备">
-                                                    <MenuItem.Icon>
-                                                        <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/ControlBox/dark/close_btn1.png" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <Separator />
-                                                <MenuItem Header="升级系统" />
-                                                <Separator />
-
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                    </Button>
-
-                                </Grid>
-
-                                <StackPanel Width="270"  HorizontalAlignment="Left" Orientation="Vertical" Margin="0,10,0,0">
-
-                                    <Border Grid.Column="0" Margin="10,35,10,15" Background="#404a52" Padding="5" CornerRadius="5">
-                                        <StackPanel>
-
-                                            <Label Foreground="#fff"  Padding="0,5,5,5">序列号：656DFBFFAABC0D55AE7C112BB90678DA</Label>
-                                            <Label Foreground="#fff"  Padding="0,5,5,5">IP地址：192.168.1.144</Label>
-                                            <Label Foreground="#fff"  Padding="0,5,5,5">在线设备：10台</Label>
-                                            <Label Foreground="#fff"  Padding="0,5,5,5">上线时间：3天前</Label>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </Border>
-                                    -->
-        
-        
-        <!--<Grid VerticalAlignment="Bottom">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                               
-                            </Grid.ColumnDefinitions>
-                           
-                            <Button Height="32" VerticalAlignment="Center" Grid.Column="1"    Content="编辑"  BorderThickness="0" Background="#3e454c" Foreground="#fff"/>
-                            <Border Grid.Column="2" CornerRadius="0,0,4,0" Background="#3e454c" >
-                            <Button Height="32" VerticalAlignment="Center"   Content="删除"  BorderThickness="0" Background="Transparent" Foreground="#d52d2f"/>
-                        </Border></Grid>--><!--
-                                    <Border Grid.Column="0" Background="#2ea5ff" CornerRadius="0,0,4,4">
-                                        <Button Height="32" VerticalAlignment="Center"  Content="添加到侠客云上"  BorderThickness="0" Background="Transparent" Foreground="#fff"/>
-                                    </Border>
-                                </StackPanel>
 
+                                    </Border>
+                                </Grid>
                             </Grid>
 
-                        </DataTemplate>
+                        </Grid>
+
+                    </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
                     <ItemsControl.ItemsPanel>
@@ -119,7 +92,7 @@
 
 
                 </ItemsControl>
-            </ScrollViewer>-->
+            </ScrollViewer>
 
 
 
@@ -129,7 +102,7 @@
 
 
 
-            <WrapPanel Grid.Row="1" Margin="30" Orientation="Horizontal">
+            <WrapPanel Visibility="Hidden" Grid.Row="1" Margin="30" Orientation="Horizontal">
 
             <Grid>
                 <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>

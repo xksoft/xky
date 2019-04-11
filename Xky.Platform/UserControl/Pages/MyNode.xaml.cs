@@ -28,7 +28,7 @@ namespace Xky.Platform.UserControl.Pages
         
             InitializeComponent();
            
-            //NodeListBox.ItemsSource = Client.AllNodes;
+            NodeListBox.ItemsSource = Client.AllNodes;
             
         }
 
