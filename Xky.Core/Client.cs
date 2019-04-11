@@ -852,7 +852,7 @@ namespace Xky.Core
         {
             lock ("allnodes")
             {
-                var node = Nodes.ToList().Find(p => p.Serial == n.Serial);
+                var node = AllNodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)
                 {
                     node.Serial = n.Serial;
