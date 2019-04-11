@@ -880,10 +880,9 @@ namespace Xky.Core
                 };
 
                 ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
-
-
+                PushAllNode(node);
                 //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node);   PushAllNode(node);});
+                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node);  });
                 return node;
             }
         }
