@@ -27,26 +27,12 @@ namespace Xky.Platform.UserControl.Pages
         {
         
             InitializeComponent();
-            //ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
-            //foreach (Node n in Client.Nodes)
-            //{
-            //    Nodes.Add(n);
-
-            //}
-            //foreach (var n in Client.LocalNodes)
-            //{
-            //    Nodes.Add(n.Value);
-
-            //}
-            //NodeListBox.ItemsSource = Nodes;
-            NodeListBox.ItemsSource = Client.LocalNodes;
-            NodeListBox.SourceUpdated += NodeListBox_SourceUpdated;
+           
+            NodeListBox.ItemsSource = Client.AllNodes;
+            
         }
 
-        private void NodeListBox_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-            Console.WriteLine("ccccccccccccccccccccccccc");
-        }
+      
 
         private void NodeListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

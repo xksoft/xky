@@ -511,6 +511,7 @@ namespace Xky.Core
         public static int Threads;
 
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+        public static readonly ObservableCollection<Node> AllNodes = new ObservableCollection<Node>();
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
@@ -846,7 +847,38 @@ namespace Xky.Core
                 return node;
             }
         }
+        private static void PushAllNode(Node n)
+        {
+            lock ("allnodes")
+            {
+                var node = Nodes.ToList().Find(p => p.Serial == n.Serial);
+                if (node != null)
+                {
+                    node.Serial = n.Serial;
+                    node.Name = n.Name;
+                    node.ConnectionHash = n.ConnectionHash;
+                    node.Forward = n.Forward;
+                    node.DeviceCount = n.DeviceCount;
+                    node.Ip = n.Ip;
 
+                }
+                else
+                {
+                    node = new Node
+                    {
+                        Serial = n.Serial,
+                        Name = n.Name,
+                        ConnectionHash = n.ConnectionHash,
+                        Forward = n.Forward,
+                        DeviceCount = n.DeviceCount,
+                        Ip = n.Ip
+                    };
+                    AllNodes.Add(node);
+                }
+
+
+            }
+        }
         /// <summary>
         ///     核心服务器事件
         /// </summary>
