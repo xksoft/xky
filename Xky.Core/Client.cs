@@ -251,7 +251,7 @@ namespace Xky.Core
                         LocalNodes[serial].Name = json["name"].ToString();
                         LocalNodes[serial].Ip = ip.Address.ToString();
                         LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
-
+                       
                         lock ("nodes")
                         {
                             var node = Nodes.ToList().Find(p => p.Serial == serial);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xky.Core;
+using Xky.Core.Model;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -23,8 +25,27 @@ namespace Xky.Platform.UserControl.Pages
     {
         public MyNode()
         {
+        
             InitializeComponent();
-            NodeListBox.ItemsSource = Client.Nodes;
+            //ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+            //foreach (Node n in Client.Nodes)
+            //{
+            //    Nodes.Add(n);
+
+            //}
+            //foreach (var n in Client.LocalNodes)
+            //{
+            //    Nodes.Add(n.Value);
+
+            //}
+            //NodeListBox.ItemsSource = Nodes;
+            NodeListBox.ItemsSource = Client.LocalNodes;
+            NodeListBox.SourceUpdated += NodeListBox_SourceUpdated;
+        }
+
+        private void NodeListBox_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            Console.WriteLine("ccccccccccccccccccccccccc");
         }
 
         private void NodeListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
