@@ -21,9 +21,9 @@ namespace Xky.Core.Model
         private string _product;
         private ImageSource _screenShot;
         private string _sn;
-        private int _cpuUseage;
-        private int _memoryUseage;
-        private int _diskUseage;
+        private int _cpuUseage = 5;
+        private int _memoryUseage = 5;
+        private int _diskUseage=5;
 
         //加载时序
         public long LoadTick { get; set; }
