@@ -168,7 +168,7 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.AdbCommand("shell ls").Json); });
+                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.WriteStringToFile("/sdcard/aa.txt","wolelgequ").Json); });
             }
         }
     }
