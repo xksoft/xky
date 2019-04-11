@@ -92,7 +92,7 @@
                                                 <Label Foreground="#fff" Content="已接入当前局域网，尚未添加到侠客云"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
                                             </StackPanel>
                                             <StackPanel HorizontalAlignment="Right"  VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,5,0,0">
-                                                <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
+                                                <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5">
                                                     <Image Height="16" Source="/Xky.Platform;component/Resources/Icon/btn_setting.png"/>
                                                 </Button>
                                                 <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
