@@ -131,6 +131,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Eziriz\.NET Reactor\dotNET_Reactor.Console.exe" -file "D:\projects\XkyPlatform\Xky.Core\bin\Release\Xky.Core.dll" -snkeypair "D:\projects\XkyPlatform\Xky.Core\xkycore.snk" -control_flow_obfuscation 1 -flow_level 9 -exclude_compiler_properties 1</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
