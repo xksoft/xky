@@ -21,7 +21,7 @@
             <lib:SwitchConverterCase When="2" Then="成功连接" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectionHashToBursh">
-            <lib:SwitchConverterCase When="null" Then="#4b555e" />
+            <lib:SwitchConverterCase When="null" Then="transparent" />
             <lib:SwitchConverterCase  Then="#343c43" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectionHashToVisible">
@@ -63,7 +63,16 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <Grid Grid.Column="1">
-                                    <Border >
+                                    <Border BorderThickness="2" CornerRadius="5">
+                                        <Border.BorderBrush>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Rectangle StrokeDashArray="4 2" Stroke="#343c43" StrokeThickness="2"
+                  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                  Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Border.BorderBrush>
                                         <StackPanel Margin="10,5,10,5">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}" Width="23" Height="23" VerticalAlignment="Center"  Source="/Xky.Platform;component/Resources/Icon/newnode.png"/>

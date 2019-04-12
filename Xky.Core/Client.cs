@@ -893,38 +893,12 @@ namespace Xky.Core
                 var node = AllNodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)
                 {
-                    if (node.ConnectionHash == null && n.ConnectionHash != null)
-                    {
-                        node = n;
-                        //node.Serial = n.Serial;
-                        //node.Name = n.Name;
-                        //node.ConnectionHash = n.ConnectionHash;
-                        //node.Forward = n.Forward;
-                        //node.DeviceCount = n.DeviceCount;
-                        //node.Ip = n.Ip;
-                    }
-                    else {
-
-
-                    }
-
-
+                    return;
                 }
                 else
                 {
-                    //node = new Node
-                    //{
-                    //    Serial = n.Serial,
-                    //    Name = n.Name,
-                    //    ConnectionHash = n.ConnectionHash,
-                    //    Forward = n.Forward,
-                    //    DeviceCount = n.DeviceCount,
-                    //    Ip = n.Ip
-                    //};
                     MainWindow.Dispatcher.Invoke(() => { AllNodes.Add(n); });
                 }
-
-
             }
         }
         /// <summary>
