@@ -216,7 +216,7 @@
                                        OnClickEvent="MyTabItem_OnOnClickEvent" IsDarkStyle="True" />
                 <userControl:MyTabItem x:Name="MainControlTabItem" ToolTip="主控" ImgSource="Resources/Icon/devices.png"
                                        PageName="MainControl"
-                                       IsDarkStyle="True"
+                                       IsDarkStyle="False"
                                        OnClickEvent="MyTabItem_OnOnClickEvent" />
                 <userControl:MyTabItem ToolTip="节点" ImgSource="Resources/Icon/nodes.png" PageName="Node"
                                        IsDarkStyle="True"

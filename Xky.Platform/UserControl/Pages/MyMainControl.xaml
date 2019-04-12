@@ -14,7 +14,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10*" />
-
+            <ColumnDefinition Width="340" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor4}">
             <Grid.RowDefinitions>
@@ -522,7 +522,7 @@
             </Viewbox>
 
         </Grid>
-        <Grid Grid.Column="3" Background="#EFF2F5" Visibility="Hidden">
+        <Grid Grid.Column="3" Background="#EFF2F5" >
             <!--模块列表开始-->
             <Grid>
                 <Grid.RowDefinitions>
