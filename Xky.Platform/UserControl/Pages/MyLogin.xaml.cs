@@ -51,7 +51,7 @@ namespace Xky.Platform.UserControl.Pages
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();
                         Common.MyMainControl.LoadModules_Panel();
-                    }); Client.SearchLocalNode();
+                    }); 
                 }
                 else
                 {

@@ -9,6 +9,7 @@
 
         <ResourceDictionary>
             <lib:HoverColorConverter x:Key="HoverColorConverter" />
+            <lib:SwitchConverter x:Key="SwitchConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>

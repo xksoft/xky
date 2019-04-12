@@ -417,7 +417,7 @@ namespace Xky.Core
 
                  
                 }
-
+                Client.SearchLocalNode();
                 return response;
             }
             catch (Exception e)
