@@ -51,6 +51,8 @@ namespace Xky.Socket.Client
         private ImmutableQueue<Packet> _sendBuffer = ImmutableQueue.Create<Packet>();
         private ImmutableQueue<On.IHandle> _subs;
 
+        private object _lockObj=new object();
+
         public Socket(Manager io, string nsp)
         {
             _io = io;
@@ -120,7 +122,7 @@ namespace Xky.Socket.Client
             {
                 log.Info($"emitting packet with ack id {_ids}");
 
-                lock ("acks")
+                lock (_lockObj)
                 {
                     _acks = _acks.Add(_ids, ack);
                 }
@@ -156,7 +158,7 @@ namespace Xky.Socket.Client
             var packet = new Packet(parserType, jsonArgs);
 
             log.Info($"emitting packet with ack id {_ids}");
-            lock ("acks")
+            lock (_lockObj)
             {
                 _acks = _acks.Add(_ids, ack);
             }
@@ -290,7 +292,7 @@ namespace Xky.Socket.Client
             var log = LogManager.GetLogger(Global.CallerName());
             log.Info($"calling ack {packet.Id} with {packet.Data}");
             IAck fn;
-            lock ("acks")
+            lock (_lockObj)
             {
                 fn = _acks[packet.Id];
                 _acks = _acks.Remove(packet.Id);
