@@ -11,6 +11,17 @@
 
 ffmpeg https://static.xky.com/download/ffmbeg_libs.rar
 
+## 项目说明
+
+### Xky.Core
+核心库项目，封装了大部分API操作和socket连接对象
+
+### Xky.Platform
+项目主程序，由wpf开发，所有界面和控件都在这个项目中，包含模块的运行控制管理等
+
+### Xky.Socket
+Socket连接库
+
 ## Copyright and license
 
 Apache License 2.0
