@@ -13,6 +13,7 @@
                                  TextBoxBackground="{StaticResource  BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="请输入32位授权码" />
                 <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" ButtonText="授权" Width="102" />
+                <Button Style="{DynamicResource btn-primary}"  Margin="10,0,0,0"  Content="授权" Width="102" />
             </VirtualizingStackPanel>
 
         </VirtualizingStackPanel>
