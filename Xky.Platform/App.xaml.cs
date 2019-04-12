@@ -23,6 +23,8 @@ namespace Xky.Platform
                 Environment.Exit(0);
             }
 
+            Console.Title = "侠客SDK调试日志";
+
             //最多512个并发
             ServicePointManager.DefaultConnectionLimit = 512;
         }
