@@ -21,7 +21,7 @@
             <lib:SwitchConverterCase When="2" Then="成功连接" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectionHashToBursh">
-            <lib:SwitchConverterCase When="null" Then="#444642" />
+            <lib:SwitchConverterCase When="null" Then="#4b555e" />
             <lib:SwitchConverterCase  Then="#343c43" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectionHashToVisible">
@@ -64,11 +64,11 @@
                                 
                                 <Grid Grid.Column="1">
                                     <Border >
-                                        <StackPanel Margin="10">
+                                        <StackPanel Margin="10,5,10,5">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}" Width="23" Height="23" VerticalAlignment="Center"  Source="/Xky.Platform;component/Resources/Icon/newnode.png"/>
                                                 <Ellipse Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}" Margin="5" Width="12" Height="12" VerticalAlignment="Center" Fill="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToBursh}}"></Ellipse>
-                                                <Label Grid.Row="0"  VerticalAlignment="Center"  Foreground="#fff" Width="300" FontSize="18" Margin="0,5,0,5" Content="{Binding  Path=Name}"></Label></StackPanel>
+                                                <Label Grid.Row="0"  VerticalAlignment="Center"  Foreground="#fff" Width="200" FontSize="18" Margin="0,5,0,5" Content="{Binding  Path=Name}"></Label></StackPanel>
                                           
                                             <StackPanel Orientation="Horizontal">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">序列号</Label>
@@ -89,13 +89,13 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60" >连接状态</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToStr}}"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}"></Label>
-                                                <Label Foreground="#fff" Content="已接入当前局域网，尚未添加到侠客云"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
+                                                <Label Foreground="#fff" Content="已连接到局域网，未添加到侠客云"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
                                             </StackPanel>
                                             <StackPanel HorizontalAlignment="Right"  VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,5,0,0">
                                                 <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5">
                                                     <Image Height="16" Source="/Xky.Platform;component/Resources/Icon/btn_setting.png"/>
                                                 </Button>
-                                                <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
+                                                <Button Background="Transparent"  BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">
                                                     <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/edit.png"/>
                                                 </Button>
                                                 <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5" Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}">

@@ -14,7 +14,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="10*" />
-
+            <ColumnDefinition Width="340" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor4}">
             <Grid.RowDefinitions>
@@ -315,9 +315,9 @@
                                 <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center" HorizontalAlignment="Left">
 
 
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="200" TrackBrush="#1b2025" IndicatorBrush="#48bf00" DangerBrush="#e30000" DangerValue="0.5"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#af00e2"  DangerBrush="#e30000" DangerValue="0.5"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#3f7dee"  DangerBrush="#e30000" DangerValue="0.8"/>
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="200" TrackBrush="#1b2025" IndicatorBrush="#343c43" DangerBrush="#e30000" DangerValue="0.4"/>
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#343c43"  DangerBrush="#e30000" DangerValue="0.4"/>
+                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#565f66"  DangerBrush="#e30000" DangerValue="0.8"/>
                                   
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
@@ -522,7 +522,7 @@
             </Viewbox>
 
         </Grid>
-        <Grid Grid.Column="3" Background="#EFF2F5" Visibility="Hidden">
+        <Grid Grid.Column="3" Background="#EFF2F5" >
             <!--模块列表开始-->
             <Grid>
                 <Grid.RowDefinitions>

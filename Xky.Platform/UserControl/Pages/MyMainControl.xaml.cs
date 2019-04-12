@@ -71,6 +71,7 @@ namespace Xky.Platform.UserControl.Pages
                 var response = Client.LoadNodes();
                
             });
+           
         }
 
         /// <summary>
