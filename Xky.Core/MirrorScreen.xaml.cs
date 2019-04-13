@@ -24,6 +24,9 @@ namespace Xky.Core
         private WriteableBitmap _writeableBitmap;
 
 
+        /// <summary>
+        /// 屏幕显示类
+        /// </summary>
         public MirrorScreen()
         {
             InitializeComponent();
@@ -32,9 +35,6 @@ namespace Xky.Core
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
         }
 
-        private void MirrorScreen_OnLoaded(object sender, RoutedEventArgs e)
-        {
-        }
 
         private void FpsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -71,7 +71,7 @@ namespace Xky.Core
                         if (_bindingSource < 20)
                         {
                             _bindingSource++;
-                            if (_bindingSource == 20) _device.ScreenShot = _writeableBitmap;
+                            if (_bindingSource == 20) CurrentDevice.ScreenShot = _writeableBitmap;
                         }
 
 
@@ -174,10 +174,17 @@ namespace Xky.Core
 
         private Socket.Client.Socket _socket;
 
-        private Device _device;
+        /// <summary>
+        /// 当前连接的设备模型
+        /// </summary>
+        public static Device CurrentDevice;
+
         private int _bindingSource;
 
-
+        /// <summary>
+        /// 连接设备
+        /// </summary>
+        /// <param name="model"></param>
         public void Connect(Device model)
         {
             if (_decoder == null)
@@ -186,27 +193,27 @@ namespace Xky.Core
                 _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
             }
 
-            if (_device != null && model.Sn != _device.Sn)
+            if (CurrentDevice != null && model.Sn != CurrentDevice.Sn)
                 Dispatcher.Invoke(() =>
                 {
-                    if (_device.ScreenShot != null)
-                        _device.ScreenShot = _device.ScreenShot.Clone();
+                    if (CurrentDevice.ScreenShot != null)
+                        CurrentDevice.ScreenShot = CurrentDevice.ScreenShot.Clone();
                 });
 
             AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
-            _device = Client.GetDevice(model.Sn);
+            CurrentDevice = Client.GetDevice(model.Sn);
 
 
-            if (_device == null) throw new Exception("无法获取这个设备的信息");
+            if (CurrentDevice == null) throw new Exception("无法获取这个设备的信息");
 
-            if (Client.LocalNodes.ContainsKey(_device.NodeSerial))
+            if (Client.LocalNodes.ContainsKey(CurrentDevice.NodeSerial))
             {
-                _device.NodeUrl = "http://" + Client.LocalNodes[_device.NodeSerial].Ip + ":8080";
-                Console.WriteLine(_device.NodeUrl);
+                CurrentDevice.NodeUrl = "http://" + Client.LocalNodes[CurrentDevice.NodeSerial].Ip + ":8080";
+                Console.WriteLine(CurrentDevice.NodeUrl);
             }
 
 
-            if (_device.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
+            if (CurrentDevice.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
 
 
             _socket?.Disconnect();
@@ -223,16 +230,16 @@ namespace Xky.Core
                 ForceNew = true,
                 Query = new Dictionary<string, string>
                 {
-                    {"sn", _device.Sn},
+                    {"sn", CurrentDevice.Sn},
                     {"action", "mirror"},
                     {"v2", "true"},
-                    {"hash", _device.ConnectionHash}
+                    {"hash", CurrentDevice.ConnectionHash}
                 },
                 Path = "/xky",
                 Transports = ImmutableList.Create("websocket")
             };
             AddLabel("正在连接..", Colors.White);
-            _socket = IO.Socket(_device.NodeUrl, options);
+            _socket = IO.Socket(CurrentDevice.NodeUrl, options);
             _socket.On(Socket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
             _socket.On(Socket.Client.Socket.EventDisconnect, () => { Console.WriteLine("Disconnected"); });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
@@ -255,12 +262,18 @@ namespace Xky.Core
 
         #region 属性
 
+        /// <summary>
+        /// 是否显示fps
+        /// </summary>
         public bool IsShowFps
         {
             get => (bool) GetValue(IsShowFpsProperty);
             set => SetValue(IsShowFpsProperty, value);
         }
 
+        /// <summary>
+        /// 是否显示fps属性
+        /// </summary>
         public static readonly DependencyProperty IsShowFpsProperty =
             DependencyProperty.Register("IsShowFps", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
                 (o, e) =>
@@ -280,12 +293,18 @@ namespace Xky.Core
                     }
                 }));
 
+        /// <summary>
+        /// 是否显示日志
+        /// </summary>
         public bool IsShowLog
         {
             get => (bool) GetValue(IsShowLogProperty);
             set => SetValue(IsShowLogProperty, value);
         }
 
+        /// <summary>
+        /// 是否显示日志属性
+        /// </summary>
         public static readonly DependencyProperty IsShowLogProperty =
             DependencyProperty.Register("IsShowLog", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
                 (o, e) =>
@@ -295,12 +314,18 @@ namespace Xky.Core
                     li.LogPanel.Visibility = (bool) e.NewValue == false ? Visibility.Collapsed : Visibility.Visible;
                 }));
 
+        /// <summary>
+        /// 是否显示箭头
+        /// </summary>
         public bool IsShowArrow
         {
             get => (bool) GetValue(IsShowArrowProperty);
             set => SetValue(IsShowArrowProperty, value);
         }
 
+        /// <summary>
+        /// 是否显示箭头属性
+        /// </summary>
         public static readonly DependencyProperty IsShowArrowProperty =
             DependencyProperty.Register("IsShowArrow", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
                 (o, e) => { }));

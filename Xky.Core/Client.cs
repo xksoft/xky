@@ -20,6 +20,9 @@ using Xky.Socket.Client;
 
 namespace Xky.Core
 {
+    /// <summary>
+    /// 客户端
+    /// </summary>
     public static class Client
     {
         internal static Socket.Client.Socket CoreSocket;
@@ -99,6 +102,12 @@ namespace Xky.Core
         }
 
 
+        /// <summary>
+        /// 调用平台接口
+        /// </summary>
+        /// <param name="api"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static Response CallApi(string api, JObject data)
         {
             var response = new Response
@@ -155,6 +164,14 @@ namespace Xky.Core
             return response;
         }
 
+        /// <summary>
+        /// 调用节点接口
+        /// </summary>
+        /// <param name="serial"></param>
+        /// <param name="sn"></param>
+        /// <param name="api"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static Response CallNodeApi(string serial, string sn, string api, JArray args)
         {
             var node = Nodes.ToList().Find(p => p.Serial == serial);
@@ -228,6 +245,9 @@ namespace Xky.Core
             return response;
         }
 
+        /// <summary>
+        /// 查找本地节点
+        /// </summary>
         public static void SearchLocalNode()
         {
             StartAction(() =>
@@ -391,6 +411,11 @@ namespace Xky.Core
                 };
             }
         }
+
+        /// <summary>
+        /// 加载节点列表
+        /// </summary>
+        /// <returns></returns>
         public static Response LoadNodes()
         {
             try
@@ -400,7 +425,7 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
                     };
 
                 var loadtick = DateTime.Now.Ticks;
@@ -409,14 +434,13 @@ namespace Xky.Core
                 if (response.Result)
                 {
                     Console.WriteLine(response);
-                    foreach (var json in (JArray)response.Json["nodes"]) {
+                    foreach (var json in (JArray) response.Json["nodes"])
+                    {
                         var ts = json["t_serial"].ToString();
                         PushNode(json["t_serial"].ToString());
-
                     }
-
-                 
                 }
+
                 Client.SearchLocalNode();
                 return response;
             }
@@ -426,11 +450,15 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
                 };
             }
         }
 
+        /// <summary>
+        /// 搜索设备
+        /// </summary>
+        /// <param name="keyword"></param>
         public static void SearchDevices(string keyword)
         {
             _lastSearchKeyword = keyword;
@@ -630,12 +658,14 @@ namespace Xky.Core
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>
                         {
-                            //   Console.WriteLine("收到截图" + sn + " 长度:" + ((byte[]) data).Length);
                             var imgdata = (byte[]) data;
                             //加入速率计数器
                             BitAverageNumber.Push(imgdata.Length);
                             var device = Devices.ToList().Find(p => p.Sn == (string) sn);
-                            if (device != null) device.ScreenShot = ByteToBitmapSource((byte[]) data);
+                            if (device != null && device.Sn != MirrorScreen.CurrentDevice?.Sn)
+                            {
+                                device.ScreenShot = ByteToBitmapSource((byte[]) data);
+                            }
                         }));
                 });
             }
@@ -882,10 +912,11 @@ namespace Xky.Core
                 ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
                 PushAllNode(node);
                 //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node);  });
+                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
                 return node;
             }
         }
+
         private static void PushAllNode(Node n)
         {
             lock ("allnodes")
@@ -901,6 +932,7 @@ namespace Xky.Core
                 }
             }
         }
+
         /// <summary>
         ///     核心服务器事件
         /// </summary>
