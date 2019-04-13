@@ -1,8 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
+using Xky.Core.Common;
 
 namespace Xky.Platform.UserControl.Pages
 {
@@ -42,7 +44,7 @@ namespace Xky.Platform.UserControl.Pages
                     Thread.Sleep(500);
 
                     //启动局域网节点探查器
-                   
+
 
                     Common.UiAction(() =>
                     {
@@ -51,7 +53,7 @@ namespace Xky.Platform.UserControl.Pages
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();
                         Common.MyMainControl.LoadModules_Panel();
-                    }); 
+                    });
                 }
                 else
                 {

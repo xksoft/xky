@@ -178,7 +178,15 @@ namespace Xky.Platform.UserControl.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Client.StartAction(() => { Console.WriteLine(device.ScriptEngine.CreateHardware().Json); });
+                Client.StartAction(() =>
+                {
+                    var xmodule = XModuleHelper.LoadXModules("modules\\debug\\xky.xmodule.demo.dll").First();
+                    if (xmodule != null)
+                    {
+                        xmodule.Device = device;
+                        xmodule.Action();
+                    }
+                });
             }
         }
     }

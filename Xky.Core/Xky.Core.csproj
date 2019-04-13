@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Common\AverageNumber.cs" />
+    <Compile Include="Common\FileHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />
     <Compile Include="MirrorScreen.xaml.cs">
@@ -110,6 +111,8 @@
     <Compile Include="Rsa.cs" />
     <Compile Include="Script.cs" />
     <Compile Include="XModule.cs" />
+    <Compile Include="XModuleHelper.cs" />
+    <Compile Include="XUserControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

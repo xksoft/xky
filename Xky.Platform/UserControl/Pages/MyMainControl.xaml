@@ -186,7 +186,7 @@
         <Grid Grid.Column="1" Background="{StaticResource  BackgroundColor3}" Width="300">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-           
+
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -195,10 +195,10 @@
                                  TextBoxBackground="{StaticResource  BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="搜索在线设备"
                                  WindowChrome.IsHitTestVisibleInChrome="True" />
-                <local:MyTagLabel  x:Name="SearchResultLabel"    Visibility="Collapsed"  HorizontalAlignment="Right"
-                                   TabLabelText="搜索结果" Margin="0,0,20,0"
-                                   TabLabelBackground="{StaticResource BackgroundColor2}"
-                                   TabLabelForeground="Lime" IsHitTestVisible="False"/>
+                <local:MyTagLabel x:Name="SearchResultLabel" Visibility="Collapsed" HorizontalAlignment="Right"
+                                  TabLabelText="搜索结果" Margin="0,0,20,0"
+                                  TabLabelBackground="{StaticResource BackgroundColor2}"
+                                  TabLabelForeground="Lime" IsHitTestVisible="False" />
 
             </Grid>
 
@@ -221,35 +221,8 @@
 
 
                         <Separator />
-                        <MenuItem Header="设为调试机器" IsEnabled="False">
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/setdebug.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
 
-                        <MenuItem Header="获取调试授权码">
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/debugcode.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <Separator />
-                        <MenuItem Header="升级系统">
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/download.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <Separator />
-                        <MenuItem Header="重启当前设备">
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/restart.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="删除设备" Click="MenuItem_OnClick">
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="say hello" Click="MenuItem_OnClick" />
+                        <MenuItem Header="测试模块" Click="MenuItem_OnClick" />
 
                     </ContextMenu>
                 </ListBox.ContextMenu>
@@ -312,13 +285,26 @@
                                     <local:MyTagLabel
                                         TabLabelForeground="{Binding Source={StaticResource White},Converter={StaticResource HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
 
 
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}" Margin="2" Height="5" Width="200" TrackBrush="#1b2025" IndicatorBrush="#343c43" DangerBrush="#e30000" DangerValue="0.4"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#343c43"  DangerBrush="#e30000" DangerValue="0.4"/>
-                                    <local:MyProgressbar Maximum="100" Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}" Margin="2"  Height="5" Width="200" TrackBrush="#1b2025"  IndicatorBrush="#565f66"  DangerBrush="#e30000" DangerValue="0.8"/>
-                                  
+                                    <local:MyProgressbar Maximum="100"
+                                                         Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}"
+                                                         Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
+                                                         IndicatorBrush="#343c43" DangerBrush="#e30000"
+                                                         DangerValue="0.4" />
+                                    <local:MyProgressbar Maximum="100"
+                                                         Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}"
+                                                         Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
+                                                         IndicatorBrush="#343c43" DangerBrush="#e30000"
+                                                         DangerValue="0.4" />
+                                    <local:MyProgressbar Maximum="100"
+                                                         Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}"
+                                                         Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
+                                                         IndicatorBrush="#565f66" DangerBrush="#e30000"
+                                                         DangerValue="0.8" />
+
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
@@ -522,7 +508,7 @@
             </Viewbox>
 
         </Grid>
-        <Grid Grid.Column="3" Background="#EFF2F5" >
+        <Grid Grid.Column="3" Background="#EFF2F5">
             <!--模块列表开始-->
             <Grid>
                 <Grid.RowDefinitions>
