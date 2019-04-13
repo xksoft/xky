@@ -2,6 +2,7 @@
 侠客云开放平台SDK_DEMO
 
 ## 下载和运行
+https://github.com/xksoft/xky/releases/latest
 
 
 
