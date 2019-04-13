@@ -200,7 +200,7 @@ namespace Xky.Core
                         CurrentDevice.ScreenShot = CurrentDevice.ScreenShot.Clone();
                 });
 
-            AddLabel("正在获取设备" + model.Sn + "的连接信息..", Colors.White);
+            AddLabel("正在连接设备[" + model.Name + "]..", Colors.GreenYellow);
             CurrentDevice = Client.GetDevice(model.Sn);
 
 
@@ -238,7 +238,6 @@ namespace Xky.Core
                 Path = "/xky",
                 Transports = ImmutableList.Create("websocket")
             };
-            AddLabel("正在连接..", Colors.White);
             _socket = IO.Socket(CurrentDevice.NodeUrl, options);
             _socket.On(Socket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
             _socket.On(Socket.Client.Socket.EventDisconnect, () => { Console.WriteLine("Disconnected"); });
