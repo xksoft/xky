@@ -73,7 +73,8 @@ namespace Xky.Platform
                         Background = Application.Current.Resources["BackgroundColor1"] as Brush,
                         CornerRadius = new CornerRadius(8),
                         Margin = new Thickness(5),
-                        HorizontalAlignment = HorizontalAlignment.Center
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Height = 0
                     };
                     var textBlock = new TextBlock
                     {
@@ -83,23 +84,21 @@ namespace Xky.Platform
                     };
 
                     border.Child = textBlock;
-                   // border.Opacity = 0;
                     foreach (var control in MainWindow.ToastPanel.Children)
                     {
                         if (control is Border aaa)
                         {
-                            aaa.Background = Application.Current.Resources["BackgroundColor3"] as Brush;
                             aaa.Opacity -= 0.1;
                         }
                     }
+
                     MainWindow.ToastPanel.Children.Add(border);
                 });
-//                for (var i = 0; i < 21; i++)
-//                {
-//                    var i1 = i;
-//                    UiAction(() => { border.Opacity = i1 * 0.05; });
-//                    Thread.Sleep(3);
-//                }
+                for (var i = 0; i < 35; i++)
+                {
+                    UiAction(() => { border.Height += 1; });
+                    Thread.Sleep(3);
+                }
 
                 Thread.Sleep(3000);
                 for (var i = 0; i < 50; i++)
