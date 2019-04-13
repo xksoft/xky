@@ -88,6 +88,7 @@ namespace Xky.Platform
                     {
                         if (control is Border aaa)
                         {
+                            aaa.Background = Application.Current.Resources["BackgroundColor3"] as Brush;
                             aaa.Opacity -= 0.1;
                         }
                     }
