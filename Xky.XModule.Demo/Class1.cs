@@ -11,27 +11,30 @@ namespace Xky.XModule.Demo
     {
         public override string Name()
         {
-            return "aaa";
+            return "我是模块的名字";
         }
 
         public override string Description()
         {
-            return "aaa的描述";
+            return "我是模块的描述";
         }
 
         public override void Start()
         {
-            Device.ScriptEngine.Toast("打声招呼 " + mystr, 1);
+            Device.ScriptEngine.Toast("打声招呼 " + MyStr, 1);
         }
 
-        public string mystr = "时间";
+        public string MyStr = "测试字符";
 
 
         public override bool ShowUserControl()
         {
             var aaa = new UserControl1();
+            //ShowDialogPanel会有类似ShowDialog的效果，堵塞线程等待关闭后继续执行
             Core.Client.ShowDialogPanel(aaa);
-            mystr = aaa.txtvalue.Text;
+            //关闭后赋值
+            MyStr = aaa.txtvalue.Text;
+            //返回true让模块继续执行，否则会直接结束
             return true;
         }
     }
