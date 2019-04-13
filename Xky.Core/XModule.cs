@@ -20,6 +20,8 @@ namespace Xky.Core
             return MemberwiseClone();
         }
 
+
+
         /// <summary>
         /// 模块名称
         /// </summary>

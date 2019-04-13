@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Newtonsoft.Json;
@@ -19,8 +20,6 @@ namespace Xky.Platform
     {
         public static MainWindow MainWindow;
         public static MyMainControl MyMainControl;
-
-        private static int _showToastStep;
 
 
         public static void PlaySound(string name)
@@ -62,48 +61,54 @@ namespace Xky.Platform
 
         public static void ShowToast(string toast, Color color, string sound = null)
         {
-            Client.StartAction(async () =>
+            Client.StartAction(() =>
             {
-                _showToastStep++;
-                var currentStep = _showToastStep;
-                var current = (double) 0;
-                UiAction(() => { current = MainWindow.ToastPanel.Opacity; });
-//                if (current > 0)
-//                {
-//                    for (var i = 0; i < 21; i++)
-//                    {
-//                        if (_showToastStep != currentStep)
-//                            break;
-//                        var i1 = i;
-//                        UiAction(() => { MainWindow.ToastPanel.Opacity = current * (20 - i1) * 0.05; });
-//                        await Task.Delay(1);
-//                    }
-//                }
+                Border border = null;
 
                 UiAction(() =>
                 {
                     PlaySound(sound);
-                    MainWindow.ToastText.Text = toast;
-                    MainWindow.ToastText.Foreground = new SolidColorBrush(color);
+                    border = new Border
+                    {
+                        Background = Application.Current.Resources["BackgroundColor1"] as Brush,
+                        CornerRadius = new CornerRadius(8),
+                        Margin = new Thickness(5),
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
+                    var textBlock = new TextBlock
+                    {
+                        Text = toast,
+                        Foreground = new SolidColorBrush(color),
+                        Margin = new Thickness(10)
+                    };
+
+                    border.Child = textBlock;
+                   // border.Opacity = 0;
+                    foreach (var control in MainWindow.ToastPanel.Children)
+                    {
+                        if (control is Border aaa)
+                        {
+                            aaa.Opacity -= 0.1;
+                        }
+                    }
+                    MainWindow.ToastPanel.Children.Add(border);
                 });
-                for (var i = 0; i < 21; i++)
+//                for (var i = 0; i < 21; i++)
+//                {
+//                    var i1 = i;
+//                    UiAction(() => { border.Opacity = i1 * 0.05; });
+//                    Thread.Sleep(3);
+//                }
+
+                Thread.Sleep(3000);
+                for (var i = 0; i < 50; i++)
                 {
-                    if (_showToastStep != currentStep)
-                        break;
-                    var i1 = i;
-                    UiAction(() => { MainWindow.ToastPanel.Opacity = current + i1 * 0.05; });
-                    await Task.Delay(1);
+                    UiAction(() => { border.Opacity -= 0.02; });
+                    Thread.Sleep(20);
                 }
 
-                await Task.Delay(3000);
-                for (var i = 0; i < 26; i++)
-                {
-                    if (_showToastStep != currentStep)
-                        break;
-                    var i1 = i;
-                    UiAction(() => { MainWindow.ToastPanel.Opacity = (25 - i1) * 0.04; });
-                    await Task.Delay(3);
-                }
+                //移除添加的对象
+                UiAction(() => { MainWindow.ToastPanel.Children.Remove(border); });
             });
         }
 
@@ -139,6 +144,7 @@ namespace Xky.Platform
                 {
                     Thread.Sleep(2);
                 }
+
                 frame.Continue = false;
             }).Start();
             Dispatcher.PushFrame(frame);

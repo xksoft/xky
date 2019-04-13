@@ -168,18 +168,15 @@
 
         <!-- Toast -->
         <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0"
-                                Opacity="0"
-                                Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                Opacity="100"
+                                Grid.ColumnSpan="3"  VerticalAlignment="Bottom"  
                                 ZIndex="998"
                                 IsHitTestVisible="False">
             <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
                                   Opacity="0.35" />
             </VirtualizingStackPanel.Effect>
-            <Grid>
-                <Border CornerRadius="8" Background="{StaticResource  BackgroundColor1}" />
-                <TextBlock x:Name="ToastText" Margin="10" Foreground="White" />
-            </Grid>
+
         </VirtualizingStackPanel>
 
         <!-- Status -->
