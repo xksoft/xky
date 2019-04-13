@@ -86,8 +86,8 @@ namespace Xky.Platform.UserControl.Pages
                 if (response.Result)
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.ModulesPanel.Count);
-                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-                    Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
+                   // Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
+                 //   Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else
@@ -137,19 +137,19 @@ namespace Xky.Platform.UserControl.Pages
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-            var btn = (RadioButton) e.Source;
-            if (btn.IsChecked.Value)
-            {
-                if (btn.Tag.ToString() == "所有模块")
-                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-                else
-                    Common.UiAction(() =>
-                    {
-                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
-                            where module.Tags.Contains(btn.Tag.ToString())
-                            select module;
-                    });
-            }
+//            var btn = (RadioButton) e.Source;
+//            if (btn.IsChecked.Value)
+//            {
+//                if (btn.Tag.ToString() == "所有模块")
+//                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
+//                else
+//                    Common.UiAction(() =>
+//                    {
+//                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
+//                            where module.Tags.Contains(btn.Tag.ToString())
+//                            select module;
+//                    });
+//            }
         }
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)

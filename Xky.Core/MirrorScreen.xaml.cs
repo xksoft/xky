@@ -96,73 +96,14 @@ namespace Xky.Core
 
         #region  Loading和日志
 
-//        private void HideLoading()
-//        {
-//            var myBrush = new SolidColorBrush();
-//            var myColorAnimation = new ColorAnimation
-//            {
-//                From = Colors.White,
-//                To = Colors.Transparent,
-//                Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-//                AutoReverse = false
-//            };
-//            myColorAnimation.Completed += MyColorAnimation_Completed;
-//
-//            myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-//
-//            ScreenLoading.Foreground = myBrush;
-//        }
-
-
-//        private void HideLabel(Label label)
-//        {
-//            Client.StartAction(async () =>
-//            {
-//                await Task.Delay(TimeSpan.FromMilliseconds(3 * 1000));
-//                Dispatcher.Invoke(() =>
-//                {
-//                    var myBrush = new SolidColorBrush();
-//                    // ScreenLoading.IsActive = false;
-//                    var myColorAnimation = new ColorAnimation
-//                    {
-//                        From = ((SolidColorBrush) label.Foreground).Color,
-//                        To = Colors.Transparent,
-//                        Duration = new Duration(TimeSpan.FromMilliseconds(1000)),
-//                        AutoReverse = false
-//                    };
-//                    myColorAnimation.Completed += delegate { LogPanel.Children.Remove(label); };
-//                    myBrush.BeginAnimation(SolidColorBrush.ColorProperty, myColorAnimation, HandoffBehavior.Compose);
-//                    label.Foreground = myBrush;
-//                });
-//            });
-//        }
-
+        /// <summary>
+        /// 添加日志
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="color"></param>
         public void AddLabel(string msg, Color color)
         {
             OnShowLog?.Invoke(this, msg, color);
-//            Dispatcher.Invoke(() =>
-//            {
-//                if (IsShowLog)
-//                {
-//                    var label = new Label
-//                    {
-//                        Content = msg,
-//                        Effect = new DropShadowEffect
-//                        {
-//                            Color = Colors.Black,
-//                            Direction = 300,
-//                            ShadowDepth = 1,
-//                            BlurRadius = 0,
-//                            Opacity = 1
-//                        },
-//                        FontSize = 14,
-//                        Foreground = new SolidColorBrush(color),
-//                        Style = null
-//                    };
-//                    LogPanel.Children.Add(label);
-//                    HideLabel(label);
-//                }
-//            });
         }
 
         #endregion
@@ -247,14 +188,27 @@ namespace Xky.Core
         }
 
 
+        /// <summary>
+        /// 给设备发送事件
+        /// </summary>
+        /// <param name="jObject"></param>
         public void EmitEvent(JObject jObject)
         {
             _socket?.Emit("event", jObject);
         }
 
 
+        /// <summary>
+        /// 显示日志
+        /// </summary>
         public event ShowLog OnShowLog;
 
+        /// <summary>
+        /// 显示日志
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="log"></param>
+        /// <param name="color"></param>
         public delegate void ShowLog(object sender, string log, Color color);
 
         #endregion
@@ -292,26 +246,6 @@ namespace Xky.Core
                     }
                 }));
 
-        /// <summary>
-        /// 是否显示日志
-        /// </summary>
-        public bool IsShowLog
-        {
-            get => (bool) GetValue(IsShowLogProperty);
-            set => SetValue(IsShowLogProperty, value);
-        }
-
-        /// <summary>
-        /// 是否显示日志属性
-        /// </summary>
-        public static readonly DependencyProperty IsShowLogProperty =
-            DependencyProperty.Register("IsShowLog", typeof(bool), typeof(MirrorScreen), new PropertyMetadata(true,
-                (o, e) =>
-                {
-                    var li = (MirrorScreen) o;
-
-                    li.LogPanel.Visibility = (bool) e.NewValue == false ? Visibility.Collapsed : Visibility.Visible;
-                }));
 
         /// <summary>
         /// 是否显示箭头
