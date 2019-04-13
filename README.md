@@ -1,7 +1,8 @@
-# XkyPlatform
-侠客云开放平台SDK_DEMO
+# 侠客SDK开源项目
+侠客SDK是侠客软件整合这几年的研发成果开放出来的一个开源项目，它实现了PC控制安卓设备的一切基础框架，把复杂的接口封装简单化提供简洁明了的接口供开发者使用，本SDK客户端所有项目完全开源，欢迎star和提issues交流。
 
 ## 下载和运行
+https://github.com/xksoft/xky/releases/latest
 
 
 
