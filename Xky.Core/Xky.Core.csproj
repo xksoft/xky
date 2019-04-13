@@ -112,7 +112,6 @@
     <Compile Include="Script.cs" />
     <Compile Include="XModule.cs" />
     <Compile Include="XModuleHelper.cs" />
-    <Compile Include="XUserControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

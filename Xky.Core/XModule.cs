@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Xky.Core.Model;
 
 namespace Xky.Core
@@ -27,12 +28,14 @@ namespace Xky.Core
             return MemberwiseClone();
         }
 
+
         /// <summary>
-        /// 用户参数面板
+        /// 显示用户赋值界面
         /// </summary>
-        public virtual XUserControl UserControl()
+        /// <returns>是否继续</returns>
+        public virtual bool ShowUserControl()
         {
-            return null;
+            return true;
         }
 
         /// <summary>
@@ -51,6 +54,6 @@ namespace Xky.Core
         /// 模块动作脚本
         /// </summary>
         /// <returns></returns>
-        public abstract void Action();
+        public abstract void Start();
     }
 }

@@ -37,8 +37,8 @@ namespace Xky.Platform
             Activated += MainWindow_Activated;
             Deactivated += MainWindow_Deactivated;
             SizeChanged += MainWindow_OnSizeChanged;
-
-
+            Client.CloseDialogPanelEvent += Client_CloseDialogPanelEvent;
+            Client.ShowDialogPanelEvent += Client_ShowDialogPanelEvent;
             try
             {
                 using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
@@ -72,6 +72,16 @@ namespace Xky.Platform
 
             //启动状态定时器
             new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
+        }
+
+        private void Client_ShowDialogPanelEvent(System.Windows.Controls.UserControl control)
+        {
+            Common.ShowMessageControl(control);
+        }
+
+        private void Client_CloseDialogPanelEvent()
+        {
+            Common.CloseMessageControl();
         }
 
         private void MainWindow_Elapsed(object sender, ElapsedEventArgs e)
@@ -125,12 +135,12 @@ namespace Xky.Platform
                         break;
                     }
                     case "Node":
-                        {
-                            var page = new MyNode();
-                            _userControlDic.Add(pagename, page);
-                            MainContent.Content = page;
-                            break;
-                        }
+                    {
+                        var page = new MyNode();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
                     case "Task":
                     {
                         var page = new MyTask();
@@ -230,9 +240,9 @@ namespace Xky.Platform
 
         #endregion
 
-        private  void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            var msg = new MyMessageBox(MessageBoxButton.YesNo) {Height = 100, MessageText = "您确认要关闭系统吗？"};
+            var msg = new MyMessageBox(MessageBoxButton.YesNo) {MessageText = "您确认要关闭系统吗？"};
             Common.ShowMessageControl(msg);
 
             if (msg.Result != MessageBoxResult.Yes)

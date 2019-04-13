@@ -31,7 +31,9 @@ namespace Xky.Platform.UserControl.Pages
             if (!string.IsNullOrEmpty(SearchText.TextBox1.Text))
             {
                 SearchResultLabel.Visibility = Visibility.Visible;
-                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count>0 ? new SolidColorBrush(Colors.Lime) : new SolidColorBrush(Color.FromRgb(254,65,53));
+                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count > 0
+                    ? new SolidColorBrush(Colors.Lime)
+                    : new SolidColorBrush(Color.FromRgb(254, 65, 53));
                 SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
             }
             else
@@ -58,6 +60,7 @@ namespace Xky.Platform.UserControl.Pages
                         Common.ShowToast("设备加载成功");
                         break;
                     }
+
                     Common.ShowToast(response.Message);
                     Thread.Sleep(1000);
                 }
@@ -69,9 +72,7 @@ namespace Xky.Platform.UserControl.Pages
             Client.StartAction(() =>
             {
                 var response = Client.LoadNodes();
-               
             });
-           
         }
 
         /// <summary>
@@ -164,8 +165,6 @@ namespace Xky.Platform.UserControl.Pages
         }
 
 
-
-
         private void DeviceListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             //var aaa=  DeviceListBox.Items.Cast<UIElement>().Where(x => x.IsVisible);
@@ -183,10 +182,17 @@ namespace Xky.Platform.UserControl.Pages
                     var xmodule = XModuleHelper.LoadXModules("modules\\debug\\xky.xmodule.demo.dll").First();
                     if (xmodule != null)
                     {
-                        xmodule.Device = device;
-                        xmodule.Action();
+                        //显示自定义控件
+                        var isContinue = false;
+                        Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
+                        //是否继续
+                        if (isContinue)
+                        {
+                            xmodule.Device = device;
+                            xmodule.Start();
+                        }
                     }
-                });
+                }, ApartmentState.STA);
             }
         }
     }

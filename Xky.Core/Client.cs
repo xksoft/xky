@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,8 +30,13 @@ namespace Xky.Core
 
         private static string _lastSearchKeyword;
 
-
-        internal static Response Post(string api, JObject json)
+        /// <summary>
+        /// http调用接口
+        /// </summary>
+        /// <param name="api"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        private static Response Post(string api, JObject json)
         {
             try
             {
@@ -70,35 +76,6 @@ namespace Xky.Core
                     Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
                 };
             }
-        }
-
-        internal static async Task<Response> Get(string api, JObject json)
-        {
-            var handler = new HttpClientHandler
-            {
-                AllowAutoRedirect = true
-            };
-            var httpClient = new HttpClient(handler) {Timeout = TimeSpan.FromSeconds(15)};
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
-            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
-            content.Headers.Add("Content-Type", "application/json");
-            var responseMessage = await httpClient.GetAsync("https://api.xky.com/" + api);
-            var jsonResult = JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
-            if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
-                return new Response
-                {
-                    Result = false,
-                    Message = "通讯结果无法解析",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
-                };
-            var resultJson =
-                JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
-            return new Response
-            {
-                Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                Message = resultJson["msg"]?.ToString(),
-                Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
-            };
         }
 
 
@@ -504,8 +481,9 @@ namespace Xky.Core
         ///     启动一个任务
         /// </summary>
         /// <param name="action"></param>
+        /// <param name="state"></param>
         /// <returns></returns>
-        public static Thread StartAction(Action action)
+        public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
         {
             var thread = new Thread(() =>
             {
@@ -530,6 +508,7 @@ namespace Xky.Core
                     }
                 }
             }) {IsBackground = true};
+            thread.SetApartmentState(state);
             thread.Start();
             return thread;
         }
@@ -569,29 +548,102 @@ namespace Xky.Core
             }
         }
 
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        /// <param name="control"></param>
+        public static void ShowDialogPanel(UserControl control)
+        {
+            ShowDialogPanelEvent?.Invoke(control);
+        }
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public static void CloseDialogPanel()
+        {
+            CloseDialogPanelEvent?.Invoke();
+        }
+
+
+        #region 全局事件
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public static event OnCloseDialogPanel CloseDialogPanelEvent;
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public delegate void OnCloseDialogPanel();
+
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        public static event OnShowDialogPanel ShowDialogPanelEvent;
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        public delegate void OnShowDialogPanel(UserControl control);
+
+        #endregion
+
         #region 公开属性
 
+        /// <summary>
+        /// 授权信息
+        /// </summary>
         public static License License;
+
+        /// <summary>
+        /// 是否连接核心
+        /// </summary>
         public static bool CoreConnected;
+
+        /// <summary>
+        /// 主ui
+        /// </summary>
         public static Window MainWindow;
 
+        /// <summary>
+        /// 并发线程数
+        /// </summary>
         public static int Threads;
 
+        /// <summary>
+        /// 节点信息
+        /// </summary>
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+
         public static readonly ObservableCollection<Node> AllNodes = new ObservableCollection<Node>();
         public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
         public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+
+        /// <summary>
+        /// 所有设备
+        /// </summary>
         public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
+
+        /// <summary>
+        /// 面板上显示的设备
+        /// </summary>
         public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
+
         public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
 
         public static readonly ObservableCollection<string> ModulesPanelTags =
             new ObservableCollection<string> {"所有模块"};
 
+        /// <summary>
+        /// 速率计数器
+        /// </summary>
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
-
 
         #region  内部方法
 
