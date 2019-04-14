@@ -1,11 +1,10 @@
-﻿<UserControl xmlns:Core="clr-namespace:Xky.Core;assembly=Xky.Core"
+﻿<UserControl xmlns:core="clr-namespace:Xky.Core;assembly=Xky.Core"
              x:Class="Xky.Platform.UserControl.Pages.MyMainControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
-             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
              mc:Ignorable="d"
              d:DesignHeight="850" d:DesignWidth="1200">
 
@@ -29,7 +28,7 @@
             </Border>
 
             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
-            <Button>Test</Button>
+ 
             <ListBox x:Name="TagListBox" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="15"
                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
 
@@ -393,37 +392,37 @@
                                       Opacity="1" />
                 </Border.Effect>
             </Border>
-            <VirtualizingStackPanel Orientation="Horizontal">
-                <Viewbox MaxHeight="920" MaxWidth="450" Margin="20,20,0,20">
+
+
+            <Viewbox MaxHeight="920" MaxWidth="508" Margin="5">
+                <VirtualizingStackPanel Orientation="Horizontal">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
-                          Height="920" Width="32">
-                        <StackPanel MaxHeight="768" Background="{StaticResource BackgroundColor2}" Width="32">
-                            <Button Cursor="Hand" Focusable="False" Width="32" Height="32"
-                     >
+                          Height="920">
+                        <VirtualizingStackPanel Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
+                                                Width="48" MaxHeight="768" Margin="0,0,10,0">
+                            <Button Cursor="Hand" Focusable="False" Width="48" Height="48"
+                         WindowChrome.IsHitTestVisibleInChrome="True">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="{x:Type Button}">
                                                     <Image x:Name="btnbg"
-                                               Source="../../Resources/Icon/addtocloud.png"
+                                               Source="../../Resources/Icon/volume-up.png"
                                                Stretch="Fill" Width="32" Height="32" />
-
                                                     <ControlTemplate.Triggers>
+
+
                                                         <Trigger Property="IsMouseOver" Value="True">
                                                             <Setter Property="Source"
-                                                        Value="../../Resources/Icon/addtocloud.png"
+                                                        Value="../../Resources/Icon/volume-up.png"
                                                         TargetName="btnbg" />
                                                         </Trigger>
-
-
                                                         <Trigger Property="IsPressed" Value="True">
                                                             <Setter Property="Source"
-                                                        Value="../../Resources/Icon/addtocloud.png"
+                                                        Value="../../Resources/Icon/volume-up.png"
                                                         TargetName="btnbg" />
                                                         </Trigger>
-
-
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -431,12 +430,10 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                        </StackPanel>
+                        </VirtualizingStackPanel>
                     </Grid>
-                </Viewbox>
-                <Viewbox MaxHeight="920" MaxWidth="450" Margin="20">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
-                          Height="920" Width="450">
+                          Height="920" Width="450" >
                         <Grid.Background>
                             <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/Device/device_android1.png" />
                         </Grid.Background>
@@ -452,7 +449,7 @@
                             <RowDefinition Height="10*" />
                         </Grid.RowDefinitions>
 
-                        <Core:MirrorScreen x:Name="MyMirrorScreen" MaxWidth="432" Grid.ColumnSpan="5" Grid.RowSpan="2"
+                        <core:MirrorScreen x:Name="MyMirrorScreen" MaxWidth="432" Grid.ColumnSpan="5" Grid.RowSpan="2"
                                            MaxHeight="768" IsShowArrow="False" IsShowFps="False"
                                            OnShowLog="MyMirrorScreen_OnOnShowLog" />
                         <Button Click="Btn_back" Cursor="Hand" Focusable="False" Width="32" Height="32"
@@ -546,9 +543,9 @@
                             </Button.Style>
                         </Button>
                     </Grid>
+                </VirtualizingStackPanel>
+            </Viewbox>
 
-                </Viewbox>
-            </VirtualizingStackPanel>
         </Grid>
 
         <!-- <Grid Grid.Column="3" Background="#EFF2F5"> -->

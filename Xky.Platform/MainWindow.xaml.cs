@@ -39,6 +39,8 @@ namespace Xky.Platform
             SizeChanged += MainWindow_OnSizeChanged;
             Client.CloseDialogPanelEvent += Client_CloseDialogPanelEvent;
             Client.ShowDialogPanelEvent += Client_ShowDialogPanelEvent;
+
+            //基于dip决定高分屏字体
             try
             {
                 using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
@@ -60,6 +62,7 @@ namespace Xky.Platform
                 // ignored
             }
 
+            //默认风格
             _buttonStatus.Baseurl = "Resources/Icon/ControlBox/drak/";
             DataContext = _buttonStatus;
 
@@ -221,6 +224,7 @@ namespace Xky.Platform
                 };
                 WindowChrome.SetWindowChrome(this, wc);
             }
+            Console.WriteLine(this.Height+" "+this.Width);
         }
 
         private void Btn_close(object sender, RoutedEventArgs e)

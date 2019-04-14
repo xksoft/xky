@@ -389,5 +389,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\myico.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
