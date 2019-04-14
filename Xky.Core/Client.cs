@@ -553,7 +553,7 @@ namespace Xky.Core
         /// 弹出面板
         /// </summary>
         /// <param name="control"></param>
-        public static void ShowDialogPanel(UserControl control)
+        public static void ShowDialogPanel(System.Windows.Controls.UserControl control)
         {
             ShowDialogPanelEvent?.Invoke(control);
         }
@@ -588,7 +588,7 @@ namespace Xky.Core
         /// <summary>
         /// 弹出面板
         /// </summary>
-        public delegate void OnShowDialogPanel(UserControl control);
+        public delegate void OnShowDialogPanel(System.Windows.Controls.UserControl control);
 
         #endregion
 

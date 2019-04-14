@@ -1,16 +1,17 @@
-﻿<UserControl x:Class="Xky.Platform.UserControl.Pages.MyLogin"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Xky.Platform.UserControl"
+             xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core" x:Class="Xky.Platform.UserControl.Pages.MyLogin"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1300">
-    <Grid Background="{StaticResource  BackgroundColor4}">
+    <Grid Background="{StaticResource BackgroundColor4}">
         <VirtualizingStackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <local:MyTextBox x:Name="LicenseKey" Height="41" Width="314" TextBoxCornerRadius="5"
-                                 TextBoxBackground="{StaticResource  BackgroundColor1}"
+                                 TextBoxBackground="{StaticResource BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="请输入32位授权码" />
                 <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" ButtonText="授权" Width="102" />
                 <Button Style="{DynamicResource btn-primary}" Margin="10,0,0,0" Content="授权" Width="102" />
@@ -18,6 +19,9 @@
             <TextBlock Foreground="White" Text="本开源程序为侠客SDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问https://www.xky.com免费申请"
                        Margin="0,10,0,0" />
         </VirtualizingStackPanel>
+
+
+        <UserControl:MyIconButton HorizontalAlignment="Left" Height="286" Margin="222,71,0,0" VerticalAlignment="Top" Width="299" Icon="../../Resources/Icon/volume-up.png"/>
 
 
     </Grid>
