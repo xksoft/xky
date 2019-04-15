@@ -40,7 +40,11 @@
                                         <Setter Property="Background" TargetName="Border"
                                                 Value="{Binding Path=Background_Pressed}" />
                                     </Trigger>
-                                </ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Background" TargetName="Border"
+                                                Value="{Binding  Background,Converter={ lib:HoverColorConverter},ConverterParameter=-5}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
