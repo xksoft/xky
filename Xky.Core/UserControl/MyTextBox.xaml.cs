@@ -25,7 +25,7 @@ namespace Xky.Core.UserControl
 
         public  static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(MyTextBox),
-                new PropertyMetadata(null));
+                new PropertyMetadata(""));
 
         public static readonly DependencyProperty WaterTextProperty =
             DependencyProperty.Register("WaterText", typeof(string), typeof(MyTextBox),

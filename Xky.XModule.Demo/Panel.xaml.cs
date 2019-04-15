@@ -20,20 +20,34 @@ namespace Xky.XModule.Demo
     /// <summary>
     /// UserControl1.xaml 的交互逻辑
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class Panel : UserControl
     {
-        public UserControl1()
+        public Panel()
         {
           
             InitializeComponent();
         }
 
-        public Class1 Module;
+        public TestModule Module;
+        private void btn_file_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.DefaultExt = ".txt";
+            ofd.Filter = "txt file|*.txt";
+            if (ofd.ShowDialog() == true)
+            {
+                text_filename.Text = ofd.FileName;
+            }
 
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-    
-            Client.CloseDialogPanel();
+            if (text_filename.Text.Length == 0)
+            {
+                MessageBox.Show("请选择文件！");
+            }
+            else { Client.CloseDialogPanel();}
+            
         }
     }
 }

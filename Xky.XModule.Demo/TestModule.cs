@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Xky.XModule.Demo
 {
-    public class Class1 : Core.XModule
+    public class TestModule : Core.XModule
     {
         public override string Name()
         {
@@ -21,7 +21,7 @@ namespace Xky.XModule.Demo
 
         public override void Start()
         {
-            Device.ScriptEngine.Toast("打声招呼 " + MyStr, 1);
+            Device.ScriptEngine.Toast("用户名：" + MyStr, 1);
         }
 
         public string MyStr = "测试字符";
@@ -29,11 +29,11 @@ namespace Xky.XModule.Demo
 
         public override bool ShowUserControl()
         {
-            var aaa = new UserControl1();
+            var panel = new Panel();
             //ShowDialogPanel会有类似ShowDialog的效果，堵塞线程等待关闭后继续执行
-            Core.Client.ShowDialogPanel(aaa);
+            Core.Client.ShowDialogPanel(panel);
             //关闭后赋值
-            MyStr = aaa.textvalue.Text;
+            MyStr = panel.text_username.Text;
             //返回true让模块继续执行，否则会直接结束
             return true;
         }
