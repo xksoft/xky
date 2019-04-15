@@ -86,8 +86,8 @@ namespace Xky.Platform.UserControl.Pages
                 if (response.Result)
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.ModulesPanel.Count);
-                   // Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-                 //   Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
+                    // Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
+                    //   Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else
@@ -122,39 +122,39 @@ namespace Xky.Platform.UserControl.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
         }
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-//            var btn = (RadioButton) e.Source;
-//            if (btn.IsChecked.Value)
-//            {
-//                if (btn.Tag.ToString() == "所有模块")
-//                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-//                else
-//                    Common.UiAction(() =>
-//                    {
-//                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
-//                            where module.Tags.Contains(btn.Tag.ToString())
-//                            select module;
-//                    });
-//            }
+            //            var btn = (RadioButton) e.Source;
+            //            if (btn.IsChecked.Value)
+            //            {
+            //                if (btn.Tag.ToString() == "所有模块")
+            //                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
+            //                else
+            //                    Common.UiAction(() =>
+            //                    {
+            //                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
+            //                            where module.Tags.Contains(btn.Tag.ToString())
+            //                            select module;
+            //                    });
+            //            }
         }
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
+            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -195,5 +195,11 @@ namespace Xky.Platform.UserControl.Pages
                 }, ApartmentState.STA);
             }
         }
+        private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            string tag = ((MyImageButton)e.Source).Tag.ToString();
+            MessageBox.Show(tag);
+        }
     }
+   
 }

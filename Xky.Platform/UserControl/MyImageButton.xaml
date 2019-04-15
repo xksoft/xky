@@ -17,7 +17,7 @@
                                 <Border x:Name="Border" CornerRadius="{Binding Path=CornerRadius}"
                                             Background="{Binding Path=Background}" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image x:Name="Image" VerticalAlignment="Center" Stretch="UniformToFill"   Source="{Binding Path=Image}" Height="{Binding Path=Image_Height}"  Width="{Binding Path=Image_Width}" Margin="0,0,5,0"></Image>
+                                    <Image x:Name="Image" VerticalAlignment="Center" Stretch="UniformToFill"   Source="{Binding Path=Image}" Height="{Binding Path=Image_Height}"  Width="{Binding Path=Image_Width}"></Image>
                                 </StackPanel>
 
                             </Grid>

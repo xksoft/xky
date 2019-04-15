@@ -152,7 +152,7 @@ namespace Xky.Platform.UserControl
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            RoutedEventArgs newEventArgs = new RoutedEventArgs(MyButton.ClickEvent);
+            RoutedEventArgs newEventArgs = new RoutedEventArgs(MyImageButton.ClickEvent);
             RaiseEvent(newEventArgs);
         }
     }
