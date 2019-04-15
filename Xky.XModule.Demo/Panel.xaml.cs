@@ -27,7 +27,7 @@ namespace Xky.XModule.Demo
           
             InitializeComponent();
         }
-
+        public bool run = false;
         public TestModule Module;
         private void btn_file_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +46,7 @@ namespace Xky.XModule.Demo
             {
                 MessageBox.Show("请选择文件！");
             }
-            else { Client.CloseDialogPanel();}
+            else { run = true; Client.CloseDialogPanel();}
             
         }
         private void btn_cancel_Click(object sender, RoutedEventArgs e)

@@ -21,11 +21,12 @@ namespace Xky.XModule.Demo
 
         public override void Start()
         {
-            Device.ScriptEngine.Toast("用户名：" + MyStr, 1);
+           Device.ScriptEngine.Toast("用户名：" + MyStr, 1); 
+          
         }
 
         public string MyStr = "测试字符";
-
+     
 
         public override bool ShowUserControl()
         {
@@ -35,7 +36,7 @@ namespace Xky.XModule.Demo
             //关闭后赋值
             MyStr = panel.text_username.Text;
             //返回true让模块继续执行，否则会直接结束
-            return true;
+            return panel.run;
         }
     }
 }
