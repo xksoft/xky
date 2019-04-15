@@ -13,7 +13,7 @@
                 <local:MyTextBox x:Name="LicenseKey" Height="41" Width="314" TextBoxCornerRadius="5"
                                  TextBoxBackground="{StaticResource BackgroundColor1}"
                                  TextBoxForeground="White" TextBoxWaterText="请输入32位授权码" />
-                <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" Text="授权" Width="102" />
+                <local:MyButton x:Name="BtnLogin" Margin="10,0,0,0" Text="授权" Width="102" Image="/Xky.Platform;component/Resources/Icon/btn_login.png" Image_Height="12" Image_Width="12" />
              
             </VirtualizingStackPanel>
             <TextBlock Foreground="White" Text="本开源程序为侠客SDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问https://www.xky.com免费申请"

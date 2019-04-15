@@ -16,6 +16,17 @@ namespace Xky.Platform.UserControl
             DependencyProperty.Register("Background", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(55, 61, 69))));
 
+        public  static readonly DependencyProperty ImageProperty =
+           DependencyProperty.Register("Image", typeof(ImageSource), typeof(MyButton),
+               new PropertyMetadata(null));
+
+        public static readonly DependencyProperty Image_HeightProperty =
+          DependencyProperty.Register("Image_Height", typeof(int), typeof(MyButton),
+              new PropertyMetadata(16));
+        public static readonly DependencyProperty Image_WidthProperty =
+          DependencyProperty.Register("Image_Width", typeof(int), typeof(MyButton),
+              new PropertyMetadata(16));
+
         public static readonly DependencyProperty Background_MouseOverProperty =
             DependencyProperty.Register("Background_MouseOver", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(65, 71, 79))));
@@ -48,7 +59,21 @@ namespace Xky.Platform.UserControl
             get => (Brush) GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
-
+        public ImageSource Image
+        {
+            get => (ImageSource)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
+        }
+        public int Image_Height
+        {
+            get => (int)GetValue(Image_HeightProperty);
+            set => SetValue(Image_HeightProperty, value);
+        }
+        public int Image_Width
+        {
+            get => (int)GetValue(Image_WidthProperty);
+            set => SetValue(Image_WidthProperty, value);
+        }
         public Brush Background_MouseOver
         {
             get => (Brush) GetValue(Background_MouseOverProperty);
