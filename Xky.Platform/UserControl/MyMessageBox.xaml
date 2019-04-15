@@ -10,9 +10,9 @@
         <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="{Binding Path=MessageText}" Margin="5,5,5,10" Foreground="White" />
             <VirtualizingStackPanel Orientation="Horizontal">
-                <UserControl:MyButton x:Name="BtnOk" Margin="5" ButtonText="OK" Width="102" Height="30" />
-                <UserControl:MyButton x:Name="BtnYes" Margin="5" ButtonText="Yes" Width="102" Height="30" />
-                <UserControl:MyButton x:Name="BtnNo" Margin="5" ButtonText="No" Width="102" Height="30" />
+                <UserControl:MyButton x:Name="BtnOk" Margin="5" Text="OK" Width="102" Height="30" />
+                <UserControl:MyButton x:Name="BtnYes" Margin="5" Text="Yes" Width="102" Height="30" />
+                <UserControl:MyButton x:Name="BtnNo" Margin="5" Text="No" Width="102" Height="30" />
             </VirtualizingStackPanel>
         </VirtualizingStackPanel>
     </Border>

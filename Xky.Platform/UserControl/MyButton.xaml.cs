@@ -8,60 +8,76 @@ namespace Xky.Platform.UserControl
     /// </summary>
     public partial class MyButton
     {
-        public static readonly DependencyProperty ButtonTexttProperty =
-            DependencyProperty.Register("ButtonText", typeof(string), typeof(MyButton),
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(MyButton),
                 new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ButtonBackground1Property =
-            DependencyProperty.Register("ButtonBackground1", typeof(Brush), typeof(MyButton),
+        public new static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(55, 61, 69))));
 
-        public static readonly DependencyProperty ButtonBackground2Property =
-            DependencyProperty.Register("ButtonBackground2", typeof(Brush), typeof(MyButton),
+        public static readonly DependencyProperty Background_MouseOverProperty =
+            DependencyProperty.Register("Background_MouseOver", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(65, 71, 79))));
 
-        public static readonly DependencyProperty ButtonBackground3Property =
-            DependencyProperty.Register("ButtonBackground3", typeof(Brush), typeof(MyButton),
+        public static readonly DependencyProperty Background_PressedProperty =
+            DependencyProperty.Register("Background_Pressed", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(85, 91, 99))));
 
-        public static readonly DependencyProperty ButtonForegroundProperty =
-            DependencyProperty.Register("ButtonForeground", typeof(Brush), typeof(MyButton),
+        public new static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
+        public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MyButton));
+
+       
         public MyButton()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        public string ButtonText
+        public string Text
         {
-            get => (string) GetValue(ButtonTexttProperty);
-            set => SetValue(ButtonTexttProperty, value);
+            get => (string) GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
-        public Brush ButtonBackground1
+        public new Brush Background
         {
-            get => (Brush) GetValue(ButtonBackground1Property);
-            set => SetValue(ButtonBackground1Property, value);
+            get => (Brush) GetValue(BackgroundProperty);
+            set => SetValue(BackgroundProperty, value);
         }
 
-        public Brush ButtonBackground2
+        public Brush Background_MouseOver
         {
-            get => (Brush) GetValue(ButtonBackground2Property);
-            set => SetValue(ButtonBackground2Property, value);
+            get => (Brush) GetValue(Background_MouseOverProperty);
+            set => SetValue(Background_MouseOverProperty, value);
         }
 
-        public Brush ButtonBackground3
+        public Brush Background_Pressed
         {
-            get => (Brush) GetValue(ButtonBackground3Property);
-            set => SetValue(ButtonBackground3Property, value);
+            get => (Brush) GetValue(Background_PressedProperty);
+            set => SetValue(Background_PressedProperty, value);
         }
 
-        public Brush ButtonForeground
+        public new Brush Foreground
         {
-            get => (Brush) GetValue(ButtonForegroundProperty);
-            set => SetValue(ButtonForegroundProperty, value);
+            get => (Brush) GetValue(ForegroundProperty);
+            set => SetValue(ForegroundProperty, value);
+        }
+        public event RoutedEventHandler Click
+        {
+            add { AddHandler(ClickEvent, value); }
+            remove { RemoveHandler(ClickEvent, value); }
+        }
+
+      
+      
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RoutedEventArgs newEventArgs = new RoutedEventArgs(MyButton.ClickEvent);
+            RaiseEvent(newEventArgs);
         }
     }
 }

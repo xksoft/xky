@@ -16,7 +16,7 @@ namespace Xky.Platform.UserControl.Pages
         public MyLogin()
         {
             InitializeComponent();
-            BtnLogin.Button1.Click += Login_Click;
+            BtnLogin.Click += Login_Click;
             Client.StartAction(() =>
             {
                 var json = Common.LoadJson("license");
@@ -32,7 +32,7 @@ namespace Xky.Platform.UserControl.Pages
             {
                 Common.UiAction(() =>
                 {
-                    BtnLogin.ButtonText = "正在授权";
+                    BtnLogin.Text = "正在授权";
                     BtnLogin.IsEnabled = false;
                 });
 
@@ -62,7 +62,7 @@ namespace Xky.Platform.UserControl.Pages
 
                 Common.UiAction(() =>
                 {
-                    BtnLogin.ButtonText = "授权";
+                    BtnLogin.Text = "授权";
                     BtnLogin.IsEnabled = true;
                 });
             });

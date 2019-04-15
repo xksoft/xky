@@ -11,9 +11,6 @@
 
     <Border Background="{Binding TrackBrush, RelativeSource={RelativeSource AncestorType=UserControl}}" CornerRadius="2">
         <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}" CornerRadius="2" >
-            <!--<Border.Effect>
-                <DropShadowEffect BlurRadius="5" ShadowDepth="0" Color="#000"/>
-            </Border.Effect>-->
             <Border Margin="1" Width="{Binding ProgressBarWidth, ElementName=uc}" CornerRadius="2"  HorizontalAlignment="Left"  Background="{Binding FForeground, RelativeSource={RelativeSource AncestorType=UserControl}}">
             </Border>
         </Border>

@@ -38,13 +38,9 @@
                     <Label FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,25,0,0">全部任务</Label>
                     <StackPanel Orientation="Horizontal">
                         <UserControl:MyButton x:Name="BtnLogin" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                              Margin="0,10,0,0" ButtonBackground1="{StaticResource BlueLine}"
-                                              ButtonBackground2="{StaticResource BlueLine}" ButtonText="添加任务"
+                                              Margin="0,10,0,0" Background="{StaticResource BlueLine}"
+                                              Background_MouseOver="{StaticResource BlueLine}" Text="添加任务"
                                               Width="102" Height="32" />
-
-                        <UserControl:MyProgressbar Maximum="100" Value="80" Margin="2" Width="250"  TrackBrush="Red" IndicatorBrush="Yellow">
-                         
-                        </UserControl:MyProgressbar>
 
                     </StackPanel>
 

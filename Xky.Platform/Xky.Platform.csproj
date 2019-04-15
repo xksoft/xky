@@ -93,6 +93,9 @@
     <Compile Include="UserControl\MyMessageBox.xaml.cs">
       <DependentUpon>MyMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\MyImageButton.xaml.cs">
+      <DependentUpon>MyImageButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Pages\MyLogin.xaml.cs">
       <DependentUpon>MyLogin.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\MyImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControl\Pages\MyLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,10 +182,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Pages\MyTask.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

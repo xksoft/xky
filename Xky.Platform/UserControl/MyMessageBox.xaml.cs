@@ -11,9 +11,9 @@ namespace Xky.Platform.UserControl
         public MyMessageBox(MessageBoxButton button)
         {
             InitializeComponent();
-            BtnOk.Button1.Click += BtnOk_Click;
-            BtnYes.Button1.Click += BtnYes_Click;
-            BtnNo.Button1.Click += BtnNo_Click;
+            BtnOk.Click += BtnOk_Click;
+            BtnYes.Click += BtnYes_Click;
+            BtnNo.Click += BtnNo_Click;
             switch (button)
             {
                 case MessageBoxButton.OK:

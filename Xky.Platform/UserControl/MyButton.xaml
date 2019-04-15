@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Cursor="Hand">
-        <Button x:Name="Button1">
+   
+        <Button  Click="Button_Click" Cursor="Hand">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="BorderThickness" Value="0" />
@@ -15,19 +15,20 @@
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid>
                                     <Border x:Name="Border" CornerRadius="5"
-                                            Background="{Binding Path=ButtonBackground1}" />
+                                            Background="{Binding Path=Background}" />
+                                    <Image Source="/Xky.Platform;component/Resources/Icon/delete.png" Stretch="None" HorizontalAlignment="Left"></Image>
                                     <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                               Foreground="{Binding Path=ButtonForeground}"
-                                               Text="{Binding Path=ButtonText}" />
+                                               Foreground="{Binding Path=Foreground}"
+                                               Text="{Binding Path=Text}" />
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" TargetName="Border"
-                                                Value="{Binding Path=ButtonBackground2}" />
+                                                Value="{Binding Path=Background_MouseOver}" />
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Setter Property="Background" TargetName="Border"
-                                                Value="{Binding Path=ButtonBackground3}" />
+                                                Value="{Binding Path=Background_Pressed}" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -36,5 +37,5 @@
                 </Style>
             </Button.Style>
         </Button>
-    </Grid>
+  
 </UserControl>
