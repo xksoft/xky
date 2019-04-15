@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Xky.Platform.Pages"
     xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
-    x:Class="Xky.Platform.Pages.MyTask"
+    x:Class="Xky.Platform.Pages.Task"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
 

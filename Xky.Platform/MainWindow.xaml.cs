@@ -16,6 +16,7 @@ using Xky.Platform.Pages;
 using Color = System.Windows.Media.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 
+
 namespace Xky.Platform
 {
     /// <summary>
@@ -125,7 +126,7 @@ namespace Xky.Platform
                 {
                     case "Login":
                         {
-                            var page = new MyLogin();
+                            var page = new Login();
                             _userControlDic.Add(pagename, page);
 
                             MainContent.Content = page;
@@ -133,28 +134,28 @@ namespace Xky.Platform
                         }
                     case "MainControl":
                         {
-                            var page = new MyMainControl();
+                            var page = new MainControl();
                             _userControlDic.Add(pagename, page);
                             MainContent.Content = page;
                             break;
                         }
                     case "Node":
                         {
-                            var page = new MyNode();
+                            var page = new Node();
                             _userControlDic.Add(pagename, page);
                             MainContent.Content = page;
                             break;
                         }
                     case "Task":
                         {
-                            var page = new MyTask();
+                            var page = new Xky.Platform.Pages.Task();
                             _userControlDic.Add(pagename, page);
                             MainContent.Content = page;
                             break;
                         }
                     case "Setting":
                         {
-                            var page = new MySetting();
+                            var page = new Setting();
                             _userControlDic.Add(pagename, page);
                             MainContent.Content = page;
                             break;

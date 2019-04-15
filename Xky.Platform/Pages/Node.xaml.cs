@@ -22,10 +22,10 @@ namespace Xky.Platform.Pages
     /// <summary>
     /// MyNode.xaml 的交互逻辑
     /// </summary>
-    public partial class MyNode 
+    public partial class Node 
     {
      
-        public MyNode()
+        public Node()
         {
         
             InitializeComponent();

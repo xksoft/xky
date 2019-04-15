@@ -15,11 +15,11 @@ namespace Xky.Platform.Pages
     /// <summary>
     ///     MyMainControl.xaml 的交互逻辑
     /// </summary>
-    public partial class MyMainControl : System.Windows.Controls.UserControl
+    public partial class MainControl : System.Windows.Controls.UserControl
     {
         private Thread _lastConnectThread;
 
-        public MyMainControl()
+        public MainControl()
         {
             InitializeComponent();
             Common.MyMainControl = this;

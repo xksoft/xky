@@ -75,20 +75,20 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyLogin.xaml.cs">
-      <DependentUpon>MyLogin.xaml</DependentUpon>
+    <Compile Include="Pages\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyMainControl.xaml.cs">
-      <DependentUpon>MyMainControl.xaml</DependentUpon>
+    <Compile Include="Pages\MainControl.xaml.cs">
+      <DependentUpon>MainControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyNode.xaml.cs">
-      <DependentUpon>MyNode.xaml</DependentUpon>
+    <Compile Include="Pages\Node.xaml.cs">
+      <DependentUpon>Node.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MySetting.xaml.cs">
-      <DependentUpon>MySetting.xaml</DependentUpon>
+    <Compile Include="Pages\Setting.xaml.cs">
+      <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyTask.xaml.cs">
-      <DependentUpon>MyTask.xaml</DependentUpon>
+    <Compile Include="Pages\Task.xaml.cs">
+      <DependentUpon>Task.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
@@ -98,23 +98,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\MyLogin.xaml">
+    <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MyMainControl.xaml">
+    <Page Include="Pages\MainControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MyNode.xaml">
+    <Page Include="Pages\Node.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MySetting.xaml">
+    <Page Include="Pages\Setting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MyTask.xaml">
+    <Page Include="Pages\Task.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

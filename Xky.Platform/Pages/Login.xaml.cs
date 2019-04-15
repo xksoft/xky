@@ -11,9 +11,9 @@ namespace Xky.Platform.Pages
     /// <summary>
     ///     MyLogin.xaml 的交互逻辑
     /// </summary>
-    public partial class MyLogin
+    public partial class Login
     {
-        public MyLogin()
+        public Login()
         {
             InitializeComponent();
             BtnLogin.Click += Login_Click;

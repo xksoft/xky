@@ -6,9 +6,9 @@ namespace Xky.Platform.Pages
     /// <summary>
     ///     MyTask.xaml 的交互逻辑
     /// </summary>
-    public partial class MySetting
+    public partial class Setting
     {
-        public MySetting()
+        public Setting()
         {
             InitializeComponent();
         }

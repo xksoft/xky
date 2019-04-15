@@ -6,9 +6,9 @@ namespace Xky.Platform.Pages
     /// <summary>
     ///     MyTask.xaml 的交互逻辑
     /// </summary>
-    public partial class MyTask
+    public partial class Task
     {
-        public MyTask()
+        public Task()
         {
             var R = new Random();
             InitializeComponent();

@@ -19,7 +19,7 @@ namespace Xky.Platform
     public static class Common
     {
         public static MainWindow MainWindow;
-        public static MyMainControl MyMainControl;
+        public static MainControl MyMainControl;
 
 
         public static void PlaySound(string name)
