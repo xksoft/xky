@@ -10,8 +10,9 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Xky.Core;
-using Xky.Platform.UserControl;
-using Xky.Platform.UserControl.Pages;
+using Xky.Core.UserControl;
+using Xky.Platform;
+using Xky.Platform.Pages;
 using Color = System.Windows.Media.Color;
 using FontFamily = System.Windows.Media.FontFamily;
 
@@ -74,7 +75,7 @@ namespace Xky.Platform
             LoginTabItem.ClickDown(null, null);
 
             //启动状态定时器
-            new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
+            new Timer { Interval = 1000, Enabled = true }.Elapsed += MainWindow_Elapsed;
         }
 
         private void Client_ShowDialogPanelEvent(System.Windows.Controls.UserControl control)
@@ -92,16 +93,16 @@ namespace Xky.Platform
             Common.UiAction(() =>
             {
                 CoreStatus.Fill = Client.CoreConnected
-                    ? (SolidColorBrush) FindResource("OnLine")
-                    : (SolidColorBrush) FindResource("OffLine");
+                    ? (SolidColorBrush)FindResource("OnLine")
+                    : (SolidColorBrush)FindResource("OffLine");
 
                 //速率单位换算
                 var bitcount = Client.BitAverageNumber.GetAverageNumber() * 8;
                 string bitspeed;
                 if (bitcount > 1024 * 1024)
-                    bitspeed = (bitcount / (decimal) 1024 / 1024).ToString("F2") + " Mbps";
+                    bitspeed = (bitcount / (decimal)1024 / 1024).ToString("F2") + " Mbps";
                 else if (bitcount > 1024)
-                    bitspeed = (bitcount / (decimal) 1024).ToString("F2") + " Kbps";
+                    bitspeed = (bitcount / (decimal)1024).ToString("F2") + " Kbps";
                 else
                     bitspeed = bitcount + " bps";
 
@@ -123,41 +124,41 @@ namespace Xky.Platform
                 switch (pagename)
                 {
                     case "Login":
-                    {
-                        var page = new MyLogin();
-                        _userControlDic.Add(pagename, page);
+                        {
+                            var page = new MyLogin();
+                            _userControlDic.Add(pagename, page);
 
-                        MainContent.Content = page;
-                        break;
-                    }
+                            MainContent.Content = page;
+                            break;
+                        }
                     case "MainControl":
-                    {
-                        var page = new MyMainControl();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
+                        {
+                            var page = new MyMainControl();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                     case "Node":
-                    {
-                        var page = new MyNode();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
+                        {
+                            var page = new MyNode();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                     case "Task":
-                    {
-                        var page = new MyTask();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
+                        {
+                            var page = new MyTask();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                     case "Setting":
-                    {
-                        var page = new MySetting();
-                        _userControlDic.Add(pagename, page);
-                        MainContent.Content = page;
-                        break;
-                    }
+                        {
+                            var page = new MySetting();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                 }
         }
 
@@ -224,7 +225,7 @@ namespace Xky.Platform
                 };
                 WindowChrome.SetWindowChrome(this, wc);
             }
-            Console.WriteLine(this.Height+" "+this.Width);
+            Console.WriteLine(this.Height + " " + this.Width);
         }
 
         private void Btn_close(object sender, RoutedEventArgs e)
@@ -246,7 +247,7 @@ namespace Xky.Platform
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            var msg = new MyMessageBox(MessageBoxButton.YesNo) {MessageText = "您确认要关闭系统吗？"};
+            var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "您确认要关闭系统吗？" };
             Common.ShowMessageControl(msg);
 
             if (msg.Result != MessageBoxResult.Yes)

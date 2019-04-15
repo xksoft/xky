@@ -72,148 +72,81 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common.cs" />
-    <Compile Include="UserControl\Lib\BooleanToVisibility.cs" />
-    <Compile Include="UserControl\Lib\SwitchConverter.cs" />
-    <Compile Include="UserControl\Lib\HoverColorConverter.cs" />
-    <Compile Include="UserControl\MyButton.xaml.cs">
-      <DependentUpon>MyButton.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MyModuleItem.xaml.cs">
-      <DependentUpon>MyModuleItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyProgressbar.xaml.cs">
-      <DependentUpon>MyProgressbar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyTagItem.xaml.cs">
-      <DependentUpon>MyTagItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyTagLabel.xaml.cs">
-      <DependentUpon>MyTagLabel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyMessageBox.xaml.cs">
-      <DependentUpon>MyMessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyImageButton.xaml.cs">
-      <DependentUpon>MyImageButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\Pages\MyLogin.xaml.cs">
+    <Compile Include="Pages\MyLogin.xaml.cs">
       <DependentUpon>MyLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Pages\MyMainControl.xaml.cs">
+    <Compile Include="Pages\MyMainControl.xaml.cs">
       <DependentUpon>MyMainControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MyTabItem.xaml.cs">
-      <DependentUpon>MyTabItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\MyTextBox.xaml.cs">
-      <DependentUpon>MyTextBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl\Pages\MyNode.xaml.cs">
+    <Compile Include="Pages\MyNode.xaml.cs">
       <DependentUpon>MyNode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Pages\MySetting.xaml.cs">
+    <Compile Include="Pages\MySetting.xaml.cs">
       <DependentUpon>MySetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Pages\MyTask.xaml.cs">
+    <Compile Include="Pages\MyTask.xaml.cs">
       <DependentUpon>MyTask.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="UserControl\MyButton.xaml">
+    <Page Include="Pages\MyLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MyModuleItem.xaml">
+    <Page Include="Pages\MyMainControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MyProgressbar.xaml">
+    <Page Include="Pages\MyNode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MyTagItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyTagLabel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyMessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyImageButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Pages\MyLogin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Pages\MyMainControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyTabItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\MyTextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Pages\MyNode.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Pages\MySetting.xaml">
+    <Page Include="Pages\MySetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Pages\MyTask.xaml">
+    <Page Include="Pages\MyTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Style\Strings.xaml">
+    <Page Include="Style\Animation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Style\ComboBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\DataGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\ToggleButton.xaml">
+    <Page Include="Style\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Style\Animation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\ContextMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\Style\ScrollBars.xaml">
+    <Page Include="Style\ComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Style\Colors.xaml">
+    <Page Include="Style\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\ScrollBars.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\Strings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\ToggleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

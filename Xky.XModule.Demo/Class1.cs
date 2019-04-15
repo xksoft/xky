@@ -33,7 +33,7 @@ namespace Xky.XModule.Demo
             //ShowDialogPanel会有类似ShowDialog的效果，堵塞线程等待关闭后继续执行
             Core.Client.ShowDialogPanel(aaa);
             //关闭后赋值
-            MyStr = aaa.txtvalue.Text;
+            MyStr = aaa.textvalue.Text;
             //返回true让模块继续执行，否则会直接结束
             return true;
         }

@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Platform.Properties;
-using Xky.Platform.UserControl.Pages;
+using Xky.Platform.Pages;
 
 namespace Xky.Platform
 {

@@ -1,0 +1,28 @@
+﻿<Application
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib" mc:Ignorable="d" x:Class="Xky.Core.App"
+             >
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <lib:HoverColorConverter x:Key="HoverColorConverter" />
+            <lib:SwitchConverter x:Key="SwitchConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="UserControl/Style/Colors.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/Strings.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ScrollBars.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ContextMenu.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/Animation.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ToggleButton.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/ComboBox.xaml" />
+                        <ResourceDictionary Source="UserControl/Style/DataGrid.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    </Application>

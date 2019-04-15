@@ -2,25 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:userControl="clr-namespace:Xky.Platform.UserControl"
-             xmlns:lib="clr-namespace:Xky.Platform.UserControl.Lib"
+             xmlns:userControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
         <ResourceDictionary>
-            <lib:HoverColorConverter x:Key="HoverColorConverter" />
-            <lib:SwitchConverter x:Key="SwitchConverter" />
+            
+            <!--<lib:HoverColorConverter x:Key="HoverColorConverter" />
+            <lib:SwitchConverter x:Key="SwitchConverter" />-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="UserControl/Style/Colors.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/Strings.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/ScrollBars.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/ContextMenu.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/Animation.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/ToggleButton.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/ComboBox.xaml" />
-                        <ResourceDictionary Source="UserControl/Style/DataGrid.xaml" />
+                        <ResourceDictionary Source="Style/Colors.xaml" />
+                        <ResourceDictionary Source="Style/Strings.xaml" />
+                        <ResourceDictionary Source="Style/ScrollBars.xaml" />
+                        <ResourceDictionary Source="Style/ContextMenu.xaml" />
+                        <ResourceDictionary Source="Style/Animation.xaml" />
+                        <ResourceDictionary Source="Style/ToggleButton.xaml" />
+                        <ResourceDictionary Source="Style/ComboBox.xaml" />
+                        <ResourceDictionary Source="Style/DataGrid.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
