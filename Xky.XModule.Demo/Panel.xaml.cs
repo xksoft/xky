@@ -40,7 +40,7 @@ namespace Xky.XModule.Demo
             }
 
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
             if (text_filename.Text.Length == 0)
             {
@@ -48,6 +48,12 @@ namespace Xky.XModule.Demo
             }
             else { Client.CloseDialogPanel();}
             
+        }
+        private void btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            
+         Client.CloseDialogPanel(); 
+
         }
     }
 }
