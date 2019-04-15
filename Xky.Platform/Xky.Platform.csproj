@@ -393,10 +393,25 @@
     <Resource Include="Resources\Icon\myico.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icon\volume-up.png" />
+    <Resource Include="Resources\Icon\volume-up-pressed.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\btn_login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-down-pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-up-over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\volume-down-over.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
