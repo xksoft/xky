@@ -46,8 +46,8 @@
                     </StackPanel>
 
                 </StackPanel>
-                <DataGrid Grid.Row="1" x:Name="datagrid_task" GridLinesVisibility="None">
-                    <!--<DataGrid.Columns>
+                  <DataGrid Grid.Row="1" x:Name="datagrid_task" GridLinesVisibility="None">
+                    <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"
 									/>
                         <DataGridTextColumn Header="名称"
@@ -56,7 +56,7 @@
                         <DataGridTextColumn Header="状态"
 									Binding="{Binding Path=State}"
 									Foreground="Black" />
-                    </DataGrid.Columns>-->
+                    </DataGrid.Columns>
 
                 </DataGrid>
             </Grid>

@@ -31,6 +31,17 @@ namespace Xky.Core.UserControl
             DependencyProperty.Register("WaterText", typeof(string), typeof(MyTextBox),
                 new PropertyMetadata(null));
 
+        public  static readonly DependencyProperty AcceptsReturnProperty =
+           DependencyProperty.Register("AcceptsReturn", typeof(bool), typeof(MyTextBox),
+               new PropertyMetadata(false));
+
+        public  static readonly DependencyProperty VerticalScrollBarVisibilityProperty =
+           DependencyProperty.Register("VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(MyTextBox),
+               new PropertyMetadata(ScrollBarVisibility.Hidden));
+        public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty =
+          DependencyProperty.Register("HorizontalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(MyTextBox),
+              new PropertyMetadata(ScrollBarVisibility.Hidden));
+
         public MyTextBox()
         {
             InitializeComponent();
@@ -78,6 +89,22 @@ namespace Xky.Core.UserControl
             set => SetValue(WaterTextProperty, value);
         }
 
+        public bool AcceptsReturn
+        {
+            get => (bool)GetValue(AcceptsReturnProperty);
+            set => SetValue(AcceptsReturnProperty, value);
+        }
+
+        public ScrollBarVisibility VerticalScrollBarVisibility
+        {
+            get => (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty);
+            set => SetValue(VerticalScrollBarVisibilityProperty, value);
+        }
+        public ScrollBarVisibility HorizontalScrollBarVisibility
+        {
+            get => (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty);
+            set => SetValue(HorizontalScrollBarVisibilityProperty, value);
+        }
 
         private void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {

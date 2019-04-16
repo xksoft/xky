@@ -34,8 +34,10 @@
                     <UserControl:MyTextBox x:Name="text_username" WaterText="用户名" Width="200" Height="32"></UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                    <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">密码</Label>
-                    <UserControl:MyTextBox  WaterText="密码" Width="200" Height="32"></UserControl:MyTextBox>
+                    <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">多行输入</Label>
+                       <UserControl:MyTextBox  Width="200" Height="100" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" WaterText="一行一个">
+                      
+                    </UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">下拉框</Label>
