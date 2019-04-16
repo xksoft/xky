@@ -14,14 +14,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="Style/Colors.xaml" />
-                        <ResourceDictionary Source="Style/Strings.xaml" />
-                        <ResourceDictionary Source="Style/ScrollBars.xaml" />
-                        <ResourceDictionary Source="Style/ContextMenu.xaml" />
-                        <ResourceDictionary Source="Style/Animation.xaml" />
-                        <ResourceDictionary Source="Style/ToggleButton.xaml" />
-                        <ResourceDictionary Source="Style/ComboBox.xaml" />
-                        <ResourceDictionary Source="Style/DataGrid.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
+                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
