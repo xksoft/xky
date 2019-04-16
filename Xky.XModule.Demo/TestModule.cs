@@ -30,7 +30,8 @@ namespace Xky.XModule.Demo
 
         public override bool ShowUserControl()
         {
-            var panel = new Panel();
+            var panel = new ModulePanel();
+          
             //ShowDialogPanel会有类似ShowDialog的效果，堵塞线程等待关闭后继续执行
             Core.Client.ShowDialogPanel(panel);
             //关闭后赋值

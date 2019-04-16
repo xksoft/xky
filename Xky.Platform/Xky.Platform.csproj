@@ -314,5 +314,9 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\volume-down-over.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\phonemenu-input-white.png" />
+    <Resource Include="Resources\Icon\phonemenu-stop-white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

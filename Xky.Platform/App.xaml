@@ -6,13 +6,7 @@
              xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
-            
-            <!--<lib:HoverColorConverter x:Key="HoverColorConverter" />
-            <lib:SwitchConverter x:Key="SwitchConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
@@ -24,7 +18,6 @@
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

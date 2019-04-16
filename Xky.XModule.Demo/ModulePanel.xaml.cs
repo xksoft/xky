@@ -20,9 +20,9 @@ namespace Xky.XModule.Demo
     /// <summary>
     /// UserControl1.xaml 的交互逻辑
     /// </summary>
-    public partial class Panel : UserControl
+    public partial class ModulePanel : UserControl
     {
-        public Panel()
+        public ModulePanel()
         {
           
             InitializeComponent();
