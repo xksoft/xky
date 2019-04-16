@@ -17,6 +17,7 @@
                         <ResourceDictionary Source="UserControl/Styles/ToggleButton.xaml" />
                         <ResourceDictionary Source="UserControl/Styles/ComboBox.xaml" />
                 <ResourceDictionary Source="UserControl/Styles/DataGrid.xaml" />
+                <ResourceDictionary Source="UserControl/Styles/RadioButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -42,6 +42,10 @@ namespace Xky.Core.UserControl
           DependencyProperty.Register("HorizontalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(MyTextBox),
               new PropertyMetadata(ScrollBarVisibility.Hidden));
 
+        public static readonly DependencyProperty LineHeightProperty =
+         DependencyProperty.Register("LineHeight", typeof(int), typeof(MyTextBox),
+             new PropertyMetadata(10));
+
         public MyTextBox()
         {
             InitializeComponent();
@@ -105,6 +109,13 @@ namespace Xky.Core.UserControl
             get => (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty);
             set => SetValue(HorizontalScrollBarVisibilityProperty, value);
         }
+
+        public int LineHeight
+        {
+            get => (int)GetValue(LineHeightProperty);
+            set => SetValue(LineHeightProperty, value);
+        }
+
 
         private void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {

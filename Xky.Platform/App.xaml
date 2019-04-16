@@ -16,7 +16,8 @@
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
                         <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/RadioButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
 
     </Application.Resources>
