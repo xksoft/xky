@@ -19,6 +19,7 @@
         <Border.Style>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="Background" Value="{Binding Path=Background}" />
+                
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="{Binding Path=Background_Hover}" />

@@ -8,9 +8,12 @@ namespace Xky.Core.UserControl
     /// </summary>
     public partial class MyMessageBox : System.Windows.Controls.UserControl
     {
-        public MyMessageBox(MessageBoxButton button)
+        public MyMessageBox(MessageBoxButton button,string text_yes="是", string text_no="否",string text_ok="确定")
         {
             InitializeComponent();
+            BtnNo.Text = text_no;
+            BtnOk.Text = text_ok;
+            BtnYes.Text = text_yes;
             BtnOk.Click += BtnOk_Click;
             BtnYes.Click += BtnYes_Click;
             BtnNo.Click += BtnNo_Click;

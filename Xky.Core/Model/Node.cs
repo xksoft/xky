@@ -4,6 +4,7 @@ namespace Xky.Core.Model
 {
     public class Node : INotifyPropertyChanged
     {
+        private int _id = 0;
         private string _connectionHash;
         private int _connectStatus;
         private int _deviceCount;
@@ -16,6 +17,18 @@ namespace Xky.Core.Model
 
         public long LoadTick { get; set; }
 
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Id"));
+                }
+            }
+        }
 
         public string Name
         {

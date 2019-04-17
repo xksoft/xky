@@ -16,7 +16,7 @@
              <UserControl:MyTextBox x:Name="LicenseKey" Height="41" Width="314" CornerRadius="5"
                                  Background="{StaticResource BackgroundColor1}"
                                  Foreground="White" WaterText="请输入32位授权码" />
-            <UserControl:MyButton x:Name="BtnLogin" Height="41"  Margin="10,0,0,0" Text="授权" Width="102" Image="/Xky.Platform;component/Resources/Icon/btn_login.png" Image_Height="12" Image_Width="12" />
+            <UserControl:MyButton x:Name="BtnLogin" Height="41"   Margin="10,0,0,0"  Text="授权" Width="104" Image="/Xky.Platform;component/Resources/Icon/btn_login.png" Image_Height="12" Image_Width="12" />
         </StackPanel>
         <TextBlock Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Text="本开源程序为侠客SDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问https://www.xky.com免费申请"  Margin="0,20,0,0" />
     </Grid>

@@ -12,6 +12,7 @@ namespace Xky.Core.UserControl
             DependencyProperty.Register("Text", typeof(string), typeof(MyButton),
                 new PropertyMetadata(null));
 
+
         public new static readonly DependencyProperty BackgroundProperty =
             DependencyProperty.Register("Background", typeof(Brush), typeof(MyButton),
                 new PropertyMetadata(new SolidColorBrush(Color.FromRgb(55, 61, 69))));
@@ -53,7 +54,7 @@ namespace Xky.Core.UserControl
             get => (string) GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
-
+      
         public new Brush Background
         {
             get => (Brush) GetValue(BackgroundProperty);

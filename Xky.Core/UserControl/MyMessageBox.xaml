@@ -9,11 +9,14 @@
              d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Center">
     <Border Background="#1d232a" BorderBrush="Black" BorderThickness="1" Padding="30">
         <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding Path=MessageText}" Margin="5,5,5,10" Foreground="White" />
-            <VirtualizingStackPanel Orientation="Horizontal">
-                <UserControl:MyButton x:Name="BtnOk" Margin="5" Text="OK" Width="102" Height="30" />
-                <UserControl:MyButton x:Name="BtnYes" Margin="5" Text="Yes" Width="102" Height="30" />
-                <UserControl:MyButton x:Name="BtnNo" Margin="5" Text="No" Width="102" Height="30" />
+            <ContentControl x:Name="ContentControl">
+
+                <TextBlock Text="{Binding Path=MessageText}" Margin="5,5,5,10" Foreground="White" />
+            </ContentControl>
+            <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <UserControl:MyButton x:Name="BtnOk" Margin="5" Text="OK"  Height="30" MinWidth="80"/>
+                <UserControl:MyButton x:Name="BtnYes" Margin="5" Text="Yes"  Height="30"  MinWidth="80"/>
+                <UserControl:MyButton x:Name="BtnNo" Margin="5" Text="No"  Height="30"  MinWidth="80"/>
             </VirtualizingStackPanel>
         </VirtualizingStackPanel>
     </Border>

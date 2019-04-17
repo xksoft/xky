@@ -245,7 +245,7 @@ namespace Xky.Core
                         }
 
                         LocalNodes[serial].Serial = json["serial"]?.ToString();
-                        LocalNodes[serial].Name = json["name"].ToString();
+                        LocalNodes[serial].Name = json["name"]?.ToString();
                         LocalNodes[serial].Ip = ip.Address.ToString();
                         LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
                         PushAllNode(LocalNodes[serial]);
@@ -430,6 +430,82 @@ namespace Xky.Core
                     Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
                 };
             }
+        }
+
+        public static Response DeleteNode(int id)
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                    };
+
+              
+                var response = CallApi("del_node", new JObject{["id"]=id});
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
+        public static Response AddNode(string serial,string name)
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                    };
+
+
+                var response = CallApi("add_node", new JObject { ["serial"] = serial, ["name"] = name });
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
+        public static void RemoveNode(int id)
+        {
+            lock ("nodes")
+            {
+                var node = AllNodes.ToList().Find(p => p.Id == id);
+                if (node != null)
+                {
+                   
+                    if (node.NodeSocket!=null)
+                    {
+                        try { node.NodeSocket.Close(); } catch { }
+                    }
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        AllNodes.Remove(node);
+
+                        Nodes.Remove(node);
+                    });
+                }
+               
+            }
+           
         }
 
         /// <summary>
@@ -958,7 +1034,8 @@ namespace Xky.Core
                     ConnectionHash = json["t_connection_hash"]?.ToString(),
                     Forward = json["t_forward"]?.ToString(),
                     DeviceCount = int.Parse(json["t_online_devices"].ToString()),
-                    Ip = json["t_ip"]?.ToString()
+                    Ip = json["t_ip"]?.ToString(),
+                    Id = json["t_id"] == null ? 0 : Convert.ToInt32(json["t_id"])
                 };
 
                 ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
@@ -971,7 +1048,7 @@ namespace Xky.Core
 
         private static void PushAllNode(Node n)
         {
-            lock ("allnodes")
+            lock ("nodes")
             {
                 var node = AllNodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)

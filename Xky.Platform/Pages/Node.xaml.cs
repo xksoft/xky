@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xky.Core;
 using Xky.Core.Model;
+using Xky.Core.UserControl;
 
 namespace Xky.Platform.Pages
 {
@@ -31,10 +33,85 @@ namespace Xky.Platform.Pages
             InitializeComponent();
            
             NodeListBox.ItemsSource = Client.AllNodes;
-            
+            DataContext = this;
         }
 
-      
+        private void Btn_Setting_Click(object sender, RoutedEventArgs e)
+        {
+            var url = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            if (url != null)
+            {
+                if (url.ToString().StartsWith("http"))
+                {
+                    Process.Start(url.ToString());
+                }
+                else {
+                    Process.Start("http://"+url.ToString()+":8080");
+                }
+            }
+
+        }
+        private void Btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            var id = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            if (id != null)
+            {
+                var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "您确认要删除该节点吗？" };
+                Common.ShowMessageControl(msg);
+
+                if (msg.Result == MessageBoxResult.Yes)
+                {
+                    Client.StartAction(() =>
+                    {
+
+                        Common.ShowToast("正在删除节点...");
+                        var response = Client.DeleteNode(Convert.ToInt32(id));
+                        if (response.Result)
+                        {
+                            if (response.Json["errcode"].ToString() == "0")
+                            {
+                                Common.UiAction(() => { Client.RemoveNode(Convert.ToInt32(id)); });
+                            }
+                        }
+                        Common.ShowToast(response.Message);
+
+
+                    });
+                }
+            }
+
+        }
+        private void Btn_AddToCloud_Click(object sender, RoutedEventArgs e)
+        {
+            var Serial = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            if (Serial != null)
+            {
+                var msg = new MyMessageBox(MessageBoxButton.YesNo,text_yes:"添加到侠客云",text_no:"取消") { MessageText = "" };
+                ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content = ContentControl_AddToCloud.Content ;
+                Common.ShowMessageControl(msg);
+
+                if (msg.Result == MessageBoxResult.Yes)
+                {
+                //    //Client.StartAction(() =>
+                //    //{
+
+                //    //    Common.ShowToast("正在删除节点...");
+                //    //    var response = Client.DeleteNode(Convert.ToInt32(id));
+                //    //    if (response.Result)
+                //    //    {
+                //    //        if (response.Json["errcode"].ToString() == "0")
+                //    //        {
+                //    //            Common.UiAction(() => { Client.RemoveNode(Convert.ToInt32(id)); });
+                //    //        }
+                //    //    }
+                //    //    Common.ShowToast(response.Message);
+
+
+                //    //});
+                }
+            }
+
+        }
 
         private void NodeListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -47,26 +124,5 @@ namespace Xky.Platform.Pages
         }
     }
 
-    public partial class ConnectStatusConvertToImageSource : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null)
-                return DependencyProperty.UnsetValue;
-            int connectstatus = (int)value;
-            if (connectstatus == 0)
-            {
-                return new Uri( "/Xky.Platform;component/Resources/Icon/lannode_online.png", UriKind.Absolute);
-            }
-            else
-            {
-                return new Uri("/Xky.Platform;component/Resources/Icon/lannode_online.png", UriKind.Absolute);
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 }
