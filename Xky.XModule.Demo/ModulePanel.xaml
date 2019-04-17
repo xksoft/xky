@@ -8,18 +8,19 @@
              d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
-                    <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/RadioButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/CheckBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Border Background="#1d232a" Padding="30" BorderBrush="Black" BorderThickness="1">
         <Grid>
@@ -36,8 +37,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">多行输入</Label>
-                       <UserControl:MyTextBox  Width="200" Height="100" LineHeight="20" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" WaterText="一行一个">
-                      
+                    <UserControl:MyTextBox  Width="200" Height="100" LineHeight="20" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" WaterText="一行一个">
+
                     </UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
@@ -45,8 +46,8 @@
                     <ComboBox x:Name="combobox_test"  Height="30" Grid.Column="0" Width="200"
                               HorizontalAlignment="Left" 
                               IsEnabled="True">
-                        
-                            <ComboBoxItem>流畅</ComboBoxItem>
+
+                        <ComboBoxItem>流畅</ComboBoxItem>
                         <ComboBoxItem IsSelected="True">一般</ComboBoxItem>
                         <ComboBoxItem>高清</ComboBoxItem>
                         <ComboBoxItem>流畅</ComboBoxItem>
@@ -57,7 +58,7 @@
                         <ComboBoxItem>高清</ComboBoxItem>
                         <ComboBoxItem>流畅</ComboBoxItem>
                     </ComboBox>
-                  
+
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">开关</Label>
@@ -68,9 +69,17 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">单选</Label>
-                    <RadioButton GroupName="app" IsChecked="True" Margin="0,0,10,0">抖音</RadioButton>
-                    <RadioButton GroupName="app"    Margin="0,0,10,0">美团</RadioButton>
-                    <RadioButton GroupName="app"    Margin="0,0,10,0">知乎</RadioButton>
+                    <RadioButton GroupName="app" IsChecked="True" Margin="0,0,15,0">抖音</RadioButton>
+                    <RadioButton GroupName="app"    Margin="0,0,15,0" >美团</RadioButton>
+                    <RadioButton GroupName="app"    Margin="0,0,15,0" >知乎</RadioButton>
+                    <RadioButton GroupName="app"    Margin="0,0,15,0" IsEnabled="False">其他</RadioButton>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">多选</Label>
+                    <CheckBox  IsChecked="True" Margin="0,0,15,0">下载</CheckBox>
+                    <CheckBox  IsChecked="True"  Margin="0,0,15,0">安装</CheckBox>
+                    <CheckBox    Margin="0,0,15,0">运行</CheckBox>
+                    <CheckBox    Margin="0,0,15,0" IsEnabled="False">其他</CheckBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Label  Width="80" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">进度</Label>

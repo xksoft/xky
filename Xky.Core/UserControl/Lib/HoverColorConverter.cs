@@ -11,6 +11,7 @@ namespace Xky.Core.UserControl.Lib
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+           
             Debug.Assert(parameter != null, nameof(parameter) + " != null");
             var num = int.Parse(parameter.ToString());
             var color = (value as SolidColorBrush).Color;

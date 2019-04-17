@@ -4,6 +4,7 @@
 
     <Style x:Key="SwitchTypeToggleButton"
            TargetType="{x:Type ToggleButton}">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">

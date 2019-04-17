@@ -7,18 +7,19 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
-                        <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/RadioButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/CheckBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
+        </ResourceDictionary>
 
     </Application.Resources>
 </Application>
