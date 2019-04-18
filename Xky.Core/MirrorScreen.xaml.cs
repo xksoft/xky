@@ -154,8 +154,8 @@ namespace Xky.Core
                 Console.WriteLine("连接屏幕："+CurrentDevice.NodeUrl);
               
             }
-
-            if (CurrentDevice.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式且尚未在局域网中发现节点服务器");
+            
+            if (CurrentDevice.NodeUrl == "") {AddLabel("设备所属节点服务器尚未连接，请稍后...", Colors.OrangeRed); throw new Exception("该设备没有设置P2P转发模式且尚未在局域网中发现节点服务器"); }
 
 
             _socket?.Disconnect();

@@ -16,8 +16,8 @@
         <Button  Click="Button_Click" Cursor="Hand">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Template">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid>

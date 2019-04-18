@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Center">
+             d:DesignHeight="600" d:DesignWidth="800" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -87,7 +87,7 @@
                     <UserControl:MyProgressbar  Width="200" TrackBrush="#373d45" IndicatorBrush="#d76a00" Maximum="100" Value="60"/>
                 </StackPanel>
                 <StackPanel Margin="0,50,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <UserControl:MyButton Background="#454c56" Width="50" Height="32" Margin="0,0,20,0" Text="取消" Click="btn_cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <UserControl:MyButton Background="#454c56"  Height="32" Margin="0,0,20,0" Text="取消" Click="btn_cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                     <UserControl:MyButton Width="100" Height="32" Margin="0,0,0,0" Text="执行" Click="btn_ok_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </StackPanel>
             </StackPanel>
