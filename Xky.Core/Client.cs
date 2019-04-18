@@ -30,240 +30,56 @@ namespace Xky.Core
 
         private static string _lastSearchKeyword;
 
-        /// <summary>
-        /// http调用接口
-        /// </summary>
-        /// <param name="api"></param>
-        /// <param name="json"></param>
-        /// <returns></returns>
-        private static Response Post(string api, JObject json)
-        {
-            try
-            {
-                var handler = new HttpClientHandler
-                {
-                    AllowAutoRedirect = true
-                };
-                var httpClient = new HttpClient(handler) {Timeout = TimeSpan.FromSeconds(15)};
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
-                var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
-                content.Headers.Add("Content-Type", "application/json");
-                var responseMessage = httpClient.PostAsync("https://api.xky.com/" + api, content).Result;
-                var jsonResult =
-                    JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
-                if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
-                    return new Response
-                    {
-                        Result = false,
-                        Message = "通讯结果无法解析",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
-                    };
-                var resultJson =
-                    JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
-                return new Response
-                {
-                    Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                    Message = resultJson["msg"]?.ToString(),
-                    Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
-                };
-            }
-            catch (Exception e)
-            {
-                return new Response
-                {
-                    Result = false,
-                    Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
-                };
-            }
-        }
-
+        #region 公开属性
 
         /// <summary>
-        /// 调用平台接口
+        /// 授权信息
         /// </summary>
-        /// <param name="api"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static Response CallApi(string api, JObject data)
-        {
-            var response = new Response
-            {
-                Result = false,
-                Message = "调用接口超时",
-                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
-            };
-            var count = 10000;
-
-            if (CoreSocket == null || !CoreConnected)
-                return new Response
-                {
-                    Result = false,
-                    Message = "未连接核心服务器",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
-                };
-
-            CoreSocket.Emit("call", result =>
-            {
-                var jsonResult = (JObject) result;
-                if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
-                {
-                    response = new Response
-                    {
-                        Result = false,
-                        Message = "通讯结果无法解析",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
-                    };
-                }
-                else
-                {
-                    var resultJson =
-                        JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
-                    response = new Response
-                    {
-                        Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                        Message = resultJson["msg"]?.ToString(),
-                        Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
-                    };
-                }
-
-                //设置跳出循环条件
-                count = 0;
-            }, api, data);
-
-
-            while (count > 0)
-            {
-                count -= 1;
-                Thread.Sleep(1);
-            }
-
-            return response;
-        }
+        public static License License;
 
         /// <summary>
-        /// 调用节点接口
+        /// 是否连接核心
         /// </summary>
-        /// <param name="serial"></param>
-        /// <param name="sn"></param>
-        /// <param name="api"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static Response CallNodeApi(string serial, string sn, string api, JArray args)
-        {
-            var node = Nodes.ToList().Find(p => p.Serial == serial);
-            if (node == null)
-            {
-                return new Response
-                {
-                    Result = false,
-                    Message = "节点服务器不存在",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器不存在"}
-                };
-            }
-
-            if (node.ConnectStatus == 0)
-            {
-                return new Response
-                {
-                    Result = false,
-                    Message = "节点服务器未连接",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器未连接"}
-                };
-            }
-
-
-            var response = new Response
-            {
-                Result = false,
-                Message = "调用接口超时",
-                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
-            };
-            var count = 10000;
-            node.NodeSocket.Emit("call",
-                result =>
-                {
-                    var resultJson = (JObject) result;
-                    if (resultJson == null)
-                    {
-                        response = new Response
-                        {
-                            Result = false,
-                            Message = "通讯结果无法解析",
-                            Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
-                        };
-                    }
-                    else
-                    {
-                        response = new Response
-                        {
-                            Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
-                            Message = resultJson["msg"]?.ToString(),
-                            Json = resultJson
-                        };
-                    }
-
-                    //设置跳出循环条件
-                    count = 0;
-                }, new JObject
-                {
-                    ["sn"] = sn,
-                    ["session"] = License.Session,
-                    ["api"] = api,
-                    ["args"] = args
-                });
-
-            while (count > 0)
-            {
-                count -= 1;
-                Thread.Sleep(1);
-            }
-
-            return response;
-        }
+        public static bool CoreConnected;
 
         /// <summary>
-        /// 查找本地节点
+        /// 主ui
         /// </summary>
-        public static void SearchLocalNode()
-        {
-            StartAction(() =>
-            {
-                var udp = new UdpClient(18866);
-                var ip = new IPEndPoint(IPAddress.Any, 18866);
-                while (true)
-                {
-                    var bytes = udp.Receive(ref ip);
-                    var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
-                    var serial = json["serial"]?.ToString();
-                    if (serial != null)
-                    {
-                        if (!LocalNodes.ContainsKey(serial))
-                        {
-                            Console.WriteLine("找到局域网节点" + serial);
-                            LocalNodes.Add(serial, new Node());
-                        }
+        public static Window MainWindow;
 
-                        LocalNodes[serial].Serial = json["serial"]?.ToString();
-                        LocalNodes[serial].Name = json["name"]?.ToString();
-                        LocalNodes[serial].Ip = ip.Address.ToString();
-                        LocalNodes[serial].LoadTick = DateTime.Now.Ticks;
-                        PushAllNode(LocalNodes[serial]);
-                        lock ("nodes")
-                        {
-                            var node = Nodes.ToList().Find(p => p.Serial == serial);
-                            if (node != null)
-                                ConnectToNode(node,
-                                    "http://" + (string.IsNullOrEmpty(LocalNodes[serial].Ip)
-                                        ? "127.0.0.1"
-                                        : LocalNodes[serial].Ip) + ":8080",
-                                    node.ConnectionHash);
-                        }
-                    }
-                }
-            });
-        }
+        /// <summary>
+        /// 并发线程数
+        /// </summary>
+        public static int Threads;
 
+        /// <summary>
+        /// 节点信息
+        /// </summary>
+        public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
+
+        public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+
+        /// <summary>
+        /// 所有设备
+        /// </summary>
+        public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
+
+        /// <summary>
+        /// 面板上显示的设备
+        /// </summary>
+        public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
+
+        public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
+
+        public static readonly ObservableCollection<string> ModulesPanelTags =
+            new ObservableCollection<string> { "所有模块" };
+
+        /// <summary>
+        /// 速率计数器
+        /// </summary>
+        public static AverageNumber BitAverageNumber = new AverageNumber(3);
+
+        #endregion
 
         /// <summary>
         ///     认证授权KEY
@@ -274,18 +90,18 @@ namespace Xky.Core
         {
             try
             {
-                var response = Post("auth_license_key", new JObject {["license_key"] = license});
+                var response = Post("auth_license_key", new JObject { ["license_key"] = license });
                 if (response.Result)
                 {
                     License = new License
                     {
                         Avatra = response.Json["user"]?["t_avatar"]?.ToString(),
                         Email = response.Json["user"]?["t_email"]?.ToString(),
-                        Id = (int) response.Json["user"]?["t_id"],
+                        Id = (int)response.Json["user"]?["t_id"],
                         LicenseCustom = response.Json["license"]?["t_custom"]?.ToString(),
-                        LicenseExpiration = ConvertTimestamp((double) response.Json["license"]?["t_expiration_time"]),
+                        LicenseExpiration = ConvertTimestamp((double)response.Json["license"]?["t_expiration_time"]),
                         LicenseKey = response.Json["user"]?["t_license_key"]?.ToString(),
-                        LicenseLevel = (int) response.Json["license"]?["t_level"],
+                        LicenseLevel = (int)response.Json["license"]?["t_level"],
                         LicenseName = response.Json["license"]?["t_name"]?.ToString(),
                         Name = response.Json["user"]?["t_name"]?.ToString(),
                         Phone = response.Json["user"]?["t_phone"]?.ToString(),
@@ -323,7 +139,7 @@ namespace Xky.Core
                         CoreConnected = false;
                     });
                     CoreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
-                    CoreSocket.On("event", json => { CoreEvent((JObject) json); });
+                    CoreSocket.On("event", json => { CoreEvent((JObject)json); });
                 }
                 else
                 {
@@ -338,7 +154,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -356,7 +172,7 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
                 var loadtick = DateTime.Now.Ticks;
@@ -365,7 +181,7 @@ namespace Xky.Core
                 if (response.Result)
                 {
                     Console.WriteLine(response);
-                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json, loadtick);
+                    foreach (var json in (JArray)response.Json["list"]) PushDevice(json, loadtick);
 
                     //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
                     MainWindow.Dispatcher.Invoke(() =>
@@ -384,10 +200,53 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
+
+        /// <summary>
+        /// 查找本地节点
+        /// </summary>
+        public static void SearchLocalNode()
+        {
+            StartAction(() =>
+            {
+                var udp = new UdpClient(18866);
+                var ip = new IPEndPoint(IPAddress.Any, 18866);
+                while (true)
+                {
+                    var bytes = udp.Receive(ref ip);
+                    var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
+                    var serial = json["serial"]?.ToString();
+                    if (serial != null)
+                    {
+                        Node node = new Node();
+
+
+
+                        node.Serial = json["serial"]?.ToString();
+                        node.Name = json["name"]?.ToString();
+                        node.Ip = ip.Address.ToString();
+                        node.LoadTick = DateTime.Now.Ticks;
+                        PushNode(node);
+                        //lock ("nodes")
+                        //{
+                        //    var node = Nodes.ToList().Find(p => p.Serial == serial);
+                        //    if (node != null)
+                        //        ConnectToNode(node,
+                        //            "http://" + (string.IsNullOrEmpty(LocalNodes[serial].Ip)
+                        //                ? "127.0.0.1"
+                        //                : LocalNodes[serial].Ip) + ":8080",
+                        //            node.ConnectionHash);
+                        //}
+                    }
+                }
+            });
+        }
+
+
+      
 
         /// <summary>
         /// 加载节点列表
@@ -414,7 +273,7 @@ namespace Xky.Core
                     foreach (var json in (JArray) response.Json["nodes"])
                     {
                         var ts = json["t_serial"].ToString();
-                        PushNode(json["t_serial"].ToString());
+                        PushNode(GetNode(json["t_serial"].ToString()));
                     }
                 }
 
@@ -431,7 +290,6 @@ namespace Xky.Core
                 };
             }
         }
-
         public static Response DeleteNode(int id)
         {
             try
@@ -488,7 +346,7 @@ namespace Xky.Core
         {
             lock ("nodes")
             {
-                var node = AllNodes.ToList().Find(p => p.Id == id);
+                var node = Nodes.ToList().Find(p => p.Id == id);
                 if (node != null)
                 {
                    
@@ -498,14 +356,63 @@ namespace Xky.Core
                     }
                     MainWindow.Dispatcher.Invoke(() =>
                     {
-                        AllNodes.Remove(node);
-
                         Nodes.Remove(node);
+
+                        
                     });
                 }
                
             }
            
+        }
+        private static Node GetNode(string serial)
+        {
+            lock ("nodes")
+            {
+                var node = Nodes.ToList().Find(p => p.Serial == serial);
+
+                if (node != null)
+                    return node;
+
+
+                var response = CallApi("get_node", new JObject { ["serial"] = serial });
+
+                if (!response.Result) return null;
+
+                var json = response.Json["node"];
+
+                node = new Node
+                {
+                    Serial = json["t_serial"]?.ToString(),
+                    Name = json["t_name"]?.ToString(),
+                    ConnectionHash = json["t_connection_hash"]?.ToString(),
+                    Forward = json["t_forward"]?.ToString(),
+                    DeviceCount = int.Parse(json["t_online_devices"].ToString()),
+                    Ip = json["t_ip"]?.ToString(),
+                    Id = json["t_id"] == null ? 0 : Convert.ToInt32(json["t_id"])
+                };
+
+                ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
+                PushNode(node);
+                //用UI线程委托添加，防止报错
+                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
+                return node;
+            }
+        }
+        private static void PushNode(Node n)
+        {
+            lock ("nodes")
+            {
+                var node = Nodes.ToList().Find(p => p.Serial == n.Serial);
+                if (node != null)
+                {
+                    return;
+                }
+                else
+                {
+                    MainWindow.Dispatcher.Invoke(() => { Nodes.Add(n); });
+                }
+            }
         }
 
         /// <summary>
@@ -668,58 +575,7 @@ namespace Xky.Core
 
         #endregion
 
-        #region 公开属性
-
-        /// <summary>
-        /// 授权信息
-        /// </summary>
-        public static License License;
-
-        /// <summary>
-        /// 是否连接核心
-        /// </summary>
-        public static bool CoreConnected;
-
-        /// <summary>
-        /// 主ui
-        /// </summary>
-        public static Window MainWindow;
-
-        /// <summary>
-        /// 并发线程数
-        /// </summary>
-        public static int Threads;
-
-        /// <summary>
-        /// 节点信息
-        /// </summary>
-        public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
-
-        public static readonly ObservableCollection<Node> AllNodes = new ObservableCollection<Node>();
-        public static readonly Dictionary<string, Node> LocalNodes = new Dictionary<string, Node>();
-        public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
-
-        /// <summary>
-        /// 所有设备
-        /// </summary>
-        public static readonly ObservableCollection<Device> Devices = new ObservableCollection<Device>();
-
-        /// <summary>
-        /// 面板上显示的设备
-        /// </summary>
-        public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
-
-        public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
-
-        public static readonly ObservableCollection<string> ModulesPanelTags =
-            new ObservableCollection<string> {"所有模块"};
-
-        /// <summary>
-        /// 速率计数器
-        /// </summary>
-        public static AverageNumber BitAverageNumber = new AverageNumber(3);
-
-        #endregion
+       
 
         #region  内部方法
 
@@ -883,7 +739,7 @@ namespace Xky.Core
                     });
 
                     //添加节点服务器
-                    StartAction(() => { PushNode(device.NodeSerial); });
+                    //StartAction(() => { PushNode(device.NodeSerial); });
 
 
                     //用UI线程委托添加，防止报错
@@ -1011,56 +867,6 @@ namespace Xky.Core
         }
 
 
-        private static Node PushNode(string serial)
-        {
-            lock ("nodes")
-            {
-                var node = Nodes.ToList().Find(p => p.Serial == serial);
-
-                if (node != null)
-                    return node;
-
-
-                var response = CallApi("get_node", new JObject {["serial"] = serial});
-
-                if (!response.Result) return null;
-
-                var json = response.Json["node"];
-
-                node = new Node
-                {
-                    Serial = json["t_serial"]?.ToString(),
-                    Name = json["t_name"]?.ToString(),
-                    ConnectionHash = json["t_connection_hash"]?.ToString(),
-                    Forward = json["t_forward"]?.ToString(),
-                    DeviceCount = int.Parse(json["t_online_devices"].ToString()),
-                    Ip = json["t_ip"]?.ToString(),
-                    Id = json["t_id"] == null ? 0 : Convert.ToInt32(json["t_id"])
-                };
-
-                ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
-                PushAllNode(node);
-                //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
-                return node;
-            }
-        }
-
-        private static void PushAllNode(Node n)
-        {
-            lock ("nodes")
-            {
-                var node = AllNodes.ToList().Find(p => p.Serial == n.Serial);
-                if (node != null)
-                {
-                    return;
-                }
-                else
-                {
-                    MainWindow.Dispatcher.Invoke(() => { AllNodes.Add(n); });
-                }
-            }
-        }
 
         /// <summary>
         ///     核心服务器事件
@@ -1111,5 +917,197 @@ namespace Xky.Core
         }
 
         #endregion
+
+        /// <summary>
+        /// http调用接口
+        /// </summary>
+        /// <param name="api"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        private static Response Post(string api, JObject json)
+        {
+            try
+            {
+                var handler = new HttpClientHandler
+                {
+                    AllowAutoRedirect = true
+                };
+                var httpClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
+                var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
+                content.Headers.Add("Content-Type", "application/json");
+                var responseMessage = httpClient.PostAsync("https://api.xky.com/" + api, content).Result;
+                var jsonResult =
+                    JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
+                if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "通讯结果无法解析",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
+                    };
+                var resultJson =
+                    JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+                return new Response
+                {
+                    Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                    Message = resultJson["msg"]?.ToString(),
+                    Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
+
+
+        /// <summary>
+        /// 调用平台接口
+        /// </summary>
+        /// <param name="api"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static Response CallApi(string api, JObject data)
+        {
+            var response = new Response
+            {
+                Result = false,
+                Message = "调用接口超时",
+                Json = new JObject { ["errcode"] = 1, ["msg"] = "调用接口超时" }
+            };
+            var count = 10000;
+
+            if (CoreSocket == null || !CoreConnected)
+                return new Response
+                {
+                    Result = false,
+                    Message = "未连接核心服务器",
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "未连接核心服务器" }
+                };
+
+            CoreSocket.Emit("call", result =>
+            {
+                var jsonResult = (JObject)result;
+                if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
+                {
+                    response = new Response
+                    {
+                        Result = false,
+                        Message = "通讯结果无法解析",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
+                    };
+                }
+                else
+                {
+                    var resultJson =
+                        JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
+                    response = new Response
+                    {
+                        Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                        Message = resultJson["msg"]?.ToString(),
+                        Json = JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()))
+                    };
+                }
+
+                //设置跳出循环条件
+                count = 0;
+            }, api, data);
+
+
+            while (count > 0)
+            {
+                count -= 1;
+                Thread.Sleep(1);
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// 调用节点接口
+        /// </summary>
+        /// <param name="serial"></param>
+        /// <param name="sn"></param>
+        /// <param name="api"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static Response CallNodeApi(string serial, string sn, string api, JArray args)
+        {
+            var node = Nodes.ToList().Find(p => p.Serial == serial);
+            if (node == null)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = "节点服务器不存在",
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器不存在" }
+                };
+            }
+
+            if (node.ConnectStatus == 0)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = "节点服务器未连接",
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器未连接" }
+                };
+            }
+
+
+            var response = new Response
+            {
+                Result = false,
+                Message = "调用接口超时",
+                Json = new JObject { ["errcode"] = 1, ["msg"] = "调用接口超时" }
+            };
+            var count = 10000;
+            node.NodeSocket.Emit("call",
+                result =>
+                {
+                    var resultJson = (JObject)result;
+                    if (resultJson == null)
+                    {
+                        response = new Response
+                        {
+                            Result = false,
+                            Message = "通讯结果无法解析",
+                            Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
+                        };
+                    }
+                    else
+                    {
+                        response = new Response
+                        {
+                            Result = resultJson["errcode"] != null && Convert.ToInt32(resultJson["errcode"]) == 0,
+                            Message = resultJson["msg"]?.ToString(),
+                            Json = resultJson
+                        };
+                    }
+
+                    //设置跳出循环条件
+                    count = 0;
+                }, new JObject
+                {
+                    ["sn"] = sn,
+                    ["session"] = License.Session,
+                    ["api"] = api,
+                    ["args"] = args
+                });
+
+            while (count > 0)
+            {
+                count -= 1;
+                Thread.Sleep(1);
+            }
+
+            return response;
+        }
     }
 }

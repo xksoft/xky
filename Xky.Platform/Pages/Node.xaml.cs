@@ -32,7 +32,7 @@ namespace Xky.Platform.Pages
         
             InitializeComponent();
            
-            NodeListBox.ItemsSource = Client.AllNodes;
+            NodeListBox.ItemsSource = Client.Nodes;
             DataContext = this;
         }
 
@@ -87,7 +87,7 @@ namespace Xky.Platform.Pages
             if (Serial != null)
             {
                
-                var node = Client.AllNodes.ToList().Find(p => p.Serial == Serial.ToString());
+                var node = Client.Nodes.ToList().Find(p => p.Serial == Serial.ToString());
                 if (node != null)
                 {
                     TextBox_Name.Text = node.Name;

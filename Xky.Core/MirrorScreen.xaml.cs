@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -146,13 +147,14 @@ namespace Xky.Core
 
 
             if (CurrentDevice == null) throw new Exception("无法获取这个设备的信息");
-
-            if (Client.LocalNodes.ContainsKey(CurrentDevice.NodeSerial))
+            var node = Client.Nodes.ToList().Find(p => p.Serial == CurrentDevice.NodeSerial);
+            if (node != null)
             {
-                CurrentDevice.NodeUrl = "http://" + Client.LocalNodes[CurrentDevice.NodeSerial].Ip + ":8080";
-                Console.WriteLine(CurrentDevice.NodeUrl);
+                
+                    CurrentDevice.NodeUrl = "http://" + node.Ip + ":8080";
+                    Console.WriteLine(CurrentDevice.NodeUrl);
+                
             }
-
 
             if (CurrentDevice.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
 
