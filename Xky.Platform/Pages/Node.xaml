@@ -210,11 +210,11 @@
             <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Center">
                 <StackPanel Orientation="Vertical" Margin="0,0,0,20">
                     <Label Foreground="#fff" Width="70" HorizontalAlignment="Left" Margin="0,0,0,5">备注名称</Label>
-                    <UserControl:MyTextBox WaterText="备注名称"  Width="300" Height="30"></UserControl:MyTextBox>
+                    <UserControl:MyTextBox x:Name="TextBox_Name" WaterText="备注名称"  Width="300" Height="30"></UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label Foreground="#fff" Width="70"  HorizontalAlignment="Left"  Margin="0,0,0,5">序列号</Label>
-                    <UserControl:MyTextBox WaterText="序列号"  Width="300" Height="30"></UserControl:MyTextBox>
+                    <UserControl:MyTextBox  x:Name="TextBox_Serial"  WaterText="序列号"  Width="300" Height="30"></UserControl:MyTextBox>
                 </StackPanel>
             </StackPanel>
         </ContentControl>

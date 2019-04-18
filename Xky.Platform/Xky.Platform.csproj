@@ -318,5 +318,23 @@
     <Resource Include="Resources\Icon\phonemenu-input-white.png" />
     <Resource Include="Resources\Icon\phonemenu-stop-white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\DeviceMenu\local-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\local-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\openinput-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\openinput-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\refresh-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\refresh-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\selectinput-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\selectinput-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\setdebug-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\setdebug-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\stop-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\stop-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\volumedown-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\volumedown-white.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\volumeup-black.png" />
+    <Resource Include="Resources\Icon\DeviceMenu\volumeup-white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
