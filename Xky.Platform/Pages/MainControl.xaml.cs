@@ -73,6 +73,7 @@ namespace Xky.Platform.Pages
             Client.StartAction(() =>
             {
                 var response = Client.LoadNodes();
+                Client.SearchLocalNode();
             });
         }
 

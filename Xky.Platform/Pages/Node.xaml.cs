@@ -92,7 +92,7 @@ namespace Xky.Platform.Pages
                 {
                     TextBox_Name.Text = node.Name;
                     TextBox_Serial.Text = node.Serial;
-                    var msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "添加到侠客云", text_no: "取消") { MessageText = "" };
+                    var msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "绑定到当前授权", text_no: "取消") { MessageText = "" };
                     ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content = ContentControl_AddToCloud.Content;
                     Common.ShowMessageControl(msg);
                     if (msg.Result == MessageBoxResult.Yes)
@@ -101,7 +101,7 @@ namespace Xky.Platform.Pages
                         Client.StartAction(() =>
                         {
 
-                            Common.ShowToast("正在添加节点到侠客云...");
+                            Common.ShowToast("正在绑定节点到当前授权上...");
                             var response = Client.AddNode(newnode_Serial,newnode_Name);
                             if (response.Result)
                             {

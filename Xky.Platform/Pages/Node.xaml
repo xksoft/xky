@@ -12,13 +12,13 @@
     <UserControl.Resources>
         <lib:SwitchConverter x:Key="ConnectStatusToBursh">
             <lib:SwitchConverterCase When="0" Then="red" />
-            <lib:SwitchConverterCase When="1" Then="yellow" />
+            <lib:SwitchConverterCase When="1" Then="green" />
             <lib:SwitchConverterCase When="2" Then="green" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectStatusToStr">
             <lib:SwitchConverterCase When="0" Then="离线" />
-            <lib:SwitchConverterCase When="1" Then="连接中..." />
-            <lib:SwitchConverterCase When="2" Then="成功连接" />
+            <lib:SwitchConverterCase When="1" Then="成功通过P2P网络连接" />
+            <lib:SwitchConverterCase When="2" Then="成功通过当前局域网连接" />
         </lib:SwitchConverter>
         <lib:SwitchConverter x:Key="ConnectionHashToBursh">
             <lib:SwitchConverterCase When="null" Then="transparent" />
@@ -59,7 +59,29 @@
                      VirtualizingPanel.ScrollUnit="Item"
                     
                      ScrollViewer.ScrollChanged="NodeListBox_ScrollChanged">
+                <ItemsControl.Style>
+                    <Style TargetType="ItemsControl">
+                        <Style.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-150,0,0">
+                                                <Label Margin="0,5,0,15" Foreground="#ccc" FontSize="18">该授权尚未绑定节点或未在当前局域网发现节点设备</Label>
+                                                <TextBlock Margin="0,0,0,5" Foreground="#ccc" Text="1、联系官方购买专用节点服务器设备。"/>
+                                                <TextBlock Margin="0,0,0,5" Foreground="#ccc" Text="2、接通节点服务器电源，使用网线将设备连接到当前局域网中并等待10秒钟左右。"/>
+                                                <TextBlock Margin="0,0,0,5"  Foreground="#ccc" Text="3、完成以上操作后节点服务器仍然不能出现在该面板上，请检查路由器是否设置为“自动获取IP”，节点设备网口灯是否闪烁。"/>
+                                                <TextBlock Margin="0,0,0,5"  Foreground="#ccc" Text="4、联系官方获取技术支持。"/>
 
+                                            </StackPanel>
+                                           
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.Style>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="10" x:Name="DataGrid">
@@ -107,14 +129,14 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60" >连接状态</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToStr}}"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}"></Label>
-                                                <Label Foreground="#fff" Content="已连接到局域网，未添加到侠客云"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
+                                                <Label Foreground="#fff" Content="已连接到局域网，未绑定到当前授权"  Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}"></Label>
                                             </StackPanel>
                                             <StackPanel HorizontalAlignment="Right"  VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,5,0,0">
                                                 <UserControl:MyImageButton ToolTip="管理"  Visibility="{Binding Path=DataContext.NodeUrl,ElementName=DataGrid,Converter={StaticResource NodeUrlToHidden}}" Tag="{Binding Path=DataContext.NodeUrl,ElementName=DataGrid}" Click="Btn_Setting_Click" CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32" Image="/Xky.Platform;component/Resources/Icon/btn_setting.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
                                                 <UserControl:MyImageButton ToolTip="管理"  Visibility="{Binding Path=DataContext.NodeUrl,ElementName=DataGrid,Converter={StaticResource NodeUrlToVisible}}"  Tag="{Binding Path=DataContext.Ip,ElementName=DataGrid}" Click="Btn_Setting_Click" CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32" Image="/Xky.Platform;component/Resources/Icon/btn_setting.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
                                                 <UserControl:MyImageButton ToolTip="修改" CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32"  Visibility="{Binding Path=DataContext.ConnectionHash,ElementName=DataGrid,Converter={StaticResource ConnectionHashToVisible}}" Image="/Xky.Platform;component/Resources/Icon/edit.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
                                                 <UserControl:MyImageButton ToolTip="删除" Tag="{Binding Path=DataContext.Id,ElementName=DataGrid}"  Click="Btn_Delete_Click"  CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32"  Visibility="{Binding Path=DataContext.ConnectionHash,ElementName=DataGrid,Converter={StaticResource ConnectionHashToVisible}}" Image="/Xky.Platform;component/Resources/Icon/delete.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
-                                                <UserControl:MyImageButton ToolTip="添加到侠客云"  Click="Btn_AddToCloud_Click"  Tag="{Binding Path=DataContext.Serial,ElementName=DataGrid}" CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32" Visibility="{Binding Path=DataContext.ConnectionHash,ElementName=DataGrid,Converter={StaticResource ConnectionHashToHidden}}" Image="/Xky.Platform;component/Resources/Icon/addtocloud.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
+                                                <UserControl:MyImageButton ToolTip="绑定到当前授权"  Click="Btn_AddToCloud_Click"  Tag="{Binding Path=DataContext.Serial,ElementName=DataGrid}" CornerRadius="2" Image_Height="16" Image_Width="16" Height="32" Width="32" Visibility="{Binding Path=DataContext.ConnectionHash,ElementName=DataGrid,Converter={StaticResource ConnectionHashToHidden}}" Image="/Xky.Platform;component/Resources/Icon/addtocloud.png" Background_MouseOver="#444e57" Background_Pressed="#3b444c"/>
                                             </StackPanel>
                                         </StackPanel>
 

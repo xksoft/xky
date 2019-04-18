@@ -229,7 +229,7 @@ namespace Xky.Core
                         node.Name = json["name"]?.ToString();
                         node.Ip = ip.Address.ToString();
                         node.LoadTick = DateTime.Now.Ticks;
-                        PushNode(node);
+                        PushNode(node,true);
                         //lock ("nodes")
                         //{
                         //    var node = Nodes.ToList().Find(p => p.Serial == serial);
@@ -273,11 +273,11 @@ namespace Xky.Core
                     foreach (var json in (JArray) response.Json["nodes"])
                     {
                         var ts = json["t_serial"].ToString();
-                        PushNode(GetNode(json["t_serial"].ToString()));
+                        PushNode(GetNode(json["t_serial"].ToString()),false);
                     }
                 }
 
-                Client.SearchLocalNode();
+              
                 return response;
             }
             catch (Exception e)
@@ -389,27 +389,50 @@ namespace Xky.Core
                     Forward = json["t_forward"]?.ToString(),
                     DeviceCount = int.Parse(json["t_online_devices"].ToString()),
                     Ip = json["t_ip"]?.ToString(),
-                    Id = json["t_id"] == null ? 0 : Convert.ToInt32(json["t_id"])
+                    Id = json["t_id"] == null ? 0 : Convert.ToInt32(json["t_id"]),
+                    NodeUrl= json["t_nodeurl"]?.ToString()
                 };
 
-                ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
-                PushNode(node);
-                //用UI线程委托添加，防止报错
-                MainWindow.Dispatcher.Invoke(() => { Nodes.Add(node); });
+                //ConnectToNode(node, json["t_nodeurl"]?.ToString(), node.ConnectionHash);
+             
                 return node;
             }
         }
-        private static void PushNode(Node n)
+        private static void PushNode(Node n,bool local)
         {
             lock ("nodes")
             {
                 var node = Nodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)
                 {
-                    return;
+                    if (node.ConnectionHash != null&&local) {
+                        //授权节点在当前局域网中，自动切换到局域网模式
+                        node.Ip = n.Ip;
+                        ConnectToNode(node, "http://" + (string.IsNullOrEmpty(node.Ip) ? "127.0.0.1" : node.Ip + ":8080"), node.ConnectionHash);
+
+                        return;
+                    }
+                    else { node = n; }
+                  
                 }
                 else
                 {
+                    if (n.ConnectionHash != null)
+                    {
+                       if (!local)
+                       {
+                            //自动通过外网连接当前节点
+                            if (n.NodeUrl != null && n.NodeUrl.Length > 0)
+                            {
+                                ConnectToNode(n, n.NodeUrl, n.ConnectionHash);
+                            }
+                            else {
+
+                                //节点未设置p2p端口，尚未在局域网发现该节点
+                            }
+                        }
+                      
+                    }
                     MainWindow.Dispatcher.Invoke(() => { Nodes.Add(n); });
                 }
             }
@@ -622,7 +645,7 @@ namespace Xky.Core
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
                     node.NodeSocket.On("tick", new MyListenerImpl((sn, json) =>
                     {
-                        Console.WriteLine(json);
+                        //Console.WriteLine(json);
                         var device = Devices.ToList().Find(p => p.Sn == sn.ToString());
                         if (device != null)
                         {

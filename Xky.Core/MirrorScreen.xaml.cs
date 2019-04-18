@@ -150,13 +150,12 @@ namespace Xky.Core
             var node = Client.Nodes.ToList().Find(p => p.Serial == CurrentDevice.NodeSerial);
             if (node != null)
             {
-                
-                    CurrentDevice.NodeUrl = "http://" + node.Ip + ":8080";
-                    Console.WriteLine(CurrentDevice.NodeUrl);
-                
+                CurrentDevice.NodeUrl = node.NodeUrl;
+                Console.WriteLine("连接屏幕："+CurrentDevice.NodeUrl);
+              
             }
 
-            if (CurrentDevice.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式");
+            if (CurrentDevice.NodeUrl == "") throw new Exception("该设备没有设置P2P转发模式且尚未在局域网中发现节点服务器");
 
 
             _socket?.Disconnect();
