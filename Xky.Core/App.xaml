@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="UserControl/Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="UserControl/Styles/RadioButton.xaml" />
                 <ResourceDictionary Source="UserControl/Styles/CheckBox.xaml" />
+                <ResourceDictionary Source="UserControl/Styles/ToolTip.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/RadioButton.xaml" />
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/CheckBox.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToolTip.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
