@@ -114,29 +114,34 @@ namespace Xky.Platform.Pages
             {
                 while (true)
                 {
-                    IEnumerable<IGrouping<string, Device>> nodeGroup;
-                    lock ("getNodeGroup")
-                    {
-                        nodeGroup = from device in _screenTickList
-                            group device by device.NodeSerial;
-                    }
-                    
-                    foreach (var zu in nodeGroup)
-                    {
-                        Console.WriteLine("组:"+zu.First().NodeSerial+" 量:"+zu.Count());
-                        var sns = zu.Select(device => device.Sn).ToList();
-                        var jarray=new JArray();
-                        foreach (var sn in sns)
-                        {
-                           jarray.Add(sn); 
-                        }
-                        Client.CallNodeEvent(zu.First().NodeSerial, jarray,
-                            new JObject {["type"] = "send_screen"});
-                    }
 
+                    SendScrccnTick();
                     Thread.Sleep(10000);
                 }
             });
+        }
+
+        private void SendScrccnTick()
+        {
+            IEnumerable<IGrouping<string, Device>> nodeGroup;
+            lock ("getNodeGroup")
+            {
+                nodeGroup = from device in _screenTickList
+                    group device by device.NodeSerial;
+            }
+
+            foreach (var zu in nodeGroup)
+            {
+                Console.WriteLine("组:" + zu.First().NodeSerial + " 量:" + zu.Count());
+                var sns = zu.Select(device => device.Sn).ToList();
+                var jarray = new JArray();
+                foreach (var sn in sns)
+                {
+                    jarray.Add(sn);
+                }
+                Client.CallNodeEvent(zu.First().NodeSerial, jarray,
+                    new JObject { ["type"] = "send_screen" });
+            }
         }
 
         #region ui事件
@@ -219,6 +224,8 @@ namespace Xky.Platform.Pages
                 _screenTickList.AddRange(Client.Devices.ToList()
                     .GetRange(Convert.ToInt32(e.VerticalOffset), Convert.ToInt32(e.ViewportHeight)));
             }
+            //发送一次心跳
+            Client.StartAction(SendScrccnTick);
         }
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
