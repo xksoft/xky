@@ -70,10 +70,12 @@ namespace Xky.Platform.Pages
                         {
                             if (response.Json["errcode"].ToString() == "0")
                             {
+                                Common.ShowToast(response.Json["msg"].ToString(), Color.FromRgb(0, 188, 0));
                                 Common.UiAction(() => { Client.RemoveNode(Convert.ToInt32(id)); });
                             }
                         }
-                        Common.ShowToast(response.Message);
+                        else { Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7)); }
+                       
 
 
                     });
@@ -85,6 +87,7 @@ namespace Xky.Platform.Pages
         {
             TextBox_Name.Text = "";
             TextBox_Serial.Text = "";
+            TextBox_Serial.IsEnabled = true;
             if (e.OriginalSource.GetType().Name.Contains("MyImageButton"))
             {
                 var Serial = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
@@ -115,8 +118,8 @@ namespace Xky.Platform.Pages
                     {
                         if (response.Json["errcode"].ToString() == "0")
                         {
-                            Common.UiAction(() => { });
-                            Common.ShowToast(response.Json["msg"].ToString());
+                           
+                                Common.ShowToast(response.Json["msg"].ToString(), Color.FromRgb(0, 188, 0));
                         }
                         else
                         {
@@ -134,6 +137,63 @@ namespace Xky.Platform.Pages
             }
 
 
+
+
+        }
+        private void Btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox_Name.Text = "";
+            TextBox_Serial.Text = "";
+            TextBox_Serial.IsEnabled = false;
+           
+                var Serial = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            if (Serial != null)
+            {
+
+                var node = Client.Nodes.ToList().Find(p => p.Serial == Serial.ToString());
+                if (node != null)
+                {
+                    TextBox_Name.Text = node.Name;
+                    TextBox_Serial.Text = node.Serial;
+
+                }
+
+
+                MyMessageBox msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存", text_no: "取消") { MessageText = "" };
+                ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content = ContentControl_AddToCloud.Content;
+                Common.ShowMessageControl(msg);
+                if (msg.Result == MessageBoxResult.Yes)
+                {
+                    string newnode_Serial = TextBox_Serial.Text;
+                    string newnode_Name = TextBox_Name.Text;
+                    Client.StartAction(() =>
+                    {
+
+                        Common.ShowToast("正在修改节点名称...");
+                        var response = Client.SetNode(node.Id, newnode_Name);
+                        if (response.Result)
+                        {
+                            if (response.Json["errcode"].ToString() == "0")
+                            {
+                                node.Name = newnode_Name;
+                                Common.ShowToast(response.Json["msg"].ToString(),Color.FromRgb(0,188,0));
+                            }
+                            else
+                            {
+                                Common.ShowToast(response.Json["msg"].ToString(), Color.FromRgb(239, 34, 7));
+                            }
+                        }
+                        else
+                        {
+                            Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                        }
+
+
+
+                    });
+                }
+
+            }
 
 
         }

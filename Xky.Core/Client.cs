@@ -266,6 +266,7 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
+                  
                     Console.WriteLine(response);
                     foreach (var json in (JArray) response.Json["nodes"])
                     {
@@ -314,6 +315,32 @@ namespace Xky.Core
                 };
             }
         }
+        public static Response SetNode(int id,string name)
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
+                    };
+
+
+                var response = CallApi("set_node", new JObject { ["id"] = id,["name"]=name });
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
+                };
+            }
+        }
 
         public static Response AddNode(string serial, string name)
         {
@@ -329,6 +356,13 @@ namespace Xky.Core
 
 
                 var response = CallApi("add_node", new JObject {["serial"] = serial, ["name"] = name});
+                if (response.Result && response.Json["errcode"].ToString() == "0")
+                {
+                   
+                       var node = GetNode(serial);
+                        PushNode(node,false);
+                    
+                }
                 return response;
             }
             catch (Exception e)
@@ -369,11 +403,7 @@ namespace Xky.Core
         {
             lock ("nodes")
             {
-                var node = Nodes.ToList().Find(p => p.Serial == serial);
-
-                if (node != null)
-                    return node;
-
+                
 
                 var response = CallApi("get_node", new JObject {["serial"] = serial});
 
@@ -381,7 +411,7 @@ namespace Xky.Core
 
                 var json = response.Json["node"];
 
-                node = new Node
+               var node = new Node
                 {
                     Serial = json["t_serial"]?.ToString(),
                     Name = json["t_name"]?.ToString(),
@@ -403,6 +433,7 @@ namespace Xky.Core
         {
             lock ("nodes")
             {
+             
                 var node = Nodes.ToList().Find(p => p.Serial == n.Serial);
                 if (node != null)
                 {
@@ -416,9 +447,28 @@ namespace Xky.Core
 
                         return;
                     }
+                    else if (node.ConnectionHash != null&&n.ConnectionHash==null)
+                    {
+                        //
+                        return;
+                    }
                     else
                     {
-                        node = n;
+                        if(n.Serial== "14F17E4D1F76086CAF4A867BD6DE0FBA")
+                        {
+
+                        }
+                        node.ConnectionHash = n.ConnectionHash;
+                        node.ConnectStatus = n.ConnectStatus;
+                        node.DeviceCount = n.DeviceCount;
+                        node.Forward = n.Forward;
+                        node.Id = n.Id;
+                        node.Ip = n.Ip;
+                        node.LoadTick = n.LoadTick;
+                        node.Name = n.Name;
+                        node.NodeUrl = n.NodeUrl;
+                        node.Serial = n.Serial;
+                        
                     }
                 }
                 else
@@ -914,6 +964,35 @@ namespace Xky.Core
 
                     break;
                 }
+                case "node_state":
+                    {
+                        if (json["message"]?.ToString() == "online") {
+                            Console.WriteLine("节点上线："+json["node"]["t_serial"].ToString());
+                            var node = new Node
+                            {
+                                Serial = json["node"]["t_serial"]?.ToString(),
+                                Name = json["node"]["t_name"]?.ToString(),
+                                ConnectionHash = json["node"]["t_connection_hash"]?.ToString(),
+                                Forward = json["node"]["t_forward"]?.ToString(),
+                                Ip = json["node"]["t_ip"]?.ToString(),
+                                Id = json["node"]["t_id"] == null ? 0 : Convert.ToInt32(json["node"]["t_id"]),
+                                NodeUrl = json["node"]["t_nodeurl"]?.ToString()
+                            };
+                            //var oldnode= Nodes.ToList().Find(p => p.Serial == node.Serial);
+                            //if (oldnode != null) {
+                            //    oldnode = node;
+                            //}
+                            //else {
+                                PushNode(node,false);
+                           // }
+                        }
+                            
+                        else
+                            RemoveNode(Convert.ToInt32(json["node"]["t_id"].ToString()));
+
+                        break;
+                       
+                    }
             }
         }
 
