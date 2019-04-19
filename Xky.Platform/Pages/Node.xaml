@@ -43,14 +43,14 @@
     </UserControl.Resources>
     <Grid Background="{StaticResource BackgroundColor4}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-           <Label Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>  
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+            <Label Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>
             <UserControl:MyButton  Text="手动添加节点"  Click="Btn_AddToCloud_Click" VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
-            <UserControl:MyTagLabel Text="正在持续查找局域网节点设备..."   Foreground="#999" Background="#303740" Padding="6">
+            <UserControl:MyTagLabel Text="正在为您持续查找当前局域网内节点设备..."   Foreground="#999" Background="#303740" Padding="6">
                 <UserControl.Triggers>
                     <EventTrigger RoutedEvent="Loaded">
                         <BeginStoryboard>
@@ -63,8 +63,6 @@
                 </UserControl.Triggers>
             </UserControl:MyTagLabel>
         </StackPanel>
-       
-
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10"
                                       ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
@@ -176,71 +174,6 @@
 
             </ItemsControl>
         </ScrollViewer>
-
-
-
-
-
-
-
-
-
-        <WrapPanel Visibility="Hidden" Grid.Row="1" Margin="30" Orientation="Horizontal">
-
-            <Grid>
-                <Border Background="#343c43" BorderThickness="0"  CornerRadius="5"></Border>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="1">
-                        <Border >
-                            <StackPanel Margin="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Fill="Green" Width="12" Height="12"  VerticalAlignment="Center"></Ellipse>
-                                    <Label  VerticalAlignment="Center" Grid.Row="0" Foreground="#fff" FontSize="18" Margin="5,5,0,5" Padding="0">测试节点服务器</Label>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">序列号</Label>
-                                    <Label Foreground="#fff">656DFBFFAABC0D55AE7C112BB90678DA</Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">IP地址</Label>
-                                    <Label Foreground="#fff">192.168.1.144</Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">在线设备</Label>
-                                    <Label Foreground="#fff">10台</Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">上线时间</Label>
-                                    <Label Foreground="#fff">3天前</Label>
-                                </StackPanel>
-                                <StackPanel HorizontalAlignment="Right"  Orientation="Horizontal" Margin="0,5,0,0">
-                                    <Button Background="Transparent" BorderThickness="0" Margin="5" Padding="5">
-                                        <Image Height="16" Source="/Xky.Platform;component/Resources/Icon/btn_setting.png"/>
-                                    </Button>
-                                    <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
-                                        <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/edit.png"/>
-                                    </Button>
-                                    <Button Background="Transparent" BorderThickness="0"  Margin="5"  Padding="5">
-                                        <Image Height="18" Source="/Xky.Platform;component/Resources/Icon/delete.png"  />
-                                    </Button>
-
-                                </StackPanel>
-                            </StackPanel>
-
-                        </Border>
-                    </Grid>
-                </Grid>
-
-            </Grid>
-
-
-        </WrapPanel>
 
 
         <ContentControl Grid.Row="1" x:Name="ContentControl_AddToCloud" Visibility="Collapsed" Panel.ZIndex="99">
