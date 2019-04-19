@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
@@ -19,28 +21,15 @@ namespace Xky.Platform.Pages
     {
         private Thread _lastConnectThread;
 
+        private readonly List<Device> _screenTickList = new List<Device>();
+
         public MainControl()
         {
             InitializeComponent();
             Common.MyMainControl = this;
-           // SearchText.TextChanged += SearchText_TextChanged;
-        }
-
-        private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Client.SearchDevices(SearchText.Text);
-            if (!string.IsNullOrEmpty(SearchText.Text))
-            {
-                SearchResultLabel.Visibility = Visibility.Visible;
-                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count > 0
-                    ? new SolidColorBrush(Colors.Lime)
-                    : new SolidColorBrush(Color.FromRgb(254, 65, 53));
-                SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
-            }
-            else
-            {
-                SearchResultLabel.Visibility = Visibility.Collapsed;
-            }
+            //开启屏幕小图心跳
+            ScreenTick();
+            // SearchText.TextChanged += SearchText_TextChanged;
         }
 
 
@@ -99,6 +88,56 @@ namespace Xky.Platform.Pages
             });
         }
 
+        private void ScreenTick()
+        {
+            Client.StartAction(() =>
+            {
+                while (true)
+                {
+                    IEnumerable<IGrouping<string, Device>> nodeGroup;
+                    lock ("getNodeGroup")
+                    {
+                        nodeGroup = from device in _screenTickList
+                            group device by device.NodeSerial;
+                    }
+                    
+                    foreach (var zu in nodeGroup)
+                    {
+                        Console.WriteLine("组:"+zu.First().NodeSerial+" 量:"+zu.Count());
+                        var sns = zu.Select(device => device.Sn).ToList();
+                        var jarray=new JArray();
+                        foreach (var sn in sns)
+                        {
+                           jarray.Add(sn); 
+                        }
+                        Client.CallNodeEvent(zu.First().NodeSerial, jarray,
+                            new JObject {["type"] = "send_screen"});
+                    }
+
+                    Thread.Sleep(10000);
+                }
+            });
+        }
+
+        #region ui事件
+
+        private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Client.SearchDevices(SearchText.Text);
+            if (!string.IsNullOrEmpty(SearchText.Text))
+            {
+                SearchResultLabel.Visibility = Visibility.Visible;
+                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count > 0
+                    ? new SolidColorBrush(Colors.Lime)
+                    : new SolidColorBrush(Color.FromRgb(254, 65, 53));
+                SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
+            }
+            else
+            {
+                SearchResultLabel.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DeviceListBox.SelectedItem is Device device)
@@ -124,17 +163,17 @@ namespace Xky.Platform.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
         }
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
@@ -156,7 +195,7 @@ namespace Xky.Platform.Pages
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
+            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -169,10 +208,12 @@ namespace Xky.Platform.Pages
 
         private void DeviceListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            //var aaa=  DeviceListBox.Items.Cast<UIElement>().Where(x => x.IsVisible);
-            Console.WriteLine("触发");
-            Console.WriteLine("Visible Item Start Index:{0}", e.VerticalOffset);
-            Console.WriteLine("Visible Item Count:{0}", e.ViewportHeight);
+            lock ("getNodeGroup")
+            {
+                _screenTickList.Clear();
+                _screenTickList.AddRange(Client.Devices.ToList()
+                    .GetRange(Convert.ToInt32(e.VerticalOffset), Convert.ToInt32(e.ViewportHeight)));
+            }
         }
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -197,11 +238,13 @@ namespace Xky.Platform.Pages
                 }, ApartmentState.STA);
             }
         }
+
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            string tag = ((MyImageButton)e.Source).Tag.ToString();
+            string tag = ((MyImageButton) e.Source).Tag.ToString();
             MessageBox.Show(tag);
         }
+
+        #endregion
     }
-   
 }
