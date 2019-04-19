@@ -80,38 +80,38 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="DeviceId"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"
+                                                      Text="{Binding ElementName=MyBorder, Path=DataContext.Id}"
                                                       Margin="0,0,3,0"
 
-                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                                     Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel x:Name="DeviceName"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"
+                                                      Text="{Binding ElementName=MyBorder, Path=DataContext.Name}"
                                                       Margin="0,0,3,0"
 
-                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                                     Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                     <local:MyTagLabel
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                       Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                     <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Model}"
+                                        Text="{Binding ElementName=MyBorder, Path=DataContext.Model}"
                                         Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                        Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Cpus}"
+                                        Text="{Binding ElementName=MyBorder, Path=DataContext.Cpus}"
                                         Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                        Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel
-                                        TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Memory}"
+                                       Text="{Binding ElementName=MyBorder, Path=DataContext.Memory}"
                                         Margin="0,0,3,0"
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                        Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="RunStatus"
-                                                      TabLabelForeground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
+                                                     Foreground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
 
                                 </StackPanel>
                             </StackPanel>
@@ -127,22 +127,22 @@
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
 
-                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceId" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                <Setter TargetName="RunStatus" Property="Foreground"
                                         Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
 
-                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceId" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                <Setter TargetName="RunStatus" Property="Foreground"
                                         Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
 
 
@@ -195,11 +195,11 @@
                 <local:MyTextBox x:Name="SearchText" Margin="15" CornerRadius="5"
                                  Background="{StaticResource  BackgroundColor1}"
                                  Foreground="White" WaterText="搜索在线设备"
-                                 WindowChrome.IsHitTestVisibleInChrome="True" />
+                                 WindowChrome.IsHitTestVisibleInChrome="True" TextChanged="SearchText_TextChanged" />
                 <local:MyTagLabel x:Name="SearchResultLabel" Visibility="Collapsed" HorizontalAlignment="Right"
-                                  TabLabelText="搜索结果" Margin="0,0,20,0"
-                                  TabLabelBackground="{StaticResource BackgroundColor2}"
-                                  TabLabelForeground="Lime" IsHitTestVisible="False" />
+                                  Text="搜索结果" Margin="0,0,20,0"
+                                  Background="{StaticResource BackgroundColor2}"
+                                 Foreground="Lime" IsHitTestVisible="False" />
 
             </Grid>
 
@@ -272,19 +272,19 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="DeviceId"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Id}"
+                                                      Text="{Binding ElementName=MyBorder, Path=DataContext.Id}"
                                                       Margin="0,0,3,0"
 
-                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                                     Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                     <local:MyTagLabel x:Name="DeviceName"
-                                                      TabLabelText="{Binding ElementName=MyBorder, Path=DataContext.Name}"
+                                                      Text="{Binding ElementName=MyBorder, Path=DataContext.Name}"
                                                       Margin="0,0,3,0"
 
-                                                      TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                                      Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                     <local:MyTagLabel
-                                        TabLabelForeground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                       Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center"
                                             HorizontalAlignment="Left">
@@ -310,7 +310,7 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
                                     <local:MyTagLabel x:Name="RunStatus"
-                                                      TabLabelForeground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
+                                                     Foreground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
 
                                 </StackPanel>
                             </StackPanel>
@@ -326,22 +326,22 @@
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
 
-                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceId" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                <Setter TargetName="RunStatus" Property="Foreground"
                                         Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
 
-                                <Setter TargetName="DeviceId" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceId" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="DeviceName" Property="TabLabelForeground"
+                                <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="TabLabelForeground"
+                                <Setter TargetName="RunStatus" Property="Foreground"
                                         Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
 
 

@@ -38,7 +38,7 @@
                       HorizontalScrollBarVisibility="{Binding Path=HorizontalScrollBarVisibility}"
                      CaretBrush="{Binding Path=Foreground}"
                      TextBlock.LineHeight="{Binding Path=LineHeight}"
-                     VerticalContentAlignment="{Binding Path=AcceptsReturn,Converter={StaticResource AcceptsReturnToVerticalContentAlignment}}" Text="{Binding Path=Text}" TextChanged="TextBox1_TextChanged"
+                     VerticalContentAlignment="{Binding Path=AcceptsReturn,Converter={StaticResource AcceptsReturnToVerticalContentAlignment}}" Text="{Binding Path=Text}" TextChanged="OnTextChanged"
                      GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus" />
         </Grid>
     </Border>

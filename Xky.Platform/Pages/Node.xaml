@@ -47,7 +47,23 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontSize="30" Foreground="White" Margin="20,40,0,0">节点管理</Label>
+        <StackPanel Orientation="Horizontal">
+           <Label Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>  
+            <UserControl:MyButton  Text="手动添加节点"  Click="Btn_AddToCloud_Click" VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
+            <UserControl:MyTagLabel Text="正在持续查找局域网节点设备..."   Foreground="#999" Background="#303740" Padding="6">
+                <UserControl.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation  Duration="0:0:0.5" From="0.8" To="0.5" AutoReverse="True" RepeatBehavior="Forever" Storyboard.TargetProperty="Opacity">
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </UserControl.Triggers>
+            </UserControl:MyTagLabel>
+        </StackPanel>
+       
 
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10"

@@ -27,11 +27,25 @@ namespace Xky.Platform.Pages
         {
             InitializeComponent();
             Common.MyMainControl = this;
-            //开启屏幕小图心跳
-            ScreenTick();
-            // SearchText.TextChanged += SearchText_TextChanged;
+           // SearchText.TextChanged += SearchText_TextChanged;
         }
 
+        private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Client.SearchDevices(SearchText.Text);
+            if (!string.IsNullOrEmpty(SearchText.Text))
+            {
+                SearchResultLabel.Visibility = Visibility.Visible;
+                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count > 0
+                    ? new SolidColorBrush(Colors.Lime)
+                    : new SolidColorBrush(Color.FromRgb(254, 65, 53));
+                SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
+            }
+            else
+            {
+                SearchResultLabel.Visibility = Visibility.Collapsed;
+            }
+        }
 
         /// <summary>
         ///     加载设备列表
