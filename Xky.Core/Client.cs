@@ -289,6 +289,11 @@ namespace Xky.Core
             }
         }
 
+        /// <summary>
+        /// 从侠客云删除节点
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Response DeleteNode(int id)
         {
             try
@@ -315,6 +320,13 @@ namespace Xky.Core
                 };
             }
         }
+
+        /// <summary>
+        /// 修改节点名称
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Response SetNode(int id,string name)
         {
             try
@@ -342,6 +354,12 @@ namespace Xky.Core
             }
         }
 
+        /// <summary>
+        /// 添加节点（将节点绑定到当前授权上）
+        /// </summary>
+        /// <param name="serial"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Response AddNode(string serial, string name)
         {
             try
@@ -376,6 +394,10 @@ namespace Xky.Core
             }
         }
 
+        /// <summary>
+        /// 从当前节点列表中移除
+        /// </summary>
+        /// <param name="id"></param>
         public static void RemoveNode(int id)
         {
             lock ("nodes")
@@ -399,6 +421,11 @@ namespace Xky.Core
             }
         }
 
+        /// <summary>
+        /// 获取节点详细信息
+        /// </summary>
+        /// <param name="serial"></param>
+        /// <returns></returns>
         private static Node GetNode(string serial)
         {
             lock ("nodes")
@@ -449,15 +476,12 @@ namespace Xky.Core
                     }
                     else if (node.ConnectionHash != null&&n.ConnectionHash==null)
                     {
-                        //
+                       
                         return;
                     }
                     else
                     {
-                        if(n.Serial== "14F17E4D1F76086CAF4A867BD6DE0FBA")
-                        {
-
-                        }
+ 
                         node.ConnectionHash = n.ConnectionHash;
                         node.ConnectStatus = n.ConnectStatus;
                         node.DeviceCount = n.DeviceCount;
