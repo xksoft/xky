@@ -8,7 +8,7 @@
      xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
     xmlns:core="clr-namespace:Xky.Core;assembly=Xky.Core"
     mc:Ignorable="d"
-             d:DesignHeight="850" d:DesignWidth="1200">
+             d:DesignHeight="850" d:DesignWidth="1200" Loaded="MainControl_OnLoaded">
 
     <Grid>
         <Grid.ColumnDefinitions>

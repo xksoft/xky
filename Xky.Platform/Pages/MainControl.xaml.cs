@@ -27,8 +27,7 @@ namespace Xky.Platform.Pages
         {
             InitializeComponent();
             Common.MyMainControl = this;
-           //开启屏幕小图心跳
-            ScreenTick();
+
             // SearchText.TextChanged += SearchText_TextChanged;
 
            
@@ -258,5 +257,11 @@ namespace Xky.Platform.Pages
         }
 
         #endregion
+
+        private void MainControl_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            //开启屏幕小图心跳
+            ScreenTick();
+        }
     }
 }
