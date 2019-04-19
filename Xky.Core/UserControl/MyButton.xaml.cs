@@ -24,6 +24,10 @@ namespace Xky.Core.UserControl
         public static readonly DependencyProperty Image_HeightProperty =
           DependencyProperty.Register("Image_Height", typeof(int), typeof(MyButton),
               new PropertyMetadata(16));
+
+        public new static readonly DependencyProperty HeightProperty =
+         DependencyProperty.Register("Height", typeof(int), typeof(MyButton),
+             new PropertyMetadata(32));
         public static readonly DependencyProperty Image_WidthProperty =
           DependencyProperty.Register("Image_Width", typeof(int), typeof(MyButton),
               new PropertyMetadata(16));
@@ -64,6 +68,11 @@ namespace Xky.Core.UserControl
         {
             get => (ImageSource)GetValue(ImageProperty);
             set => SetValue(ImageProperty, value);
+        }
+        public int  Height
+        {
+            get => (int)GetValue(HeightProperty);
+            set => SetValue(HeightProperty, value);
         }
         public int Image_Height
         {

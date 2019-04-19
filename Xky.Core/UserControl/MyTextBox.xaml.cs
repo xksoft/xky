@@ -45,8 +45,7 @@ namespace Xky.Core.UserControl
         public static readonly DependencyProperty LineHeightProperty =
          DependencyProperty.Register("LineHeight", typeof(int), typeof(MyTextBox),
              new PropertyMetadata(10));
-
-        public MyTextBox()
+      public MyTextBox()
         {
             InitializeComponent();
             DataContext = this;
@@ -116,11 +115,22 @@ namespace Xky.Core.UserControl
             set => SetValue(LineHeightProperty, value);
         }
 
+        public event TextChangedEventHandler TextChanged;
 
-        private void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
+
+
+
+        public void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            Text = TextBox1.Text;
+            TextChangedEventHandler h = TextChanged;
+            if (h != null)
+            {
+                h(this, e);
+            }
             WaterLabel.Visibility = TextBox1.Text.Length > 0 ? Visibility.Collapsed : Visibility.Visible;
         }
+
 
         private void TextBox1_GotFocus(object sender, RoutedEventArgs e)
         {

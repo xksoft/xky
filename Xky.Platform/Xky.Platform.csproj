@@ -336,5 +336,8 @@
     <Resource Include="Resources\Icon\DeviceMenu\volumeup-black.png" />
     <Resource Include="Resources\Icon\DeviceMenu\volumeup-white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\add.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

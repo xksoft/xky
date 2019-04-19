@@ -23,7 +23,7 @@ namespace Xky.Platform.Pages
         {
             InitializeComponent();
             Common.MyMainControl = this;
-           // SearchText.TextChanged += SearchText_TextChanged;
+           
         }
 
         private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
@@ -32,10 +32,10 @@ namespace Xky.Platform.Pages
             if (!string.IsNullOrEmpty(SearchText.Text))
             {
                 SearchResultLabel.Visibility = Visibility.Visible;
-                SearchResultLabel.TabLabelForeground = Client.PanelDevices.Count > 0
+                SearchResultLabel.Foreground = Client.PanelDevices.Count > 0
                     ? new SolidColorBrush(Colors.Lime)
                     : new SolidColorBrush(Color.FromRgb(254, 65, 53));
-                SearchResultLabel.TabLabelText = "找到" + Client.PanelDevices.Count + "台设备";
+                SearchResultLabel.Text = "找到" + Client.PanelDevices.Count + "台设备";
             }
             else
             {
