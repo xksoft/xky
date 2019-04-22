@@ -24,6 +24,7 @@ namespace Xky.Core.Model
         private int _cpuUseage = 5;
         private int _memoryUseage = 5;
         private int _diskUseage=5;
+        
 
         //加载时序
         public long LoadTick { get; set; }

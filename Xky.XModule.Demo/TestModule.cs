@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -21,8 +22,13 @@ namespace Xky.XModule.Demo
 
         public override void Start()
         {
-           Device.ScriptEngine.Toast("用户名：" + MyStr, 1); 
-          
+            Device.ScriptEngine.Toast("用户名：" + MyStr, 1);
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(1000);
+                Console.WriteLine(i + "秒后继续执行");
+            }
+            Device.ScriptEngine.Toast("模块执行完毕", 1);
         }
 
         public string MyStr = "测试字符";

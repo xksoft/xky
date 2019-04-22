@@ -14,17 +14,8 @@ namespace Xky.Core
     /// </summary>
     public abstract class XModule : Object, ICloneable
     {
-        public XModule()
-        {
-            ModuleName = Name();
-            ModuleDescription = Description();
-        }
-        public string ModuleName { get; set; }
-        public string ModuleDescription { get; set; }
-        /// <summary>
-        /// 分组名称
-        /// </summary>
-        public string GroupName { get; set; }
+       
+       
         /// <summary>
         /// 当前设备
         /// </summary>
@@ -60,6 +51,12 @@ namespace Xky.Core
         /// </summary>
         /// <returns></returns>
         public abstract string Description();
+
+        /// <summary>
+        /// 是否是后台模块
+        /// </summary>
+        /// <returns></returns>
+        public bool IsBackground { get; set; } = false;
 
         /// <summary>
         /// 模块动作脚本

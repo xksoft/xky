@@ -69,8 +69,8 @@ namespace Xky.Core
         /// </summary>
         public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
 
-        public static  ObservableCollection<XModule> Modules = new ObservableCollection<XModule>();
-        public static ObservableCollection<string> ModuleGroupNames = new ObservableCollection<string>();
+
+        public static ObservableCollection<Module> Modules = new ObservableCollection<Module>();
 
         /// <summary>
         /// 速率计数器
@@ -608,15 +608,22 @@ namespace Xky.Core
                     foreach (string modulefile in modulefilelist)
                     {
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
-                        foreach (XModule xmodule in xmodulelist)
-                        {
+                        //foreach (XModule xmodule in xmodulelist)
+                        //{
                            
-                                var newmodule = (XModule)xmodule.Clone();
-                                newmodule.GroupName = groupname;
-                                Client.Modules.Add(newmodule);
-                            
-                            
-                        }
+                        //        var modulecontent = (XModule)xmodule.Clone();
+                              
+                                
+                        //    var module = new Module();
+                        //    module.Name = modulecontent.Name();
+                        //    module.Groupname = groupname;
+                        //    module.Description = modulecontent.Description();
+                        //    module.ModuleContent = modulecontent;
+                           
+                        //    Client.Modules.Add(module);
+
+
+                        //}
                     }
 
                 }
