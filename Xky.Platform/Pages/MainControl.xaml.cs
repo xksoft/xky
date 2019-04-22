@@ -92,23 +92,22 @@ namespace Xky.Platform.Pages
         {
             Client.StartAction(() =>
             {
-                var response = Client.LoadModules_Panel();
-                if (response.Result)
-                {
-                    Console.WriteLine("模块面板上的模块数量：" + Client.ModulesPanel.Count);
-                    Common.UiAction(() => {
-                        ModulesPanel.ItemsSource = Client.ModulesPanel;
-                    });
-                    Common.UiAction(() => {
-                        ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags;
-                    });
-                    Common.ShowToast("模块面板加载成功");
-                }
-                else
-                {
-                    Common.ShowToast(response.Message);
-                }
-            });
+                 Client.LoadModules();
+               
+                    Console.WriteLine("成功加载模块：" + Client.Modules.Count+"个");
+                //    Common.UiAction(() => {
+                //        ModulesPanel.ItemsSource = Client.ModulesPanel;
+                //    });
+                //    Common.UiAction(() => {
+                //        ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags;
+                //    });
+                //    Common.ShowToast("模块面板加载成功");
+                //}
+                //else
+                //{
+                //    Common.ShowToast(response.Message);
+                //}
+            }, ApartmentState.STA);
         }
 
         private void ScreenTick()

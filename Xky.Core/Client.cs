@@ -69,10 +69,8 @@ namespace Xky.Core
         /// </summary>
         public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
 
-        public static readonly ObservableCollection<Module> ModulesPanel = new ObservableCollection<Module>();
-
-        public static readonly ObservableCollection<string> ModulesPanelTags =
-            new ObservableCollection<string> {"所有模块"};
+        public static  ObservableCollection<XModule> Modules = new ObservableCollection<XModule>();
+        public static ObservableCollection<string> ModuleGroupNames = new ObservableCollection<string>();
 
         /// <summary>
         /// 速率计数器
@@ -596,33 +594,32 @@ namespace Xky.Core
         ///     重新加载模块列表
         /// </summary>
         /// <returns></returns>
-        public static Response LoadModules_Panel()
+        public static void  LoadModules()
         {
             try
             {
-                if (License == null)
-                    return new Response
+                string currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\"))+ "\\Modules";
+                string []groupnamepaths= Directory.GetDirectories(modulepath);
+                foreach (string groupnamepath in groupnamepaths)
+                {
+                    string groupname = new DirectoryInfo(groupnamepath).Name;
+                    List<string> modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
+                    foreach (string modulefile in modulefilelist)
                     {
-                        Result = false,
-                        Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
-                    };
-                var response = CallApi("get_module_panel", new JObject());
+                        var xmodulelist = XModuleHelper.LoadXModules(modulefile);
+                        foreach (XModule xmodule in xmodulelist)
+                        {
+                            xmodule.GroupName = groupname;
+                            Client.Modules.Add(xmodule);
+                        }
+                    }
 
-                if (response.Result)
-                    foreach (var json in (JArray) response.Json["result"])
-                        PushModule(json);
-
-                return response;
+                }
             }
             catch (Exception e)
             {
-                return new Response
-                {
-                    Result = false,
-                    Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
-                };
+               
             }
         }
 
@@ -874,73 +871,7 @@ namespace Xky.Core
         }
 
 
-        /// <summary>
-        ///     添加或更新模块面板
-        /// </summary>
-        /// <param name="json"></param>
-        private static Module PushModule(JToken json)
-        {
-            lock ("modules")
-            {
-                var module = ModulesPanel.ToList().Find(p => p.Id == (int) json["t_id"]);
-                //如果已经存在就更新
-                if (module != null)
-                {
-                    module.Id = (int) json["t_id"];
-                    module.Name = json["t_name"]?.ToString();
 
-                    module.Price = (int) json["t_price"];
-                    module.Status = (int) json["t_status"];
-                    module.Uid = (int) json["t_uid"];
-                    module.Type = (int) json["t_type"];
-                    module.Tags = json["t_tags"].Values<string>().ToList();
-                }
-                else
-                {
-                    module = new Module
-                    {
-                        Id = (int) json["t_id"],
-                        Name = json["t_name"]?.ToString(),
-
-                        Price = (int) json["t_price"],
-                        Status = (int) json["t_status"],
-                        Uid = (int) json["t_uid"],
-                        Type = (int) json["t_type"],
-                        Tags = json["t_tags"].Values<string>().ToList()
-                    };
-                    foreach (var tag in module.Tags)
-                        if (!ModulesPanelTags.Contains(tag))
-                            ModulesPanelTags.Add(tag);
-
-                    StartAction(() =>
-                    {
-                        //得加个锁，不然一下子并发上百个请求，会被服务器堵住
-
-                        try
-                        {
-                            using (var client = new WebClient())
-                            {
-                                var data = client.DownloadData(json["t_logo"] + "@96h");
-                                MainWindow.Dispatcher.Invoke(() => { module.Logo = ByteToBitmapSource(data); });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
-                    });
-                    MainWindow.Dispatcher.Invoke(() =>
-                    {
-//                        //设置初始屏幕
-//                        module.Logo =
-//                            new BitmapImage(new Uri(json["t_logo"] + "@96h"));
-                        ModulesPanel.Add(module);
-                    });
-                }
-
-                return module;
-            }
-        }
 
         /// <summary>
         ///     移除Device

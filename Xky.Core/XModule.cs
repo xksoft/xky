@@ -15,6 +15,10 @@ namespace Xky.Core
     public abstract class XModule : Object, ICloneable
     {
         /// <summary>
+        /// 分组名称
+        /// </summary>
+        public string GroupName = "默认分组";
+        /// <summary>
         /// 当前设备
         /// </summary>
         public Device Device { get; set; }
