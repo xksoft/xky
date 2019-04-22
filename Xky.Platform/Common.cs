@@ -117,11 +117,18 @@ namespace Xky.Platform
             ShowToast(toast, Colors.White);
         }
 
-        public static void UiAction(Action callback)
+        public static void UiAction(Action callback, bool isBegin = true)
         {
             try
             {
-                MainWindow?.Dispatcher.BeginInvoke(DispatcherPriority.Background,callback);
+                if (isBegin)
+                {
+                    MainWindow?.Dispatcher.BeginInvoke(DispatcherPriority.Background, callback);
+                }
+                else
+                {
+                    MainWindow?.Dispatcher.Invoke(DispatcherPriority.Background, callback);
+                }
             }
             catch (Exception e)
             {
