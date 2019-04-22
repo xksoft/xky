@@ -13,7 +13,7 @@ namespace Xky.XModule.Demo
         {
             return "我是模块的名字";
         }
-
+       
         public override string Description()
         {
             return "我是模块的描述";
@@ -30,6 +30,7 @@ namespace Xky.XModule.Demo
 
         public override bool ShowUserControl()
         {
+         
             var panel = new ModulePanel();
           
             //ShowDialogPanel会有类似ShowDialog的效果，堵塞线程等待关闭后继续执行
@@ -37,6 +38,7 @@ namespace Xky.XModule.Demo
             //关闭后赋值
             MyStr = panel.text_username.Text;
             //返回true让模块继续执行，否则会直接结束
+            Console.WriteLine("模块调用返回："+panel.run);
             return panel.run;
         }
     }

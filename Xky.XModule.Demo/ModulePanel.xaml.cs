@@ -42,11 +42,7 @@ namespace Xky.XModule.Demo
         }
         private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
-            if (text_filename.Text.Length == 0)
-            {
-                MessageBox.Show("请选择文件！");
-            }
-            else { run = true; Client.CloseDialogPanel();}
+            run = true; Client.CloseDialogPanel();
             
         }
         private void btn_cancel_Click(object sender, RoutedEventArgs e)

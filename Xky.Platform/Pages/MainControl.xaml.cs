@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -30,7 +31,7 @@ namespace Xky.Platform.Pages
 
             // SearchText.TextChanged += SearchText_TextChanged;
 
-           
+
         }
 
         private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
@@ -88,25 +89,21 @@ namespace Xky.Platform.Pages
         /// <summary>
         ///     加载模块面板上的模块列表
         /// </summary>
-        public void LoadModules_Panel()
+        public void LoadModules()
         {
             Client.StartAction(() =>
             {
-                 Client.LoadModules();
-               
-                    Console.WriteLine("成功加载模块：" + Client.Modules.Count+"个");
-                //    Common.UiAction(() => {
-                //        ModulesPanel.ItemsSource = Client.ModulesPanel;
-                //    });
-                //    Common.UiAction(() => {
-                //        ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags;
-                //    });
-                //    Common.ShowToast("模块面板加载成功");
-                //}
-                //else
-                //{
-                //    Common.ShowToast(response.Message);
-                //}
+                Client.LoadModules();
+
+                Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
+                Common.UiAction(() =>
+                {
+                    var view = CollectionViewSource.GetDefaultView(Client.Modules);
+                    view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+                    ModuleListBox.ItemsSource = view;
+
+                });
+
             }, ApartmentState.STA);
         }
 
@@ -129,7 +126,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 nodeGroup = from device in _screenTickList
-                    group device by device.NodeSerial;
+                            group device by device.NodeSerial;
             }
 
             foreach (var zu in nodeGroup)
@@ -175,39 +172,27 @@ namespace Xky.Platform.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
         }
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-            //            var btn = (RadioButton) e.Source;
-            //            if (btn.IsChecked.Value)
-            //            {
-            //                if (btn.Tag.ToString() == "所有模块")
-            //                    Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-            //                else
-            //                    Common.UiAction(() =>
-            //                    {
-            //                        ModulesPanel.ItemsSource = from module in Client.ModulesPanel
-            //                            where module.Tags.Contains(btn.Tag.ToString())
-            //                            select module;
-            //                    });
-            //            }
+           
         }
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
+            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -236,7 +221,7 @@ namespace Xky.Platform.Pages
             {
                 Client.StartAction(() =>
                 {
-                    var xmodule = XModuleHelper.LoadXModules("modules\\debug\\xky.xmodule.demo.dll").First();
+                    var xmodule = XModuleHelper.LoadXModules("modules\\默认分组\\debug\\xky.xmodule.demo.dll").First();
                     if (xmodule != null)
                     {
                         //显示自定义控件
@@ -255,7 +240,7 @@ namespace Xky.Platform.Pages
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            string tag = ((MyImageButton) e.Source).Tag.ToString();
+            string tag = ((MyImageButton)e.Source).Tag.ToString();
             MessageBox.Show(tag);
         }
 
@@ -265,6 +250,33 @@ namespace Xky.Platform.Pages
         {
             //开启屏幕小图心跳
             ScreenTick();
+        }
+
+        private void ModuleListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var module = (XModule)ModuleListBox.SelectedItem;
+            if (module != null)
+            {
+                if (DeviceListBox.SelectedItem is Device device)
+                {
+                    Client.StartAction(() =>
+                {
+
+                    //显示自定义控件
+                    var isContinue = false;
+                    Common.UiAction(() => {
+                        isContinue = module.ShowUserControl();
+                    });
+                    //是否继续
+                    if (isContinue)
+                    {
+                        module.Device = device;
+                        module.Start();
+                    }
+
+                }, ApartmentState.STA);
+                }
+            }
         }
     }
 }

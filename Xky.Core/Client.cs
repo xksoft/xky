@@ -610,8 +610,12 @@ namespace Xky.Core
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
                         foreach (XModule xmodule in xmodulelist)
                         {
-                            xmodule.GroupName = groupname;
-                            Client.Modules.Add(xmodule);
+                           
+                                var newmodule = (XModule)xmodule.Clone();
+                                newmodule.GroupName = groupname;
+                                Client.Modules.Add(newmodule);
+                            
+                            
                         }
                     }
 

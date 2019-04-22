@@ -14,10 +14,17 @@ namespace Xky.Core
     /// </summary>
     public abstract class XModule : Object, ICloneable
     {
+        public XModule()
+        {
+            ModuleName = Name();
+            ModuleDescription = Description();
+        }
+        public string ModuleName { get; set; }
+        public string ModuleDescription { get; set; }
         /// <summary>
         /// 分组名称
         /// </summary>
-        public string GroupName = "默认分组";
+        public string GroupName { get; set; }
         /// <summary>
         /// 当前设备
         /// </summary>
@@ -41,13 +48,13 @@ namespace Xky.Core
         {
             return true;
         }
-
+       
         /// <summary>
         /// 模块名称
         /// </summary>
         /// <returns></returns>
         public abstract string Name();
-
+        
         /// <summary>
         /// 模块说明
         /// </summary>

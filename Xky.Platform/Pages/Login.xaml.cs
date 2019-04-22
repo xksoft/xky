@@ -44,15 +44,14 @@ namespace Xky.Platform.Pages
                     Thread.Sleep(500);
 
                     //启动局域网节点探查器
-
-
+                   
                     Common.UiAction(() =>
                     {
-                        // Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
+                       
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();
-                        Common.MyMainControl.LoadModules_Panel();
+                        Common.MyMainControl.LoadModules();
                     });
                 }
                 else
