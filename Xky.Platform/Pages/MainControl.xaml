@@ -387,7 +387,7 @@
         </Grid>
 
 
-        <Grid Grid.Column="2" Grid.ColumnSpan="2" Background="{StaticResource  BackgroundColor4}">
+        <Grid Grid.Column="2"  Background="{StaticResource  BackgroundColor4}">
             <Border Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="Black">
                 <Border.Effect>
                     <DropShadowEffect Color="#CC000000" Direction="360" BlurRadius="4" ShadowDepth="1"
@@ -408,8 +408,7 @@
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/setdebug-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
-                            <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/whatapps.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
-                            <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/authority.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
+                          
                         </VirtualizingStackPanel>
                     </Grid>
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -528,110 +527,107 @@
 
         </Grid>
 
-        <!-- <Grid Grid.Column="3" Background="#EFF2F5"> -->
-        <!--     ~1~模块列表开始@1@ -->
-        <!--     <Grid> -->
-        <!--         <Grid.RowDefinitions> -->
-        <!--             <RowDefinition Height="100" /> -->
-        <!--             <RowDefinition Height="auto" /> -->
-        <!--             <RowDefinition Height="*" /> -->
-        <!--         </Grid.RowDefinitions> -->
-        <!-- -->
-        <!--         <Border Margin="15,60,15,10" CornerRadius="5" Height="30" BorderBrush="#ccc" BorderThickness="1"> -->
-        <!--             <local:MyTextBox Grid.Row="0" BorderThickness="0" -->
-        <!-- -->
-        <!--                              TextBoxBackground="#fff" -->
-        <!--                              TextBoxForeground="#616161" -->
-        <!--                              TextBoxWaterText="搜索模块" -->
-        <!--                              WindowChrome.IsHitTestVisibleInChrome="True" /> -->
-        <!--         </Border> -->
-        <!-- -->
-        <!--         <ItemsControl x:Name="ModulesTagsPanel" Grid.Row="1"> -->
-        <!--             <ItemsControl.ItemsPanel> -->
-        <!--                 <ItemsPanelTemplate> -->
-        <!--                     <WrapPanel Margin="10,10,10,10" Orientation="Horizontal" /> -->
-        <!--                 </ItemsPanelTemplate> -->
-        <!--             </ItemsControl.ItemsPanel> -->
-        <!--             <ItemsControl.ItemTemplate> -->
-        <!--                 <DataTemplate> -->
-        <!-- -->
-        <!--                     <RadioButton MinWidth="10" GroupName="tag" Margin="0" Background="#000" -->
-        <!--                                  Click="RadioButton_ModuleTag_Click" Tag="{Binding}"> -->
-        <!--                         <RadioButton.Style> -->
-        <!--                             <Style TargetType="{x:Type RadioButton}"> -->
-        <!--                                 <Setter Property="Template"> -->
-        <!--                                     <Setter.Value> -->
-        <!--                                         <ControlTemplate TargetType="RadioButton"> -->
-        <!--                                             <Border x:Name="TagBorder" BorderBrush="Transparent" Padding="1" -->
-        <!--                                                     BorderThickness="1" Margin="2" CornerRadius="4"> -->
-        <!--                                                 <Border x:Name="TagBackground" BorderThickness="1" -->
-        <!--                                                         CornerRadius="4" -->
-        <!--                                                         Background="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-10}"> -->
-        <!--                                                     <TextBlock Padding="6" Text="{Binding}" -->
-        <!--                                                                VerticalAlignment="Center" -->
-        <!--                                                                HorizontalAlignment="Center" Foreground="#fff" /> -->
-        <!--                                                 </Border> -->
-        <!--                                             </Border> -->
-        <!--                                             <ControlTemplate.Triggers> -->
-        <!-- -->
-        <!--                                                 <Trigger Property="IsMouseOver" Value="True"> -->
-        <!--                                                     <Setter TargetName="TagBackground" Property="Background" -->
-        <!--                                                             Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" /> -->
-        <!--                                                 </Trigger> -->
-        <!--                                                 <Trigger Property="IsChecked" Value="True"> -->
-        <!--                                                     <Setter TargetName="TagBorder" Property="BorderBrush" -->
-        <!--                                                             Value="#999" /> -->
-        <!--                                                     <Setter TargetName="TagBackground" Property="Background" -->
-        <!--                                                             Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-40}" /> -->
-        <!--                                                 </Trigger> -->
-        <!-- -->
-        <!--                                             </ControlTemplate.Triggers> -->
-        <!--                                         </ControlTemplate> -->
-        <!--                                     </Setter.Value> -->
-        <!--                                 </Setter> -->
-        <!--                             </Style> -->
-        <!--                         </RadioButton.Style> -->
-        <!-- -->
-        <!--                     </RadioButton> -->
-        <!-- -->
-        <!--                 </DataTemplate> -->
-        <!--             </ItemsControl.ItemTemplate> -->
-        <!--         </ItemsControl> -->
-        <!-- -->
-        <!-- -->
-        <!--         <Grid Grid.Row="2" Margin="10,0,10,20"> -->
-        <!--             <Grid> -->
-        <!--                 <Grid.RowDefinitions> -->
-        <!--                     <RowDefinition Height="50" /> -->
-        <!--                     <RowDefinition /> -->
-        <!--                 </Grid.RowDefinitions> -->
-        <!--                 <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ccc" Margin="5,0,5,20"> -->
-        <!--                     <Label HorizontalContentAlignment="Left" Foreground="#999" HorizontalAlignment="Left">“陌陌”下一共有8个模块</Label> -->
-        <!--                 </Border> -->
-        <!-- -->
-        <!--                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" -->
-        <!--                               ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True"> -->
-        <!--                     <ItemsControl x:Name="ModulesPanel"> -->
-        <!--                         <ItemsControl.ItemsPanel> -->
-        <!--                             <ItemsPanelTemplate> -->
-        <!--                                 <WrapPanel /> -->
-        <!--                             </ItemsPanelTemplate> -->
-        <!--                         </ItemsControl.ItemsPanel> -->
-        <!--                         <ItemsControl.ItemTemplate> -->
-        <!--                             <DataTemplate> -->
-        <!--                                 <local:MyModuleItem Text="{Binding Name}" Logo="{Binding Logo}" -->
-        <!--                                                     MouseDown="MyModuleItem_MouseDown" /> -->
-        <!--                             </DataTemplate> -->
-        <!--                         </ItemsControl.ItemTemplate> -->
-        <!--                     </ItemsControl> -->
-        <!-- -->
-        <!--                 </ScrollViewer> -->
-        <!--             </Grid> -->
-        <!-- -->
-        <!--             ~1~模块列表结束@1@ -->
-        <!-- -->
-        <!--         </Grid> -->
-        <!--     </Grid> -->
-        <!-- </Grid> -->
+         <Grid Grid.Column="3" Background="#EFF2F5"> 
+           
+             <Grid> 
+                 <Grid.RowDefinitions> 
+                     <RowDefinition Height="100" /> 
+                     <RowDefinition Height="auto" /> 
+                     <RowDefinition Height="*" /> 
+                 </Grid.RowDefinitions> 
+         
+                 <Border Margin="15,60,15,10" CornerRadius="5" Height="30" BorderBrush="#ccc" BorderThickness="1"> 
+                     <local:MyTextBox Grid.Row="0" BorderThickness="0" 
+         
+                                     Background="#fff" 
+                                      Foreground="#616161" 
+                                     WaterText="搜索模块" 
+                                      WindowChrome.IsHitTestVisibleInChrome="True" /> 
+                 </Border> 
+         
+                 <ItemsControl x:Name="ModulesTagsPanel" Grid.Row="1"> 
+                     <ItemsControl.ItemsPanel> 
+                         <ItemsPanelTemplate> 
+                             <WrapPanel Margin="10,10,10,10" Orientation="Horizontal" /> 
+                         </ItemsPanelTemplate> 
+                     </ItemsControl.ItemsPanel> 
+                     <ItemsControl.ItemTemplate> 
+                         <DataTemplate> 
+         
+                             <RadioButton MinWidth="10" GroupName="tag" Margin="0" Background="#000" 
+                                          Click="RadioButton_ModuleTag_Click" Tag="{Binding}"> 
+                                 <RadioButton.Style> 
+                                     <Style TargetType="{x:Type RadioButton}"> 
+                                         <Setter Property="Template"> 
+                                             <Setter.Value> 
+                                                 <ControlTemplate TargetType="RadioButton"> 
+                                                     <Border x:Name="TagBorder" BorderBrush="Transparent" Padding="1" 
+                                                             BorderThickness="1" Margin="2" CornerRadius="4"> 
+                                                         <Border x:Name="TagBackground" BorderThickness="1" 
+                                                                 CornerRadius="4" 
+                                                                 Background="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-10}"> 
+                                                             <TextBlock Padding="6" Text="{Binding}" 
+                                                                        VerticalAlignment="Center" 
+                                                                        HorizontalAlignment="Center" Foreground="#fff" /> 
+                                                         </Border> 
+                                                     </Border> 
+                                                     <ControlTemplate.Triggers> 
+         
+                                                         <Trigger Property="IsMouseOver" Value="True"> 
+                                                             <Setter TargetName="TagBackground" Property="Background" 
+                                                                     Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=+10}" /> 
+                                                         </Trigger> 
+                                                         <Trigger Property="IsChecked" Value="True"> 
+                                                             <Setter TargetName="TagBorder" Property="BorderBrush" 
+                                                                     Value="#999" /> 
+                                                             <Setter TargetName="TagBackground" Property="Background" 
+                                                                     Value="{Binding Source={StaticResource BlueLine},Converter={ lib:HoverColorConverter},ConverterParameter=-40}" /> 
+                                                         </Trigger> 
+         
+                                                     </ControlTemplate.Triggers> 
+                                                 </ControlTemplate> 
+                                             </Setter.Value> 
+                                         </Setter> 
+                                     </Style> 
+                                 </RadioButton.Style> 
+         
+                             </RadioButton> 
+         
+                         </DataTemplate> 
+                     </ItemsControl.ItemTemplate> 
+                 </ItemsControl> 
+         
+         
+                 <Grid Grid.Row="2" Margin="10,0,10,20"> 
+                     <Grid> 
+                         <Grid.RowDefinitions> 
+                             <RowDefinition Height="50" /> 
+                             <RowDefinition /> 
+                         </Grid.RowDefinitions> 
+                         <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#ccc" Margin="5,0,5,20"> 
+                             <Label HorizontalContentAlignment="Left" Foreground="#999" HorizontalAlignment="Left">“陌陌”下一共有8个模块</Label> 
+                         </Border> 
+         
+                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                                       ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True"> 
+                             <ItemsControl x:Name="ModulesPanel"> 
+                                 <ItemsControl.ItemsPanel> 
+                                     <ItemsPanelTemplate> 
+                                         <WrapPanel /> 
+                                     </ItemsPanelTemplate> 
+                                 </ItemsControl.ItemsPanel> 
+                                 <ItemsControl.ItemTemplate> 
+                                     <DataTemplate> 
+                                         <local:MyModuleItem Text="{Binding Name}" Logo="{Binding Logo}" 
+                                                             MouseDown="MyModuleItem_MouseDown" /> 
+                                     </DataTemplate> 
+                                 </ItemsControl.ItemTemplate> 
+                             </ItemsControl> 
+         
+                         </ScrollViewer> 
+                     </Grid> 
+                 </Grid> 
+             </Grid> 
+         </Grid> 
     </Grid>
 </UserControl>

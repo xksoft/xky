@@ -96,8 +96,12 @@ namespace Xky.Platform.Pages
                 if (response.Result)
                 {
                     Console.WriteLine("模块面板上的模块数量：" + Client.ModulesPanel.Count);
-                    // Common.UiAction(() => { ModulesPanel.ItemsSource = Client.ModulesPanel; });
-                    //   Common.UiAction(() => { ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags; });
+                    Common.UiAction(() => {
+                        ModulesPanel.ItemsSource = Client.ModulesPanel;
+                    });
+                    Common.UiAction(() => {
+                        ModulesTagsPanel.ItemsSource = Client.ModulesPanelTags;
+                    });
                     Common.ShowToast("模块面板加载成功");
                 }
                 else

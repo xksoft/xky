@@ -161,8 +161,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\MyModuleItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MyProgressbar.xaml">
       <Generator>MSBuild:Compile</Generator>
