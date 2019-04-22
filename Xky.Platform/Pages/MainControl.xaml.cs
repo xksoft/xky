@@ -227,11 +227,11 @@ namespace Xky.Platform.Pages
                         //显示自定义控件
                         var isContinue = false;
                         Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
-                        Console.WriteLine("111");
+                    
                         //是否继续
                         if (isContinue)
                         {
-                            Console.WriteLine("222");
+                          
                             xmodule.Device = device;
                             xmodule.Start();
                         }
@@ -268,12 +268,10 @@ namespace Xky.Platform.Pages
                     var isContinue = false;
                     Common.UiAction(() => {
                         isContinue = module.ShowUserControl();
-                    });
-                    Console.WriteLine("111");
+                    },false);
                     //是否继续
                     if (isContinue)
                     {
-                        Console.WriteLine("2222");
                         module.Device = device;
                         module.Start();
                     }
