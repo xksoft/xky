@@ -411,13 +411,13 @@
                             <ItemsControl x:Name="RunningModules">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Height="48" Width="48" ToolTip="{Binding Path=Name}">
+                                        <Button Cursor="Hand" Height="48" Width="48" ToolTip="{Binding Path=Name}" Click="Btn_RunningModule_Stop" Tag="{Binding Path=Md5}">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="{x:Type Button}">
                                                     <Grid>
                                                         <Border x:Name="Border" Background="Transparent" />
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <Border Height="24" Width="24" CornerRadius="2" >
+                                                            <Border Height="32" Width="32" CornerRadius="4" >
                                                                 <Border.Background>
                                                                     <ImageBrush  ImageSource="{Binding Path=Icon}" ></ImageBrush>
                                                                 </Border.Background>

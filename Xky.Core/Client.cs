@@ -621,10 +621,7 @@ namespace Xky.Core
                             module.GroupName = groupname;
                             module.Description = modulecontent.Description();
                             module.XModule = modulecontent;
-                            
                             module.Icon = modulecontent.Icon();
-
-
                             Client.Modules.Add(module);
                         }
                     }

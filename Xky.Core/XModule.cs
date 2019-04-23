@@ -64,7 +64,7 @@ namespace Xky.Core
         /// 是否是后台模块
         /// </summary>
         /// <returns></returns>
-        public bool IsBackground { get; set; } = false;
+        public abstract bool IsBackground ();
 
         /// <summary>
         /// 模块动作脚本

@@ -21,7 +21,7 @@ namespace Xky.Platform.Pages
     public partial class MainControl : System.Windows.Controls.UserControl
     {
         private Thread _lastConnectThread;
-
+        private Device CurrentDevice;
         private readonly List<Device> _screenTickList = new List<Device>();
 
         public MainControl()
@@ -66,8 +66,10 @@ namespace Xky.Platform.Pages
                     var response = Client.LoadDevices();
                     if (response.Result)
                     {
-                        Common.UiAction(() => {
-                            DeviceListBox.ItemsSource = Client.PanelDevices; });
+                        Common.UiAction(() =>
+                        {
+                            DeviceListBox.ItemsSource = Client.PanelDevices;
+                        });
                         Common.ShowToast("设备加载成功");
                         break;
                     }
@@ -151,6 +153,7 @@ namespace Xky.Platform.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
+
                 //上一个线程如果没完成就强制结束
                 _lastConnectThread?.Abort();
                 _lastConnectThread = Client.StartAction(() =>
@@ -184,6 +187,27 @@ namespace Xky.Platform.Pages
         private void Btn_task(object sender, RoutedEventArgs e)
         {
             MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+        }
+        private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
+        {
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                if (sender is Button button)
+                {
+                    string module_md5 = button.Tag.ToString();
+                    if (device.RunningThreads.ContainsKey(module_md5))
+                    {
+                        device.RunningThreads[module_md5].Abort();
+
+                        device.RunningThreads.Remove(module_md5);
+                        var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module_md5);
+                        if (runningmodule != null)
+                        {
+                            device.RunningModules.Remove(runningmodule);
+                        }
+                    }
+                }
+            }
         }
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
@@ -220,24 +244,24 @@ namespace Xky.Platform.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                Client.StartAction(() =>
-                {
-                    var xmodule = XModuleHelper.LoadXModules("modules\\默认分组\\debug\\xky.xmodule.demo.dll").First();
-                    if (xmodule != null)
+                var thread = Client.StartAction(() =>
                     {
+                        var xmodule = XModuleHelper.LoadXModules("modules\\默认分组\\debug\\xky.xmodule.demo.dll").First();
+                        if (xmodule != null)
+                        {
                         //显示自定义控件
                         var isContinue = false;
-                        Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
+                            Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
 
                         //是否继续
                         if (isContinue)
-                        {
+                            {
 
-                            xmodule.Device = device;
-                            xmodule.Start();
+                                xmodule.Device = device;
+                                xmodule.Start();
+                            }
                         }
-                    }
-                }, ApartmentState.STA);
+                    }, ApartmentState.STA);
             }
         }
 
@@ -263,49 +287,65 @@ namespace Xky.Platform.Pages
                 var module = (Module)module_select.Clone();
                 if (DeviceListBox.SelectedItem is Device device)
                 {
-                    Client.StartAction(() =>
-                {
                     XModule xmodule = (XModule)module.XModule.Clone();
-                    //显示自定义控件
-                    var isContinue = false;
-                    Common.UiAction(() =>
+                    var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+                    if (runningmodule != null)
                     {
-                        isContinue = xmodule.ShowUserControl();
-                    }, false);
-                    //是否继续
-                    if (isContinue)
+                        Common.ShowToast("该设备正在执行模块[" + module.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                        return;
+                    }
+                    if (!xmodule.IsBackground())
                     {
-                      
-                        var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+                        //如果是前台模块，同一时间只允许运行一个
+                        runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
                         if (runningmodule != null)
                         {
-                            Common.ShowToast("该设备正在执行模块[" + module.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                            Common.ShowToast("前台模块[" + module.Name + "]正在运行中，无法同时执行两个前台模块！", Color.FromRgb(239, 34, 7));
                             return;
                         }
-                        if (!xmodule.IsBackground)
-                        {
-                            //如果是前台模块，同一时间只允许运行一个
-                            runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground == true);
-                            if (runningmodule != null)
-                            {
-                                Common.ShowToast("前台模块[" + module.Name + "]正在运行中，无法同时执行两个前台模块！", Color.FromRgb(239, 34, 7));
-                                return;
-                            }
-                        }
-                        xmodule.Device = device;
-                        Dispatcher.Invoke(() =>
-                        {
-                            device.RunningModules.Add(module);
-                        });
-                        xmodule.Start();
-                        Console.WriteLine("设备["+device.Id+"]成功执行模块["+module.Name+"]");
-                        Dispatcher.Invoke(() =>
-                        {
-                            device.RunningModules.Remove(module);
-                        });
                     }
 
-                }, ApartmentState.STA);
+                    var thread = Client.StartAction(() =>
+                    {
+                        //显示自定义控件
+                        var isContinue = false;
+                        Common.UiAction(() =>
+                        {
+                            isContinue = xmodule.ShowUserControl();
+                        }, false);
+                        //是否继续
+                        if (isContinue)
+                        {
+                            xmodule.Device = device;
+                            Dispatcher.Invoke(() =>
+                            {
+                                device.RunningModules.Add(module);
+
+
+                            });
+                            xmodule.Start();
+                            Console.WriteLine("设备[" + device.Id + "]成功执行模块[" + module.Name + "]");
+                            Dispatcher.Invoke(() =>
+                            {
+                                device.RunningModules.Remove(module);
+                                if (device.RunningThreads.ContainsKey(module.Md5))
+                                {
+                                    device.RunningThreads.Remove(module.Md5);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            //参数设置过程中取消执行
+                            if (device.RunningThreads.ContainsKey(module.Md5))
+                            {
+                                device.RunningThreads.Remove(module.Md5);
+                            }
+                        }
+
+                    }, ApartmentState.STA);
+                    device.RunningThreads.Add(module.Md5, thread);
+
                 }
             }
         }

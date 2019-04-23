@@ -28,7 +28,7 @@ namespace Xky.XModule.Demo
             InitializeComponent();
         }
         public bool run = false;
-        public TestModule Module;
+        public TestModule1 Module;
         private void btn_file_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
