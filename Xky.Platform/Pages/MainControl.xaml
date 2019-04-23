@@ -402,13 +402,46 @@
                           Height="920">
                         <VirtualizingStackPanel Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
                                                 Width="48" MaxHeight="768" Margin="0,0,10,0">
-
+                           
                             <local:MyImageButton  Tag="volumeup" Click="DeviceMenuItem_OnClick" Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumeup-white.png"  Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumedown-white.png"    Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
                             <local:MyImageButton Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/setdebug-white.png"   Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750" Background_Pressed="#32373d"></local:MyImageButton>
-                          
+                            <ItemsControl x:Name="RunningModules">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Height="48" Width="48" ToolTip="{Binding Path=Name}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Grid>
+                                                        <Border x:Name="Border" Background="Transparent" />
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                            <Border Height="24" Width="24" CornerRadius="2" >
+                                                                <Border.Background>
+                                                                    <ImageBrush  ImageSource="{Binding Path=Icon}" ></ImageBrush>
+                                                                </Border.Background>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" TargetName="Border" Value="#404750" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Background" TargetName="Border"  Value="#32373d" />
+                                                          
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            
+                                        </Button>
+                                    </DataTemplate>
+                                    
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            
                         </VirtualizingStackPanel>
                     </Grid>
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -536,7 +569,7 @@
                      VirtualizingPanel.IsVirtualizingWhenGrouping='True'
                      MouseDoubleClick="ModuleListBox_MouseDoubleClick"
                      >
-              
+
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="编辑">
@@ -560,7 +593,7 @@
                                     <ColumnDefinition Width="50"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/app_4.jpg" VerticalAlignment="Center"></Image>
+                                <Image Grid.Column="0" Source="{Binding ElementName=ModuleItem, Path=DataContext.Icon}" VerticalAlignment="Center"></Image>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
                                     <Label Content="{Binding ElementName=ModuleItem, Path=DataContext.Name}" />
                                     <Label  Content="{Binding ElementName=ModuleItem, Path=DataContext.Description}"></Label>
@@ -616,21 +649,6 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <!--<Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="50"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/app_4.jpg" VerticalAlignment="Center"></Image>
-                    <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                        <Label>模块名称</Label>
-                        <Label>模块说明模块说明模块说明模块说明模块说明</Label>
-                    </StackPanel>
-                </Grid>
-  
-             </Grid>--> 
-         </Grid> 
+        </Grid> 
     </Grid>
 </UserControl>

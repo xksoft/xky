@@ -66,7 +66,8 @@ namespace Xky.Platform.Pages
                     var response = Client.LoadDevices();
                     if (response.Result)
                     {
-                        Common.UiAction(() => { DeviceListBox.ItemsSource = Client.PanelDevices; });
+                        Common.UiAction(() => {
+                            DeviceListBox.ItemsSource = Client.PanelDevices; });
                         Common.ShowToast("设备加载成功");
                         break;
                     }
@@ -97,14 +98,13 @@ namespace Xky.Platform.Pages
 
                 Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
                 Common.UiAction(() =>
-                {
-                    var view = CollectionViewSource.GetDefaultView(Client.Modules);
-                    view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
-                    ModuleListBox.ItemsSource = view;
-
-                });
-
+                               {
+                                   var view = CollectionViewSource.GetDefaultView(Client.Modules);
+                                   view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+                                   ModuleListBox.ItemsSource = view;
+                               });
             }, ApartmentState.STA);
+
         }
 
         private void ScreenTick()
@@ -162,6 +162,7 @@ namespace Xky.Platform.Pages
                         MyMirrorScreen.Connect(device);
                     }
                 });
+                RunningModules.ItemsSource = device.RunningModules;
             }
         }
 
@@ -292,10 +293,16 @@ namespace Xky.Platform.Pages
                             }
                         }
                         xmodule.Device = device;
-                        device.RunningModules.Add(module);
+                        Dispatcher.Invoke(() =>
+                        {
+                            device.RunningModules.Add(module);
+                        });
                         xmodule.Start();
                         Console.WriteLine("设备["+device.Id+"]成功执行模块["+module.Name+"]");
-                        device.RunningModules.Remove(module);
+                        Dispatcher.Invoke(() =>
+                        {
+                            device.RunningModules.Remove(module);
+                        });
                     }
 
                 }, ApartmentState.STA);

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Xky.Core.Model
 {
@@ -14,6 +16,7 @@ namespace Xky.Core.Model
         private string _groupname = "";
         private XModule _xmodule;
         private int _state = 0;
+        private byte[] icon;
 
         public string Md5 { get => _md5; set => _md5 = value; }
         public string Name { get => _name; set => _name = value; }
@@ -21,6 +24,8 @@ namespace Xky.Core.Model
         public string GroupName { get => _groupname; set => _groupname = value; }
         public XModule XModule { get => _xmodule; set => _xmodule = value; }
         public int State { get => _state; set => _state = value; }
+        public byte[] Icon { get => icon; set => icon = value; }
+
         /// <summary>
         /// 克隆这个对象
         /// </summary>

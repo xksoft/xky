@@ -104,6 +104,7 @@
     <Compile Include="Rsa.cs" />
     <Compile Include="Script.cs" />
     <Compile Include="UserControl\Lib\BooleanToVisibility.cs" />
+    <Compile Include="UserControl\Lib\ByteArrayToImageSource.cs" />
     <Compile Include="UserControl\Lib\HoverColorConverter.cs" />
     <Compile Include="UserControl\Lib\SwitchConverter.cs" />
     <Compile Include="UserControl\MyButton.xaml.cs">

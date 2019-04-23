@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -620,6 +621,10 @@ namespace Xky.Core
                             module.GroupName = groupname;
                             module.Description = modulecontent.Description();
                             module.XModule = modulecontent;
+                            
+                            module.Icon = modulecontent.Icon();
+
+
                             Client.Modules.Add(module);
                         }
                     }
@@ -628,7 +633,7 @@ namespace Xky.Core
             }
             catch (Exception e)
             {
-               
+                Console.WriteLine("模块加载失败："+e);
             }
         }
 

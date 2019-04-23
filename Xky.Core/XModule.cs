@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Xky.Core.Model;
 
 namespace Xky.Core
@@ -51,6 +53,12 @@ namespace Xky.Core
         /// </summary>
         /// <returns></returns>
         public abstract string Description();
+
+        /// <summary>
+        /// 模块图标
+        /// </summary>
+        /// <returns></returns>
+        public abstract byte[] Icon();
 
         /// <summary>
         /// 是否是后台模块
