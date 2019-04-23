@@ -269,4 +269,47 @@ namespace Xky.XModule.Demo
             return panel.run;
         }
     }
+    public class TestModule6 : Core.XModule
+    {
+        public override string Name()
+        {
+            return "无参数模块";
+        }
+        public override byte[] Icon()
+        {
+            Assembly myAssembly = Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.Demo.icon6.png");
+            byte[] bytes = new byte[myStream.Length];
+            myStream.Read(bytes, 0, bytes.Length);
+            return bytes;
+
+        }
+        public override string Description()
+        {
+            return "该模块直接双击运行无需设置参数";
+        }
+
+        public override void Start()
+        {
+            Device.ScriptEngine.Toast("用户名：" + MyStr, 1);
+            for (int i = 10; i > 0; i--)
+            {
+                Thread.Sleep(5000);
+                Device.ScriptEngine.Toast("当前设备厂商：" + Device.Product, 1);
+            }
+            Device.ScriptEngine.Toast("模块执行完毕", 1);
+        }
+
+        public string MyStr = "测试字符";
+
+        public override bool IsBackground()
+        {
+            return false;
+        }
+        public override bool ShowUserControl()
+        {
+
+            return true;
+        }
+    }
 }

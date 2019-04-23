@@ -82,6 +82,9 @@
     <EmbeddedResource Include="icon4.png" />
     <EmbeddedResource Include="icon5.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icon6.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\默认分组\Debug\ /y</PostBuildEvent>

@@ -242,27 +242,7 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            if (DeviceListBox.SelectedItem is Device device)
-            {
-                var thread = Client.StartAction(() =>
-                    {
-                        var xmodule = XModuleHelper.LoadXModules("modules\\默认分组\\debug\\xky.xmodule.demo.dll").First();
-                        if (xmodule != null)
-                        {
-                        //显示自定义控件
-                        var isContinue = false;
-                            Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
-
-                        //是否继续
-                        if (isContinue)
-                            {
-
-                                xmodule.Device = device;
-                                xmodule.Start();
-                            }
-                        }
-                    }, ApartmentState.STA);
-            }
+            
         }
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -291,7 +271,7 @@ namespace Xky.Platform.Pages
                     var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
                     if (runningmodule != null)
                     {
-                        Common.ShowToast("该设备正在执行模块[" + module.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                        Common.ShowToast("该设备正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
                         return;
                     }
                     if (!xmodule.IsBackground())
@@ -300,7 +280,7 @@ namespace Xky.Platform.Pages
                         runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
                         if (runningmodule != null)
                         {
-                            Common.ShowToast("前台模块[" + module.Name + "]正在运行中，无法同时执行两个前台模块！", Color.FromRgb(239, 34, 7));
+                            Common.ShowToast("前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！", Color.FromRgb(239, 34, 7));
                             return;
                         }
                     }
