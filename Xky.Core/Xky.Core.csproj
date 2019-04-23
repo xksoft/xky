@@ -85,6 +85,8 @@
     <Compile Include="Client.cs" />
     <Compile Include="Common\AverageNumber.cs" />
     <Compile Include="Common\FileHelper.cs" />
+    <Compile Include="Common\ObjectHelper.cs" />
+    <Compile Include="Common\StrHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="H264Decoder.cs" />
     <Compile Include="MirrorScreen.xaml.cs">

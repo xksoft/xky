@@ -27,6 +27,7 @@ namespace Xky.XModule.Demo
             {
                 Thread.Sleep(1000);
                 Console.WriteLine(i + "秒后继续执行");
+                Console.WriteLine("当前设备ID："+Device.Id);
             }
             Device.ScriptEngine.Toast("模块执行完毕", 1);
         }

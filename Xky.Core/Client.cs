@@ -608,22 +608,20 @@ namespace Xky.Core
                     foreach (string modulefile in modulefilelist)
                     {
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
-                        //foreach (XModule xmodule in xmodulelist)
-                        //{
-                           
-                        //        var modulecontent = (XModule)xmodule.Clone();
-                              
-                                
-                        //    var module = new Module();
-                        //    module.Name = modulecontent.Name();
-                        //    module.Groupname = groupname;
-                        //    module.Description = modulecontent.Description();
-                        //    module.ModuleContent = modulecontent;
-                           
-                        //    Client.Modules.Add(module);
+                        foreach (XModule xmodule in xmodulelist)
+                        {
+
+                            var modulecontent = (XModule)xmodule.Clone();
 
 
-                        //}
+                            var module = new Module();
+                            module.Md5 = StrHelper.Md5(groupnamepath + modulecontent.GetType().FullName, false);
+                            module.Name = modulecontent.Name();
+                            module.GroupName = groupname;
+                            module.Description = modulecontent.Description();
+                            module.XModule = modulecontent;
+                            Client.Modules.Add(module);
+                        }
                     }
 
                 }

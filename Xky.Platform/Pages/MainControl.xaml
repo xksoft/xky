@@ -562,8 +562,8 @@
 
                                 <Image Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/app_4.jpg" VerticalAlignment="Center"></Image>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                                    <Label Content="{Binding ElementName=ModuleItem, Path=DataContext.ModuleName}" />
-                                    <Label  Content="{Binding ElementName=ModuleItem, Path=DataContext.ModuleDescription}"></Label>
+                                    <Label Content="{Binding ElementName=ModuleItem, Path=DataContext.Name}" />
+                                    <Label  Content="{Binding ElementName=ModuleItem, Path=DataContext.Description}"></Label>
                                 </StackPanel>
                             </Grid>
                         </Border>

@@ -187,7 +187,7 @@ namespace Xky.Platform.Pages
 
         private void RadioButton_ModuleTag_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -227,11 +227,11 @@ namespace Xky.Platform.Pages
                         //显示自定义控件
                         var isContinue = false;
                         Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); });
-                    
+
                         //是否继续
                         if (isContinue)
                         {
-                          
+
                             xmodule.Device = device;
                             xmodule.Start();
                         }
@@ -256,24 +256,46 @@ namespace Xky.Platform.Pages
 
         private void ModuleListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var module = (XModule)ModuleListBox.SelectedItem;
-            if (module != null)
+            var module_select = (Module)ModuleListBox.SelectedItem;
+            if (module_select != null)
             {
+                var module = (Module)module_select.Clone();
                 if (DeviceListBox.SelectedItem is Device device)
                 {
                     Client.StartAction(() =>
                 {
-
+                    XModule xmodule = (XModule)module.XModule.Clone();
                     //显示自定义控件
                     var isContinue = false;
-                    Common.UiAction(() => {
-                        isContinue = module.ShowUserControl();
-                    },false);
+                    Common.UiAction(() =>
+                    {
+                        isContinue = xmodule.ShowUserControl();
+                    }, false);
                     //是否继续
                     if (isContinue)
                     {
-                        module.Device = device;
-                        module.Start();
+                      
+                        var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+                        if (runningmodule != null)
+                        {
+                            Common.ShowToast("该设备正在执行模块[" + module.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                            return;
+                        }
+                        if (!xmodule.IsBackground)
+                        {
+                            //如果是前台模块，同一时间只允许运行一个
+                            runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground == true);
+                            if (runningmodule != null)
+                            {
+                                Common.ShowToast("前台模块[" + module.Name + "]正在运行中，无法同时执行两个前台模块！", Color.FromRgb(239, 34, 7));
+                                return;
+                            }
+                        }
+                        xmodule.Device = device;
+                        device.RunningModules.Add(module);
+                        xmodule.Start();
+                        Console.WriteLine("设备["+device.Id+"]成功执行模块["+module.Name+"]");
+                        device.RunningModules.Remove(module);
                     }
 
                 }, ApartmentState.STA);
