@@ -568,12 +568,12 @@
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
                      VirtualizingPanel.IsVirtualizingWhenGrouping='True'
-                     MouseDoubleClick="ModuleListBox_MouseDoubleClick">
+                     >
 
                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border CornerRadius="5" Cursor="Hand">
+                        <Border CornerRadius="5" Cursor="Hand" MouseDown="ModuleListBox_MouseDown">
                             <Grid x:Name="ModuleItem">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"></ColumnDefinition>
@@ -604,7 +604,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <Expander Width="320" IsExpanded="False"  Margin="0" Padding="0"  >
+                                            <Expander Width="320" IsExpanded="True"  Margin="0" Padding="0"  >
                                                 <Expander.Header>
                                                     <Label Margin="25,0,0,0" Foreground="#393d40" Content="{Binding Path=Name}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                 </Expander.Header>

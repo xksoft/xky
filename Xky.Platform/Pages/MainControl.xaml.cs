@@ -259,9 +259,13 @@ namespace Xky.Platform.Pages
             ScreenTick();
         }
 
-        private void ModuleListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ModuleListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var module_select = (Module)ModuleListBox.SelectedItem;
+            if (e.ChangedButton != MouseButton.Left || e.ClickCount != 2)
+            {
+                return;
+            }
+                var module_select = (Module)ModuleListBox.SelectedItem;
             if (module_select != null)
             {
                 var module = (Module)module_select.Clone();
