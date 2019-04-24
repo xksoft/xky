@@ -560,33 +560,20 @@
 
         </Grid>
 
-        <Grid Grid.Column="3" Background="#EFF2F5">
-            
-            <ListBox x:Name="ModuleListBox" Margin="0,50,0,0"  Padding="0"
+        <Grid Grid.Column="3" Background="#EFF2F5" >
+          
+            <ListBox x:Name="ModuleListBox" Margin="0,50,0,0"  Padding="0" 
                      SelectionMode="Extended" Background="Transparent" BorderThickness="0"
                    ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
                      VirtualizingPanel.IsVirtualizingWhenGrouping='True'
-                     MouseDoubleClick="ModuleListBox_MouseDoubleClick"
-                     >
+                     MouseDoubleClick="ModuleListBox_MouseDoubleClick">
 
-                <ListBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="编辑">
-                            <MenuItem Header="修改基本信息" />
-                            <MenuItem Header="修改标签" />
-                            <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <Separator />
-                        <MenuItem Header="测试模块" Click="MenuItem_OnClick" />
-                    </ContextMenu>
-                </ListBox.ContextMenu>
+               
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border>
+                        <Border CornerRadius="5" Cursor="Hand">
                             <Grid x:Name="ModuleItem">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"></ColumnDefinition>
@@ -609,7 +596,7 @@
                     <GroupStyle>
                         <GroupStyle.Panel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Vertical" />
+                                <VirtualizingStackPanel Orientation="Vertical"  Margin="0"/>
                             </ItemsPanelTemplate>
                         </GroupStyle.Panel>
                         <GroupStyle.ContainerStyle>
@@ -617,74 +604,43 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <Expander IsExpanded="True" Width="auto" Margin="0" Padding="0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                            <Expander Width="320" IsExpanded="False"  Margin="0" Padding="0"  >
                                                 <Expander.Header>
-                                                    <Grid Background="#ccc">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="50"/>
-                                                            <ColumnDefinition/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition/>
-                                                        </Grid.RowDefinitions>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" />
-                                                        </StackPanel>
-                                                        <Line Grid.Column="1" SnapsToDevicePixels="true"  X1="0" X2="1" Stretch="Fill"  StrokeThickness="1"/>
-                                                    </Grid>
+                                                    <Label Margin="25,0,0,0" Foreground="#393d40" Content="{Binding Path=Name}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                 </Expander.Header>
                                                 <Expander.Template>
-
                                                     <ControlTemplate TargetType="{x:Type Expander}">
-                                                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True"
-                            Width="{TemplateBinding Width}">
-                                                            <Grid>
+                                                        <Border Cursor="Hand"  VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" CornerRadius="5" SnapsToDevicePixels="True" >
+                                                            <Grid Margin="0">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="auto"/>
                                                                     <RowDefinition Height="auto"/>
                                                                 </Grid.RowDefinitions>
 
 
-                                                                <ToggleButton x:Name="HeaderSite"  Grid.Row="0" Height="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                          ContentTemplate="{TemplateBinding HeaderTemplate}" 
-                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                          Content="{TemplateBinding Header}"                                   
-                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"                                  
-                           >
+                                                                <ToggleButton x:Name="HeaderSite"  Grid.Row="0" Height="50"   Content="{TemplateBinding Header}"    IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"                                   >
 
                                                                     <ToggleButton.Template>
                                                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                            <Canvas Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" 
-                    Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                                                                <Canvas x:Name="canvNormal" Visibility="Visible" 
-                     Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" 
-                     Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Canvas.Right="0">
-                                                                                    <Path Data="M 0 0 L 6 6  12 0 " Stroke="LightSteelBlue" StrokeThickness="2" Canvas.Right="5" Canvas.Top="10"/>
-                                                                                    <Path Data="M 0 0 L 6 6  12 0 " Stroke="LightSteelBlue" StrokeThickness="2" Canvas.Right="5" Canvas.Top="15"/>
-                                                                                </Canvas>
-                                                                                <Canvas x:Name="canvChecked" Visibility="Hidden" 
-                     Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" 
-                     Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Canvas.Right="0">
-                                                                                    <Path Data="M 0 0 L 6 -6  12 0 " Stroke="LightSteelBlue" StrokeThickness="2" Canvas.Right="5" Canvas.Top="15"/>
-                                                                                    <Path Data="M 0 0 L 6 -6  12 0 " Stroke="LightSteelBlue" StrokeThickness="2" Canvas.Right="5" Canvas.Top="20"/>
-                                                                                </Canvas>
 
-                                                                                <ContentPresenter 
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                     Margin="{TemplateBinding Padding}" 
-                     RecognizesAccessKey="True"                       
-                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                                            </Canvas>
-
+                                                                            <Border Background="#cbced3" CornerRadius="5" Margin="0,5,0,10" Padding="5">
+                                                                                <Grid SnapsToDevicePixels="True">
+                                                                                    <Border   x:Name="canvNormal" CornerRadius="10" Visibility="Visible" BorderBrush="#393d40" Width="23" Height="23" VerticalAlignment="Center" HorizontalAlignment="Left" BorderThickness="2">
+                                                                                        <Path Data="M 0 0 L 6 6  12 0 " Stroke="#393d40" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,0"/>
+                                                                                </Border>
+                                                                                    <Border   x:Name="canvChecked" CornerRadius="10" Visibility="Hidden" BorderBrush="#393d40" Width="23" Height="23" VerticalAlignment="Center" HorizontalAlignment="Left" BorderThickness="2">
+                                                                                        <Path Data="M 0 0 L 6 -6  12 0 " Stroke="#393d40" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                                                                                    </Border>
+                                                                                    <ContentPresenter   HorizontalAlignment="Left"  Margin="0"   RecognizesAccessKey="True"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"   VerticalAlignment="Center"/>
+                                                                            </Grid>
+                                                                            </Border>
                                                                             <ControlTemplate.Triggers>
                                                                                 <Trigger Property="IsPressed" Value="true">
-                                                                                    <Setter Property="Background" Value="SlateGray" />
+                                                                                    <Setter Property="Background" Value="#bec0c6" />
                                                                                 </Trigger>
                                                                                 <Trigger Property="IsChecked" Value="true">
                                                                                     <Setter Property="Visibility" TargetName="canvChecked" Value="Visible" />
-                                                                                    <Setter Property="Visibility" TargetName="canvNormal" Value="Hidden" />
+                                                                                    <Setter Property="Visibility" TargetName="canvNormal" Value="Collapsed" />
                                                                                 </Trigger>
                                                                                 <Trigger Property="IsEnabled" Value="false">
                                                                                     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
@@ -694,9 +650,9 @@
 
                                                                     </ToggleButton.Template>
                                                                 </ToggleButton>
-                                                                <ContentPresenter x:Name="ExpandSite" Grid.Row="1"
+                                                                <ContentPresenter x:Name="ExpandSite" Grid.Row="1" Margin="0"
                                               ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" 
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                              Visibility="Collapsed" />
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -720,8 +676,8 @@
                 </ListBox.GroupStyle>
                 <ListBox.ItemContainerStyle>
                     <Style>
-                        <Setter Property="Control.Margin" Value="0,5,0,5" />
-                        <Setter Property="Control.Padding" Value="5" />
+                        <Setter Property="Control.Margin" Value="0" />
+                        <Setter Property="Control.Padding" Value="10" />
                         <Setter Property="Control.BorderThickness" Value="0" />
                     </Style>
                 </ListBox.ItemContainerStyle>
