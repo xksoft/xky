@@ -74,7 +74,7 @@ namespace Xky.Platform
                         CornerRadius = new CornerRadius(8),
                         Margin = new Thickness(5),
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Height = 0
+                        Height = 35
                     };
                     var textBlock = new TextBlock
                     {
@@ -94,11 +94,11 @@ namespace Xky.Platform
 
                     MainWindow.ToastPanel.Children.Add(border);
                 });
-                for (var i = 0; i < 35; i++)
-                {
-                    UiAction(() => { border.Height += 1; });
-                    Thread.Sleep(3);
-                }
+//                for (var i = 0; i < 35; i++)
+//                {
+//                    UiAction(() => { border.Height += 1; });
+//                    Thread.Sleep(3);
+//                }
 
                 Thread.Sleep(3000);
                 for (var i = 0; i < 50; i++)
@@ -138,7 +138,7 @@ namespace Xky.Platform
 
         private static bool _isShowMessage;
 
-        public static void ShowMessageControl(System.Windows.Controls.UserControl myControl)
+        public static void ShowMessageControl(UserControl myControl)
         {
             MainWindow.MessageContent.Content = myControl;
             MainWindow.MessageContentBorader.Visibility = Visibility.Visible;
