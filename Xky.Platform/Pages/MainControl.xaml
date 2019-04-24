@@ -567,11 +567,25 @@
                    ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
-                     VirtualizingPanel.IsVirtualizingWhenGrouping='True'
-                     >
+                     VirtualizingPanel.IsVirtualizingWhenGrouping='True' >
 
-               
+                <ListBox.Style>
+                    <Style  TargetType="ListBox">
+                        <Style.Triggers>
+                            <Trigger Property="HasItems" Value="False">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <TextBlock>没有发现可用模块</TextBlock>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
                 <ListBox.ItemTemplate>
+                   
                     <DataTemplate>
                         <Border CornerRadius="5" Cursor="Hand" MouseDown="ModuleListBox_MouseDown">
                             <Grid x:Name="ModuleItem">
@@ -676,6 +690,7 @@
                 </ListBox.GroupStyle>
                 <ListBox.ItemContainerStyle>
                     <Style>
+                        
                         <Setter Property="Control.Margin" Value="0" />
                         <Setter Property="Control.Padding" Value="10" />
                         <Setter Property="Control.BorderThickness" Value="0" />
