@@ -147,8 +147,6 @@ namespace Xky.Platform.Pages
 
         #region ui事件
 
-
-
         private void DeviceListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DeviceListBox.SelectedItem is Device device)
@@ -188,6 +186,7 @@ namespace Xky.Platform.Pages
         {
             MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
         }
+
         private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
         {
             if (DeviceListBox.SelectedItem is Device device)
@@ -227,7 +226,6 @@ namespace Xky.Platform.Pages
             });
         }
 
-
         private void DeviceListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             lock ("getNodeGroup")
@@ -242,7 +240,7 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -250,8 +248,6 @@ namespace Xky.Platform.Pages
             string tag = ((MyImageButton)e.Source).Tag.ToString();
             MessageBox.Show(tag);
         }
-
-        #endregion
 
         private void MainControl_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -265,7 +261,7 @@ namespace Xky.Platform.Pages
             {
                 return;
             }
-                var module_select = (Module)ModuleListBox.SelectedItem;
+            var module_select = (Module)ModuleListBox.SelectedItem;
             if (module_select != null)
             {
                 var module = (Module)module_select.Clone();
@@ -304,8 +300,6 @@ namespace Xky.Platform.Pages
                             Dispatcher.Invoke(() =>
                             {
                                 device.RunningModules.Add(module);
-
-
                             });
                             xmodule.Start();
                             Console.WriteLine("设备[" + device.Id + "]成功执行模块[" + module.Name + "]");
@@ -333,5 +327,6 @@ namespace Xky.Platform.Pages
                 }
             }
         }
+        #endregion
     }
 }

@@ -7,7 +7,6 @@
              x:Name="Page_Node"
              xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              mc:Ignorable="d" 
-          
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <lib:SwitchConverter x:Key="ConnectStatusToBursh">
@@ -84,11 +83,9 @@
                                                 <Label Margin="0,5,0,15" Foreground="#ccc" FontSize="18">该授权尚未绑定节点或未在当前局域网发现节点设备</Label>
                                                 <TextBlock Margin="0,0,0,5" Foreground="#ccc" Text="1、联系官方购买专用节点服务器设备。"/>
                                                 <TextBlock Margin="0,0,0,5" Foreground="#ccc" Text="2、接通节点服务器电源，使用网线将设备连接到当前局域网中并等待10秒钟左右。"/>
-                                                <TextBlock Margin="0,0,0,5"  Foreground="#ccc" Text="3、完成以上操作后节点服务器仍然不能出现在该面板上，请检查路由器是否设置为“自动获取IP”，节点设备网口灯是否闪烁。"/>
+                                                <TextBlock Margin="0,0,0,5"  Foreground="#ccc" Text="3、完成以上操作后节点服务器仍然不能出现在该面板上，请检查路由器是否设置为"自动获取IP"，节点设备网口灯是否闪烁。"/>
                                                 <TextBlock Margin="0,0,0,5"  Foreground="#ccc" Text="4、联系官方获取技术支持。"/>
-
                                             </StackPanel>
-                                           
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -168,14 +165,8 @@
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-
-
-
-
             </ItemsControl>
         </ScrollViewer>
-
-
         <ContentControl Grid.Row="1" x:Name="ContentControl_AddToCloud" Visibility="Collapsed" Panel.ZIndex="99">
 
             <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Center">

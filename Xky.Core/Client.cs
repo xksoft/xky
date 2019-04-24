@@ -70,7 +70,9 @@ namespace Xky.Core
         /// </summary>
         public static ObservableCollection<Device> PanelDevices = new ObservableCollection<Device>();
 
-
+        /// <summary>
+        /// 模块列表
+        /// </summary>
         public static ObservableCollection<Module> Modules = new ObservableCollection<Module>();
 
         /// <summary>
@@ -89,18 +91,18 @@ namespace Xky.Core
         {
             try
             {
-                var response = Post("auth_license_key", new JObject {["license_key"] = license});
+                var response = Post("auth_license_key", new JObject { ["license_key"] = license });
                 if (response.Result)
                 {
                     License = new License
                     {
                         Avatra = response.Json["user"]?["t_avatar"]?.ToString(),
                         Email = response.Json["user"]?["t_email"]?.ToString(),
-                        Id = (int) response.Json["user"]?["t_id"],
+                        Id = (int)response.Json["user"]?["t_id"],
                         LicenseCustom = response.Json["license"]?["t_custom"]?.ToString(),
-                        LicenseExpiration = ConvertTimestamp((double) response.Json["license"]?["t_expiration_time"]),
+                        LicenseExpiration = ConvertTimestamp((double)response.Json["license"]?["t_expiration_time"]),
                         LicenseKey = response.Json["user"]?["t_license_key"]?.ToString(),
-                        LicenseLevel = (int) response.Json["license"]?["t_level"],
+                        LicenseLevel = (int)response.Json["license"]?["t_level"],
                         LicenseName = response.Json["license"]?["t_name"]?.ToString(),
                         Name = response.Json["user"]?["t_name"]?.ToString(),
                         Phone = response.Json["user"]?["t_phone"]?.ToString(),
@@ -138,7 +140,7 @@ namespace Xky.Core
                         CoreConnected = false;
                     });
                     CoreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
-                    CoreSocket.On("event", json => { CoreEvent((JObject) json); });
+                    CoreSocket.On("event", json => { CoreEvent((JObject)json); });
                 }
                 else
                 {
@@ -153,7 +155,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -171,7 +173,7 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
                 var loadtick = DateTime.Now.Ticks;
@@ -180,7 +182,7 @@ namespace Xky.Core
                 if (response.Result)
                 {
                     Console.WriteLine(response);
-                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json, loadtick);
+                    foreach (var json in (JArray)response.Json["list"]) PushDevice(json, loadtick);
 
                     //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
                     MainWindow.Dispatcher.Invoke(() =>
@@ -199,7 +201,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -257,7 +259,7 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
                 var loadtick = DateTime.Now.Ticks;
@@ -266,7 +268,7 @@ namespace Xky.Core
                 if (response.Result)
                 {
                     Console.WriteLine(response);
-                    foreach (var json in (JArray) response.Json["nodes"])
+                    foreach (var json in (JArray)response.Json["nodes"])
                     {
                         var ts = json["t_serial"].ToString();
                         PushNode(GetNode(json["t_serial"].ToString()), false);
@@ -282,7 +284,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -301,11 +303,11 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
 
-                var response = CallApi("del_node", new JObject {["id"] = id});
+                var response = CallApi("del_node", new JObject { ["id"] = id });
                 return response;
             }
             catch (Exception e)
@@ -314,7 +316,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -334,11 +336,11 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
 
-                var response = CallApi("set_node", new JObject {["id"] = id, ["name"] = name});
+                var response = CallApi("set_node", new JObject { ["id"] = id, ["name"] = name });
                 return response;
             }
             catch (Exception e)
@@ -347,7 +349,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -367,11 +369,11 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "未授权" }
                     };
 
 
-                var response = CallApi("add_node", new JObject {["serial"] = serial, ["name"] = name});
+                var response = CallApi("add_node", new JObject { ["serial"] = serial, ["name"] = name });
                 if (response.Result && response.Json["errcode"].ToString() == "0")
                 {
                     var node = GetNode(serial);
@@ -386,7 +388,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -427,7 +429,7 @@ namespace Xky.Core
         {
             lock ("nodes")
             {
-                var response = CallApi("get_node", new JObject {["serial"] = serial});
+                var response = CallApi("get_node", new JObject { ["serial"] = serial });
 
                 if (!response.Result) return null;
 
@@ -517,11 +519,11 @@ namespace Xky.Core
         {
             _lastSearchKeyword = keyword;
             var list = (from d in Devices
-                where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
-                      d.Name.Contains(keyword) ||
-                      d.Description.Contains(keyword)
-                orderby d.Name
-                select d).ToList();
+                        where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
+                              d.Name.Contains(keyword) ||
+                              d.Description.Contains(keyword)
+                        orderby d.Name
+                        select d).ToList();
             var list2 = PanelDevices.ToList();
             foreach (var device in list2)
             {
@@ -548,7 +550,7 @@ namespace Xky.Core
         public static Device GetDevice(string sn)
         {
             var response = CallApi("get_device",
-                new JObject {["sn"] = sn});
+                new JObject { ["sn"] = sn });
             if (!response.Result) Console.WriteLine(response.Message);
 
             return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
@@ -584,7 +586,8 @@ namespace Xky.Core
                         Threads--;
                     }
                 }
-            }) {IsBackground = true};
+            })
+            { IsBackground = true };
             thread.SetApartmentState(state);
             thread.Start();
             return thread;
@@ -592,16 +595,16 @@ namespace Xky.Core
 
 
         /// <summary>
-        ///     重新加载模块列表
+        /// 加载模块列表
         /// </summary>
         /// <returns></returns>
-        public static void  LoadModules()
+        public static void LoadModules()
         {
             try
             {
                 string currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\"))+ "\\Modules";
-                string []groupnamepaths= Directory.GetDirectories(modulepath);
+                string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\")) + "\\Modules";
+                string[] groupnamepaths = Directory.GetDirectories(modulepath);
                 foreach (string groupnamepath in groupnamepaths)
                 {
                     string groupname = new DirectoryInfo(groupnamepath).Name;
@@ -611,10 +614,7 @@ namespace Xky.Core
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
                         foreach (XModule xmodule in xmodulelist)
                         {
-
                             var modulecontent = (XModule)xmodule.Clone();
-
-
                             var module = new Module();
                             module.Md5 = StrHelper.Md5(groupnamepath + modulecontent.GetType().FullName, false);
                             module.Name = modulecontent.Name();
@@ -630,7 +630,7 @@ namespace Xky.Core
             }
             catch (Exception e)
             {
-                Console.WriteLine("模块加载失败："+e);
+                Console.WriteLine("模块加载失败：" + e);
             }
         }
 
@@ -744,13 +744,13 @@ namespace Xky.Core
                     node.NodeSocket.On("img",
                         new MyListenerImpl((sn, data) =>
                         {
-                            var imgdata = (byte[]) data;
+                            var imgdata = (byte[])data;
                             //加入速率计数器
                             BitAverageNumber.Push(imgdata.Length);
-                            var device = Devices.ToList().Find(p => p.Sn == (string) sn);
+                            var device = Devices.ToList().Find(p => p.Sn == (string)sn);
                             if (device != null && device.Sn != MirrorScreen.CurrentDevice?.Sn)
                             {
-                                device.ScreenShot = ByteToBitmapSource((byte[]) data);
+                                device.ScreenShot = ByteToBitmapSource((byte[])data);
                             }
                         }));
                 });
@@ -779,7 +779,7 @@ namespace Xky.Core
         {
             lock ("devices")
             {
-                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                var device = Devices.ToList().Find(p => p.Id == (int)json["t_id"]);
                 //如果已经存在就更新
                 if (device != null)
                 {
@@ -790,14 +790,14 @@ namespace Xky.Core
                     device.NodeSerial = json["t_node"]?.ToString();
                     device.GpsLat = json["t_gps_lat"]?.ToString();
                     device.GpsLng = json["t_gps_lng"]?.ToString();
-                    device.Id = (int) json["t_id"];
+                    device.Id = (int)json["t_id"];
                     device.Model = json["t_model"]?.ToString();
                     device.Name = json["t_name"]?.ToString();
                     device.Node = json["t_node"]?.ToString();
                     device.Product = json["t_product"]?.ToString();
                     device.Sn = json["t_sn"]?.ToString();
-                    device.Cpus = (int) json["t_cpus"];
-                    device.Memory = (int) json["t_memory"];
+                    device.Cpus = (int)json["t_cpus"];
+                    device.Memory = (int)json["t_memory"];
                     device.LoadTick = loadtick;
                 }
                 else
@@ -811,14 +811,14 @@ namespace Xky.Core
                         NodeSerial = json["t_node"]?.ToString(),
                         GpsLat = json["t_gps_lat"]?.ToString(),
                         GpsLng = json["t_gps_lng"]?.ToString(),
-                        Id = (int) json["t_id"],
+                        Id = (int)json["t_id"],
                         Model = json["t_model"]?.ToString(),
                         Name = json["t_name"]?.ToString(),
                         Node = json["t_node"]?.ToString(),
                         Product = json["t_product"]?.ToString(),
                         Sn = json["t_sn"]?.ToString(),
-                        Cpus = (int) json["t_cpus"],
-                        Memory = (int) json["t_memory"],
+                        Cpus = (int)json["t_cpus"],
+                        Memory = (int)json["t_memory"],
                         LoadTick = loadtick,
                     };
                     //初始化脚本引擎
@@ -881,9 +881,6 @@ namespace Xky.Core
             }
         }
 
-
-
-
         /// <summary>
         ///     移除Device
         /// </summary>
@@ -892,7 +889,7 @@ namespace Xky.Core
         {
             lock ("devices")
             {
-                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                var device = Devices.ToList().Find(p => p.Id == (int)json["t_id"]);
                 if (device != null)
                     MainWindow.Dispatcher.Invoke(() =>
                     {
@@ -914,49 +911,49 @@ namespace Xky.Core
             switch (type)
             {
                 case "device_state":
-                {
-                    if (json["message"]?.ToString() == "online")
-                        PushDevice(json["device"], DateTime.Now.Ticks);
-                    else
-                        RemoveDevice(json["device"]);
-
-                    break;
-                }
-                case "node_state":
-                {
-                    if (json["message"]?.ToString() == "online")
                     {
-                        Console.WriteLine("节点上线：" + json["node"]["t_serial"].ToString());
-                        var node = new Node
-                        {
-                            Serial = json["node"]["t_serial"]?.ToString(),
-                            Name = json["node"]["t_name"]?.ToString(),
-                            ConnectionHash = json["node"]["t_connection_hash"]?.ToString(),
-                            Forward = json["node"]["t_forward"]?.ToString(),
-                            Ip = json["node"]["t_ip"]?.ToString(),
-                            Id = json["node"]["t_id"] == null ? 0 : Convert.ToInt32(json["node"]["t_id"]),
-                            NodeUrl = json["node"]["t_nodeurl"]?.ToString()
-                        };
-                        //var oldnode= Nodes.ToList().Find(p => p.Serial == node.Serial);
-                        //if (oldnode != null) {
-                        //    oldnode = node;
-                        //}
-                        //else {
-                        PushNode(node, false);
-                        // }
+                        if (json["message"]?.ToString() == "online")
+                            PushDevice(json["device"], DateTime.Now.Ticks);
+                        else
+                            RemoveDevice(json["device"]);
+
+                        break;
                     }
+                case "node_state":
+                    {
+                        if (json["message"]?.ToString() == "online")
+                        {
+                            Console.WriteLine("节点上线：" + json["node"]["t_serial"].ToString());
+                            var node = new Node
+                            {
+                                Serial = json["node"]["t_serial"]?.ToString(),
+                                Name = json["node"]["t_name"]?.ToString(),
+                                ConnectionHash = json["node"]["t_connection_hash"]?.ToString(),
+                                Forward = json["node"]["t_forward"]?.ToString(),
+                                Ip = json["node"]["t_ip"]?.ToString(),
+                                Id = json["node"]["t_id"] == null ? 0 : Convert.ToInt32(json["node"]["t_id"]),
+                                NodeUrl = json["node"]["t_nodeurl"]?.ToString()
+                            };
+                            //var oldnode= Nodes.ToList().Find(p => p.Serial == node.Serial);
+                            //if (oldnode != null) {
+                            //    oldnode = node;
+                            //}
+                            //else {
+                            PushNode(node, false);
+                            // }
+                        }
 
-                    else
-                        RemoveNode(Convert.ToInt32(json["node"]["t_id"].ToString()));
+                        else
+                            RemoveNode(Convert.ToInt32(json["node"]["t_id"].ToString()));
 
-                    break;
-                }
+                        break;
+                    }
                 case "device_event":
-                {
-                    Console.WriteLine("收到事件");
+                    {
+                        Console.WriteLine("收到事件");
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
@@ -1002,7 +999,7 @@ namespace Xky.Core
                 {
                     AllowAutoRedirect = true
                 };
-                var httpClient = new HttpClient(handler) {Timeout = TimeSpan.FromSeconds(15)};
+                var httpClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
                 var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
                 content.Headers.Add("Content-Type", "application/json");
@@ -1014,7 +1011,7 @@ namespace Xky.Core
                     {
                         Result = false,
                         Message = "通讯结果无法解析",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
                     };
                 var resultJson =
                     JsonConvert.DeserializeObject<JObject>(Rsa.DecrypteRsa(jsonResult["encrypt"].ToString()));
@@ -1031,7 +1028,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = e.Message }
                 };
             }
         }
@@ -1049,7 +1046,7 @@ namespace Xky.Core
             {
                 Result = false,
                 Message = "调用接口超时",
-                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+                Json = new JObject { ["errcode"] = 1, ["msg"] = "调用接口超时" }
             };
             var count = 10000;
 
@@ -1058,19 +1055,19 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = "未连接核心服务器",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "未连接核心服务器" }
                 };
 
             CoreSocket.Emit("call", result =>
             {
-                var jsonResult = (JObject) result;
+                var jsonResult = (JObject)result;
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
                 {
                     response = new Response
                     {
                         Result = false,
                         Message = "通讯结果无法解析",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
+                        Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
                     };
                 }
                 else
@@ -1116,7 +1113,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = "节点服务器不存在",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器不存在"}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器不存在" }
                 };
             }
 
@@ -1126,7 +1123,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = "节点服务器未连接",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器未连接"}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器未连接" }
                 };
             }
 
@@ -1135,20 +1132,20 @@ namespace Xky.Core
             {
                 Result = false,
                 Message = "调用接口超时",
-                Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
+                Json = new JObject { ["errcode"] = 1, ["msg"] = "调用接口超时" }
             };
             var count = 10000;
             node.NodeSocket.Emit("call",
                 result =>
                 {
-                    var resultJson = (JObject) result;
+                    var resultJson = (JObject)result;
                     if (resultJson == null)
                     {
                         response = new Response
                         {
                             Result = false,
                             Message = "通讯结果无法解析",
-                            Json = new JObject {["errcode"] = 1, ["msg"] = "通讯结果无法解析"}
+                            Json = new JObject { ["errcode"] = 1, ["msg"] = "通讯结果无法解析" }
                         };
                     }
                     else
@@ -1196,7 +1193,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = "节点服务器不存在",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器不存在"}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器不存在" }
                 };
             }
 
@@ -1206,7 +1203,7 @@ namespace Xky.Core
                 {
                     Result = false,
                     Message = "节点服务器未连接",
-                    Json = new JObject {["errcode"] = 1, ["msg"] = "节点服务器未连接"}
+                    Json = new JObject { ["errcode"] = 1, ["msg"] = "节点服务器未连接" }
                 };
             }
 
@@ -1215,7 +1212,7 @@ namespace Xky.Core
             {
                 Result = true,
                 Message = "指令已下发",
-                Json = new JObject {["errcode"] = 1, ["msg"] = "指令已下发"}
+                Json = new JObject { ["errcode"] = 1, ["msg"] = "指令已下发" }
             };
             node.NodeSocket.Emit("event", sns, json);
             return response;
