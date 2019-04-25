@@ -34,17 +34,18 @@ namespace Xky.XModule.FileManager
         {
             ItemListBox.ItemsSource = DeviceFiles;
             Ls("/");
-           
-            
+
+
         }
-       
+
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
         {
 
             Client.CloseDialogPanel();
 
         }
-        public class DeviceFile {
+        public class DeviceFile
+        {
             private string _name = "";
             private string _type = "文件";
             private string _fullname = "";
@@ -56,7 +57,7 @@ namespace Xky.XModule.FileManager
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string name = ((Button)sender).Content.ToString();
-            var deviceFile =DeviceFiles.ToList().Find(f => f.Name ==name);
+            var deviceFile = DeviceFiles.ToList().Find(f => f.Name == name);
             if (deviceFile.Type == "file") { MessageBox.Show("下载文件到本地"); }
             else
             {
@@ -66,9 +67,9 @@ namespace Xky.XModule.FileManager
         }
         public void Ls(string dir)
         {
-            
-            Console.WriteLine("打开目录："+dir);
-            Response res = device.ScriptEngine.AdbShell("cd "+dir+"&&ls -al");
+
+            Console.WriteLine("打开目录：" + dir);
+            Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
             if (res.Json["result"] != null)
             {
                 DeviceFiles.Clear();
@@ -86,13 +87,13 @@ namespace Xky.XModule.FileManager
                         }
                     }
                     DeviceFile deviceFile = new DeviceFile();
-                    string s = "";
+                    //string s = "";
                     //Console.WriteLine(infolist.Count);
-                    foreach (string ii in infolist)
-                    {
-                        s += ii + "|";
-                    }
-                    Console.WriteLine(s);
+                    //foreach (string ii in infolist)
+                    //{
+                    //    s += ii + "|";
+                    //}
+                    //Console.WriteLine(s);
                     if (infolist.Count >= 8)
                     {
                         deviceFile.Name = infolist[7];
@@ -111,14 +112,14 @@ namespace Xky.XModule.FileManager
                             deviceFile.Type = "link";
 
                         }
-                        deviceFile.Fullname = dir+"/"+ deviceFile.Name;
-                        if (deviceFile.Name==".")
+                        deviceFile.Fullname = dir + "/" + deviceFile.Name;
+                        if (deviceFile.Name == ".")
                         {
                             deviceFile.Fullname = "/";
                         }
                         if (deviceFile.Name.Contains("->"))
                         {
-                            deviceFile.Fullname =  deviceFile.Name.Substring(deviceFile.Name.IndexOf("->")+2);
+                            deviceFile.Fullname = deviceFile.Name.Substring(deviceFile.Name.IndexOf("->") + 2);
                         }
                         Console.WriteLine(deviceFile.Fullname);
                         DeviceFiles.Add(deviceFile);
