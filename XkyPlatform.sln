@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.Demo", "Xky.XMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.FileManager", "Xky.Xmodule.FileManager\Xky.XModule.FileManager.csproj", "{4E9A2218-18A8-4A62-9900-374AD0A01B84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.AppManager", "Xky.XModule.AppManager\Xky.XModule.AppManager.csproj", "{D4A06549-5393-4552-AFA0-B6A71E8ED034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{4E9A2218-18A8-4A62-9900-374AD0A01B84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E9A2218-18A8-4A62-9900-374AD0A01B84}.Release|x64.ActiveCfg = Release|Any CPU
 		{4E9A2218-18A8-4A62-9900-374AD0A01B84}.Release|x64.Build.0 = Release|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Debug|x64.Build.0 = Debug|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Release|x64.ActiveCfg = Release|Any CPU
+		{D4A06549-5393-4552-AFA0-B6A71E8ED034}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
