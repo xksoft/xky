@@ -48,20 +48,20 @@ namespace Xky.XModule.FileManager
         {
             private string _name = "";
             private string _type = "文件";
-            private string _fullname = "";
+            private string _fullName = "";
             public string Name { get => _name; set => _name = value; }
             public string Type { get => _type; set => _type = value; }
-            public string Fullname { get => _fullname; set => _fullname = value; }
+            public string FullName { get => _fullName; set => _fullName = value; }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string name = ((Button)sender).Content.ToString();
+            string name = ((Button)sender).Tag.ToString();
             var deviceFile = DeviceFiles.ToList().Find(f => f.Name == name);
             if (deviceFile.Type == "file") { MessageBox.Show("下载文件到本地"); }
             else
             {
-                Ls(deviceFile.Fullname);
+                Ls(deviceFile.FullName);
 
             }
         }
@@ -112,16 +112,16 @@ namespace Xky.XModule.FileManager
                             deviceFile.Type = "link";
 
                         }
-                        deviceFile.Fullname = dir + "/" + deviceFile.Name;
+                        deviceFile.FullName = dir + "/" + deviceFile.Name;
                         if (deviceFile.Name == ".")
                         {
-                            deviceFile.Fullname = "/";
+                            deviceFile.FullName = "/";
                         }
                         if (deviceFile.Name.Contains("->"))
                         {
-                            deviceFile.Fullname = deviceFile.Name.Substring(deviceFile.Name.IndexOf("->") + 2);
+                            deviceFile.FullName = deviceFile.Name.Substring(deviceFile.Name.IndexOf("->") + 2);
                         }
-                        Console.WriteLine(deviceFile.Fullname);
+                        Console.WriteLine(deviceFile.FullName);
                         DeviceFiles.Add(deviceFile);
                     }
                 }

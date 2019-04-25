@@ -31,23 +31,35 @@
                 <RowDefinition Height="400"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <ItemsControl x:Name="ItemListBox" Margin="0,0,0,1" Grid.Row="0" Height="400"
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="10"
+                                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
+                <ItemsControl x:Name="ItemListBox" Margin="0,0,0,1" 
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="10" x:Name="DataGrid" Background="#ccc">
-                            <Button Click="Button_Click" Tag="{Binding Path=FullName}"  Content="{Binding Path=Name}" Padding="5"></Button>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10" x:Name="DataGrid" Background="#ccc">
+                                <Button Click="Button_Click" Tag="{Binding Path=Name}" BorderThickness="0" Padding="5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="/Xky.XModule.FileManager;component/file.png" Width="32" Height="32" VerticalAlignment="Center"></Image>
+                                        <Image Source="/Xky.XModule.FileManager;component/folder.png" Width="32" Height="32" VerticalAlignment="Center"></Image>
+                                    </Grid>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
             <StackPanel Grid.Row="2" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <UserControl:MyButton Background="#454c56"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </StackPanel>

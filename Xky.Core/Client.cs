@@ -600,16 +600,17 @@ namespace Xky.Core
         /// <returns></returns>
         public static void LoadModules()
         {
-            try
+
+            string currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\")) + "\\Modules";
+            string[] groupnamepaths = Directory.GetDirectories(modulepath);
+            foreach (string groupnamepath in groupnamepaths)
             {
-                string currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\")) + "\\Modules";
-                string[] groupnamepaths = Directory.GetDirectories(modulepath);
-                foreach (string groupnamepath in groupnamepaths)
+                string groupname = new DirectoryInfo(groupnamepath).Name;
+                List<string> modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
+                foreach (string modulefile in modulefilelist)
                 {
-                    string groupname = new DirectoryInfo(groupnamepath).Name;
-                    List<string> modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
-                    foreach (string modulefile in modulefilelist)
+                    try
                     {
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
                         foreach (XModule xmodule in xmodulelist)
@@ -625,13 +626,14 @@ namespace Xky.Core
                             Client.Modules.Add(module);
                         }
                     }
-
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("模块加载失败：" + e);
+                    }
                 }
+
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("模块加载失败：" + e);
-            }
+
         }
 
 
