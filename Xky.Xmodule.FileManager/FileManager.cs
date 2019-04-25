@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Xky.Core.Model;
 
 namespace Xky.XModule.FileManager
 {
@@ -37,7 +38,15 @@ namespace Xky.XModule.FileManager
 
         public override void Start()
         {
-            throw new NotImplementedException();
+           
+        }
+        public override bool ShowUserControl()
+        {
+           
+            var panel = new ModulePanel();
+            panel.device = Device;
+            Core.Client.ShowDialogPanel(panel);
+            return true;
         }
     }
 }

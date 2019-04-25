@@ -287,6 +287,7 @@ namespace Xky.Platform.Pages
 
                     var thread = Client.StartAction(() =>
                     {
+                        xmodule.Device = device;
                         //显示自定义控件
                         var isContinue = false;
                         Common.UiAction(() =>
@@ -296,7 +297,7 @@ namespace Xky.Platform.Pages
                         //是否继续
                         if (isContinue)
                         {
-                            xmodule.Device = device;
+                           
                             Dispatcher.Invoke(() =>
                             {
                                 device.RunningModules.Add(module);
