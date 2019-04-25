@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Xky.XModule.FileManager
             InitializeComponent();
         }
         public Device device;
-        public string currentDirectory = "/";
+        public string CurrentDirectory = "/";
         public ObservableCollection<DeviceFile> DeviceFiles = new ObservableCollection<DeviceFile>();
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -57,23 +58,25 @@ namespace Xky.XModule.FileManager
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string name = ((Button)sender).Tag.ToString();
+           
             var deviceFile = DeviceFiles.ToList().Find(f => f.Name == name);
             if (deviceFile.Type == "file") { MessageBox.Show("下载文件到本地"); }
             else
             {
-                Ls(deviceFile.FullName);
 
+                Ls(deviceFile.FullName);
+             
             }
         }
         public void Ls(string dir)
         {
-
+            CurrentDirectory = dir;
             Console.WriteLine("打开目录：" + dir);
             Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
             if (res.Json["result"] != null)
             {
                 DeviceFiles.Clear();
-
+                List<DeviceFile> list = new List<DeviceFile>();
                 List<string> files = res.Json["result"].ToString().Replace(" -> ", "->").Split('\n').ToList();
                 foreach (string file in files)
                 {
@@ -87,13 +90,6 @@ namespace Xky.XModule.FileManager
                         }
                     }
                     DeviceFile deviceFile = new DeviceFile();
-                    //string s = "";
-                    //Console.WriteLine(infolist.Count);
-                    //foreach (string ii in infolist)
-                    //{
-                    //    s += ii + "|";
-                    //}
-                    //Console.WriteLine(s);
                     if (infolist.Count >= 8)
                     {
                         deviceFile.Name = infolist[7];
@@ -115,18 +111,64 @@ namespace Xky.XModule.FileManager
                         deviceFile.FullName = dir + "/" + deviceFile.Name;
                         if (deviceFile.Name == ".")
                         {
-                            deviceFile.FullName = "/";
+                            continue;
+                        }
+                        else if (deviceFile.Name == "..")
+                        {
+                            continue;
                         }
                         if (deviceFile.Name.Contains("->"))
                         {
                             deviceFile.FullName = deviceFile.Name.Substring(deviceFile.Name.IndexOf("->") + 2);
                         }
-                        Console.WriteLine(deviceFile.FullName);
-                        DeviceFiles.Add(deviceFile);
+
+                        list.Add(deviceFile);
                     }
                 }
+                list.Sort((left, right) =>
+                {
+                    if (left.Type != right.Type)
+                    {
+                        if (left.Type == "file") { return 1; }
+                        else { return -1; }
+                    }
+                    else { return 0; }
+                });
+             
+                list.Insert(0, new DeviceFile { Name = "上级目录", FullName =((dir=="/"||dir=="")?"/":dir.Remove(dir.LastIndexOf("/"))), Type = "directory" });
+                list.Insert(0,new DeviceFile { Name="根目录",FullName="/",Type="directory"});
+                
+                DeviceFiles = new ObservableCollection<DeviceFile>(list);
+                
+                ItemListBox.ItemsSource = DeviceFiles;
+
             }
 
+        }
+
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                Array arr = (System.Array)e.Data.GetData(DataFormats.FileDrop);
+                foreach (var obj in arr)
+                {
+                    string filename = obj.ToString();
+                    device.ScriptEngine.WriteBufferToFile(CurrentDirectory+"/"+new FileInfo(filename).Name, File.ReadAllBytes(filename));
+                    Console.WriteLine("文件上传完毕");
+                }
+                Ls(CurrentDirectory);
+            }
+
+            
+        }
+
+        private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            DeviceFile deviceFile = (DeviceFile)((MenuItem)sender).DataContext;
+            Console.WriteLine(deviceFile.FullName);
+            Response res = device.ScriptEngine.AdbShell("rm -r -f "+deviceFile.FullName);
+            Ls(CurrentDirectory);
         }
     }
 }

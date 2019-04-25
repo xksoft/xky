@@ -76,8 +76,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="file.png" />
-    <EmbeddedResource Include="folder.png" />
+    <Resource Include="file.png" />
+    <Resource Include="folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
