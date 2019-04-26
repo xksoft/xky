@@ -70,6 +70,12 @@
   <ItemGroup>
     <EmbeddedResource Include="icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="packages.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="system.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\系统工具\应用管理器\ /y</PostBuildEvent>

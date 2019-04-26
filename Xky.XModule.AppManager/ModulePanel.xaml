@@ -11,14 +11,11 @@
              d:DesignHeight="600" d:DesignWidth="800" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
-            <lib:SwitchConverter x:Key="TypeToFileVisible">
-                <lib:SwitchConverterCase When="file" Then="Visible" />
+            <lib:SwitchConverter x:Key="TypeToSystemVisible">
+                <lib:SwitchConverterCase When="system" Then="Visible" />
                 <lib:SwitchConverterCase  Then="Collapsed" />
         </lib:SwitchConverter>
-            <lib:SwitchConverter x:Key="TypeToDirectoryVisible">
-                <lib:SwitchConverterCase When="file" Then="Collapsed" />
-                <lib:SwitchConverterCase  Then="Visible" />
-            </lib:SwitchConverter>
+           
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
@@ -48,23 +45,41 @@
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Style.Triggers>
+                                <Trigger Property="HasItems" Value="false">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="00">
+                                                    <Label Foreground="#636870">正在加载设备应用列表，请稍后...</Label>
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10" x:Name="DataGrid" Background="#777a7f">
-                                <Button Click="Button_Click" Tag="{Binding Path=Name}" BorderThickness="0" Padding="5">
+                                <Button Click="Button_Click" Tag="{Binding Path=PackageName}" BorderThickness="0" Padding="5">
                                     <Button.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="打开应用"></MenuItem>
-                                            <MenuItem Header="停止应用"></MenuItem>
+                                            <MenuItem Header="打开应用" Click="MenuItem_Open_Click"></MenuItem>
+                                            <MenuItem Header="停止应用" Click="MenuItem_Stop_Click"></MenuItem>
                                             <Separator />
-                                            <MenuItem Header="安装APK"></MenuItem>
+                                            <MenuItem Header="安装APK" Click="MenuItem_Install_Click"></MenuItem>
                                             <Separator />
-                                            <MenuItem Header="清空数据"></MenuItem>
+                                            <MenuItem Header="清空数据" Click="MenuItem_Clear_Click"></MenuItem>
                                             <MenuItem Header="卸载" Click="MenuItem_Delete_Click"></MenuItem>
                                         </ContextMenu>
                                     </Button.ContextMenu>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Margin="5,0,0,0" Grid.Column="1" Text="{Binding Path=PackageName}"></TextBlock>
+                                        <Image Grid.Column="0" Margin="0,0,5,0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToSystemVisible}}" Source="pack://application:,,,/Xky.XModule.AppManager;component/system.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                        <TextBlock Margin="0" Grid.Column="1" Text="{Binding Path=Name}"></TextBlock>
                                     </StackPanel>
                                 </Button>
                             </Border>
