@@ -57,20 +57,12 @@ namespace Xky.XModule.FileManager
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string name = ((Button)sender).Tag.ToString();
            
-            var deviceFile = DeviceFiles.ToList().Find(f => f.Name == name);
-            if (deviceFile.Type == "file") { MessageBox.Show("下载文件到本地"); }
-            else
-            {
-
-                Ls(deviceFile.FullName);
-             
-            }
         }
         public void Ls(string dir)
         {
             CurrentDirectory = dir;
+            TextBox_Current.Text = CurrentDirectory;
             Console.WriteLine("打开目录：" + dir);
             Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
             if (res.Json["result"] != null)
@@ -169,6 +161,37 @@ namespace Xky.XModule.FileManager
             Console.WriteLine(deviceFile.FullName);
             Response res = device.ScriptEngine.AdbShell("rm -r -f "+deviceFile.FullName);
             Ls(CurrentDirectory);
+        }
+
+        private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ItemListBox.SelectedItem!=null)
+            {
+               
+
+                var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
+               
+                if (deviceFile.Type == "file") { MessageBox.Show("下载文件到本地"); }
+                else
+                {
+
+                    Ls(deviceFile.FullName);
+
+                }
+            }
+
+        }
+
+        private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ItemListBox.SelectedItem != null)
+            {
+
+
+                var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
+                TextBox_Current.Text = deviceFile.FullName;
+
+            }
         }
     }
 }

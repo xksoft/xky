@@ -34,53 +34,64 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Background="#1d232a" Padding="30" BorderBrush="Black" BorderThickness="1">
+    <Border Background="#1d232a"  BorderBrush="Black" BorderThickness="1" Padding="10" Height="500" MaxWidth="1024">
         <Grid Drop="Grid_Drop" AllowDrop="True">
-           
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="400"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions> 
-           
-            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="10"
-                                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
-                <ItemsControl x:Name="ItemListBox" Margin="0,0,0,1" 
+
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <UserControl:MyButton Background="#454c56"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <UserControl:MyButton Text="根目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Text="返回上级目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Text="新建目录" Margin="0,0,10,0"></UserControl:MyButton>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <UserControl:MyTextBox x:Name="TextBox_Current" Width="500" Height="24" Margin="0,0,5,0"></UserControl:MyTextBox>
+                <UserControl:MyButton Height="24" Text="复制路径"></UserControl:MyButton>
+            </StackPanel>
+            <ListBox Grid.Row="3" x:Name="ItemListBox" Margin="0,0,0,1" SelectionChanged="ItemListBox_SelectionChanged" MouseDoubleClick="ItemListBox_MouseDoubleClick"  Background="#292f37" BorderThickness="0"
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="10" x:Name="DataGrid" Background="#777a7f">
-                                <Button Click="Button_Click" Tag="{Binding Path=Name}" BorderThickness="0" Padding="5">
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="下载到本机"></MenuItem>
-                                            <MenuItem Header="上传文件"></MenuItem>
-                                            <Separator />
-                                            <MenuItem Header="新建文件夹"></MenuItem>
-                                            <MenuItem Header="删除" Click="MenuItem_Delete_Click"></MenuItem>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                        <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                        <TextBlock Margin="5,0,0,0" Grid.Column="1" Text="{Binding Path=Name}"></TextBlock>
-                                    </StackPanel>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
-            <StackPanel Grid.Row="2" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-               
-                <UserControl:MyButton Background="#454c56"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            </StackPanel>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="下载到本机"></MenuItem>
+                        <MenuItem Header="上传文件"></MenuItem>
+                        <Separator />
+                        <MenuItem Header="新建文件夹"></MenuItem>
+                        <MenuItem Header="删除" Click="MenuItem_Delete_Click"></MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border  x:Name="DataGrid">
+                            <Grid Tag="{Binding Path=Name}">
+                                
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                    <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                    <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="#fff" Text="{Binding Path=Name}"></TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical"  Margin="0"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+           
         </Grid>
     </Border>
 </UserControl>

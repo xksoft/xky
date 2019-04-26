@@ -14,7 +14,11 @@
             <lib:SwitchConverter x:Key="TypeToSystemVisible">
                 <lib:SwitchConverterCase When="system" Then="Visible" />
                 <lib:SwitchConverterCase  Then="Collapsed" />
-        </lib:SwitchConverter>
+            </lib:SwitchConverter>
+            <lib:SwitchConverter x:Key="TypeToUserForeground">
+                <lib:SwitchConverterCase When="user" Then="#000" />
+                <lib:SwitchConverterCase  Then="#767676" />
+            </lib:SwitchConverter>
            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
@@ -64,8 +68,8 @@
                     </ItemsControl.Style>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="10" x:Name="DataGrid" Background="#777a7f">
-                                <Button Click="Button_Click" Tag="{Binding Path=PackageName}" BorderThickness="0" Padding="5">
+                            <Border Margin="10" x:Name="DataGrid">
+                                <Button Click="Button_Click"  Tag="{Binding Path=PackageName}" BorderThickness="0" Padding="5"  Foreground="{Binding Path=Type,Converter={StaticResource TypeToUserForeground}}">
                                     <Button.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="打开应用" Click="MenuItem_Open_Click"></MenuItem>
