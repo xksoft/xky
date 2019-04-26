@@ -34,25 +34,43 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Background="#1d232a"  BorderBrush="Black" BorderThickness="1" Padding="10" Height="500" MaxWidth="1024">
-        <Grid Drop="Grid_Drop" AllowDrop="True">
-
+    <Grid Background="#1d232a"   Height="500" MaxWidth="1024">
+        <Grid x:Name="Grid_AddDirectory" Panel.ZIndex="2" Visibility="Hidden">
+            <Border Background="#000" Opacity="0.8">
+            </Border>
+            <Border Padding="20" CornerRadius="5" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#1d232a">
+            <StackPanel   Orientation="Vertical" >
+                
+                <StackPanel Orientation="Horizontal"  Margin="0,20,0,0">
+                    <Label Width="60" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">目录名称</Label>
+                        <UserControl:MyTextBox x:Name="TextBox_AddDirectory_DirectoryName" WaterText="目录名称" Width="200" Height="32" Text="test"></UserControl:MyTextBox>
+                </StackPanel>
+               
+                <StackPanel Margin="0,40,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <UserControl:MyButton Click="Button_AddDirectory_Cancel_Click" Background="#454c56"  Height="32" Margin="0,0,20,0" Text="取消"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <UserControl:MyButton Click="Button_AddDirectory_Ok_Click" Width="100" Height="32" Margin="0,0,0,0" Text="确定"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </StackPanel>
+            </Border>
+        </Grid>
+        <Grid Drop="Grid_Drop" AllowDrop="True" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="42"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
 
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <UserControl:MyButton Background="#454c56"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <UserControl:MyButton Background="#454c56"  Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <UserControl:MyButton Text="根目录" Margin="0,0,10,0"></UserControl:MyButton>
                 <UserControl:MyButton Text="返回上级目录" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Text="新建目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Click="Button_AddDirectory_Click" Text="新建目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Text="上传文件夹" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Text="上传文件" Margin="0,0,10,0"></UserControl:MyButton>
             </StackPanel>
-
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <UserControl:MyTextBox x:Name="TextBox_Current" Width="500" Height="24" Margin="0,0,5,0"></UserControl:MyTextBox>
                 <UserControl:MyButton Height="24" Text="复制路径"></UserControl:MyButton>
@@ -64,21 +82,19 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="下载到本机"></MenuItem>
-                        <MenuItem Header="上传文件"></MenuItem>
                         <Separator />
-                        <MenuItem Header="新建文件夹"></MenuItem>
                         <MenuItem Header="删除" Click="MenuItem_Delete_Click"></MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border  x:Name="DataGrid">
+                        <Border  x:Name="DataGrid" Height="20" VerticalAlignment="Center">
                             <Grid Tag="{Binding Path=Name}">
                                 
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
                                     <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                    <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="#fff" Text="{Binding Path=Name}"></TextBlock>
+                                    <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="#fff" Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -93,6 +109,7 @@
 
            
         </Grid>
-    </Border>
+    </Grid>
+    
 </UserControl>
 

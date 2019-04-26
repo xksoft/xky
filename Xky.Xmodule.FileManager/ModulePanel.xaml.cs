@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,6 +45,34 @@ namespace Xky.XModule.FileManager
 
             Client.CloseDialogPanel();
 
+        }
+        private void Button_AddDirectory_Click(object sender, RoutedEventArgs e)
+        {
+           
+            Grid_AddDirectory.Visibility = Visibility.Visible;
+
+        }
+        private void Button_AddDirectory_Ok_Click(object sender, RoutedEventArgs e)
+        {
+            string DirectoryName = TextBox_AddDirectory_DirectoryName.Text.Trim();
+            if (new Regex("[\u4E00-\u9FA5]").IsMatch(DirectoryName))
+            {
+                MessageBox.Show("目录名称中不能包含中文");
+            }
+            else
+            {
+                if (DirectoryName.Length > 0)
+                {
+                    Response res = device.ScriptEngine.AdbShell("cd " + CurrentDirectory + "&&mkdir -m 0777 " + DirectoryName);
+                    Ls(CurrentDirectory);
+                }
+                Grid_AddDirectory.Visibility = Visibility.Hidden;
+            }
+
+        }
+        private void Button_AddDirectory_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Grid_AddDirectory.Visibility = Visibility.Hidden;
         }
         public class DeviceFile
         {
@@ -146,8 +175,8 @@ namespace Xky.XModule.FileManager
                 foreach (var obj in arr)
                 {
                     string filename = obj.ToString();
-                    device.ScriptEngine.WriteBufferToFile(CurrentDirectory+"/"+new FileInfo(filename).Name, File.ReadAllBytes(filename));
-                    Console.WriteLine("文件上传完毕");
+                  Response res=  device.ScriptEngine.WriteBufferToFile(CurrentDirectory+"/"+new FileInfo(filename).Name, File.ReadAllBytes(filename));
+                    Console.WriteLine("文件上传完毕："+res.Json.ToString());
                 }
                 Ls(CurrentDirectory);
             }
@@ -157,10 +186,14 @@ namespace Xky.XModule.FileManager
 
         private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            DeviceFile deviceFile = (DeviceFile)((MenuItem)sender).DataContext;
-            Console.WriteLine(deviceFile.FullName);
-            Response res = device.ScriptEngine.AdbShell("rm -r -f "+deviceFile.FullName);
-            Ls(CurrentDirectory);
+            if (ItemListBox.SelectedItem != null)
+            {
+
+
+                var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
+                Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
+                Ls(CurrentDirectory);
+            }
         }
 
         private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
