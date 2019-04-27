@@ -56,12 +56,12 @@
                 <UserControl:MyButton Background="#454c56"  Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <UserControl:MyButton x:Name="Button_RootDirectory" Click="Button_RootDirectory_Click" Text="根目录" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Text="手机存储" Margin="0,0,10,0" Click="Button_SDcard_Click"></UserControl:MyButton>
-                <UserControl:MyButton Text="返回上级目录" x:Name="Button_GoBack" Click="Button_GoBack_Click" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Click="Button_AddDirectory_Click" Text="新建目录" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Text="上传文件夹" x:Name="Button_UploadDirectory" Click="Button_UploadDirectory_Click" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Text="上传文件"  x:Name="Button_UploadFile"  Click="Button_UploadFile_Click" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Height="18" Image_Width="15" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/android.png"   x:Name="Button_RootDirectory" Click="Button_RootDirectory_Click" Text="根目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Height="19" Image_Width="13"  Text="手机存储" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/phone.png"  Margin="0,0,10,0" Click="Button_SDcard_Click"></UserControl:MyButton>
+                <UserControl:MyButton Text="返回上级目录" Image_Width="17" Image_Height="13"  Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/goback.png" x:Name="Button_GoBack" Click="Button_GoBack_Click" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Width="18" Image_Height="13" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/adddirectory.png" Click="Button_AddDirectory_Click" Text="新建目录" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Width="14" Image_Height="14"  Text="上传文件夹" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/upload.png" x:Name="Button_UploadDirectory" Click="Button_UploadDirectory_Click" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Width="14" Image_Height="14"  Text="上传文件" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/upload.png"  x:Name="Button_UploadFile"  Click="Button_UploadFile_Click" Margin="0,0,10,0"></UserControl:MyButton>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <UserControl:MyTextBox x:Name="TextBox_Current" Width="500" Height="24" Margin="0,0,5,0"></UserControl:MyTextBox>
@@ -73,9 +73,17 @@
                      VirtualizingPanel.ScrollUnit="Item">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="下载到本机"></MenuItem>
+                        <MenuItem Header="下载到本机" Click="MenuItem_DownLoad_Click">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="pack://application:,,,/Xky.XModule.FileManager;component/icon/download.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <Separator />
-                        <MenuItem Header="删除" Click="MenuItem_Delete_Click"></MenuItem>
+                        <MenuItem Header="删除" Click="MenuItem_Delete_Click">
+                            <MenuItem.Icon>
+                                <ImageBrush ImageSource="pack://application:,,,/Xky.XModule.FileManager;component/icon/delete.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
@@ -84,8 +92,8 @@
                             <Grid Tag="{Binding Path=Name}">
                                 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                    <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                    <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/icon/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                    <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/icon/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
                                     <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="#fff" Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
                                 </StackPanel>
                             </Grid>
@@ -105,21 +113,21 @@
            
         </Grid>
         <Grid Visibility="Hidden">
-            <ContentControl  x:Name="ContentControl_AddDirectory" >
+            <ContentControl  x:Name="ContentControl_AddDirectory"   Visibility="Collapsed" >
             <StackPanel Orientation="Vertical" >
                 
-                <StackPanel Orientation="Horizontal"  Margin="0,20,0,0">
-                    <Label Width="60" Foreground="#fff" VerticalAlignment="Center" Margin="0,0,10,0">目录名称</Label>
+                <StackPanel Orientation="Vertical"  Margin="0">
+                    <Label Width="60" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,10">目录名称</Label>
                         <UserControl:MyTextBox x:Name="TextBox_AddDirectory_DirectoryName" WaterText="目录名称" Width="200" Height="32" Text="test"></UserControl:MyTextBox>
                 </StackPanel>
                
-                <StackPanel Margin="0,40,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
                         <UserControl:MyButton Click="Button_AddDirectory_Cancel_Click" Background="#454c56"  Height="32" Margin="0,0,20,0" Text="取消"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <UserControl:MyButton Click="Button_AddDirectory_Ok_Click" Width="100" Height="32" Margin="0,0,0,0" Text="确定"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </StackPanel>
             </StackPanel>
             </ContentControl>
-            <ContentControl  x:Name="ContentControl_Loading" >
+            <ContentControl  x:Name="ContentControl_Loading"  Visibility="Collapsed" >
                 <Label x:Name="Label_Loading" Foreground="#fff">正在加载中，请稍后...</Label>
             </ContentControl>
         </Grid>

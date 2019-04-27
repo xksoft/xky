@@ -6,7 +6,7 @@
     xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
     x:Class="Xky.Platform.Pages.Login"
     mc:Ignorable="d" d:DesignHeight="900" d:DesignWidth="1300">
-    <Grid Background="{StaticResource BackgroundColor4}">
+    <Grid Background="#33000000">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>

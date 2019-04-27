@@ -80,8 +80,27 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="file.png" />
-    <Resource Include="folder.png" />
+    <Resource Include="icon\file.png" />
+    <Resource Include="icon\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\goback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\adddirectory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\android.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\delete.png" />
+    <Resource Include="icon\download.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
