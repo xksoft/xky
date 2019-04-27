@@ -221,7 +221,7 @@
 
                         <Separator />
 
-                        <MenuItem Header="测试模块" Click="MenuItem_OnClick" />
+                        <MenuItem Header="测试一下" Click="MenuItem_OnClick" />
 
                     </ContextMenu>
                 </ListBox.ContextMenu>

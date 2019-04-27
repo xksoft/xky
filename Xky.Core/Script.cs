@@ -68,8 +68,19 @@ namespace Xky.Core
         /// <returns></returns>
         public Response WriteBufferToFile(string path, byte[] data)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeBufferToFile",
-                new JArray(path, Convert.ToBase64String(data)));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeBufferToFile2",
+                new JArray(path, data));
+        }
+
+        /// <summary>
+        /// 从设备读取二进制数据
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Response ReadBufferFromFile(string path)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readBufferFromFile",
+                new JArray(path));
         }
 
         /// <summary>
