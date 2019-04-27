@@ -108,7 +108,7 @@
             </ListBox>
 
             <StackPanel Grid.Row="4" Orientation="Vertical" VerticalAlignment="Center">
-                <Label VerticalAlignment="Center" Foreground="#ccc">使用说明：按住Shift或Ctrl键可进行多选，拖动文件或文件夹到列表中可快速上传，右键可删除和将文件或目录下载到本地电脑。</Label>
+                <TextBlock VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动文件或文件夹到列表中可快速上传，右键可删除和将文件或目录下载到本地电脑，双击文件可以直接下载到本地并打开。</TextBlock>
             </StackPanel>
            
         </Grid>

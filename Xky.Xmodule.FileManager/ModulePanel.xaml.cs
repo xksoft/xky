@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -375,20 +376,20 @@ namespace Xky.XModule.FileManager
                             foreach (var file in files)
                             {
                                 ShowLoading("正在下载文件[" + file.FullName + "]...");
-                                string RelativePath = file.FullName.Substring(file.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
-                                if (RelativePath.StartsWith("/"))
-                                {
-                                    RelativePath = RelativePath.Substring(1);
-                                }
+                                DownloadFile(openFileDialog.SelectedPath,file);
+                                //string RelativePath = file.FullName.Substring(file.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
+                                //if (RelativePath.StartsWith("/"))
+                                //{
+                                //    RelativePath = RelativePath.Substring(1);
+                                //}
                               
-                                var response = device.ScriptEngine.ReadBufferFromFile(deviceFile.FullName);
-                                if (response.Result)
-                                {
-                                    var data = (byte[])(response.Json["buffer"] as JArray)?.First;
-                                    int index = deviceFile.FullName.LastIndexOf("/") + 1;
-                                    string filename = openFileDialog.SelectedPath + "\\" + RelativePath;
-                                    File.WriteAllBytes(filename,data);
-                                }
+                                //var response = device.ScriptEngine.ReadBufferFromFile(deviceFile.FullName);
+                                //if (response.Result)
+                                //{
+                                //    var data = (byte[])(response.Json["buffer"] as JArray)?.First;
+                                //    string filename = openFileDialog.SelectedPath + "\\" + RelativePath;
+                                //    File.WriteAllBytes(filename,data);
+                                //}
                             }
                         }
                         CloseLoading();
@@ -397,6 +398,24 @@ namespace Xky.XModule.FileManager
                 }
             }
         }
+        public string DownloadFile(string path,DeviceFile file) {
+
+            string RelativePath = file.FullName.Substring(file.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
+            if (RelativePath.StartsWith("/"))
+            {
+                RelativePath = RelativePath.Substring(1);
+            }
+
+            var response = device.ScriptEngine.ReadBufferFromFile(file.FullName);
+            if (response.Result)
+            {
+                var data = (byte[])(response.Json["buffer"] as JArray)?.First;
+                string filename = path + "\\" + RelativePath;
+                File.WriteAllBytes(filename, data);
+                return filename;
+            }
+            else { return ""; }
+        }
         private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ItemListBox.SelectedItem != null)
@@ -404,14 +423,25 @@ namespace Xky.XModule.FileManager
 
 
                 var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
-
-                if (deviceFile.Type == "file") { System.Windows.MessageBox.Show("下载文件到本地"); }
-                else
+                new Thread(() =>
                 {
+                    ShowLoading("准备下载...");
+                    if (deviceFile.Type == "file")
+                    {
+                        var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
+                        string filename = DownloadFile(tempdir, deviceFile);
+                        Process.Start(filename);
 
-                    Ls(deviceFile.FullName);
+                    }
+                    else
+                    {
 
-                }
+                        Ls(deviceFile.FullName);
+
+                    }
+                    CloseLoading();
+                })
+                { IsBackground = true }.Start();
             }
 
         }
