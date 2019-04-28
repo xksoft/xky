@@ -21,8 +21,17 @@
     <Window.Resources>
         <platform:ButtonStatus x:Key="ButtonStatus" />
     </Window.Resources>
-    <Grid Background="White" x:Name="MainGrid" Margin="20">
-        <Grid.ColumnDefinitions>
+    <Grid>
+        <!--<Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+            <Border.Background>
+                <ImageBrush ImageSource="Resources/Icon/background.jpg" />
+            </Border.Background>
+        </Border>-->
+        <Grid  x:Name="MainGrid" Margin="20">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/Icon/background.jpg" />
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="193" />
             <ColumnDefinition />
@@ -35,7 +44,7 @@
             <DropShadowEffect x:Name="DropShadowEffect" Color="#CC000000" Direction="320" BlurRadius="8"
                               Opacity="0.35" />
         </Grid.Effect>
-
+        
         <!-- 顶部导航 -->
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 
@@ -201,7 +210,7 @@
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" />
 
         <!-- 第一栏 -->
-        <Grid Grid.Column="0" Background="{StaticResource  BackgroundColor2}" Grid.Row="0" Grid.RowSpan="2">
+        <Grid Grid.Column="0" Background="Transparent" Grid.Row="0" Grid.RowSpan="2">
 
 
             <VirtualizingStackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
@@ -241,5 +250,7 @@
         </Border>
 
     </Grid>
+    </Grid>
+    
 
 </Window>

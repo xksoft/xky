@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,7 +36,9 @@ namespace Xky.XModule.FileManager
         public Device device;
         public string CurrentDirectory = "/storage/emulated/0";
         public static List<FileInformation> FileList = new List<FileInformation>();
+        public static List<DeviceFile> FileList_Device = new List<DeviceFile>();
         public static string  DirectoryAbsolutePath="";
+        
         public ObservableCollection<DeviceFile> DeviceFiles = new ObservableCollection<DeviceFile>();
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -93,6 +97,7 @@ namespace Xky.XModule.FileManager
             public string Name { get => _name; set => _name = value; }
             public string Type { get => _type; set => _type = value; }
             public string FullName { get => _fullName; set => _fullName = value; }
+            public string Size { get; set; }
         }
 
 
@@ -122,6 +127,7 @@ namespace Xky.XModule.FileManager
             public string FileName { get; set; }
             public string RelativePath { get; set; }
             public bool IsFile { get; set; }
+           
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +138,7 @@ namespace Xky.XModule.FileManager
             CurrentDirectory = dir;
             this.Dispatcher.Invoke(new Action(() =>
             {
-                TextBox_Current.Text = CurrentDirectory;
+                TextBox_CurrentPath.Text = CurrentDirectory;
             }));
             Console.WriteLine("打开目录：" + dir);
             Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
@@ -142,55 +148,7 @@ namespace Xky.XModule.FileManager
                 {
                     DeviceFiles.Clear();
                 }));
-                List<DeviceFile> list = new List<DeviceFile>();
-                List<string> files = res.Json["result"].ToString().Replace(" -> ", "->").Split('\n').ToList();
-                foreach (string file in files)
-                {
-                    string[] infos = file.Split(' ');
-                    List<string> infolist = new List<string>();
-                    foreach (string i in infos)
-                    {
-                        if (i.Trim().Length > 0)
-                        {
-                            infolist.Add(i.Trim());
-                        }
-                    }
-                    DeviceFile deviceFile = new DeviceFile();
-                    if (infolist.Count >= 8)
-                    {
-                        deviceFile.Name = infolist[7];
-                        if (file.StartsWith("-"))
-                        {
-                            deviceFile.Type = "file";
-
-                        }
-                        else if (file.StartsWith("d"))
-                        {
-                            deviceFile.Type = "directory";
-
-                        }
-                        else if (file.StartsWith("l"))
-                        {
-                            deviceFile.Type = "link";
-
-                        }
-                        deviceFile.FullName = dir + "/" + deviceFile.Name;
-                        if (deviceFile.Name == ".")
-                        {
-                            continue;
-                        }
-                        else if (deviceFile.Name == "..")
-                        {
-                            continue;
-                        }
-                        if (deviceFile.Name.Contains("->"))
-                        {
-                            deviceFile.FullName = deviceFile.Name.Substring(deviceFile.Name.IndexOf("->") + 2);
-                        }
-
-                        list.Add(deviceFile);
-                    }
-                }
+                List<DeviceFile> list= GetDeviceFilesFromLs(dir,res.Json["result"].ToString());
                 list.Sort((left, right) =>
                 {
                     if (left.Type != right.Type)
@@ -213,7 +171,97 @@ namespace Xky.XModule.FileManager
             }
 
         }
+        public void GetAllDeviceFilesAndDirectory(string dir)
+        {
+            Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
+            if (res.Json["result"] != null)
+            {
+                List<DeviceFile> list = GetDeviceFilesFromLs(dir, res.Json["result"].ToString());
+                foreach (var deviceFile in list)
+                {
+                    FileList_Device.Add(deviceFile);
+                    if (deviceFile.Type != "file")
+                    {
+                        GetAllDeviceFilesAndDirectory(deviceFile.FullName);
+                    }
 
+                }
+            }
+        }
+        public List<DeviceFile> GetDeviceFilesFromLs(string dir,string lsres)
+        {
+            List<DeviceFile> list = new List<DeviceFile>();
+            List<string> files = lsres.Replace(" -> ", "->").Split('\n').ToList();
+            foreach (string file in files)
+            {
+                string[] infos = file.Split(' ');
+                List<string> infolist = new List<string>();
+                foreach (string i in infos)
+                {
+                    if (i.Trim().Length > 0)
+                    {
+                        infolist.Add(i.Trim());
+                    }
+                }
+                DeviceFile deviceFile = new DeviceFile();
+                if (infolist.Count >= 8)
+                {
+                    deviceFile.Name = infolist[7];
+                    if (file.StartsWith("-"))
+                    {
+                        deviceFile.Type = "file";
+                        long size = 0;
+                        long.TryParse(infolist[4], out size) ;
+                        if (size >= 1073741824)
+                        {
+                            //超过1G
+                            deviceFile.Size = (size / 1073741824.0).ToString("0.0") + "G";
+                        }
+                        else if (size >= 1024 * 1024)
+                        {
+                            //超过1M
+                            deviceFile.Size = (size / 1048576.0).ToString("0.0") + "M";
+                        }
+                        else
+                        {
+                            deviceFile.Size = (size / 1024.0).ToString("0.0") + "KB";
+                        }
+                        if (deviceFile.Size== "0.0KB")
+                        {
+                            deviceFile.Size = "-";
+                        }
+
+                    }
+                    else if (file.StartsWith("d"))
+                    {
+                        deviceFile.Type = "directory";
+
+                    }
+                    else if (file.StartsWith("l"))
+                    {
+                        deviceFile.Type = "link";
+
+                    }
+                    deviceFile.FullName = dir + "/" + deviceFile.Name;
+                    if (deviceFile.Name == ".")
+                    {
+                        continue;
+                    }
+                    else if (deviceFile.Name == "..")
+                    {
+                        continue;
+                    }
+                    if (deviceFile.Name.Contains("->"))
+                    {
+                        deviceFile.Name= deviceFile.Name.Remove(deviceFile.Name.IndexOf("->"));
+                        deviceFile.FullName = dir + "/" + deviceFile.Name;//.Substring(deviceFile.Name.IndexOf("->") + 2);
+                    }
+
+                    list.Add(deviceFile);
+                }
+            }
+            return list;
+        }
         private void Grid_Drop(object sender, System.Windows.DragEventArgs e)
         {
             if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
@@ -276,16 +324,141 @@ namespace Xky.XModule.FileManager
         }
         private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (ItemListBox.SelectedItem != null)
+            if (ItemListBox.SelectedItems.Count > 0)
             {
+                var deviceFiles =ItemListBox.SelectedItems;
+                new Thread(() =>
+                {
+                    ShowLoading("准备删除...");
+                   
+                    for (int i = 0; i < deviceFiles.Count; i++)
+                    {
+                        var deviceFile = (DeviceFile)deviceFiles[i];
+                        if (deviceFile.Name == "根目录" || deviceFile.Name == "上级目录")
+                        {
+                            continue;
+                        }
+                        ShowLoading("正在删除[" + deviceFile.Name + "]...");
+                        Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
+                    }
 
-
-                var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
-                Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
-                Ls(CurrentDirectory);
+                    Ls(CurrentDirectory);
+                    CloseLoading();
+                })
+                { IsBackground = true }.Start();
             }
         }
+        private void MenuItem_DownLoad_Click(object sender, RoutedEventArgs e)
+        {
+            if (ItemListBox.SelectedItems.Count > 0)
+            {
+                var openFileDialog = new FolderBrowserDialog();
 
+                var result = openFileDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    FileList_Device.Clear();
+                    var deviceFiles = ItemListBox.SelectedItems;
+                    new Thread(() =>
+                    {
+                        ShowLoading("准备下载...");
+                        for (int i = 0; i < deviceFiles.Count; i++)
+                        {
+                            var deviceFile = (DeviceFile)deviceFiles[i];
+                            if (deviceFile.Name == "根目录" || deviceFile.Name == "上级目录")
+                            {
+                                continue;
+                            }
+                           
+                            if (deviceFile.Type == "file")
+                            {
+                                FileList_Device.Add(deviceFile);
+                               
+                            }
+                            else
+                            {
+                                ShowLoading("正在遍历目录[" + deviceFile.FullName + "]...");
+                                GetAllDeviceFilesAndDirectory(deviceFile.FullName);
+                            }
+
+                            var files = (from f in FileList_Device where f.Type == "file" select f).ToList();
+                            var dirs = (from f in FileList_Device where f.Type != "file" select f).ToList();
+                            foreach (var dir in dirs)
+                            {
+
+                                string RelativePath = dir.FullName.Substring(dir.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
+                                if (RelativePath.StartsWith("/"))
+                                {
+                                    RelativePath = RelativePath.Substring(1);
+                                }
+                                DirectoryInfo selectDir = new DirectoryInfo(openFileDialog.SelectedPath);
+                                selectDir.CreateSubdirectory(RelativePath);
+                            }
+                            foreach (var file in files)
+                            {
+                                ShowLoading("正在下载文件[" + file.FullName + "]...");
+                                DownloadFile(openFileDialog.SelectedPath,file);
+                                //string RelativePath = file.FullName.Substring(file.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
+                                //if (RelativePath.StartsWith("/"))
+                                //{
+                                //    RelativePath = RelativePath.Substring(1);
+                                //}
+                              
+                                //var response = device.ScriptEngine.ReadBufferFromFile(deviceFile.FullName);
+                                //if (response.Result)
+                                //{
+                                //    var data = (byte[])(response.Json["buffer"] as JArray)?.First;
+                                //    string filename = openFileDialog.SelectedPath + "\\" + RelativePath;
+                                //    File.WriteAllBytes(filename,data);
+                                //}
+                            }
+                        }
+                        CloseLoading();
+                        Process.Start(openFileDialog.SelectedPath);
+                    })
+                    { IsBackground = true }.Start();
+                }
+            }
+        }
+        public string DownloadFile(string path,DeviceFile file) {
+
+            string RelativePath = file.FullName.Substring(file.FullName.IndexOf(CurrentDirectory) + CurrentDirectory.Length);
+            if (RelativePath.StartsWith("/"))
+            {
+                RelativePath = RelativePath.Substring(1);
+            }
+
+            var response = device.ScriptEngine.ReadBufferFromFile(file.FullName);
+            if (response.Result)
+            {
+                string filename = path + "\\" + RelativePath;
+                var data = (response.Json["buffer"] as JArray);
+              
+                using (FileStream fsw = new FileStream(filename, FileMode.Create))
+                {
+                    if (data != null)
+                    {
+
+                        for (int i = 0; i < data.Count; i++)
+                        {
+                            byte[] bs = (byte[])data[i];
+                            fsw.Write(bs, 0, bs.Length);
+                        }
+
+                        fsw.Close();
+                        return filename;
+                    }
+
+
+                }
+
+
+
+            }
+            
+            return ""; 
+        }
         private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ItemListBox.SelectedItem != null)
@@ -293,14 +466,43 @@ namespace Xky.XModule.FileManager
 
 
                 var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
-
-                if (deviceFile.Type == "file") { System.Windows.MessageBox.Show("下载文件到本地"); }
-                else
+                new Thread(() =>
                 {
+                    
+                    if (deviceFile.Type == "file")
+                    {
+                        ShowLoading("正在下载文件["+ deviceFile .FullName+ "]...");
+                        var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
+                        string filename = DownloadFile(tempdir, deviceFile);
+                        if (filename.Length > 0)
+                        {
+                            try
+                            {
+                                Process p = Process.Start(filename);
+                                if (p == null)
+                                {
+                                    System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
+                                }
+                            }
+                            catch
+                            {
+                                System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
+                            }
+                        }
+                        else {
+                            System.Windows.MessageBox.Show("文件下载失败！");
+                        }
 
-                    Ls(deviceFile.FullName);
+                    }
+                    else
+                    {
 
-                }
+                        Ls(deviceFile.FullName);
+
+                    }
+                    CloseLoading();
+                })
+                { IsBackground = true }.Start();
             }
 
         }
@@ -312,7 +514,7 @@ namespace Xky.XModule.FileManager
 
 
                 var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
-                TextBox_Current.Text = deviceFile.FullName;
+                TextBox_CurrentPath.Text = deviceFile.FullName;
 
             }
         }
@@ -408,6 +610,19 @@ namespace Xky.XModule.FileManager
             }));
         }
 
+        private void Button_TempDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
+            Process.Start(tempdir);
+        }
 
+        private void Button_SetClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Windows.Clipboard.SetDataObject(TextBox_CurrentPath.Text, true);
+            }
+            catch { }
+        }
     }
 }

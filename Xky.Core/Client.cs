@@ -1145,7 +1145,7 @@ namespace Xky.Core
                 Message = "调用接口超时",
                 Json = new JObject {["errcode"] = 1, ["msg"] = "调用接口超时"}
             };
-            var count = 10000;
+            var count = 20000;
             node.NodeSocket.Emit("call",
                 result =>
                 {
