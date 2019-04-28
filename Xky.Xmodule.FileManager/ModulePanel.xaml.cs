@@ -97,6 +97,7 @@ namespace Xky.XModule.FileManager
             public string Name { get => _name; set => _name = value; }
             public string Type { get => _type; set => _type = value; }
             public string FullName { get => _fullName; set => _fullName = value; }
+            public string Size { get; set; }
         }
 
 
@@ -126,6 +127,7 @@ namespace Xky.XModule.FileManager
             public string FileName { get; set; }
             public string RelativePath { get; set; }
             public bool IsFile { get; set; }
+           
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -136,7 +138,7 @@ namespace Xky.XModule.FileManager
             CurrentDirectory = dir;
             this.Dispatcher.Invoke(new Action(() =>
             {
-                TextBox_Current.Text = CurrentDirectory;
+                TextBox_CurrentPath.Text = CurrentDirectory;
             }));
             Console.WriteLine("打开目录：" + dir);
             Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&ls -al");
@@ -208,6 +210,26 @@ namespace Xky.XModule.FileManager
                     if (file.StartsWith("-"))
                     {
                         deviceFile.Type = "file";
+                        long size = 0;
+                        long.TryParse(infolist[4], out size) ;
+                        if (size >= 1073741824)
+                        {
+                            //超过1G
+                            deviceFile.Size = (size / 1073741824.0).ToString("0.0") + "G";
+                        }
+                        else if (size >= 1024 * 1024)
+                        {
+                            //超过1M
+                            deviceFile.Size = (size / 1048576.0).ToString("0.0") + "M";
+                        }
+                        else
+                        {
+                            deviceFile.Size = (size / 1024.0).ToString("0.0") + "KB";
+                        }
+                        if (deviceFile.Size== "0.0KB")
+                        {
+                            deviceFile.Size = "-";
+                        }
 
                     }
                     else if (file.StartsWith("d"))
@@ -393,6 +415,7 @@ namespace Xky.XModule.FileManager
                             }
                         }
                         CloseLoading();
+                        Process.Start(openFileDialog.SelectedPath);
                     })
                     { IsBackground = true }.Start();
                 }
@@ -410,6 +433,7 @@ namespace Xky.XModule.FileManager
             if (response.Result)
             {
                 var data = (byte[])(response.Json["buffer"] as JArray)?.First;
+                if (data==null) { data = new byte[0]; }
                 string filename = path + "\\" + RelativePath;
                 File.WriteAllBytes(filename, data);
                 return filename;
@@ -430,7 +454,18 @@ namespace Xky.XModule.FileManager
                     {
                         var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
                         string filename = DownloadFile(tempdir, deviceFile);
-                        Process.Start(filename);
+                        try
+                        {
+                           Process p= Process.Start(filename);
+                            if (p==null)
+                            {
+                                System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
+                            }
+                        }
+                        catch
+                        {
+                            System.Diagnostics.Process.Start("Explorer.exe", @"/select,"+filename);
+                        }
 
                     }
                     else
@@ -453,7 +488,7 @@ namespace Xky.XModule.FileManager
 
 
                 var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
-                TextBox_Current.Text = deviceFile.FullName;
+                TextBox_CurrentPath.Text = deviceFile.FullName;
 
             }
         }
@@ -549,6 +584,19 @@ namespace Xky.XModule.FileManager
             }));
         }
 
+        private void Button_TempDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
+            Process.Start(tempdir);
+        }
 
+        private void Button_SetClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Windows.Clipboard.SetDataObject(TextBox_CurrentPath.Text, true);
+            }
+            catch { }
+        }
     }
 }

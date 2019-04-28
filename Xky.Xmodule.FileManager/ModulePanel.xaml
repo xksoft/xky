@@ -50,7 +50,7 @@
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="42"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <UserControl:MyButton Background="#454c56"  Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
@@ -64,8 +64,8 @@
                 <UserControl:MyButton Image_Width="14" Image_Height="14"  Text="上传文件" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/upload.png"  x:Name="Button_UploadFile"  Click="Button_UploadFile_Click" Margin="0,0,10,0"></UserControl:MyButton>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <UserControl:MyTextBox x:Name="TextBox_Current" Width="500" Height="24" Margin="0,0,5,0"></UserControl:MyTextBox>
-                <UserControl:MyButton Height="24" Text="复制路径"></UserControl:MyButton>
+                <UserControl:MyTextBox x:Name="TextBox_CurrentPath" Width="500" Height="24" Margin="0,0,5,0"></UserControl:MyTextBox>
+                <UserControl:MyButton x:Name="Button_SetClipboard" Click="Button_SetClipboard_Click" Height="24" Text="复制路径"></UserControl:MyButton>
             </StackPanel>
             <ListBox SelectionMode="Extended" Grid.Row="3" x:Name="ItemListBox" Margin="0,0,0,1" SelectionChanged="ItemListBox_SelectionChanged" MouseDoubleClick="ItemListBox_MouseDoubleClick"  Background="#292f37" BorderThickness="0"
                      ScrollViewer.CanContentScroll="True"
@@ -94,7 +94,15 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToFileVisible}}" Source="pack://application:,,,/Xky.XModule.FileManager;component/icon/file.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
                                     <Image Grid.Column="0"  Visibility="{Binding Path=Type,Converter={StaticResource TypeToDirectoryVisible}}"  Source="pack://application:,,,/Xky.XModule.FileManager;component/icon/folder.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                    <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="#fff" Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"  Margin="5,0,0,0" Foreground="#fff" Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Width="80" Grid.Column="1" Text="{Binding Path=Size}" Foreground="#515356" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                                    </Grid>
+                                  
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -108,7 +116,8 @@
             </ListBox>
 
             <StackPanel Grid.Row="4" Orientation="Vertical" VerticalAlignment="Center">
-                <TextBlock VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动文件或文件夹到列表中可快速上传，右键可删除和将文件或目录下载到本地电脑，双击文件可以直接下载到本地并打开。</TextBlock>
+                <TextBlock LineHeight="20" VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动文件或文件夹到列表中可快速上传，右键可删除和将文件或目录下载到本地电脑，双击文件可以直接下载到<Button x:Name="Button_TempDirectory" Click="Button_TempDirectory_Click" BorderThickness="0" Cursor="Hand" Foreground="#292f37" Height="18" Margin="5,0,5,-5" VerticalContentAlignment="Center"><TextBlock TextDecorations="underline">本地临时目录</TextBlock> </Button>并打开。</TextBlock>
+                <TextBlock Margin="0,5,0,0" Foreground="Red">注意：文件或目录名称不可包含中文。</TextBlock>
             </StackPanel>
            
         </Grid>
