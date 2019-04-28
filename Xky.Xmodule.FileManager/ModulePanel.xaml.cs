@@ -432,13 +432,32 @@ namespace Xky.XModule.FileManager
             var response = device.ScriptEngine.ReadBufferFromFile(file.FullName);
             if (response.Result)
             {
-                var data = (byte[])(response.Json["buffer"] as JArray)?.First;
-                if (data==null) { data = new byte[0]; }
                 string filename = path + "\\" + RelativePath;
-                File.WriteAllBytes(filename, data);
-                return filename;
+                var data = (response.Json["buffer"] as JArray);
+              
+                using (FileStream fsw = new FileStream(filename, FileMode.Create))
+                {
+                    if (data != null)
+                    {
+
+                        for (int i = 0; i < data.Count; i++)
+                        {
+                            byte[] bs = (byte[])data[i];
+                            fsw.Write(bs, 0, bs.Length);
+                        }
+
+                        fsw.Close();
+                        return filename;
+                    }
+
+
+                }
+
+
+
             }
-            else { return ""; }
+            
+            return ""; 
         }
         private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -449,22 +468,29 @@ namespace Xky.XModule.FileManager
                 var deviceFile = (DeviceFile)(ItemListBox.SelectedItem);
                 new Thread(() =>
                 {
-                    ShowLoading("准备下载...");
+                    
                     if (deviceFile.Type == "file")
                     {
+                        ShowLoading("正在下载文件["+ deviceFile .FullName+ "]...");
                         var tempdir = System.Environment.GetEnvironmentVariable("TEMP");
                         string filename = DownloadFile(tempdir, deviceFile);
-                        try
+                        if (filename.Length > 0)
                         {
-                           Process p= Process.Start(filename);
-                            if (p==null)
+                            try
+                            {
+                                Process p = Process.Start(filename);
+                                if (p == null)
+                                {
+                                    System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
+                                }
+                            }
+                            catch
                             {
                                 System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
                             }
                         }
-                        catch
-                        {
-                            System.Diagnostics.Process.Start("Explorer.exe", @"/select,"+filename);
+                        else {
+                            System.Windows.MessageBox.Show("文件下载失败！");
                         }
 
                     }
