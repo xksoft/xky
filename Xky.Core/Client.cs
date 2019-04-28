@@ -956,10 +956,13 @@ namespace Xky.Core
                 case "ime_status":
                 {
                     Console.WriteLine("输入法状态改变事件:" + json["enable"]);
-                    var device = GetDevice(json["sn"]?.ToString());
-                    if (device != null)
+                    lock ("devices")
                     {
-                        device.ImeEnable = (bool) json["enable"];
+                        var device = Devices.ToList().Find(p => p.Sn == (string) json["sn"]);
+                        if (device != null)
+                        {
+                            device.ImeEnable = (bool) json["enable"];
+                        }
                     }
 
                     break;
