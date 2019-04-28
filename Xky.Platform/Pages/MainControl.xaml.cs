@@ -124,18 +124,18 @@ namespace Xky.Platform.Pages
                     group device by device.NodeSerial;
             }
 
-            foreach (var zu in nodeGroup)
+            foreach (var group in nodeGroup)
             {
-                Console.WriteLine("组:" + zu.First().NodeSerial + " 量:" + zu.Count());
-                var sns = zu.Select(device => device.Sn).ToList();
+                Console.WriteLine("组:" + group.First().NodeSerial + " 量:" + group.Count());
+                var sns = group.Select(device => device.Sn).ToList();
                 var jarray = new JArray();
                 foreach (var sn in sns)
                 {
                     jarray.Add(sn);
                 }
 
-                Client.CallNodeEvent(zu.First().NodeSerial, jarray,
-                    new JObject {["type"] = "send_screen"});
+                Client.CallNodeEvent(group.First().NodeSerial, jarray,
+                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
             }
         }
 
