@@ -26,10 +26,13 @@ namespace Xky.Core.Model
         private string _sn;
         private int _cpuUseage = 5;
         private int _memoryUseage = 5;
-        private int _diskUseage=5;
-       
+        private int _diskUseage = 5;
+
 
         //加载时序
+        /// <summary>
+        /// 
+        /// </summary>
         public long LoadTick { get; set; }
 
         /// <summary>
@@ -290,6 +293,9 @@ namespace Xky.Core.Model
         }
 
 
+        /// <summary>
+        /// Cpu使用率
+        /// </summary>
         public int CpuUseage
         {
             get => _cpuUseage;
@@ -303,6 +309,9 @@ namespace Xky.Core.Model
             }
         }
 
+        /// <summary>
+        /// 内存使用率
+        /// </summary>
         public int MemoryUseage
         {
             get => _memoryUseage;
@@ -316,6 +325,9 @@ namespace Xky.Core.Model
             }
         }
 
+        /// <summary>
+        /// 磁盘使用率
+        /// </summary>
         public int DiskUseage
         {
             get => _diskUseage;
@@ -329,9 +341,42 @@ namespace Xky.Core.Model
             }
         }
 
+        /// <summary>
+        /// 输入法状态
+        /// </summary>
+        public bool ImeEnable
+        {
+            get => _imeEnable;
+            set
+            {
+                if (_imeEnable != value)
+                {
+                    _imeEnable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ImeEnable"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 脚本引擎
+        /// </summary>
         public Script ScriptEngine { get; set; }
+
+        /// <summary>
+        /// 当前正在执行的模块
+        /// </summary>
         public ObservableCollection<Module> RunningModules = new ObservableCollection<Module>();
+
+        /// <summary>
+        /// 当前正在执行的线程
+        /// </summary>
         public Dictionary<string, Thread> RunningThreads = new Dictionary<string, Thread>();
+
+        private bool _imeEnable;
+
+        /// <summary>
+        /// 属性触发
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
