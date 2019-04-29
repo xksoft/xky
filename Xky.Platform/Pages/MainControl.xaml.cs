@@ -135,7 +135,7 @@ namespace Xky.Platform.Pages
                 }
 
                 Client.CallNodeEvent(group.First().NodeSerial, jarray,
-                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
+                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30});
             }
         }
 
@@ -239,12 +239,10 @@ namespace Xky.Platform.Pages
 //                    Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
 //                Console.WriteLine(response1.Json);
 
-                var response = device.ScriptEngine.ReadBufferFromFile("/sdcard/bbb.txt");
+                var response = device.ScriptEngine.ReadDir("/sdcard");
                 if (response.Result)
                 {
-                    var data = (byte[]) (response.Json["buffer"] as JArray)?.First;
-                    Console.WriteLine(
-                        Encoding.UTF8.GetString(data));
+                    Console.WriteLine(response.Json);
                 }
             }
         }

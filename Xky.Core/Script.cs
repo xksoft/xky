@@ -84,6 +84,17 @@ namespace Xky.Core
         }
 
         /// <summary>
+        /// 读书设备上的目录信息
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Response ReadDir(string path)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readDir",
+                new JArray(path));
+        }
+
+        /// <summary>
         /// 创建一个新的硬件信息
         /// </summary>
         /// <param name="model">指定型号</param>
