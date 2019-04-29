@@ -53,7 +53,7 @@
                 <RowDefinition Height="70"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <UserControl:MyButton Background="#454c56"  Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <UserControl:MyButton Panel.ZIndex="99" Background="#454c56"  Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <UserControl:MyButton Image_Height="18" Image_Width="15" Image="pack://application:,,,/Xky.XModule.FileManager;component/icon/android.png"   x:Name="Button_RootDirectory" Click="Button_RootDirectory_Click" Text="根目录" Margin="0,0,10,0"></UserControl:MyButton>
