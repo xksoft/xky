@@ -40,6 +40,23 @@ namespace Xky.XModule.FileManager
         public static string  DirectoryAbsolutePath="";
         
         public ObservableCollection<DeviceFile> DeviceFiles = new ObservableCollection<DeviceFile>();
+        public class DeviceFile
+        {
+            private string _name = "";
+            private string _type = "文件";
+            private string _fullName = "";
+            public string Name { get => _name; set => _name = value; }
+            public string Type { get => _type; set => _type = value; }
+            public string FullName { get => _fullName; set => _fullName = value; }
+            public string Size { get; set; }
+        }
+        public class FileInformation
+        {
+            public string FileName { get; set; }
+            public string RelativePath { get; set; }
+            public bool IsFile { get; set; }
+
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ItemListBox.ItemsSource = DeviceFiles;
@@ -89,17 +106,6 @@ namespace Xky.XModule.FileManager
         {
             Grid_MessageBox.Visibility = Visibility.Hidden;
         }
-        public class DeviceFile
-        {
-            private string _name = "";
-            private string _type = "文件";
-            private string _fullName = "";
-            public string Name { get => _name; set => _name = value; }
-            public string Type { get => _type; set => _type = value; }
-            public string FullName { get => _fullName; set => _fullName = value; }
-            public string Size { get; set; }
-        }
-
 
         public static void GetAllFilesAndDirectory(DirectoryInfo dir)
         {
@@ -121,14 +127,7 @@ namespace Xky.XModule.FileManager
             }
            
         }
-        
-        public class FileInformation
-        {
-            public string FileName { get; set; }
-            public string RelativePath { get; set; }
-            public bool IsFile { get; set; }
-           
-        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -479,10 +478,7 @@ namespace Xky.XModule.FileManager
                             try
                             {
                                 Process p = Process.Start(filename);
-                                if (p == null)
-                                {
-                                    System.Diagnostics.Process.Start("Explorer.exe", @"/select," + filename);
-                                }
+                               
                             }
                             catch
                             {
