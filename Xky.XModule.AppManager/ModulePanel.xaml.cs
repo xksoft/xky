@@ -178,20 +178,23 @@ namespace Xky.XModule.AppManager
         }
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
-            DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
-            Console.WriteLine(deviceApp.PackageName);
-            Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
+            //DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
+            //Console.WriteLine(deviceApp.PackageName);
+            //Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
           
         }
         private void MenuItem_Stop_Click(object sender, RoutedEventArgs e)
         {
+
         }
         private void MenuItem_Clear_Click(object sender, RoutedEventArgs e)
         {
+
         }
         
         private void MenuItem_Install_Click(object sender, RoutedEventArgs e)
         {
+
         }
         private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
