@@ -63,7 +63,9 @@
             </Grid.RowDefinitions>
            
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <UserControl:MyButton Image_Height="14" Image_Width="14" Image="pack://application:,,,/Xky.XModule.AppManager;component/icon/install.png"   x:Name="Button_InstallAPK"  Text="安装本地APK" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Height="14" Image_Width="14" Image="pack://application:,,,/Xky.XModule.AppManager;component/icon/install.png"   x:Name="Button_InstallAPK" Click="Button_InstallAPK_Click"  Text="安装本地APK" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Height="14" Image_Width="14"    x:Name="Button_Reload" Click="Button_Reload_Click"  Text="刷新" Margin="0,0,10,0"></UserControl:MyButton>
+
             </StackPanel>
             <ListBox SelectionMode="Extended" Grid.Row="2" x:Name="ItemListBox" Margin="0,0,0,1" SelectionChanged="ItemListBox_SelectionChanged"  MouseDoubleClick="ItemListBox_MouseDoubleClick"  Background="#292f37" BorderThickness="0"
                      ScrollViewer.CanContentScroll="True"

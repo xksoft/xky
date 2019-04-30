@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,7 +25,7 @@ namespace Xky.XModule.AppManager
     /// <summary>
     /// ModulePanel.xaml 的交互逻辑
     /// </summary>
-    public partial class ModulePanel : UserControl
+    public partial class ModulePanel : System.Windows.Controls.UserControl
     {
         public ModulePanel()
         {
@@ -78,12 +79,7 @@ namespace Xky.XModule.AppManager
             public string PackageName { get => _packageName; set => _packageName = value; }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DeviceApp deviceApp = (DeviceApp)((Button)sender).DataContext;
-            Console.WriteLine(deviceApp.PackageName);
-            Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
-        }
+       
         public void LoadPackages()
         {
     
@@ -164,11 +160,11 @@ namespace Xky.XModule.AppManager
             })
             { IsBackground = true }.Start();
         }
-        private void Grid_Drop(object sender, DragEventArgs e)
+        private void Grid_Drop(object sender, System.Windows.DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
             {
-                Array arr = (System.Array)e.Data.GetData(DataFormats.FileDrop);
+                Array arr = (System.Array)e.Data.GetData(System.Windows.DataFormats.FileDrop);
                 foreach (var obj in arr)
                 {
                     string filename = obj.ToString();
@@ -182,7 +178,7 @@ namespace Xky.XModule.AppManager
         }
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
-            DeviceApp deviceApp = (DeviceApp)((MenuItem)sender).DataContext;
+            DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
             Console.WriteLine(deviceApp.PackageName);
             Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
           
@@ -240,10 +236,97 @@ namespace Xky.XModule.AppManager
                 Grid_MessageBox.Visibility = Visibility.Hidden;
             }));
         }
+        public void UploadFile(string dir, string filename)
+        {
+            ShowLoading("正在上传文件[" + filename + "]...");
+            FileInfo fi = new FileInfo(filename);
+            string filename_new = fi.Name.Remove(fi.Name.LastIndexOf(fi.Extension));
+            if (filename_new.Length > 50)
+            {
+                filename_new.Remove(50);
+            }
+            if (fi.Length > 10485760)
+            {
+                //大于10M的文件采用分段上传
+              
+                FileStream fs = new FileStream(filename, FileMode.Open);
+               
+                string tempdir = filename_new + "_temp";
+                int i = 1;
+                byte[] bytes = new byte[10485760];
+                string catf = "";
+                int readlength = fs.Read(bytes, 0, 10485760);
+                while (readlength > 0)
+                {
+                    ShowLoading("使用大文件上传模式，预计还需" + ((fi.Length / 10485760)-i+1)+ "秒钟...");
+                    if (readlength < 10485760)
+                    {
+                        device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes.Take(readlength).ToArray());
 
+                    }
+                    else { device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes); }
+                    Console.WriteLine("正在上传第" + i + "个拆分文件，大小" + readlength + "...");
+                    catf += i + ".tmp  ";
+
+                    i++;
+                    readlength = fs.Read(bytes, 0, 10485760);
+                  
+                }
+                fs.Close();
+                for (int w = i / 2; w >0; w--)
+                {
+                    ShowLoading("正在合并文件，预计还需" + w + "秒钟...");
+                    Thread.Sleep(1000);
+                }
+               
+                Response res = device.ScriptEngine.AdbShell("cd " + dir + "/" + tempdir + "&&cat " + catf + " > ../" + filename_new + fi.Extension + "&&rm -r -f " + dir + "/" + tempdir);
+
+            }
+            else
+            {
+                Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
+            }
+
+        }
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             Client.CloseDialogPanel();
+        }
+
+        private void Button_InstallAPK_Click(object sender, RoutedEventArgs e)
+        {
+
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "安卓安装包|*.apk";
+            var result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                new Thread(() =>
+                {
+
+                    ShowLoading("正在上传安装包到设备中...");
+                   
+                    string filename = openFileDialog.FileName.ToString();
+                    UploadFile("/sdcard", filename);
+              
+                    ShowLoading("正在安装应用...");
+                    Response res = device.ScriptEngine.AdbShell("pm install /sdcard/" + new FileInfo(filename).Name+"&");
+                    Thread.Sleep(5000);
+                    ShowLoading("成功发送安装命令，请稍后刷新应用列表查看是否成功安装！");
+                    Thread.Sleep(5000);
+                    CloseLoading();
+                    ShowLoading("正在加载设备应用列表...");
+                    LoadPackages();
+                    CloseLoading();
+                })
+                { IsBackground = true }.Start();
+            }
+        }
+
+        private void Button_Reload_Click(object sender, RoutedEventArgs e)
+        {
+            ReLoadPackages();
         }
     }
 }

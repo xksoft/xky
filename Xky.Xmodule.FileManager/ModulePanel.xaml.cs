@@ -289,9 +289,52 @@ namespace Xky.XModule.FileManager
         public void UploadFile(string dir,string filename)
         {
             ShowLoading("正在上传文件[" + filename + "]...");
-            Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
-            Console.WriteLine("文件上传完毕：" + res.Json.ToString());
-           
+            FileInfo fi = new FileInfo(filename);
+            string filename_new = fi.Name.Remove(fi.Name.LastIndexOf(fi.Extension));
+            if (filename_new.Length>50) {
+                filename_new.Remove(50);
+            }
+            if (fi.Length > 10485760)
+            {
+                //大于10M的文件采用分段上传
+
+                FileStream fs = new FileStream(filename, FileMode.Open);
+
+                string tempdir = filename_new + "_temp";
+                int i = 1;
+                byte[] bytes = new byte[10485760];
+                string catf = "";
+                int readlength = fs.Read(bytes, 0, 10485760);
+                while (readlength > 0)
+                {
+                    ShowLoading("使用大文件上传模式，预计还需" + ((fi.Length / 10485760) - i + 1) + "秒钟...");
+                    if (readlength < 10485760)
+                    {
+                        device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes.Take(readlength).ToArray());
+
+                    }
+                    else { device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes); }
+                    Console.WriteLine("正在上传第" + i + "个拆分文件，大小" + readlength + "...");
+                    catf += i + ".tmp  ";
+
+                    i++;
+                    readlength = fs.Read(bytes, 0, 10485760);
+                }
+                fs.Close();
+
+                for (int w = i / 2; w > 0; w--)
+                {
+                    ShowLoading("正在合并文件，预计还需" + w + "秒钟...");
+                    Thread.Sleep(1000);
+                }
+                Response res = device.ScriptEngine.AdbShell("cd " + dir + "/" + tempdir + "&&cat " + catf + " > ../" + filename_new + fi.Extension + "&&rm -r -f " + dir + "/" + tempdir);
+
+
+            }
+            else
+            {
+                Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
+            }
 
         }
         public void UploadDirectory(string dir, string dirname)

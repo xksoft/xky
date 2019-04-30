@@ -294,6 +294,7 @@ namespace Xky.XModule.Demo
             Device.ScriptEngine.Toast("用户名：" + MyStr, 1);
             for (int i = 10; i > 0; i--)
             {
+                
                 Thread.Sleep(5000);
                 Device.ScriptEngine.Toast("当前设备厂商：" + Device.Product, 1);
             }
