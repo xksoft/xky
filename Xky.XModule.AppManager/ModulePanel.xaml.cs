@@ -61,16 +61,13 @@ namespace Xky.XModule.AppManager
            
 
                 }
+                ShowLoading("正在加载设备应用列表...");
                 LoadPackages();
+                CloseLoading();
             })
             { IsBackground = true }.Start();
         }
-    private void btn_cancel_Click(object sender, RoutedEventArgs e)
-        {
-
-            Client.CloseDialogPanel();
-
-        }
+ 
         public class DeviceApp
         {
             private string _name = "";
@@ -90,8 +87,7 @@ namespace Xky.XModule.AppManager
         public void LoadPackages()
         {
     
-            new Thread(() =>
-            {
+           
                 List<DeviceApp> list = new List<DeviceApp>();
                 Response res_system = device.ScriptEngine.AdbShell("pm list package -s");
                 if (res_system.Json["result"] != null)
@@ -157,10 +153,17 @@ namespace Xky.XModule.AppManager
                     ItemListBox.ItemsSource = DeviceApps;
                 }));
 
+            
+        }
+        public void ReLoadPackages() {
+            new Thread(() =>
+            {
+                ShowLoading("正在加载设备应用列表...");
+                LoadPackages();
+                CloseLoading();
             })
             { IsBackground = true }.Start();
         }
-
         private void Grid_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -200,6 +203,47 @@ namespace Xky.XModule.AppManager
             //Console.WriteLine(deviceFile.FullName);
             //Response res = device.ScriptEngine.AdbShell("rm -r -f "+deviceFile.FullName);
             //Ls(CurrentDirectory);
+        }
+
+        private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ItemListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        public void ShowLoading(string text)
+        {
+            if (Grid_MessageBox.Visibility == Visibility.Visible)
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    Label_Loading.Content = text;
+                }));
+            }
+            else
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    ContentControl_MessageBox.Content = ContentControl_Loading.Content;
+                    Label_Loading.Content = text;
+                    Grid_MessageBox.Visibility = Visibility.Visible;
+                }));
+            }
+        }
+        public void CloseLoading()
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                Grid_MessageBox.Visibility = Visibility.Hidden;
+            }));
+        }
+
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            Client.CloseDialogPanel();
         }
     }
 }

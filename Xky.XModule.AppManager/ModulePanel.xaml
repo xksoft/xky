@@ -8,16 +8,20 @@
              xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
-             d:DesignHeight="600" d:DesignWidth="800" VerticalAlignment="Center">
+            d:DesignHeight="600" d:DesignWidth="800" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
             <lib:SwitchConverter x:Key="TypeToSystemVisible">
                 <lib:SwitchConverterCase When="system" Then="Visible" />
                 <lib:SwitchConverterCase  Then="Collapsed" />
             </lib:SwitchConverter>
+            <lib:SwitchConverter x:Key="TypeToAndroidVisible">
+                <lib:SwitchConverterCase When="system" Then="Collapsed" />
+                <lib:SwitchConverterCase  Then="Visible" />
+            </lib:SwitchConverter>
             <lib:SwitchConverter x:Key="TypeToUserForeground">
-                <lib:SwitchConverterCase When="user" Then="#000" />
-                <lib:SwitchConverterCase  Then="#767676" />
+                <lib:SwitchConverterCase When="user" Then="#fff" />
+                <lib:SwitchConverterCase  Then="#ccc" />
             </lib:SwitchConverter>
            
             <ResourceDictionary.MergedDictionaries>
@@ -35,72 +39,97 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Background="#1d232a" Padding="30" BorderBrush="Black" BorderThickness="1">
-        <Grid Drop="Grid_Drop" AllowDrop="True">
+    <Grid Background="#1d232a"   Height="500" MaxWidth="1024"> 
+        
+        <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
+                <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            </Canvas>
+        <Grid x:Name="Grid_MessageBox" Panel.ZIndex="2" Visibility="Hidden">
+            <Border Background="#000" Opacity="0.5">
+            </Border>
+            <Border Padding="20" CornerRadius="5" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#1d232a">
+                <ContentControl  x:Name="ContentControl_MessageBox" >
+
+                </ContentControl>
+            </Border>
+        </Grid>
+        <Grid Drop="Grid_Drop" AllowDrop="True" Margin="20">
            
             <Grid.RowDefinitions>
-                <RowDefinition Height="400"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions> 
+                <RowDefinition Height="70"></RowDefinition>
+            </Grid.RowDefinitions>
            
-            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="10"
-                                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
-                <ItemsControl x:Name="ItemListBox" Margin="0,0,0,1" 
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <UserControl:MyButton Image_Height="14" Image_Width="14" Image="pack://application:,,,/Xky.XModule.AppManager;component/icon/install.png"   x:Name="Button_InstallAPK"  Text="安装本地APK" Margin="0,0,10,0"></UserControl:MyButton>
+            </StackPanel>
+            <ListBox SelectionMode="Extended" Grid.Row="2" x:Name="ItemListBox" Margin="0,0,0,1" SelectionChanged="ItemListBox_SelectionChanged"  MouseDoubleClick="ItemListBox_MouseDoubleClick"  Background="#292f37" BorderThickness="0"
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item">
-                    <ItemsControl.Style>
-                        <Style TargetType="ItemsControl">
-                            <Style.Triggers>
-                                <Trigger Property="HasItems" Value="false">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate>
-                                                <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="00">
-                                                    <Label Foreground="#636870">正在加载设备应用列表，请稍后...</Label>
-                                                </StackPanel>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ItemsControl.Style>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="10" x:Name="DataGrid">
-                                <Button Click="Button_Click"  Tag="{Binding Path=PackageName}" BorderThickness="0" Padding="5"  Foreground="{Binding Path=Type,Converter={StaticResource TypeToUserForeground}}">
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="打开应用" Click="MenuItem_Open_Click"></MenuItem>
-                                            <MenuItem Header="停止应用" Click="MenuItem_Stop_Click"></MenuItem>
-                                            <Separator />
-                                            <MenuItem Header="安装APK" Click="MenuItem_Install_Click"></MenuItem>
-                                            <Separator />
-                                            <MenuItem Header="清空数据" Click="MenuItem_Clear_Click"></MenuItem>
-                                            <MenuItem Header="卸载" Click="MenuItem_Delete_Click"></MenuItem>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Grid.Column="0" Margin="0,0,5,0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToSystemVisible}}" Source="pack://application:,,,/Xky.XModule.AppManager;component/system.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
-                                        <TextBlock Margin="0" Grid.Column="1" Text="{Binding Path=Name}"></TextBlock>
-                                    </StackPanel>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
-            <StackPanel Grid.Row="2" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-               
-                <UserControl:MyButton Background="#454c56"  Height="32" Margin="0" Text="关闭" Click="btn_cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="打开应用" Click="MenuItem_Open_Click"></MenuItem>
+                        <MenuItem Header="停止应用" Click="MenuItem_Stop_Click"></MenuItem>
+                        <Separator />
+                        <MenuItem Header="安装APK" Click="MenuItem_Install_Click"></MenuItem>
+                        <Separator />
+                        <MenuItem Header="清空数据" Click="MenuItem_Clear_Click"></MenuItem>
+                        <MenuItem Header="卸载" Click="MenuItem_Delete_Click"></MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border  x:Name="DataGrid" Height="20" VerticalAlignment="Center">
+                            <Grid Tag="{Binding Path=PackageName}">
+
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToAndroidVisible}}" Source="pack://application:,,,/Xky.XModule.AppManager;component/icon/android.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                    <Image Grid.Column="0" Visibility="{Binding Path=Type,Converter={StaticResource TypeToSystemVisible}}" Source="pack://application:,,,/Xky.XModule.AppManager;component/icon/system.png" Width="16" Height="16" VerticalAlignment="Center"></Image>
+                                     <Grid >
+
+                                        <TextBlock Grid.Column="0"  Margin="5,0,0,0" Foreground="{Binding Path=Type,Converter={StaticResource TypeToUserForeground}}" Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
+                                       
+                                    </Grid>
+
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical"  Margin="0"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock LineHeight="20" VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动APK文件到列表中可快速安装，右键可卸载、停止、清除APP数据，双击在设备中打开APP。</TextBlock>
+                <TextBlock Margin="0,5,0,0" Foreground="Red">注意：操作系统APP请慎重。</TextBlock>
             </StackPanel>
         </Grid>
-    </Border>
+        <Grid Visibility="Hidden">
+            <ContentControl  x:Name="ContentControl_AddDirectory"   Visibility="Collapsed" >
+                <StackPanel Orientation="Vertical" >
+
+                    <StackPanel Orientation="Vertical"  Margin="0">
+                        <Label Width="60" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,10">目录名称</Label>
+                        <UserControl:MyTextBox x:Name="TextBox_AddDirectory_DirectoryName" WaterText="目录名称" Width="200" Height="32" Text="test"></UserControl:MyTextBox>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <UserControl:MyButton  Background="#454c56"  Height="32" Margin="0,0,20,0" Text="取消"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <UserControl:MyButton Width="100" Height="32" Margin="0,0,0,0" Text="确定"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </StackPanel>
+            </ContentControl>
+            <ContentControl  x:Name="ContentControl_Loading"  Visibility="Collapsed" >
+                <Label x:Name="Label_Loading" Foreground="#fff">正在加载中，请稍后...</Label>
+            </ContentControl>
+        </Grid>
+    </Grid>
 </UserControl>
 

@@ -73,10 +73,16 @@
     <EmbeddedResource Include="packages.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="system.png" />
+    <Resource Include="icon\system.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\android.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\install.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
