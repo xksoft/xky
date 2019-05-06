@@ -322,7 +322,17 @@ namespace Xky.Platform.Pages
                             }
                         }
                     }, ApartmentState.STA);
-                    device.RunningThreads.Add(module.Md5, thread);
+                    if (!device.RunningThreads.ContainsKey(module.Md5))
+                    {
+                        device.RunningThreads.Add(module.Md5, thread);
+                    }
+                    else
+                    {
+                        Common.ShowToast("模块[" + runningmodule.Name + "]已经在运行中！",
+                                  Color.FromRgb(239, 34, 7));
+
+                    }
+                    
                 }
             }
         }
