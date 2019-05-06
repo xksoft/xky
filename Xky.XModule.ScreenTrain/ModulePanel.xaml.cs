@@ -92,22 +92,34 @@ namespace Xky.XModule.ScreenTrain
         private System.Windows.Point _downPoint;
         private void Image_Screen_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _started = true;
+            if (e.ChangedButton == MouseButton.Left)
+            {
 
-            _downPoint = e.GetPosition(Image_Screen);
+
+                _started = true;
+
+                _downPoint = e.GetPosition(Image_Screen);
+            }
+            else { _started = false;
+                rect_select = new Rect(0,0,0,0);
+                Rectangle_Select.Width = Rectangle_Select.Height = 0;
+            }
         }
 
         private void Image_Screen_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            _started = false;
-            if (rect_select != null && rect_select.Width > 0 & rect_select.Height > 0)
+            if (e.ChangedButton==MouseButton.Left)
             {
-                ImageSource imageSource = Image_Screen.Source.Clone();
-                BitmapSource bitmapSource = ImageHelper.CutImage((BitmapSource)imageSource, new Int32Rect((int)rect_select.X, (int)rect_select.Y, (int)rect_select.Width, (int)rect_select.Height));
+                _started = false;
+                if (rect_select != null && rect_select.Width > 0 & rect_select.Height > 0)
+                {
+                    ImageSource imageSource = Image_Screen.Source.Clone();
+                    BitmapSource bitmapSource = ImageHelper.CutImage((BitmapSource)imageSource, new Int32Rect((int)rect_select.X, (int)rect_select.Y, (int)rect_select.Width, (int)rect_select.Height));
 
-                Image_Select.Source = bitmapSource;
+                    Image_Select.Source = bitmapSource;
+                }
+                else { Image_Select.Source = null; }
             }
-            else { Image_Select.Source = null; }
         }
 
         private void Image_Screen_MouseMove(object sender, MouseEventArgs e)
@@ -136,6 +148,11 @@ namespace Xky.XModule.ScreenTrain
                 ms.Close();
                 Image_Select.Source = null;
             }
+        }
+
+        private void Button_Find_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

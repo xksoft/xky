@@ -61,6 +61,7 @@
                     <Label Width="60" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,10">元素名称</Label>
                     <UserControl:MyTextBox x:Name="TextBox_AddDirectory_DirectoryName" WaterText="元素名称"  Height="32" Text="按钮"></UserControl:MyTextBox>
                     <UserControl:MyButton x:Name="Button_Train" Click="Button_Train_Click" Margin="0,20,0,0" Text="提交训练"></UserControl:MyButton>
+                    <UserControl:MyButton x:Name="Button_Find"  Click="Button_Find_Click" Margin="0,20,0,0" Text="识别"></UserControl:MyButton>
                 </StackPanel>
             </StackPanel>
         </Grid>
