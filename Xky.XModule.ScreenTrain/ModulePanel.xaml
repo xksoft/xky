@@ -7,7 +7,7 @@
              xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
-             d:DesignHeight="800" d:DesignWidth="800" VerticalAlignment="Center">
+             d:DesignHeight="900" d:DesignWidth="800" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,7 +25,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#1d232a"   Height="800">
+    <Grid Background="#1d232a"  >
         <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
             <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         </Canvas>
@@ -45,10 +45,10 @@
                 <ColumnDefinition Width="260"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1"   Background="#1d232a">
+            <Border Grid.Column="1"   Background="#1d232a" Margin="0,20,0,20">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
-                      <Canvas Height="640" Width="360" VerticalAlignment="Center" HorizontalAlignment="Center">
-                       <Image  MouseDown="Image_Screen_MouseDown" MouseUp="Image_Screen_MouseUp" MouseMove="Image_Screen_MouseMove" x:Name="Image_Screen" Height="640" Width="360" Stretch="UniformToFill"></Image>
+                      <Canvas Height="768" Width="430" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image  MouseDown="Image_Screen_MouseDown" MouseUp="Image_Screen_MouseUp" MouseMove="Image_Screen_MouseMove"  x:Name="Image_Screen" Height="768" Width="430" Stretch="UniformToFill"></Image>
                    <Rectangle Canvas.Top="10" Canvas.Left="10" x:Name="Rectangle_Select" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
                     </Canvas>
                     
@@ -57,10 +57,10 @@
             </Border>
             <StackPanel Grid.Column="2" Orientation="Vertical"  VerticalAlignment="Center" Margin="10">
                 <StackPanel Orientation="Vertical"  Margin="0">
-                    <Image Margin="0,0,0,10" Width="200" x:Name="Image_Select" Source="select.png" Stretch="UniformToFill"></Image>
+                    <Image Margin="0,0,0,10" Width="200" Height="200" x:Name="Image_Select" Source="select.png"/>
                     <Label Width="60" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,10">元素名称</Label>
                     <UserControl:MyTextBox x:Name="TextBox_AddDirectory_DirectoryName" WaterText="元素名称"  Height="32" Text="按钮"></UserControl:MyTextBox>
-                    <UserControl:MyButton x:Name="Button_Train" Margin="0,20,0,0" Text="提交训练"></UserControl:MyButton>
+                    <UserControl:MyButton x:Name="Button_Train" Click="Button_Train_Click" Margin="0,20,0,0" Text="提交训练"></UserControl:MyButton>
                 </StackPanel>
             </StackPanel>
         </Grid>
