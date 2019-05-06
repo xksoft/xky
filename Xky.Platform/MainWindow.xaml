@@ -22,15 +22,10 @@
         <platform:ButtonStatus x:Key="ButtonStatus" />
     </Window.Resources>
     <Grid>
-        <!--<Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-            <Border.Background>
-                <ImageBrush ImageSource="Resources/Icon/background.jpg" />
-            </Border.Background>
-        </Border>-->
-        <Grid  x:Name="MainGrid" Margin="20">
-            <Grid.Background>
-                <ImageBrush ImageSource="Resources/Icon/background.jpg" />
-            </Grid.Background>
+        <Grid  x:Name="MainGrid" Margin="20" Background="{StaticResource BackgroundColor2}">
+            <!--<Grid.Background>
+                --><!--<ImageBrush ImageSource="Resources/Icon/background.jpg" />--><!--
+            </Grid.Background>-->
             <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="193" />
