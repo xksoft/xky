@@ -61,7 +61,7 @@ namespace Xky.Core
                     Dispatcher.Invoke(() =>
                     {
                         //第一次初始化
-                        if (ScreenImage.Source == null)
+                        if (ScreenImage.Source == null|| _writeableBitmap.PixelWidth!=width)
                         {
                             _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                             ScreenImage.Source = _writeableBitmap;
