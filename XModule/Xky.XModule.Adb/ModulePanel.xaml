@@ -39,12 +39,12 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <UserControl:MyButton Image_Height="18" Image_Width="15" Click="Button_Cmd_Click" Tag="[adbshell]dumpsys window" Text="当前界面信息" Margin="0,0,10,0"></UserControl:MyButton>
                 <UserControl:MyButton Image_Height="18" Image_Width="15" Click="Button_Cmd_Click" Tag="[adbshell]curl -o /sdcard/1.jpg http://www.baidu.com/img/bd_logo1.png" Text="下载远程文件" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton Image_Height="18" Image_Width="15" Click="Button_Cmd_Click" Tag="[adbshell]netcfg" Text="网络信息" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton Image_Height="18" Image_Width="15" Click="Button_Cmd_Click" Tag="[adbshell]netcfg&amp;ifconfig" Text="网络信息" Margin="0,0,10,0"></UserControl:MyButton>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <UserControl:MyTextBox x:Name="TextBox_Cmd" Width="500" Height="32" Margin="0,0,5,0"></UserControl:MyTextBox>
                 <UserControl:MyButton x:Name="Button_Run"  Click="Button_Run_Click" Height="32" Text="执行" Margin="0,0,10,0"></UserControl:MyButton>
-                <UserControl:MyButton x:Name="Button_SetClipboard"  Height="32" Text="复制命令" Margin="0,0,10,0"></UserControl:MyButton>
+                <UserControl:MyButton x:Name="Button_SetClipboard" Click="Button_SetClipboard_Click"  Height="32" Text="复制命令" Margin="0,0,10,0"></UserControl:MyButton>
 
                 <CheckBox  x:Name="CheckBox_Shell" Margin="0,0,15,0" >Adb Shell</CheckBox>
             </StackPanel>

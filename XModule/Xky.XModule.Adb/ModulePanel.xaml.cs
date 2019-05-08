@@ -53,15 +53,34 @@ namespace Xky.XModule.Adb
         }
         public void RunCmd(string cmd)
         {
+            Response res;
             if (CheckBox_Shell.IsChecked.Value)
             {
-                TextBox_Result.Text = device.ScriptEngine.AdbShell(cmd).Json["result"].ToString();
+                res= device.ScriptEngine.AdbShell(cmd);
             }
             else
             {
-                TextBox_Result.Text = device.ScriptEngine.AdbCommand(cmd).Json["result"].ToString();
+                 res  = device.ScriptEngine.AdbCommand(cmd);
+            }
+            if (res != null && res.Result&&res.Json!=null&&res.Json["result"]!=null)
+            {
+                TextBox_Result.Text = res.Json["result"].ToString();
+            }
+            else
+            {
+                TextBox_Result.Text = "执行失败！";
+
             }
 
+        }
+
+        private void Button_SetClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Windows.Clipboard.SetDataObject(TextBox_Cmd.Text, true);
+            }
+            catch { }
         }
     }
 }
