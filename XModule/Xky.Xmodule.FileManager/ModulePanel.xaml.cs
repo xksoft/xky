@@ -142,8 +142,9 @@ namespace Xky.XModule.FileManager
             }));
             Console.WriteLine("打开目录：" + dir);
 
+           
 
-          
+
 
             Response res = device.ScriptEngine.ReadDir(dir);
             if (res.Json["list"] != null)
@@ -333,9 +334,10 @@ namespace Xky.XModule.FileManager
             }
             else
             {
-                Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
+                Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + filename_new+fi.Extension, File.ReadAllBytes(filename));
             }
 
+            device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://" + dir + "/" + filename_new + fi.Extension);
         }
         public void UploadDirectory(string dir, string dirname)
         {
@@ -375,12 +377,21 @@ namespace Xky.XModule.FileManager
                         ShowLoading("正在删除[" + deviceFile.Name + "]...");
                         Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
                     }
-
+                    RescanningMedia();
                     Ls(CurrentDirectory);
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();
             }
+        }
+        public void RescanningMedia()
+        {
+            Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_MOUNTED -d file:///sdcard/");
+            Console.WriteLine(res_reload.Json);
+            res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://"+CurrentDirectory);
+            Console.WriteLine(res_reload.Json);
+            res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.BOOT_COMPLETED -n com.android.providers.media/.MediaScannerReceiver");
+            Console.WriteLine(res_reload.Json);
         }
         private void MenuItem_DownLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -599,6 +610,7 @@ namespace Xky.XModule.FileManager
 
                     
                     Ls(CurrentDirectory);
+                    RescanningMedia();
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();
@@ -624,6 +636,7 @@ namespace Xky.XModule.FileManager
                         
                     }
                     Ls(CurrentDirectory);
+                    RescanningMedia();
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();

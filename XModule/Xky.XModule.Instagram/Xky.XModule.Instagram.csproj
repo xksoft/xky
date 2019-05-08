@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E9A2218-18A8-4A62-9900-374AD0A01B84}</ProjectGuid>
+    <ProjectGuid>{45D80282-379F-4710-B5C1-CE8C47FAB5FC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Xky.XModule.FileManager</RootNamespace>
-    <AssemblyName>Xky.XModule.FileManager</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xky.XModule.Instagram</RootNamespace>
+    <AssemblyName>Xky.XModule.Instagram</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,78 +30,34 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManager.cs" />
-    <Compile Include="ModulePanel.xaml.cs">
-      <DependentUpon>ModulePanel.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Instagram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xky.Core\Xky.Core.csproj">
+    <ProjectReference Include="..\..\Xky.Core\Xky.Core.csproj">
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
       <Name>Xky.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="icon.png" />
+    <EmbeddedResource Include="logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ModulePanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\file.png" />
-    <Resource Include="icon\folder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\upload.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\goback.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\adddirectory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\phone.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\android.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon\delete.png" />
-    <Resource Include="icon\download.png" />
+    <Folder Include="icon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\系统工具\文件管理器\ /y</PostBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\Instagram\Instagram\ /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

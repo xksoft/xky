@@ -314,7 +314,7 @@ namespace Xky.XModule.AppManager
                     UploadFile("/sdcard", filename);
               
                     ShowLoading("正在安装应用...");
-                    Response res = device.ScriptEngine.AdbShell("pm install /sdcard/" + new FileInfo(filename).Name+"&");
+                    Response res = device.ScriptEngine.AdbShell("pm install -g -r /sdcard/" + new FileInfo(filename).Name+"&");
                     Thread.Sleep(5000);
                     ShowLoading("成功发送安装命令，请稍后刷新应用列表查看是否成功安装！");
                     Thread.Sleep(5000);
