@@ -65,6 +65,7 @@ namespace Xky.Core
                         {
                             _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                             ScreenImage.Source = _writeableBitmap;
+                            CurrentDevice.ScreenShot = _writeableBitmap;
                         }
 
 
