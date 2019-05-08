@@ -16,7 +16,7 @@ namespace Xky.XModule.Adb
         }
         public override bool IsBackground()
         {
-            return false;
+            return true;
         }
         public override byte[] Icon()
         {
@@ -29,7 +29,7 @@ namespace Xky.XModule.Adb
         }
         public override string Description()
         {
-            return "[前台模块]执行普通Adb或Shell命令";
+            return "执行普通Adb或Shell命令";
         }
 
         public override void Start()

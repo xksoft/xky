@@ -337,7 +337,7 @@ namespace Xky.XModule.FileManager
                 Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + filename_new+fi.Extension, File.ReadAllBytes(filename));
             }
 
-            device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://" + dir + "/" + filename_new + fi.Extension);
+          RescanningMedia( dir + "/" + filename_new + fi.Extension,false);
         }
         public void UploadDirectory(string dir, string dirname)
         {
@@ -376,22 +376,40 @@ namespace Xky.XModule.FileManager
                         }
                         ShowLoading("正在删除[" + deviceFile.Name + "]...");
                         Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
+                        if (deviceFile.Type == "file")
+                        {
+                            RescanningMedia(deviceFile.FullName, false);
+                        }
+                        else
+                        {
+                            RescanningMedia(deviceFile.FullName, true);
+                        }
                     }
-                    RescanningMedia();
+                   
                     Ls(CurrentDirectory);
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();
             }
         }
-        public void RescanningMedia()
+        public void RescanningMedia(string path,bool isdir)
         {
-            Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_MOUNTED -d file:///sdcard/");
-            Console.WriteLine(res_reload.Json);
-            res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://"+CurrentDirectory);
-            Console.WriteLine(res_reload.Json);
-            res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.BOOT_COMPLETED -n com.android.providers.media/.MediaScannerReceiver");
-            Console.WriteLine(res_reload.Json);
+
+            if (path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".mp4"))
+            {
+                Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://" + path);
+                Console.WriteLine(res_reload.Json);
+                res_reload = device.ScriptEngine.InsertMedia(path);
+                Console.WriteLine(res_reload.Json);
+            }
+            else if (isdir)
+            {
+                Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://" + CurrentDirectory);
+                Console.WriteLine(res_reload.Json);
+            }
+           
+
+
         }
         private void MenuItem_DownLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -610,7 +628,7 @@ namespace Xky.XModule.FileManager
 
                     
                     Ls(CurrentDirectory);
-                    RescanningMedia();
+            
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();
@@ -636,7 +654,6 @@ namespace Xky.XModule.FileManager
                         
                     }
                     Ls(CurrentDirectory);
-                    RescanningMedia();
                     CloseLoading();
                 })
                 { IsBackground = true }.Start();
