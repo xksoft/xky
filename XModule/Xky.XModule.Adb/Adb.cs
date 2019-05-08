@@ -4,25 +4,24 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace Xky.XModule.Instagram
+namespace Xky.XModule.Adb
 {
-    public class Instagram_打开APP : Core.XModule
+    public class Adb : Core.XModule
     {
         public override string Name()
         {
-            return "打开Instagram";
+            return "执行Adb命令";
         }
         public override bool IsBackground()
         {
-            return true;
+            return false;
         }
         public override byte[] Icon()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
-            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.Instagram.logo.png");
+            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.Adb.logo.png");
             byte[] bytes = new byte[myStream.Length];
             myStream.Read(bytes, 0, bytes.Length);
             return bytes;
@@ -30,24 +29,26 @@ namespace Xky.XModule.Instagram
         }
         public override string Description()
         {
-            return "打开Instagram";
+            return "[前台模块]执行普通Adb或Shell命令";
         }
 
         public override void Start()
         {
-          
-            Device.ScriptEngine.AdbShell("am start com.instagram.android/com.instagram.android.activity.MainTabActivity");
-           
-            Device.ScriptEngine.Toast(Name()+"模块执行完毕", 1);
+
+            
+
+            
         }
 
 
 
         public override bool ShowUserControl()
         {
+            var panel = new ModulePanel();
+            panel.device = Device;
+            Core.Client.ShowDialogPanel(panel);
             return true;
 
         }
     }
 }
-
