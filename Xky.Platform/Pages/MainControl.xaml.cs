@@ -64,7 +64,12 @@ namespace Xky.Platform.Pages
                     var response = Client.LoadDevices();
                     if (response.Result)
                     {
-                        Common.UiAction(() => { DeviceListBox.ItemsSource = Client.PanelDevices; });
+                        Common.UiAction(() =>
+                        {
+                            DeviceListBox.ItemsSource = Client.PanelDevices;
+                            TagListBox.ItemsSource = Client.Tags;
+                            NodeTagListBox.ItemsSource = Client.NodeTags;
+                        });
                         Common.ShowToast("设备加载成功");
                         break;
                     }
@@ -329,10 +334,8 @@ namespace Xky.Platform.Pages
                     else
                     {
                         Common.ShowToast("模块[" + runningmodule.Name + "]已经在运行中！",
-                                  Color.FromRgb(239, 34, 7));
-
+                            Color.FromRgb(239, 34, 7));
                     }
-                    
                 }
             }
         }

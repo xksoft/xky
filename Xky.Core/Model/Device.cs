@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
@@ -6,6 +7,9 @@ using System.Windows.Media;
 
 namespace Xky.Core.Model
 {
+    /// <summary>
+    /// 设备模型
+    /// </summary>
     public class Device : INotifyPropertyChanged
     {
         private string _connectionHash;
@@ -29,11 +33,6 @@ namespace Xky.Core.Model
         private int _diskUseage = 5;
 
 
-        //加载时序
-        /// <summary>
-        /// 
-        /// </summary>
-        public long LoadTick { get; set; }
 
         /// <summary>
         ///     设备id
@@ -159,6 +158,22 @@ namespace Xky.Core.Model
                 {
                     _node = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Node"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 标签组
+        /// </summary>
+        public string[] Tags
+        {
+            get => _tags;
+            set
+            {
+                if (_tags != value)
+                {
+                    _tags = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Tags"));
                 }
             }
         }
@@ -373,10 +388,13 @@ namespace Xky.Core.Model
         public Dictionary<string, Thread> RunningThreads = new Dictionary<string, Thread>();
 
         private bool _imeEnable;
+        private string[] _tags;
 
         /// <summary>
         /// 属性触发
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+
     }
 }

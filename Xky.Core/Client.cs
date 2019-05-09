@@ -27,7 +27,7 @@ namespace Xky.Core
     /// </summary>
     public static class Client
     {
-        internal static Socket.Client.Socket CoreSocket;
+        private static Socket.Client.Socket _coreSocket;
 
         private static string _lastSearchKeyword;
 
@@ -58,7 +58,15 @@ namespace Xky.Core
         /// </summary>
         public static readonly ObservableCollection<Node> Nodes = new ObservableCollection<Node>();
 
-        public static readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+        /// <summary>
+        /// 标签信息
+        /// </summary>
+        public static ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+
+        /// <summary>
+        /// 节点标签信息
+        /// </summary>
+        public static ObservableCollection<Tag> NodeTags = new ObservableCollection<Tag>();
 
         /// <summary>
         /// 所有设备
@@ -81,6 +89,8 @@ namespace Xky.Core
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
 
         #endregion
+
+        #region 全局方法
 
         /// <summary>
         ///     认证授权KEY
@@ -110,9 +120,9 @@ namespace Xky.Core
                     };
 
                     //释放资源
-                    CoreSocket?.Disconnect();
-                    CoreSocket?.Off();
-                    CoreSocket?.Close();
+                    _coreSocket?.Disconnect();
+                    _coreSocket?.Off();
+                    _coreSocket?.Close();
 
 
                     var options = new IO.Options
@@ -128,19 +138,19 @@ namespace Xky.Core
                         Path = "/xky",
                         Transports = ImmutableList.Create("websocket")
                     };
-                    CoreSocket = IO.Socket("wss://api.xky.com", options);
-                    CoreSocket.On(Socket.Client.Socket.EventConnect, () =>
+                    _coreSocket = IO.Socket("wss://api.xky.com", options);
+                    _coreSocket.On(Socket.Client.Socket.EventConnect, () =>
                     {
                         Console.WriteLine("Connected");
                         CoreConnected = true;
                     });
-                    CoreSocket.On(Socket.Client.Socket.EventDisconnect, () =>
+                    _coreSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         Console.WriteLine("Disconnected");
                         CoreConnected = false;
                     });
-                    CoreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
-                    CoreSocket.On("event", json => { CoreEvent((JObject) json); });
+                    _coreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
+                    _coreSocket.On("event", json => { CoreEvent((JObject) json); });
                 }
                 else
                 {
@@ -161,50 +171,86 @@ namespace Xky.Core
         }
 
         /// <summary>
-        ///     重新加载设备列表
+        ///     启动一个任务
         /// </summary>
+        /// <param name="action"></param>
+        /// <param name="state"></param>
         /// <returns></returns>
-        public static Response LoadDevices()
+        public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
         {
-            try
-            {
-                if (License == null)
-                    return new Response
-                    {
-                        Result = false,
-                        Message = "未授权",
-                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
-                    };
-
-                var loadtick = DateTime.Now.Ticks;
-                var response = CallApi("get_device_list", new JObject());
-
-                if (response.Result)
+            var thread = new Thread(() =>
                 {
-                    Console.WriteLine(response);
-                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json, loadtick);
-
-                    //删除所有本时序中不存在的设备 用UI线程委托删除，防止报错
-                    MainWindow.Dispatcher.Invoke(() =>
+                    try
                     {
-                        foreach (var t in Devices.ToList())
-                            if (t.LoadTick != loadtick)
-                                Devices.Remove(t);
-                    });
+                        lock ("thread_count")
+                        {
+                            Threads++;
+                        }
+
+                        action.Invoke();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    finally
+                    {
+                        lock ("thread_count")
+                        {
+                            Threads--;
+                        }
+                    }
+                })
+                {IsBackground = true};
+            thread.SetApartmentState(state);
+            thread.Start();
+            return thread;
+        }
+
+        /// <summary>
+        /// 加载模块
+        /// </summary>
+        public static void LoadModules()
+        {
+            var currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
+            var modulepath = currentfilename?.Remove(currentfilename.LastIndexOf("\\", StringComparison.Ordinal)) +
+                             "\\Modules";
+            var groupnamepaths = Directory.GetDirectories(modulepath);
+            foreach (var groupnamepath in groupnamepaths)
+            {
+                var groupname = new DirectoryInfo(groupnamepath).Name;
+                var modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
+                foreach (var modulefile in modulefilelist)
+                {
+                    try
+                    {
+                        var xmodulelist = XModuleHelper.LoadXModules(modulefile);
+                        foreach (var xmodule in xmodulelist)
+                        {
+                            var modulecontent = (XModule) xmodule.Clone();
+                            var module = new Module
+                            {
+                                Md5 = StrHelper.Md5(groupnamepath + modulecontent.GetType().FullName, false),
+                                Name = modulecontent.Name(),
+                                GroupName = groupname,
+                                Description = modulecontent.Description(),
+                                XModule = modulecontent,
+                                Icon = modulecontent.Icon()
+                            };
+                            Client.Modules.Add(module);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("模块加载失败：" + e);
+                    }
                 }
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                return new Response
-                {
-                    Result = false,
-                    Message = e.Message,
-                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
-                };
             }
         }
+
+        #endregion
+
+        #region  节点相关
 
         /// <summary>
         /// 查找本地节点
@@ -222,13 +268,15 @@ namespace Xky.Core
                     var serial = json["serial"]?.ToString();
                     if (serial != null)
                     {
-                        Node node = new Node();
+                        var node = new Node
+                        {
+                            Serial = json["serial"]?.ToString(),
+                            Name = json["name"]?.ToString(),
+                            Ip = ip.Address.ToString(),
+                            LoadTick = DateTime.Now.Ticks
+                        };
 
 
-                        node.Serial = json["serial"]?.ToString();
-                        node.Name = json["name"]?.ToString();
-                        node.Ip = ip.Address.ToString();
-                        node.LoadTick = DateTime.Now.Ticks;
                         PushNode(node, true);
                         //lock ("nodes")
                         //{
@@ -244,7 +292,6 @@ namespace Xky.Core
                 }
             });
         }
-
 
         /// <summary>
         /// 加载节点列表
@@ -290,7 +337,7 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 从侠客云删除节点
+        /// 删除节点
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -495,7 +542,7 @@ namespace Xky.Core
                         if (!local)
                         {
                             //自动通过外网连接当前节点
-                            if (n.NodeUrl != null && n.NodeUrl.Length > 0)
+                            if (!string.IsNullOrEmpty(n.NodeUrl))
                             {
                                 ConnectToNode(n, n.NodeUrl, n.ConnectionHash);
                             }
@@ -506,8 +553,49 @@ namespace Xky.Core
                         }
                     }
 
+
                     MainWindow.Dispatcher.Invoke(() => { Nodes.Add(n); });
                 }
+            }
+        }
+
+        #endregion
+
+        #region 设备相关
+
+        /// <summary>
+        ///     重新加载设备列表
+        /// </summary>
+        /// <returns></returns>
+        public static Response LoadDevices()
+        {
+            try
+            {
+                if (License == null)
+                    return new Response
+                    {
+                        Result = false,
+                        Message = "未授权",
+                        Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
+                    };
+
+                var response = CallApi("get_device_list", new JObject());
+
+                if (response.Result)
+                {
+                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Response
+                {
+                    Result = false,
+                    Message = e.Message,
+                    Json = new JObject {["errcode"] = 1, ["msg"] = e.Message}
+                };
             }
         }
 
@@ -553,133 +641,225 @@ namespace Xky.Core
                 new JObject {["sn"] = sn});
             if (!response.Result) Console.WriteLine(response.Message);
 
-            return !response.Result ? null : PushDevice(response.Json, DateTime.Now.Ticks);
+            return !response.Result ? null : PushDevice(response.Json);
         }
 
         /// <summary>
-        ///     启动一个任务
+        ///     添加或更新Device
         /// </summary>
-        /// <param name="action"></param>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
+        /// <param name="json"></param>
+        /// <param name="loadtick"></param>
+        private static Device PushDevice(JToken json)
         {
-            var thread = new Thread(() =>
-                {
-                    try
-                    {
-                        lock ("thread_count")
-                        {
-                            Threads++;
-                        }
-
-                        action.Invoke();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                    finally
-                    {
-                        lock ("thread_count")
-                        {
-                            Threads--;
-                        }
-                    }
-                })
-                {IsBackground = true};
-            thread.SetApartmentState(state);
-            thread.Start();
-            return thread;
-        }
-
-
-        /// <summary>
-        /// 加载模块列表
-        /// </summary>
-        /// <returns></returns>
-        public static void LoadModules()
-        {
-            string currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-            string modulepath = currentfilename.Remove(currentfilename.LastIndexOf("\\")) + "\\Modules";
-            string[] groupnamepaths = Directory.GetDirectories(modulepath);
-            foreach (string groupnamepath in groupnamepaths)
+            lock ("devices")
             {
-                string groupname = new DirectoryInfo(groupnamepath).Name;
-                List<string> modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
-                foreach (string modulefile in modulefilelist)
+                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                //如果已经存在就更新
+                if (device != null)
                 {
-                    try
+                    device.ConnectionHash = json["t_connection_hash"]?.ToString();
+                    device.Description = json["t_desc"]?.ToString();
+                    device.Forward = json["t_forward"]?.ToString();
+                    device.NodeUrl = json["t_nodeurl"]?.ToString();
+                    device.NodeSerial = json["t_node"]?.ToString();
+                    device.GpsLat = json["t_gps_lat"]?.ToString();
+                    device.GpsLng = json["t_gps_lng"]?.ToString();
+                    device.Id = (int) json["t_id"];
+                    device.Model = json["t_model"]?.ToString();
+                    device.Name = json["t_name"]?.ToString();
+                    device.Node = json["t_node"]?.ToString();
+                    device.Product = json["t_product"]?.ToString();
+                    device.Sn = json["t_sn"]?.ToString();
+                    device.Cpus = (int) json["t_cpus"];
+                    device.Memory = (int) json["t_memory"];
+                    device.Tags = ((JArray) json["t_tags"]).ToObject<string[]>();
+                }
+                else
+                {
+                    device = new Device
                     {
-                        var xmodulelist = XModuleHelper.LoadXModules(modulefile);
-                        foreach (XModule xmodule in xmodulelist)
+                        ConnectionHash = json["t_connection_hash"]?.ToString(),
+                        Description = json["t_desc"]?.ToString(),
+                        Forward = json["t_forward"]?.ToString(),
+                        NodeUrl = json["t_nodeurl"]?.ToString(),
+                        NodeSerial = json["t_node"]?.ToString(),
+                        GpsLat = json["t_gps_lat"]?.ToString(),
+                        GpsLng = json["t_gps_lng"]?.ToString(),
+                        Id = (int) json["t_id"],
+                        Model = json["t_model"]?.ToString(),
+                        Name = json["t_name"]?.ToString(),
+                        Node = json["t_node"]?.ToString(),
+                        Product = json["t_product"]?.ToString(),
+                        Sn = json["t_sn"]?.ToString(),
+                        Cpus = (int) json["t_cpus"],
+                        Memory = (int) json["t_memory"],
+                        Tags = ((JArray) json["t_tags"]).ToObject<string[]>()
+                    };
+                    //初始化脚本引擎
+                    device.ScriptEngine = new Script(device);
+                    StartAction(() =>
+                    {
+                        try
                         {
-                            var modulecontent = (XModule) xmodule.Clone();
-                            var module = new Module();
-                            module.Md5 = StrHelper.Md5(groupnamepath + modulecontent.GetType().FullName, false);
-                            module.Name = modulecontent.Name();
-                            module.GroupName = groupname;
-                            module.Description = modulecontent.Description();
-                            module.XModule = modulecontent;
-                            module.Icon = modulecontent.Icon();
-                            Client.Modules.Add(module);
+                            using (var client = new WebClient())
+                            {
+                                var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
+                                                               ".jpg?x-oss-process=image/resize,h_100,w_52");
+                                MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    });
+
+                    //添加节点服务器
+                    //StartAction(() => { PushNode(device.NodeSerial); });
+
+                    if (device.Tags.Length == 0)
+                    {
+                        device.Tags = new[] {"无标签设备"};
+                    }
+
+                    foreach (var name in device.Tags)
+                    {
+                        var tag = Tags.ToList().Find(p => p.Name == name);
+
+                        if (tag != null)
+                        {
+                            tag.Devices.Add(device);
+                            tag.Count++;
+                        }
+                        else
+                        {
+                            tag = new Tag
+                            {
+                                Name = name,
+                                Count = 1,
+                                Devices = new List<Device>()
+                            };
+                            tag.Devices.Add(device);
+                            Tags.Add(tag);
                         }
                     }
-                    catch (Exception e)
+
+                    Tags = new ObservableCollection<Tag>(Tags.OrderByDescending(item => item.Count));
+
+
+                    var nodename = Nodes.ToList().Find(n => n.Serial == device.NodeSerial).Name;
+                    var nodetag = NodeTags.ToList().Find(p =>
+                        p.Name == nodename);
+
+                    if (nodetag == null)
                     {
-                        Console.WriteLine("模块加载失败：" + e);
+                        nodetag = new Tag
+                        {
+                            Name = nodename,
+                            Count = 1,
+                            Devices = new List<Device>()
+                        };
+                        nodetag.Devices.Add(device);
+                        NodeTags.Add(nodetag);
                     }
+                    else
+                    {
+                        nodetag.Devices.Add(device);
+                        nodetag.Count++;
+                    }
+
+
+                    NodeTags = new ObservableCollection<Tag>(NodeTags.OrderByDescending(item => item.Count));
+
+
+                    //用UI线程委托添加，防止报错
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        Devices.Add(device);
+                        ParsePanelDevice(device, false);
+                    });
+                }
+
+                return device;
+            }
+        }
+
+        /// <summary>
+        /// 解析最新设备决定是否放入面板
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="isRemove"></param>
+        private static void ParsePanelDevice(Device device, bool isRemove)
+        {
+            if (_lastSearchKeyword == null || device.Id.ToString().Contains(_lastSearchKeyword) ||
+                device.Sn.Contains(_lastSearchKeyword) ||
+                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword))
+            {
+                var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
+                if (isRemove)
+                {
+                    if (find == null) return;
+                    PanelDevices.Remove(device);
+                }
+                else
+                {
+                    if (find != null) return;
+                    PanelDevices.Add(device);
                 }
             }
         }
 
-
         /// <summary>
-        /// 弹出面板
+        ///     移除Device
         /// </summary>
-        /// <param name="control"></param>
-        public static void ShowDialogPanel(System.Windows.Controls.UserControl control)
+        /// <param name="json"></param>
+        private static void RemoveDevice(JToken json)
         {
-            ShowDialogPanelEvent?.Invoke(control);
+            lock ("devices")
+            {
+                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
+                if (device != null)
+                    MainWindow.Dispatcher.Invoke(() =>
+                    {
+                        foreach (var name in device.Tags)
+                        {
+                            var tag = Tags.ToList().Find(p => p.Name == name);
+
+                            if (tag != null)
+                            {
+                                tag.Devices.Remove(device);
+                                tag.Count--;
+                                if (tag.Count == 0)
+                                    Tags.Remove(tag);
+                            }
+                        }
+
+                        var node = Nodes.ToList().Find(n => n.Serial == device.NodeSerial);
+                        if (node != null)
+                        {
+                            var nodeTag = NodeTags.ToList().Find(p => p.Name == node.Name);
+                            if (nodeTag != null)
+                            {
+                                nodeTag.Devices.Remove(device);
+                                nodeTag.Count--;
+                                if (nodeTag.Count == 0)
+                                    NodeTags.Remove(nodeTag);
+                            }
+                        }
+
+
+                        Devices.Remove(device);
+                        ParsePanelDevice(device, true);
+                    });
+            }
         }
 
         /// <summary>
-        /// 关闭弹出面板
+        /// 连接到节点
         /// </summary>
-        public static void CloseDialogPanel()
-        {
-            CloseDialogPanelEvent?.Invoke();
-        }
-
-
-        #region 全局事件
-
-        /// <summary>
-        /// 关闭弹出面板
-        /// </summary>
-        public static event OnCloseDialogPanel CloseDialogPanelEvent;
-
-        /// <summary>
-        /// 关闭弹出面板
-        /// </summary>
-        public delegate void OnCloseDialogPanel();
-
-
-        /// <summary>
-        /// 弹出面板
-        /// </summary>
-        public static event OnShowDialogPanel ShowDialogPanelEvent;
-
-        /// <summary>
-        /// 弹出面板
-        /// </summary>
-        public delegate void OnShowDialogPanel(System.Windows.Controls.UserControl control);
-
-        #endregion
-
-
-        #region  内部方法
-
+        /// <param name="node"></param>
+        /// <param name="url"></param>
+        /// <param name="hash"></param>
         private static void ConnectToNode(Node node, string url, string hash)
         {
             lock ("node_connect")
@@ -756,6 +936,55 @@ namespace Xky.Core
             }
         }
 
+        #endregion
+
+        #region 面板操作
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        /// <param name="control"></param>
+        public static void ShowDialogPanel(System.Windows.Controls.UserControl control)
+        {
+            ShowDialogPanelEvent?.Invoke(control);
+        }
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public static void CloseDialogPanel()
+        {
+            CloseDialogPanelEvent?.Invoke();
+        }
+
+        #endregion
+
+        #region 全局事件
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public static event OnCloseDialogPanel CloseDialogPanelEvent;
+
+        /// <summary>
+        /// 关闭弹出面板
+        /// </summary>
+        public delegate void OnCloseDialogPanel();
+
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        public static event OnShowDialogPanel ShowDialogPanelEvent;
+
+        /// <summary>
+        /// 弹出面板
+        /// </summary>
+        public delegate void OnShowDialogPanel(System.Windows.Controls.UserControl control);
+
+        #endregion
+
+        #region  内部方法
 
         /// <summary>
         ///     unix时间戳转换成datetime
@@ -769,135 +998,6 @@ namespace Xky.Core
             return newDateTime.ToLocalTime();
         }
 
-        /// <summary>
-        ///     添加或更新Device
-        /// </summary>
-        /// <param name="json"></param>
-        /// <param name="loadtick"></param>
-        private static Device PushDevice(JToken json, long loadtick)
-        {
-            lock ("devices")
-            {
-                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-                //如果已经存在就更新
-                if (device != null)
-                {
-                    device.ConnectionHash = json["t_connection_hash"]?.ToString();
-                    device.Description = json["t_desc"]?.ToString();
-                    device.Forward = json["t_forward"]?.ToString();
-                    device.NodeUrl = json["t_nodeurl"]?.ToString();
-                    device.NodeSerial = json["t_node"]?.ToString();
-                    device.GpsLat = json["t_gps_lat"]?.ToString();
-                    device.GpsLng = json["t_gps_lng"]?.ToString();
-                    device.Id = (int) json["t_id"];
-                    device.Model = json["t_model"]?.ToString();
-                    device.Name = json["t_name"]?.ToString();
-                    device.Node = json["t_node"]?.ToString();
-                    device.Product = json["t_product"]?.ToString();
-                    device.Sn = json["t_sn"]?.ToString();
-                    device.Cpus = (int) json["t_cpus"];
-                    device.Memory = (int) json["t_memory"];
-                    device.LoadTick = loadtick;
-                }
-                else
-                {
-                    device = new Device
-                    {
-                        ConnectionHash = json["t_connection_hash"]?.ToString(),
-                        Description = json["t_desc"]?.ToString(),
-                        Forward = json["t_forward"]?.ToString(),
-                        NodeUrl = json["t_nodeurl"]?.ToString(),
-                        NodeSerial = json["t_node"]?.ToString(),
-                        GpsLat = json["t_gps_lat"]?.ToString(),
-                        GpsLng = json["t_gps_lng"]?.ToString(),
-                        Id = (int) json["t_id"],
-                        Model = json["t_model"]?.ToString(),
-                        Name = json["t_name"]?.ToString(),
-                        Node = json["t_node"]?.ToString(),
-                        Product = json["t_product"]?.ToString(),
-                        Sn = json["t_sn"]?.ToString(),
-                        Cpus = (int) json["t_cpus"],
-                        Memory = (int) json["t_memory"],
-                        LoadTick = loadtick,
-                    };
-                    //初始化脚本引擎
-                    device.ScriptEngine = new Script(device);
-                    StartAction(() =>
-                    {
-                        try
-                        {
-                            using (var client = new WebClient())
-                            {
-                                var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
-                                                               ".jpg?x-oss-process=image/resize,h_100,w_52");
-                                MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
-                    });
-
-                    //添加节点服务器
-                    //StartAction(() => { PushNode(device.NodeSerial); });
-
-
-                    //用UI线程委托添加，防止报错
-                    MainWindow.Dispatcher.Invoke(() =>
-                    {
-                        Devices.Add(device);
-                        ParsePanelDevice(device, false);
-                    });
-                }
-
-                return device;
-            }
-        }
-
-        /// <summary>
-        /// 解析最新设备决定是否放入面板
-        /// </summary>
-        /// <param name="device"></param>
-        /// <param name="isRemove"></param>
-        private static void ParsePanelDevice(Device device, bool isRemove)
-        {
-            if (_lastSearchKeyword == null || device.Id.ToString().Contains(_lastSearchKeyword) ||
-                device.Sn.Contains(_lastSearchKeyword) ||
-                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword))
-            {
-                var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
-                if (isRemove)
-                {
-                    if (find == null) return;
-                    PanelDevices.Remove(device);
-                }
-                else
-                {
-                    if (find != null) return;
-                    PanelDevices.Add(device);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     移除Device
-        /// </summary>
-        /// <param name="json"></param>
-        private static void RemoveDevice(JToken json)
-        {
-            lock ("devices")
-            {
-                var device = Devices.ToList().Find(p => p.Id == (int) json["t_id"]);
-                if (device != null)
-                    MainWindow.Dispatcher.Invoke(() =>
-                    {
-                        Devices.Remove(device);
-                        ParsePanelDevice(device, true);
-                    });
-            }
-        }
-
 
         /// <summary>
         ///     核心服务器事件
@@ -905,14 +1005,13 @@ namespace Xky.Core
         /// <param name="json"></param>
         private static void CoreEvent(JObject json)
         {
-            Console.WriteLine(json);
             var type = json["type"]?.ToString();
             switch (type)
             {
                 case "device_state":
                 {
                     if (json["message"]?.ToString() == "online")
-                        PushDevice(json["device"], DateTime.Now.Ticks);
+                        PushDevice(json["device"]);
                     else
                         RemoveDevice(json["device"]);
 
@@ -1004,6 +1103,8 @@ namespace Xky.Core
 
         #endregion
 
+        #region 接口调用方法
+
         /// <summary>
         /// http调用接口
         /// </summary>
@@ -1069,7 +1170,7 @@ namespace Xky.Core
             };
             var count = 10000;
 
-            if (CoreSocket == null || !CoreConnected)
+            if (_coreSocket == null || !CoreConnected)
                 return new Response
                 {
                     Result = false,
@@ -1077,7 +1178,7 @@ namespace Xky.Core
                     Json = new JObject {["errcode"] = 1, ["msg"] = "未连接核心服务器"}
                 };
 
-            CoreSocket.Emit("call", result =>
+            _coreSocket.Emit("call", result =>
             {
                 var jsonResult = (JObject) result;
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))
@@ -1236,5 +1337,7 @@ namespace Xky.Core
             node.NodeSocket.Emit("event", sns, json);
             return response;
         }
+
+        #endregion
     }
 }
