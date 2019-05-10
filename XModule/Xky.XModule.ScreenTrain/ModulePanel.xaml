@@ -40,28 +40,28 @@
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="500"></ColumnDefinition>
+               
+                <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="260"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+              
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1"   Background="#1d232a" Margin="0,20,0,20">
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Border Grid.Column="0"   Background="#1d232a" Margin="0,20,0,20">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
                       <Canvas x:Name="Canvas_Main" Height="768" Width="430" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image  MouseDown="Image_Screen_MouseDown" SourceUpdated="Image_Screen_SourceUpdated" MouseUp="Image_Screen_MouseUp" MouseMove="Image_Screen_MouseMove"  x:Name="Image_Screen" Height="768" Width="430" Stretch="UniformToFill"></Image>
-                   <Rectangle Canvas.Top="10" Canvas.Left="10" x:Name="Rectangle_Select" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_0" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_1" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_2" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_3" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_4" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_5" StrokeThickness="2" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Image Grid.Column="0"  MouseDown="Image_Screen_MouseDown" SourceUpdated="Image_Screen_SourceUpdated" MouseUp="Image_Screen_MouseUp" MouseMove="Image_Screen_MouseMove"  x:Name="Image_Screen"  Stretch="UniformToFill"></Image>
+                   <Rectangle Canvas.Top="10" Canvas.Left="10" x:Name="Rectangle_Select" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_0" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_1" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_2" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_3" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_4" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+                        <Rectangle Canvas.Top="10" Canvas.Left="0" x:Name="Rectangle_5" StrokeThickness="1" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
                     </Canvas>
                     
                 <UserControl:MyButton x:Name="Button_Pause" HorizontalAlignment="Center" Click="Button_Pause_Click" Width="200" Text="暂停" Margin="0,10,0,0" Loaded="Button_Pause_Loaded"></UserControl:MyButton>
            </StackPanel> 
             </Border>
-            <StackPanel Grid.Column="2" Orientation="Vertical"  VerticalAlignment="Center" Margin="10">
+            <StackPanel Grid.Column="1" Orientation="Vertical"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">
                 <StackPanel Orientation="Vertical"  Margin="0">
                     <Image Margin="0,0,0,10" Width="200" Height="200" x:Name="Image_Select" Source="select.png"/>
                     <Label Width="60" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,10">元素名称</Label>
