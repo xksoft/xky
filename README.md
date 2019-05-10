@@ -3,8 +3,7 @@
 
 ## 下载和运行
 https://github.com/xksoft/xky/releases/latest
-
-
+测试授权码：a03fe7c92edb17db937f2c44b15e5b28（没有在线设备或不能使用请联系我们）
 
 ## 如何编译
   
