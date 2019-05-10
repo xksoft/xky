@@ -43,6 +43,11 @@ namespace Xky.XModule.ScreenTrain
         ImageSource imageSource;
         Queue transq = new Queue();
         int index = 0;
+        EncoderParameters eps = new EncoderParameters(1);
+        EncoderParameter ep_20 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality,20L);
+        EncoderParameter ep_60 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+        EncoderParameter ep_100 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+        ImageCodecInfo jpsEncodeer = GetEncoder(ImageFormat.Jpeg);
         public ModulePanel()
         {
             InitializeComponent();
@@ -81,7 +86,7 @@ namespace Xky.XModule.ScreenTrain
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            
             Image_Screen.Source = device.ScreenShot;
             Image_Screen.Source.Changed += Source_Changed;
             StartTransQueue();
@@ -95,6 +100,7 @@ namespace Xky.XModule.ScreenTrain
             if (info == null) { index = 1; }
             else {     FileInfo finfo = new FileInfo(info.FileName);
                 index = Convert.ToInt32(finfo.Name.Remove((finfo.Name.LastIndexOf("."))));
+                index++;
             }
         
         }
@@ -181,16 +187,23 @@ namespace Xky.XModule.ScreenTrain
         {
             if (Image_Select.Source != null)
             {
-                var eps = new EncoderParameters(1);
-                var ep = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 85L);
-                eps.Param[0] = ep;
-                var jpsEncodeer = GetEncoder(ImageFormat.Jpeg);
+               
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
+                eps.Param[0] = ep_100;
                 bitmap.Save(DataPath + "\\" + index + ".jpg",jpsEncodeer,eps);
                 File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                index++;
+                eps.Param[0] = ep_60;
+                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                index++;
+                eps.Param[0] = ep_20;
+                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                index++;
 
                 Image_Select.Source = null;
-                index++;
+                
             }
         }
 
@@ -215,12 +228,13 @@ namespace Xky.XModule.ScreenTrain
 
         private void Source_Changed(object sender, EventArgs e)
         {
-             if (DateTime.Now.Ticks - lasttrans >= 1000000 && isTrans)
+             if (DateTime.Now.Ticks - lasttrans >= 2000000 && isTrans)
             {
+                eps.Param[0] = ep_100;
                 lasttrans = DateTime.Now.Ticks;
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)Image_Screen.Source);
                 MemoryStream ms = new MemoryStream();
-                bitmap.Save(ms, ImageFormat.Png);
+                bitmap.Save(ms, jpsEncodeer, eps);
                 ms.Close();
                 transq.Enqueue(ms.GetBuffer());
 
@@ -242,6 +256,7 @@ namespace Xky.XModule.ScreenTrain
                             TransResult tr = JsonConvert.DeserializeObject <TransResult>( result);
                             if (tr != null)
                             {
+                                Console.WriteLine(tr.msg);
                                 List<TransItem> tritems = JsonConvert.DeserializeObject<List<TransItem>>(tr.msg);
                                 Console.WriteLine(tritems.Count);
                                 Console.WriteLine("识别列队剩余：" + transq.Count);
