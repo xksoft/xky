@@ -648,7 +648,6 @@ namespace Xky.Core
         ///     添加或更新Device
         /// </summary>
         /// <param name="json"></param>
-        /// <param name="loadtick"></param>
         private static Device PushDevice(JToken json)
         {
             lock ("devices")
@@ -705,7 +704,8 @@ namespace Xky.Core
                             {
                                 var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
                                                                ".jpg?x-oss-process=image/resize,h_100,w_52");
-                                MainWindow.Dispatcher.Invoke(() => { device.ScreenShot = ByteToBitmapSource(data); });
+                                MainWindow.Dispatcher.Invoke(
+                                    () => { device.ScreenShot = ByteToBitmapSource(data); });
                             }
                         }
                         catch (Exception e)
@@ -740,36 +740,11 @@ namespace Xky.Core
                                 Devices = new List<Device>()
                             };
                             tag.Devices.Add(device);
-                            Tags.Add(tag);
+                            MainWindow.Dispatcher.Invoke(() => { Tags.Add(tag); });
                         }
                     }
 
                     Tags = new ObservableCollection<Tag>(Tags.OrderByDescending(item => item.Count));
-
-
-                    var nodename = Nodes.ToList().Find(n => n.Serial == device.NodeSerial).Name;
-                    var nodetag = NodeTags.ToList().Find(p =>
-                        p.Name == nodename);
-
-                    if (nodetag == null)
-                    {
-                        nodetag = new Tag
-                        {
-                            Name = nodename,
-                            Count = 1,
-                            Devices = new List<Device>()
-                        };
-                        nodetag.Devices.Add(device);
-                        NodeTags.Add(nodetag);
-                    }
-                    else
-                    {
-                        nodetag.Devices.Add(device);
-                        nodetag.Count++;
-                    }
-
-
-                    NodeTags = new ObservableCollection<Tag>(NodeTags.OrderByDescending(item => item.Count));
 
 
                     //用UI线程委托添加，防止报错
@@ -1068,7 +1043,7 @@ namespace Xky.Core
                 }
                 default:
                 {
-                    Console.WriteLine("收到未处理的事件：" + json);
+                    //  Console.WriteLine("收到未处理的事件：" + json);
 
                     break;
                 }
