@@ -61,7 +61,7 @@ namespace Xky.Core
                     Dispatcher.Invoke(() =>
                     {
                         //第一次初始化
-                        if (ScreenImage.Source == null|| _writeableBitmap.PixelWidth!=width)
+                        if (ScreenImage.Source == null || _writeableBitmap.PixelWidth != width)
                         {
                             _writeableBitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr24, null);
                             ScreenImage.Source = _writeableBitmap;
@@ -84,6 +84,7 @@ namespace Xky.Core
 
                         if (!_isShow)
                         {
+                            ScreenImage.Visibility = Visibility.Visible;
                             AddLabel("成功解析画面..", Colors.Lime);
                             _isShow = true;
                         }
@@ -152,11 +153,14 @@ namespace Xky.Core
             if (node != null)
             {
                 CurrentDevice.NodeUrl = node.NodeUrl;
-                Console.WriteLine("连接屏幕："+CurrentDevice.NodeUrl);
-              
+                Console.WriteLine("连接屏幕：" + CurrentDevice.NodeUrl);
             }
-            
-            if (CurrentDevice.NodeUrl == "") {AddLabel("设备所属节点服务器尚未连接，请稍后...", Colors.OrangeRed); throw new Exception("该设备没有设置P2P转发模式且尚未在局域网中发现节点服务器"); }
+
+            if (CurrentDevice.NodeUrl == "")
+            {
+                AddLabel("设备所属节点服务器尚未连接，请稍后...", Colors.OrangeRed);
+                throw new Exception("该设备没有设置P2P转发模式且尚未在局域网中发现节点服务器");
+            }
 
 
             _socket?.Disconnect();
@@ -183,7 +187,14 @@ namespace Xky.Core
             };
             _socket = IO.Socket(CurrentDevice.NodeUrl, options);
             _socket.On(Socket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
-            _socket.On(Socket.Client.Socket.EventDisconnect, () => { Console.WriteLine("Disconnected"); });
+            _socket.On(Socket.Client.Socket.EventDisconnect, () =>
+            {
+                if (CurrentDevice.Sn == model.Sn)
+                {
+                    Dispatcher.Invoke(() => { ScreenImage.Visibility = Visibility.Collapsed; });
+                    AddLabel("设备已断开连接...", Colors.OrangeRed);
+                }
+            });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
             _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });

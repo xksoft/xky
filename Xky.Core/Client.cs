@@ -724,25 +724,10 @@ namespace Xky.Core
 
                     foreach (var name in device.Tags)
                     {
-                        var tag = Tags.ToList().Find(p => p.Name == name);
-
-                        if (tag != null)
-                        {
-                            tag.Devices.Add(device);
-                            tag.Count++;
-                        }
-                        else
-                        {
-                            tag = new Tag
-                            {
-                                Name = name,
-                                Count = 1,
-                                Devices = new List<Device>()
-                            };
-                            tag.Devices.Add(device);
-                            MainWindow.Dispatcher.Invoke(() => { Tags.Add(tag); });
-                        }
+                        AddTags(name, device);
                     }
+
+                    AddTags("所有设备", device);
 
                     Tags = new ObservableCollection<Tag>(Tags.OrderByDescending(item => item.Count));
 
@@ -756,6 +741,51 @@ namespace Xky.Core
                 }
 
                 return device;
+            }
+        }
+
+        /// <summary>
+        /// 标签、设备
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="device"></param>
+        private static void AddTags(string name, Device device)
+        {
+            var tag = Tags.ToList().Find(p => p.Name == name);
+
+            if (tag != null)
+            {
+                tag.Devices.Add(device);
+                tag.Count++;
+            }
+            else
+            {
+                tag = new Tag
+                {
+                    Name = name,
+                    Count = 1,
+                    Devices = new List<Device>()
+                };
+                tag.Devices.Add(device);
+                MainWindow.Dispatcher.Invoke(() => { Tags.Add(tag); });
+            }
+        }
+
+        /// <summary>
+        /// 删除标签
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="device"></param>
+        private static void RemoveTags(string name, Device device)
+        {
+            var tag = Tags.ToList().Find(p => p.Name == name);
+
+            if (tag != null)
+            {
+                tag.Devices.Remove(device);
+                tag.Count--;
+                if (tag.Count == 0)
+                    MainWindow.Dispatcher.Invoke(() => { Tags.Remove(tag); });
             }
         }
 
@@ -798,29 +828,9 @@ namespace Xky.Core
                     {
                         foreach (var name in device.Tags)
                         {
-                            var tag = Tags.ToList().Find(p => p.Name == name);
-
-                            if (tag != null)
-                            {
-                                tag.Devices.Remove(device);
-                                tag.Count--;
-                                if (tag.Count == 0)
-                                    Tags.Remove(tag);
-                            }
+                            RemoveTags(name, device);
                         }
-
-                        var node = Nodes.ToList().Find(n => n.Serial == device.NodeSerial);
-                        if (node != null)
-                        {
-                            var nodeTag = NodeTags.ToList().Find(p => p.Name == node.Name);
-                            if (nodeTag != null)
-                            {
-                                nodeTag.Devices.Remove(device);
-                                nodeTag.Count--;
-                                if (nodeTag.Count == 0)
-                                    NodeTags.Remove(nodeTag);
-                            }
-                        }
+                        RemoveTags("所有设备",device);
 
 
                         Devices.Remove(device);
@@ -828,6 +838,7 @@ namespace Xky.Core
                     });
             }
         }
+
 
         /// <summary>
         /// 连接到节点
