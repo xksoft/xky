@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Xky.XModule.AllApiDemo.ModulePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Xky.XModule.AllApiDemo"
+            xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800" VerticalAlignment="Center">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ScrollBars.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Animation.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToggleButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/DataGrid.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/RadioButton.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/CheckBox.xaml" />
+                <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/ToolTip.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#1d232a"   Height="500" MaxWidth="1024">
+        <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
+            <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        </Canvas>
+        <Grid  Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="42"></RowDefinition>
+            <RowDefinition Height="42"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+        </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Orientation="Horizontal"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal"/>
+        </Grid>
+    </Grid>
+</UserControl>
