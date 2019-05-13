@@ -266,7 +266,7 @@ namespace Xky.XModule.ScreenTrain
                             //Console.WriteLine(result);
                             //continue;
                             result = PostData("http://192.168.1.8/api?action=getobject", (byte[])obj);
-                           // Console.WriteLine(result);
+                           Console.WriteLine(result);
                             TransResult tr = JsonConvert.DeserializeObject<TransResult>(result);
                             if (tr != null)
                             {
@@ -395,18 +395,19 @@ namespace Xky.XModule.ScreenTrain
         int nodcount = 0;
         public void AiPlay(List<TransItem> tritems)
         {
-            var items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.2 select i).ToList();
+            var items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
             if (items.Count > 0)
             {
                 nodcount = 0;
 
                 Console.WriteLine("后退");
                 AiPlay_Back();
+                aistate = "攻击";
                 waite = false;
                 return;
             }
 
-            items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.2 select i).ToList();
+            items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
             if (items.Count > 0)
             {
                 nodcount = 0;
@@ -418,8 +419,11 @@ namespace Xky.XModule.ScreenTrain
                 return;
             }
 
-
-
+            items = (from i in tritems where (i.Type == "技能升级提示") && i.Confidence > 0.3 select i).ToList();
+            if (items.Count>0)
+            {
+                device.ScriptEngine.AdbShell("input tap 964 562&&input tap 1049 426&&input tap 1239 416&&input tap 1183 311");
+            }
             lock ("aiplay")
             {
                 if (waite)
@@ -432,7 +436,7 @@ namespace Xky.XModule.ScreenTrain
                     if (aistate == "在家")
                     {
 
-                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.2 select i).ToList();
+                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
                         if (items.Count > 0)
                         {
                             nodcount = 0;
@@ -443,7 +447,7 @@ namespace Xky.XModule.ScreenTrain
                             return;
                         }
 
-                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.2 select i).ToList();
+                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
                         if (items.Count > 0)
                         {
                             nodcount = 0;
@@ -455,7 +459,7 @@ namespace Xky.XModule.ScreenTrain
 
                         }
 
-                        items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "我方防御塔" || i.Type == "老家") && i.Confidence > 0.2 select i).ToList();
+                        items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "我方防御塔" || i.Type == "老家") && i.Confidence > 0.5 select i).ToList();
                         if (items.Count() > 0)
                         {
                         //Thread.Sleep(5000);
@@ -473,7 +477,7 @@ namespace Xky.XModule.ScreenTrain
                     else if (aistate == "攻击")
                     {
 
-                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.2 select i).ToList();
+                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
                         if (items.Count > 0)
                         {
                             nodcount = 0;
@@ -484,7 +488,7 @@ namespace Xky.XModule.ScreenTrain
                             return;
                         }
 
-                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.2 select i).ToList();
+                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
                         if (items.Count > 0)
                         {
                             nodcount = 0;
@@ -497,7 +501,7 @@ namespace Xky.XModule.ScreenTrain
                         else
                         {
 
-                            items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "老家") && i.Confidence > 0.2 select i).ToList();
+                            items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "老家") && i.Confidence > 0.5 select i).ToList();
                             if (items.Count > 0)
                             {
                                 aistate = "在家";
@@ -509,7 +513,7 @@ namespace Xky.XModule.ScreenTrain
                             //没有敌人了，前进
                             nodcount++;
                                 Thread.Sleep(100);
-                                if (nodcount >= 50)
+                                if (nodcount >= 20)
                                 {
                                     Console.WriteLine("没有敌方单位了，前进");
 
