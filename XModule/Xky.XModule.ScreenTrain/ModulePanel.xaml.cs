@@ -43,6 +43,7 @@ namespace Xky.XModule.ScreenTrain
         ImageSource imageSource;
         Queue transq = new Queue();
         int index = 0;
+        bool waite = false;
         EncoderParameters eps = new EncoderParameters(1);
         EncoderParameter ep_20 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality,20L);
         EncoderParameter ep_60 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
@@ -86,6 +87,7 @@ namespace Xky.XModule.ScreenTrain
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            
             
             Image_Screen.Source = device.ScreenShot;
             Image_Screen.Source.Changed += Source_Changed;
@@ -154,6 +156,7 @@ namespace Xky.XModule.ScreenTrain
                     BitmapSource bitmapSource = ImageHelper.CutImage((BitmapSource)imageSource, new Int32Rect((int)rect_select.X, (int)rect_select.Y, (int)rect_select.Width, (int)rect_select.Height));
 
                     Image_Select.Source = bitmapSource;
+                    Console.WriteLine("X:"+rect_select.X+" Y:"+rect_select.Y);
                 }
                 else { Image_Select.Source = null; }
             }
@@ -228,9 +231,9 @@ namespace Xky.XModule.ScreenTrain
 
         private void Source_Changed(object sender, EventArgs e)
         {
-             if (DateTime.Now.Ticks - lasttrans >= 2000000 && isTrans)
+             if (DateTime.Now.Ticks - lasttrans >= 1000000 && isTrans)
             {
-                eps.Param[0] = ep_100;
+                eps.Param[0] = ep_20;
                 lasttrans = DateTime.Now.Ticks;
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)Image_Screen.Source);
                 MemoryStream ms = new MemoryStream();
@@ -253,13 +256,38 @@ namespace Xky.XModule.ScreenTrain
                         if (obj != null)
                         {
                             string result = PostData("http://192.168.1.8/api?action=getobject", (byte[])obj);
+                            Console.WriteLine(result);
                             TransResult tr = JsonConvert.DeserializeObject <TransResult>( result);
                             if (tr != null)
                             {
-                                Console.WriteLine(tr.msg);
+                              
                                 List<TransItem> tritems = JsonConvert.DeserializeObject<List<TransItem>>(tr.msg);
-                                Console.WriteLine(tritems.Count);
-                                Console.WriteLine("识别列队剩余：" + transq.Count);
+                                var items = (from i in tritems where i.Type == "敌方防御塔" || i.Type == "敌方水晶" select i).ToList();
+                                if (items.Count > 0)
+                                {
+                                    nodcount = 0;
+                                    Console.WriteLine("后退");
+                                    AiPlay_Back();
+
+                                }
+                                else
+                                {
+                                    items = (from i in tritems where i.Type == "敌方小兵" || i.Type == "敌人" select i).ToList();
+                                    if (items.Count > 0)
+                                    {
+                                        nodcount = 0;
+                                        aistate = "攻击";
+                                        Console.WriteLine("攻击");
+                                        device.ScriptEngine.AdbShell("input tap 1260 600&&input tap 1043 632&&input tap 1089 501&&input tap 1239 416&&input tap 132 298&&input tap 145 377");
+
+
+                                    }
+
+                                }
+                                if (!waite) { AiPlay(tritems); }
+                               
+                                //Console.WriteLine(tritems.Count);
+                                //Console.WriteLine("识别列队剩余：" + transq.Count);
 
                                 for (int i = 0; i <5; i++)
                                 {
@@ -294,7 +322,7 @@ namespace Xky.XModule.ScreenTrain
             })
             { IsBackground = true }.Start();
         }
-    private void Image_Screen_SourceUpdated(object sender, DataTransferEventArgs e)
+        private void Image_Screen_SourceUpdated(object sender, DataTransferEventArgs e)
         {
            
         }
@@ -346,6 +374,123 @@ namespace Xky.XModule.ScreenTrain
 
         private void Button_Pause_Loaded(object sender, RoutedEventArgs e)
         {
+
+        }
+        string aistate = "在家";
+        int nodcount = 0;
+        public void AiPlay(List<TransItem> tritems)
+        {
+            if (waite)
+            {
+                return;
+            }
+            new Thread(() =>
+            {
+                waite = true;
+                if (aistate == "在家")
+                {
+                  
+                    var items = (from i in tritems where i.Type == "敌方防御塔" || i.Type == "敌方水晶" select i).ToList();
+                    if (items.Count > 0)
+                    {
+                        nodcount = 0;
+                        Console.WriteLine("后退");
+                        AiPlay_Back();
+                        waite = false;
+                        return;
+                    }
+
+                    items = (from i in tritems where i.Type == "敌方小兵" || i.Type == "敌人" select i).ToList();
+                    if (items.Count > 0)
+                    {
+                        nodcount = 0;
+                        aistate = "攻击";
+                        Console.WriteLine("攻击");
+                        device.ScriptEngine.AdbShell("input tap 1260 600");
+                        waite = false;
+                        return;
+                        
+                    }
+
+                    items = (from i in tritems where i.Type == "我方水晶"||i.Type=="我方防御塔"||i.Type=="老家" select i).ToList();
+                    if (items.Count() > 0)
+                    {
+                        //Thread.Sleep(5000);
+                        Console.WriteLine("出门");
+                        AiPlay_Go();
+                    }
+                    else
+                    {
+                      
+                        Console.WriteLine("出门");
+                        AiPlay_Go();
+                    }
+                   
+                }
+                else if (aistate == "攻击")
+                {
+                
+                   var items = (from i in tritems where i.Type == "敌方防御塔" ||i.Type == "敌方水晶" select i).ToList();
+                    if (items.Count > 0)
+                    {
+                        nodcount = 0;
+
+                        Console.WriteLine("后退");
+                        AiPlay_Back();
+                        waite = false;
+                        return;
+                    }
+
+                    items = (from i in tritems where i.Type == "敌方小兵" || i.Type == "敌人" select i).ToList();
+                    if (items.Count > 0)
+                    {
+                        nodcount = 0;
+                        aistate = "攻击";
+                        Console.WriteLine("攻击");
+                        device.ScriptEngine.AdbShell("input tap 1260 600&&input tap 1043 632&&input tap 1089 501&&input tap 1239 416&&input tap 132 298&&input tap 145 377");
+                     
+
+                    }
+                    else {
+
+                        items = (from i in tritems where i.Type == "我方水晶"||i.Type=="老家" select i).ToList();
+                        if (items.Count > 0)
+                        {
+                            aistate = "在家";
+
+                        }
+                        else {
+                           // 
+                            //没有敌人了，前进
+                            nodcount++;
+                            Thread.Sleep(1000);
+                            if (nodcount >= 5)
+                            {Console.WriteLine("没有敌方单位了，前进");
+
+                                device.ScriptEngine.AdbShell("input swipe 294 578 333 497 1000");
+                                nodcount = 0;
+                            }
+                       
+                        }
+                      
+                    }
+
+                    
+                }
+                waite = false;
+            })
+            { IsBackground = true }.Start();
+        }
+        public void AiPlay_Go()
+        {
+         
+                device.ScriptEngine.AdbShell("input swipe 294 578 333 497 5000");
+          
+        }
+        public void AiPlay_Back()
+        {
+
+            device.ScriptEngine.AdbShell("input swipe 294 587 246 640 5000");
 
         }
     }
