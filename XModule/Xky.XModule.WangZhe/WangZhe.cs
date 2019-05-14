@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Xky.XModule.WangZhe
 {
     public class WangZhe : Core.XModule
     {
+        ModulePanel panel = null;
         public override string Name()
         {
             return "王者中单";
@@ -34,12 +37,12 @@ namespace Xky.XModule.WangZhe
 
         public override void Start()
         {
-          
+            panel.Exit=true;
         }
         public override bool ShowUserControl()
         {
+            panel = new ModulePanel();
 
-            var panel = new ModulePanel();
             panel.device = Device;
             Core.Client.ShowDialogPanel(panel);
             return true;

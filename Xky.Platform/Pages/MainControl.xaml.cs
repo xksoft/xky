@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -309,11 +310,16 @@ namespace Xky.Platform.Pages
                             Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
                             xmodule.Start();
                             Console.WriteLine("设备[" + device.Id + "]成功执行模块[" + module.Name + "]");
+                          
                             Dispatcher.Invoke(() =>
                             {
+                               
                                 device.RunningModules.Remove(module);
+                               
                                 if (device.RunningThreads.ContainsKey(module.Md5))
                                 {
+                                   
+                                   
                                     device.RunningThreads.Remove(module.Md5);
                                 }
                             });
@@ -323,6 +329,7 @@ namespace Xky.Platform.Pages
                             //参数设置过程中取消执行
                             if (device.RunningThreads.ContainsKey(module.Md5))
                             {
+                               
                                 device.RunningThreads.Remove(module.Md5);
                             }
                         }

@@ -25,18 +25,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#1d232a"  >
+    <Grid Background="#1d232a" MinHeight="780" >
         <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
-            <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <UserControl:MyButton x:Name="Button_Close"  Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         </Canvas>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="1"   Background="#1d232a" Margin="0,20,0,20">
-                <Image  x:Name="Image_Screen"  Stretch="None"></Image>
-            </Border>
+           
+           <Image Panel.ZIndex="3" x:Name="Image_ScreenCopy"   Stretch="None"></Image>
+            <Image   x:Name="Image_Screen"  Stretch="None"></Image>
         </Grid>
     </Grid>
 </UserControl>
