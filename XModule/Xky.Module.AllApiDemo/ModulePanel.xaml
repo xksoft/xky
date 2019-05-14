@@ -24,20 +24,65 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#1d232a"   Height="500" MaxWidth="1024">
+    <Grid Background="#1d232a"   Height="780" MaxWidth="1024">
         <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
             <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         </Canvas>
         <Grid  Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="42"></RowDefinition>
-            <RowDefinition Height="42"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+           
         </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Orientation="Horizontal"/>
-            <StackPanel Grid.Row="2" Orientation="Horizontal"/>
+            <WrapPanel Grid.Row="1" Orientation="Horizontal">
+               
+                <UserControl:MyButton Text="执行adb指令" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="执行adb shell指令" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="在手机上弹出的提示信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="唤醒设备" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="点击某个位置" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="按下某个位置" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="释放某个位置" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="移动到某个位置" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="滚动" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="滑动" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="按下某个按键" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="设置手机上的剪贴板内容" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="读取剪贴板内容" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="查找控件元素" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="查找并点击一个元素" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="查找某个控件并输入指定文本" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="重新启动APP" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="结束在运行的APP" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="清空APP所有数据" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="调用第三方接口Api" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="通过输入法输入文本" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="打开输入法选择界面" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="设置侠客云X输入法" Margin="0,0,10,10"></UserControl:MyButton>
+
+                <UserControl:MyButton Text="执行输入法动作指令" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="创建一个全息硬件信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="获取当前设备的硬件全息KEY" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="还原一个全息硬件信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="创建一个APP的全息快照插座" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="切换一个APP的全息快照插座" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="获取当前APP的全息快照插座信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="获取当前APP的全息快照插座列表信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="删除指定的快照" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="将一个远程图片更新到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="基于文本生成一个二维码，并提交到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="将一个本地图片提交到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="锁屏" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="读取联系人" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="添加联系人" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="清空所有联系人" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Text="添加图片到系统图库" Margin="0,0,10,10"></UserControl:MyButton>
+               
+            </WrapPanel>
+         
+                <UserControl:MyTextBox  x:Name="TextBox_Result" Grid.Row="2"  LineHeight="20" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" WaterText=""></UserControl:MyTextBox>
+           
         </Grid>
     </Grid>
 </UserControl>

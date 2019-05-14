@@ -138,6 +138,7 @@ namespace Xky.XModule.ScreenTrain
                 _started = true;
 
                 _downPoint = e.GetPosition(Image_Screen);
+                Console.WriteLine("Point:" + (_downPoint.X / Image_Screen.ActualWidth) + "  " + (_downPoint.Y / Image_Screen.ActualHeight));
             }
             else
             {
@@ -158,7 +159,7 @@ namespace Xky.XModule.ScreenTrain
                     BitmapSource bitmapSource = ImageHelper.CutImage((BitmapSource)imageSource, new Int32Rect((int)rect_select.X, (int)rect_select.Y, (int)rect_select.Width, (int)rect_select.Height));
 
                     Image_Select.Source = bitmapSource;
-                    Console.WriteLine("X:"+rect_select.X+" Y:"+rect_select.Y);
+                    Console.WriteLine("X:"+rect_select.X+" Y:"+rect_select.Y+" "+(rect_select.X/imageSource.Width)+"  "+ (rect_select.Y / imageSource.Height));
                 }
                 else { Image_Select.Source = null; }
             }

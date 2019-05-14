@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -67,18 +68,22 @@ namespace Xky.XModule.WangZhe
             return result;
         }
         private Queue transq = new Queue();//屏幕截图列队
+        private Queue adbQueue = new Queue();
         private long lastDate = 0;//最后进入列队时间
         private Font nameFont = new Font("Arial", 9);
         private SolidBrush nameBrush = new SolidBrush(System.Drawing.Color.GreenYellow);
         private System.Drawing.Pen namePen = new System.Drawing.Pen(System.Drawing.Color.GreenYellow, 2);
         private Bitmap bitmapNull = new Bitmap(100, 100);
         private Graphics graphicsNull = null;
+      
         public void StartTransQueue()
         {
             new Thread(() =>
             {
                 while (true&&!Exit)
                 {
+                   
+                    
                     Thread.Sleep(1);
                     if (transq.Count > 0)
                     {
@@ -105,12 +110,15 @@ namespace Xky.XModule.WangZhe
                                 {
 
                                     List<TransItem> transItems = JsonConvert.DeserializeObject<List<TransItem>>(tr.msg);
+                                    if (!Playing) { AiPlay(transItems); }
+                                   
                                     if (graphicsNull != null)
                                     {
                                         graphicsNull.Clear(System.Drawing.Color.Transparent);
                                     }
                                     if (transItems.Count > 0)
                                     {
+
 
                                         foreach (TransItem item in transItems)
                                         {
@@ -140,6 +148,94 @@ namespace Xky.XModule.WangZhe
             })
             { IsBackground = true }.Start();
         }
+       
+        public int safeCount = 0;
+        public int buyCount = 0;
+        public bool Playing = false;
+        public void AiPlay(List<TransItem> tritems)
+        {
+            new Thread(() =>
+            {
+                if (Playing) { return; }
+            Playing = true;
+             var items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") select i).ToList();
+            if (items.Count > 0)
+            {
+                safeCount = 0;
+                Console.WriteLine("后退");
+                device.ScriptEngine.MouseDown(0.2, 0.78);
+                Thread.Sleep(50);
+                device.ScriptEngine.MouseDrag(0.17, 0.864);
+                Thread.Sleep(2000);
+                device.ScriptEngine.MouseUp(0.17, 0.864);
+
+            }
+            else
+            {
+                items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") select i).ToList();
+                    if (items.Count > 0 && items.Count < 4)
+                    {
+                        safeCount = 0;
+                        Console.WriteLine("攻击");
+                        device.ScriptEngine.Click(0.868, 0.844);
+                        device.ScriptEngine.Click(0.716, 0.872);
+                        device.ScriptEngine.Click(0.772, 0.682);
+                        device.ScriptEngine.Click(0.858, 0.576);
+                    }
+                    else if (items.Count >= 4) {
+                        //怂
+                        Console.WriteLine("后退");
+                        device.ScriptEngine.MouseDown(0.2, 0.78);
+                        Thread.Sleep(50);
+                        device.ScriptEngine.MouseDrag(0.17, 0.864);
+                        Thread.Sleep(2000);
+                        device.ScriptEngine.MouseUp(0.17, 0.864);
+                    }
+                    else
+                    {
+
+                        if (buyCount >= 10 || (from i in tritems where (i.Type == "装备购买提示" || i.Type == "技能升级提示") select i).ToList().Count > 0)
+                        {
+                            //一段时间内周围没有地方单位，购买装备，学习技能
+                            device.ScriptEngine.Click(0.093, 0.393);
+                            device.ScriptEngine.Click(0.091, 0.5);
+                            device.ScriptEngine.Click(0.66, 0.766);
+                            device.ScriptEngine.Click(0.72, 0.57);
+                            device.ScriptEngine.Click(0.83, 0.42);
+                            buyCount = 0;
+                        }
+                        if (safeCount >= 10)
+                        {
+                            //前进
+                            Console.WriteLine("前进");
+                            device.ScriptEngine.MouseDown(0.2, 0.78);
+                            Thread.Sleep(50);
+                            device.ScriptEngine.MouseDrag(0.24, 0.67);
+                            Thread.Sleep(800);
+                            device.ScriptEngine.MouseUp(0.24, 0.67);
+                            safeCount = 0;
+                        }
+
+
+                        //没有敌方单位
+                        items = (from i in tritems where (i.Type == "我方小兵" || i.Type == "队友" || i.Type == "我方防御塔"||i.Type=="老家") select i).ToList();
+                        if (items.Count > 0)
+                        {
+                            //有我方小兵或队友在的时候不要方
+                            safeCount = safeCount + items.Count;
+                            buyCount++;
+                        }
+                        else {
+                            safeCount++;
+                            buyCount++;
+                        }
+                    }
+
+            }
+            Playing = false;
+            })
+            { IsBackground = true }.Start();
+        }
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             Client.CloseDialogPanel();
@@ -153,8 +249,10 @@ namespace Xky.XModule.WangZhe
             Image_Screen.Source.Changed += Source_Changed;
             Image_ScreenCopy.Width = Image_Screen.Width;
             Image_ScreenCopy.Height = Image_Screen.Height;
-           
+
             StartTransQueue();
+           
+
         }
 
         private void Source_Changed(object sender, EventArgs e)
