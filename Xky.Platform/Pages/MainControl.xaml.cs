@@ -23,7 +23,6 @@ namespace Xky.Platform.Pages
     public partial class MainControl : System.Windows.Controls.UserControl
     {
         private Thread _lastConnectThread;
-        private Device CurrentDevice;
         private readonly List<Device> _screenTickList = new List<Device>();
 
         public MainControl()
@@ -36,7 +35,7 @@ namespace Xky.Platform.Pages
 
         private void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Client.SearchDevices(SearchText.Text);
+            Client.SearchDevices(SearchText.Text, GetTag(), GetDevicesByTag());
             if (!string.IsNullOrEmpty(SearchText.Text))
             {
                 SearchResultLabel.Visibility = Visibility.Visible;
@@ -49,6 +48,34 @@ namespace Xky.Platform.Pages
             {
                 SearchResultLabel.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private List<Device> GetDevicesByTag()
+        {
+            if (TagListBox.SelectedItem is Tag tag)
+            {
+                return tag.Devices;
+            }
+
+            var find = Client.Tags.ToList().Find(p => p.Name == "所有设备");
+            if (find != null)
+            {
+                Console.WriteLine("设为选中");
+                TagListBox.SelectedItem = find;
+                return find.Devices;
+            }
+
+            return new List<Device>();
+        }
+
+        private string GetTag()
+        {
+            if (TagListBox.SelectedItem is Tag tag)
+            {
+                return tag.Name;
+            }
+
+            return "所有设备";
         }
 
 
@@ -70,6 +97,7 @@ namespace Xky.Platform.Pages
                             DeviceListBox.ItemsSource = Client.PanelDevices;
                             TagListBox.ItemsSource = Client.Tags;
                             NodeTagListBox.ItemsSource = Client.NodeTags;
+                            TagListBox.SelectedIndex = 0;
                         });
                         Common.ShowToast("设备加载成功");
                         break;
@@ -127,7 +155,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 nodeGroup = from device in _screenTickList
-                            group device by device.NodeSerial;
+                    group device by device.NodeSerial;
             }
 
             foreach (var group in nodeGroup)
@@ -141,7 +169,7 @@ namespace Xky.Platform.Pages
                 }
 
                 Client.CallNodeEvent(group.First().NodeSerial, jarray,
-                    new JObject { ["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
+                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30});
             }
         }
 
@@ -164,6 +192,10 @@ namespace Xky.Platform.Pages
                 });
                 RunningModules.ItemsSource = device.RunningModules;
             }
+            else
+            {
+                MyMirrorScreen.Disconnect();
+            }
         }
 
         private void MyMirrorScreen_OnOnShowLog(object sender, string log, Color color)
@@ -173,17 +205,17 @@ namespace Xky.Platform.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
         }
 
         private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
@@ -214,7 +246,7 @@ namespace Xky.Platform.Pages
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
+            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -255,7 +287,7 @@ namespace Xky.Platform.Pages
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            string tag = ((MyImageButton)e.Source).Tag.ToString();
+            string tag = ((MyImageButton) e.Source).Tag.ToString();
             MessageBox.Show(tag);
         }
 
@@ -272,13 +304,13 @@ namespace Xky.Platform.Pages
                 return;
             }
 
-            var module_select = (Module)ModuleListBox.SelectedItem;
+            var module_select = (Module) ModuleListBox.SelectedItem;
             if (module_select != null)
             {
-                var module = (Module)module_select.Clone();
+                var module = (Module) module_select.Clone();
                 if (DeviceListBox.SelectedItem is Device device)
                 {
-                    XModule xmodule = (XModule)module.XModule.Clone();
+                    XModule xmodule = (XModule) module.XModule.Clone();
                     var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
                     if (runningmodule != null)
                     {
@@ -313,13 +345,10 @@ namespace Xky.Platform.Pages
 
                             Dispatcher.Invoke(() =>
                             {
-
                                 device.RunningModules.Remove(module);
 
                                 if (device.RunningThreads.ContainsKey(module.Md5))
                                 {
-
-
                                     device.RunningThreads.Remove(module.Md5);
                                 }
                             });
@@ -329,7 +358,6 @@ namespace Xky.Platform.Pages
                             //参数设置过程中取消执行
                             if (device.RunningThreads.ContainsKey(module.Md5))
                             {
-
                                 device.RunningThreads.Remove(module.Md5);
                             }
                         }
@@ -351,23 +379,31 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag = ((MenuItem)sender).Tag.ToString();
+            string tag = ((MenuItem) sender).Tag.ToString();
             switch (tag)
             {
                 case "EditInfo":
+                {
+                    ContentControl_EditInfo_Tags.ItemsSource = Client.Tags;
+                    MyMessageBox msg =
+                        new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消") {MessageText = ""};
+                    ((ContentControl) ((Border) msg.Content).FindName("ContentControl")).Content =
+                        ContentControl_EditInfo.Content;
+                    Common.ShowMessageControl(msg);
+                    if (msg.Result == MessageBoxResult.Yes)
                     {
-                        ContentControl_EditInfo_Tags.ItemsSource = Client.Tags;
-                        MyMessageBox msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消") { MessageText = "" };
-                        ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content = ContentControl_EditInfo.Content;
-                        Common.ShowMessageControl(msg);
-                        if (msg.Result == MessageBoxResult.Yes)
-                        {
-
-                        }
-
-                        break;
                     }
 
+                    break;
+                }
+            }
+        }
+
+        private void TagListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TagListBox.SelectedItem is Tag tag)
+            {
+                Client.SearchDevices(SearchText.Text, tag.Name, GetDevicesByTag());
             }
         }
     }

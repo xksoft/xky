@@ -27,13 +27,13 @@
                 </Border.Effect>
             </Border>
 
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">分类</TextBlock>
+
             <StackPanel Grid.Row="1">
                 <ListBox x:Name="TagListBox"  HorizontalContentAlignment="Stretch" Margin="15"
-                     ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
+                     ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True" SelectionChanged="TagListBox_OnSelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border x:Name="MyBorder" CornerRadius="5" Cursor="Hand">
+                            <Border x:Name="MyBorder" CornerRadius="5" Cursor="Hand" Margin="0,0,0,2">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="7*" />
@@ -176,7 +176,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <!-- <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/> -->
                 <UserControl:MyTextBox x:Name="SearchText" Margin="15" CornerRadius="5"
                                  Background="{StaticResource  BackgroundColor1}"
                                  Foreground="White" WaterText="搜索在线设备"
@@ -773,7 +772,7 @@
                     <ItemsControl x:Name="ContentControl_EditInfo_Tags" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <UserControl:MyButton Text="{Binding RelativeSource={RelativeSource Self}, Path=Count}" Margin="0,5,5,5"></UserControl:MyButton>
+                                <UserControl:MyButton Text="{Binding RelativeSource={RelativeSource Self}}" Margin="0,5,5,5"></UserControl:MyButton>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>

@@ -192,12 +192,20 @@ namespace Xky.Core
                 if (CurrentDevice.Sn == model.Sn)
                 {
                     Dispatcher.Invoke(() => { ScreenImage.Visibility = Visibility.Collapsed; });
-                    AddLabel("设备已断开连接...", Colors.OrangeRed);
+                    AddLabel(model.Name+" 已断开连接...", Colors.OrangeRed);
                 }
             });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
             _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
+        }
+
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        public void Disconnect()
+        {
+            _socket?.Disconnect();
         }
 
 

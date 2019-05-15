@@ -30,6 +30,7 @@ namespace Xky.Core
         private static Socket.Client.Socket _coreSocket;
 
         private static string _lastSearchKeyword;
+        private static string _lastSearchTag;
 
         #region 公开属性
 
@@ -61,7 +62,7 @@ namespace Xky.Core
         /// <summary>
         /// 标签信息
         /// </summary>
-        public static ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+        public static ObservableCollection<Tag> Tags = new ObservableCollection<Tag>(){new Tag(){Count = 0,Devices = new List<Device>(),Name = "所有设备"}};
 
         /// <summary>
         /// 节点标签信息
@@ -603,11 +604,14 @@ namespace Xky.Core
         /// 搜索设备
         /// </summary>
         /// <param name="keyword"></param>
-        public static void SearchDevices(string keyword)
+        /// <param name="tag"></param>
+        /// <param name="devices"></param>
+        public static void SearchDevices(string keyword,string tag,List<Device> devices)
         {
             _lastSearchKeyword = keyword;
-            var list = (from d in Devices
-                where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
+            _lastSearchTag = tag;
+            var list = (from d in devices
+                        where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
                       d.Name.Contains(keyword) ||
                       d.Description.Contains(keyword)
                 orderby d.Name
@@ -784,8 +788,8 @@ namespace Xky.Core
             {
                 tag.Devices.Remove(device);
                 tag.Count--;
-                if (tag.Count == 0)
-                    MainWindow.Dispatcher.Invoke(() => { Tags.Remove(tag); });
+//                if (tag.Count == 0)
+//                    MainWindow.Dispatcher.Invoke(() => { Tags.Remove(tag); });
             }
         }
 
@@ -796,9 +800,9 @@ namespace Xky.Core
         /// <param name="isRemove"></param>
         private static void ParsePanelDevice(Device device, bool isRemove)
         {
-            if (_lastSearchKeyword == null || device.Id.ToString().Contains(_lastSearchKeyword) ||
+            if (_lastSearchKeyword == null||device.Id.ToString().Contains(_lastSearchKeyword) ||
                 device.Sn.Contains(_lastSearchKeyword) ||
-                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword))
+                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword)&&device.Tags.Contains(_lastSearchTag))
             {
                 var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
                 if (isRemove)
