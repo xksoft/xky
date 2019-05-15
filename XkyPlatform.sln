@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.FileManager", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.ScreenTrain", "XModule\Xky.XModule.ScreenTrain\Xky.XModule.ScreenTrain.csproj", "{80200232-EEC8-4752-8E29-A2FE388A4667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.Demo", "XModule\Xky.XModule.Demo\Xky.XModule.Demo.csproj", "{549A063A-CDE7-478F-9A96-A8520C5E602D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.System", "XModule\Xky.XModule.Demo\Xky.XModule.System.csproj", "{549A063A-CDE7-478F-9A96-A8520C5E602D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.Adb", "XModule\Xky.XModule.Adb\Xky.XModule.Adb.csproj", "{C3364FE4-43B0-41B1-93B3-4F2C9F9559BE}"
 EndProject

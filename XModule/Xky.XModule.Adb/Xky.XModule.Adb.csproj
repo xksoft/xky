@@ -74,6 +74,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\系统工具\Adb\ /y</PostBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\2-系统工具\Adb\ /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

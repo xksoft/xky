@@ -81,6 +81,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\系统工具\屏幕训练\ /y</PostBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\人工智能\屏幕训练\ /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
