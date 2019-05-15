@@ -559,6 +559,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
+
                                             <StackPanel Orientation="Vertical" VerticalAlignment="Center"
                                                         HorizontalAlignment="Center">
                                                 <TextBlock Foreground="#ccc" TextWrapping="Wrap" Width="280">没有发现可用模块，请将模块文件夹放在程序目录下的“Modules”文件夹中并重启本系统。</TextBlock>
@@ -587,8 +588,13 @@
                                     <ColumnDefinition Width="50" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding ElementName=ModuleItem, Path=DataContext.Icon}"
-                                       VerticalAlignment="Center" />
+
+                                <Image Source="{Binding ElementName=ModuleItem, Path=DataContext.Icon}"
+                                       VerticalAlignment="Center" Width="48" Height="48" >
+                                    <Image.Clip>
+                                        <RectangleGeometry  Rect="0,0,48,48" RadiusX="8" RadiusY="8"/>
+                                    </Image.Clip>
+                                </Image>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
                                             Margin="5,0,0,0">
                                     <Label Foreground="#25272a"
