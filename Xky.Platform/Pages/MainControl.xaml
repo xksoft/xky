@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
              xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              xmlns:core="clr-namespace:Xky.Core;assembly=Xky.Core"
              mc:Ignorable="d"
@@ -31,51 +31,61 @@
             <StackPanel Grid.Row="1">
                 <ListBox x:Name="TagListBox"  HorizontalContentAlignment="Stretch" Margin="15"
                      ScrollViewer.CanContentScroll="True" VirtualizingStackPanel.IsVirtualizing="True">
-
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border x:Name="MyBorder" Background="{StaticResource  BackgroundColor4}" CornerRadius="5">
+                            <Border x:Name="MyBorder" CornerRadius="5" Cursor="Hand">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="7*" />
                                         <ColumnDefinition Width="3*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="MyTextBlock1" Grid.Column="0" Foreground="#a0a4a7"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10" Text="{Binding ElementName=MyBorder, Path=DataContext.Name}" />
-                                    <TextBlock Grid.Column="1" x:Name="MyTextBlock2" Foreground="#a0a4a7"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Right" Margin="10"
-                                           Text="{Binding ElementName=MyBorder, Path=DataContext.Count}" />
+                                    <TextBlock Grid.Column="0" Foreground="#a0a4a7"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left"
+                                               Margin="10" Text="{Binding ElementName=MyBorder, Path=DataContext.Name}">
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1"  Foreground="#a0a4a7"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right" Margin="10" Text="{Binding ElementName=MyBorder, Path=DataContext.Count}">
+                                    </TextBlock>
                                 </Grid>
                             </Border>
                             <DataTemplate.Triggers>
                                 <DataTrigger
-                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                Value="True" />
-                                <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
-                                Value="True" />
+                                Value="True" >
+                                    <Setter Property="Background" TargetName="MyBorder" Value="#41474f" />
+                                </DataTrigger>
+                                <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                Value="True" >
+                                    <Setter Property="Background" TargetName="MyBorder" Value="#373d45" />
+                                </DataTrigger>
+                               
                             </DataTemplate.Triggers>
 
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-
                     <ListBox.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Control.Margin" Value="0" />
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border Background="Transparent" >
+                                            <ContentPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                             <Setter Property="Control.Padding" Value="0" />
                             <Setter Property="Control.BorderThickness" Value="0" />
                         </Style>
                     </ListBox.ItemContainerStyle>
-
 
                     <ListBox.Template>
                         <ControlTemplate TargetType="ListBox">
@@ -167,11 +177,11 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <!-- <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource DescriptionColor}"/> -->
-                <local:MyTextBox x:Name="SearchText" Margin="15" CornerRadius="5"
+                <UserControl:MyTextBox x:Name="SearchText" Margin="15" CornerRadius="5"
                                  Background="{StaticResource  BackgroundColor1}"
                                  Foreground="White" WaterText="搜索在线设备"
                                  WindowChrome.IsHitTestVisibleInChrome="True" TextChanged="SearchText_TextChanged" />
-                <local:MyTagLabel x:Name="SearchResultLabel" Visibility="Collapsed" HorizontalAlignment="Right"
+                <UserControl:MyTagLabel x:Name="SearchResultLabel" Visibility="Collapsed" HorizontalAlignment="Right"
                                   Text="搜索结果" Margin="0,0,20,0"
                                   Background="{StaticResource BackgroundColor2}"
                                   Foreground="Lime" IsHitTestVisible="False" />
@@ -186,19 +196,15 @@
                      ScrollViewer.ScrollChanged="DeviceListBox_OnScrollChanged">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="编辑">
-                            <MenuItem Header="修改基本信息" />
-                            <MenuItem Header="修改标签" />
+                        <MenuItem Header="修改信息" Tag="EditInfo" Click="MenuItem_Click">
                             <MenuItem.Icon>
                                 <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" />
                             </MenuItem.Icon>
-
                         </MenuItem>
-
-
                         <Separator />
-
-                        <MenuItem Header="测试一下" Click="MenuItem_OnClick" />
+                        <MenuItem Header="分享设备" Tag="Share" Click="MenuItem_Click"/>
+                        <MenuItem Header="重启" Tag="Reboot" Click="MenuItem_Click"/>
+                       
 
                     </ContextMenu>
                 </ListBox.ContextMenu>
@@ -246,36 +252,36 @@
                             <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
-                                    <local:MyTagLabel x:Name="DeviceId"
+                                    <UserControl:MyTagLabel x:Name="DeviceId"
                                                       Text="{Binding ElementName=MyBorder, Path=DataContext.Id}"
                                                       Margin="0,0,3,0"
 
                                                       Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
-                                    <local:MyTagLabel x:Name="DeviceName"
+                                    <UserControl:MyTagLabel x:Name="DeviceName"
                                                       Text="{Binding ElementName=MyBorder, Path=DataContext.Name}"
                                                       Margin="0,0,3,0"
 
                                                       Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                    <local:MyTagLabel
+                                    <UserControl:MyTagLabel Text="分组"
                                         Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Margin="0,0,0,3" VerticalAlignment="Center"
                                             HorizontalAlignment="Left">
 
 
-                                    <local:MyProgressbar Maximum="100"
+                                    <UserControl:MyProgressbar Maximum="100"
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
                                                          IndicatorBrush="#343c43" DangerBrush="#e30000"
                                                          DangerValue="0.4" />
-                                    <local:MyProgressbar Maximum="100"
+                                    <UserControl:MyProgressbar Maximum="100"
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
                                                          IndicatorBrush="#343c43" DangerBrush="#e30000"
                                                          DangerValue="0.4" />
-                                    <local:MyProgressbar Maximum="100"
+                                    <UserControl:MyProgressbar Maximum="100"
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
                                                          IndicatorBrush="#565f66" DangerBrush="#e30000"
@@ -284,7 +290,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
 
-                                    <local:MyTagLabel x:Name="RunStatus"
+                                    <UserControl:MyTagLabel x:Name="RunStatus"
                                                       Foreground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
 
                                 </StackPanel>
@@ -369,23 +375,23 @@
                         <VirtualizingStackPanel Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
                                                 Width="48" MaxHeight="768" Margin="0,0,10,0">
 
-                            <local:MyImageButton Tag="volumeup" Click="DeviceMenuItem_OnClick"
+                            <UserControl:MyImageButton Tag="volumeup" Click="DeviceMenuItem_OnClick"
                                                  Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumeup-white.png"
                                                  Height="48" Image_Height="24" Image_Width="24"
                                                  Background_MouseOver="#404750" Background_Pressed="#32373d" />
-                            <local:MyImageButton
+                            <UserControl:MyImageButton
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumedown-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <local:MyImageButton
+                            <UserControl:MyImageButton
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <local:MyImageButton
+                            <UserControl:MyImageButton
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Height="48"
                                 Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <local:MyImageButton
+                            <UserControl:MyImageButton
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/setdebug-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
@@ -750,5 +756,39 @@
                 </ListBox.ItemContainerStyle>
             </ListBox>
         </Grid>
+
+        <!--#region对话框开始-->
+        <!--#region 分组修改对话框-->
+        <ContentControl Grid.Row="1" x:Name="ContentControl_EditInfo" Visibility="Collapsed" Panel.ZIndex="99">
+            <StackPanel Orientation="Vertical" Margin="50" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+                    <Label Foreground="#fff" Width="70" HorizontalAlignment="Left" Margin="0,0,0,5">设备名称</Label>
+                    <UserControl:MyTextBox x:Name="TextBox_DeviceName" WaterText="设备名称"  Width="300" Height="30"></UserControl:MyTextBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,0,10">
+                    <Label Foreground="#fff" Width="70" HorizontalAlignment="Left" Margin="0,0,0,5">分组</Label>
+                    <UserControl:MyTextBox x:Name="TextBox_DeviceTag" WaterText="分组"  Width="300" Height="30"></UserControl:MyTextBox>
+                </StackPanel>
+                <StackPanel>
+                    <ItemsControl x:Name="ContentControl_EditInfo_Tags" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <UserControl:MyButton Text="{Binding RelativeSource={RelativeSource Self}, Path=Count}" Margin="0,5,5,5"></UserControl:MyButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+    </ContentControl>
+    <!--#endregion-->
+        <!--#endregion对话框结束-->
     </Grid>
+   
 </UserControl>
+ 
+  

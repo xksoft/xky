@@ -199,9 +199,13 @@ namespace Xky.XModule.WangZhe
                             //一段时间内周围没有地方单位，购买装备，学习技能
                             device.ScriptEngine.Click(0.093, 0.393);
                             device.ScriptEngine.Click(0.091, 0.5);
+
+                            device.ScriptEngine.Click(0.817, 0.476);
                             device.ScriptEngine.Click(0.66, 0.766);
                             device.ScriptEngine.Click(0.72, 0.57);
-                            device.ScriptEngine.Click(0.83, 0.42);
+
+                       
+
                             buyCount = 0;
                         }
                         if (safeCount >= 10)

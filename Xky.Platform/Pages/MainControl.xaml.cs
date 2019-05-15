@@ -127,7 +127,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 nodeGroup = from device in _screenTickList
-                    group device by device.NodeSerial;
+                            group device by device.NodeSerial;
             }
 
             foreach (var group in nodeGroup)
@@ -141,7 +141,7 @@ namespace Xky.Platform.Pages
                 }
 
                 Client.CallNodeEvent(group.First().NodeSerial, jarray,
-                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30});
+                    new JObject { ["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
             }
         }
 
@@ -173,17 +173,17 @@ namespace Xky.Platform.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+            MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
         }
 
         private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
@@ -214,7 +214,7 @@ namespace Xky.Platform.Pages
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
+            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -241,9 +241,9 @@ namespace Xky.Platform.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-//                var response1 = device.ScriptEngine.WriteBufferToFile("/sdcard/bbb.txt",
-//                    Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
-//                Console.WriteLine(response1.Json);
+                //                var response1 = device.ScriptEngine.WriteBufferToFile("/sdcard/bbb.txt",
+                //                    Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
+                //                Console.WriteLine(response1.Json);
 
                 var response = device.ScriptEngine.ReadDir("/sdcard");
                 if (response.Result)
@@ -255,7 +255,7 @@ namespace Xky.Platform.Pages
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            string tag = ((MyImageButton) e.Source).Tag.ToString();
+            string tag = ((MyImageButton)e.Source).Tag.ToString();
             MessageBox.Show(tag);
         }
 
@@ -272,13 +272,13 @@ namespace Xky.Platform.Pages
                 return;
             }
 
-            var module_select = (Module) ModuleListBox.SelectedItem;
+            var module_select = (Module)ModuleListBox.SelectedItem;
             if (module_select != null)
             {
-                var module = (Module) module_select.Clone();
+                var module = (Module)module_select.Clone();
                 if (DeviceListBox.SelectedItem is Device device)
                 {
-                    XModule xmodule = (XModule) module.XModule.Clone();
+                    XModule xmodule = (XModule)module.XModule.Clone();
                     var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
                     if (runningmodule != null)
                     {
@@ -310,16 +310,16 @@ namespace Xky.Platform.Pages
                             Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
                             xmodule.Start();
                             Console.WriteLine("设备[" + device.Id + "]成功执行模块[" + module.Name + "]");
-                          
+
                             Dispatcher.Invoke(() =>
                             {
-                               
+
                                 device.RunningModules.Remove(module);
-                               
+
                                 if (device.RunningThreads.ContainsKey(module.Md5))
                                 {
-                                   
-                                   
+
+
                                     device.RunningThreads.Remove(module.Md5);
                                 }
                             });
@@ -329,7 +329,7 @@ namespace Xky.Platform.Pages
                             //参数设置过程中取消执行
                             if (device.RunningThreads.ContainsKey(module.Md5))
                             {
-                               
+
                                 device.RunningThreads.Remove(module.Md5);
                             }
                         }
@@ -348,5 +348,27 @@ namespace Xky.Platform.Pages
         }
 
         #endregion
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = ((MenuItem)sender).Tag.ToString();
+            switch (tag)
+            {
+                case "EditInfo":
+                    {
+                        ContentControl_EditInfo_Tags.ItemsSource = Client.Tags;
+                        MyMessageBox msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消") { MessageText = "" };
+                        ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content = ContentControl_EditInfo.Content;
+                        Common.ShowMessageControl(msg);
+                        if (msg.Result == MessageBoxResult.Yes)
+                        {
+
+                        }
+
+                        break;
+                    }
+
+            }
+        }
     }
 }

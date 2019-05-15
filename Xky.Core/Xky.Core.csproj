@@ -125,9 +125,6 @@
     <Compile Include="UserControl\MyTabItem.xaml.cs">
       <DependentUpon>MyTabItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MyTagItem.xaml.cs">
-      <DependentUpon>MyTagItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\MyTagLabel.xaml.cs">
       <DependentUpon>MyTagLabel.xaml</DependentUpon>
     </Compile>
@@ -172,10 +169,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\MyTabItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControl\MyTagItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

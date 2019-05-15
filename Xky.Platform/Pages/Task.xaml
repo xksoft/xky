@@ -21,10 +21,7 @@
                     任务中心
                 </Label>
                 <StackPanel Grid.Row="1" Margin="15">
-                    <UserControl:MyTagItem />
-                    <UserControl:MyTagItem />
-                    <UserControl:MyTagItem />
-                    <UserControl:MyTagItem />
+                   
 
                 </StackPanel>
             </StackPanel>
