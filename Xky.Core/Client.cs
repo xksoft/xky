@@ -784,7 +784,7 @@ namespace Xky.Core
         /// </summary>
         /// <param name="name"></param>
         /// <param name="device"></param>
-        private static void AddTags(string name, Device device)
+        public static void AddTags(string name, Device device)
         {
             var tag = Tags.ToList().Find(p => p.Name == name);
 
@@ -811,7 +811,7 @@ namespace Xky.Core
         /// </summary>
         /// <param name="name"></param>
         /// <param name="device"></param>
-        private static void RemoveTags(string name, Device device)
+        public static void RemoveTags(string name, Device device)
         {
             var tag = Tags.ToList().Find(p => p.Name == name);
 

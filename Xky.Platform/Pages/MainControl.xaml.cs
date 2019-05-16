@@ -379,24 +379,26 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag = ((MenuItem) sender).Tag.ToString();
+            string tag = ((MenuItem)sender).Tag.ToString();
             switch (tag)
             {
                 case "EditInfo":
-                {
+                    {
+                        string oldtag = "";
                         if (DeviceListBox.SelectedItem is Device device)
                         {
                             ContentControl_EditInfo_Tags.ItemsSource = Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
                             TextBox_DeviceName.Text = device.Name;
                             if (device.Tags.Length > 0)
                             {
+                                oldtag = device.Tags[0];
                                 TextBox_DeviceTag.Text = device.Tags[0];
                             }
                             else
                             {
                                 TextBox_DeviceTag.Text = "";
                             }
-                         
+
                             MyMessageBox msg =
                                 new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消") { MessageText = "" };
                             ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content =
@@ -408,20 +410,36 @@ namespace Xky.Platform.Pages
                                 string DeviceTag = TextBox_DeviceTag.Text;
                                 Client.StartAction(() =>
                                 {
-                                  Response response =  Client.SetDevice(device.Sn,DeviceName , device.Description, new string[]{ DeviceTag});
+                                    string[] tags = new string[0];
+                                    if (DeviceTag.Length > 0)
+                                    {
+                                        tags = new string[] { DeviceTag };
+                                    }
+                                    Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
                                     if (response.Result)
                                     {
-                                       
-                                            Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
-                                           
-                                        
+
+                                        Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
+                                        device.Name = DeviceName;
+
+                                        device.Tags = tags;
+                                        if (oldtag != DeviceTag)
+                                        {
+                                            if (oldtag.Length > 0) { Client.RemoveTags(oldtag, device); }
+                                            else
+                                            {
+                                                Client.RemoveTags("未分组设备", device);
+                                            }
+                                            Client.AddTags(DeviceTag, device);
+                                        }
+
                                     }
                                     else { Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7)); }
                                 });
                             }
                         }
-                    break;
-                }
+                        break;
+                    }
             }
         }
         private void Label_EditInfo_Tags_Click(object sender, RoutedEventArgs e)
