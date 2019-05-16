@@ -181,5 +181,44 @@ namespace Xky.XModule.System
 
 
     }
+    public class System_Test : Core.XModule
+    {
+        public override string Name()
+        {
+            return "测试";
+        }
+        public override bool IsBackground()
+        {
+            return true;
+        }
+        public override byte[] Icon()
+        {
+            Assembly myAssembly = Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.System.icon.reboot.png");
+            byte[] bytes = new byte[myStream.Length];
+            myStream.Read(bytes, 0, bytes.Length);
+            return bytes;
+
+        }
+        public override string Description()
+        {
+            return "[后台模块]重启设备";
+        }
+
+        public override void Start()
+        {
+            for (int i=0;i<60;i++) {
+                Thread.Sleep(1000);
+            }
+
+        }
+        public override bool ShowUserControl()
+        {
+            return true;
+
+        }
+
+
+    }
 }
   

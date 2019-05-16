@@ -8,7 +8,17 @@
              xmlns:core="clr-namespace:Xky.Core;assembly=Xky.Core"
              mc:Ignorable="d"
              d:DesignHeight="850" d:DesignWidth="1200" Loaded="MainControl_OnLoaded">
-    <Grid>
+    <UserControl.Resources>
+        <lib:SwitchConverter x:Key="ModuleState1ToVisible">
+            <lib:SwitchConverterCase When="0" Then="Collapsed" />
+            <lib:SwitchConverterCase  Then="Visible" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ModuleState0ToVisible">
+            <lib:SwitchConverterCase When="0" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+    </UserControl.Resources>
+<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="300" />
@@ -587,13 +597,19 @@
                 </ListBox.Style>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border CornerRadius="5" Cursor="Hand" MouseDown="ModuleListBox_MouseDown">
+                        <Border CornerRadius="5" Cursor="Hand" MouseDown="ModuleListBox_MouseDown" HorizontalAlignment="Stretch">
+                            <Grid>
+                                
+                               
+                          
                             <Grid x:Name="ModuleItem">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50" />
                                     <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
+                                    <ColumnDefinition Width="60" />
+                                    </Grid.ColumnDefinitions>
+                                
+                               
                                 <Image Source="{Binding ElementName=ModuleItem, Path=DataContext.Icon}"
                                        VerticalAlignment="Center" Width="48" Height="48" >
                                     <Image.Clip>
@@ -602,14 +618,26 @@
                                 </Image>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
                                             Margin="5,0,0,0">
-                                    <Label Foreground="#25272a"
-                                           Content="{Binding ElementName=ModuleItem, Path=DataContext.Name}" />
-                                    <Label Foreground="#5f6368"
-                                           Content="{Binding ElementName=ModuleItem, Path=DataContext.Description}" />
+
+                                        <TextBlock Foreground="#25272a" TextTrimming="CharacterEllipsis" Margin="0,0,0,10"
+                                           Text="{Binding ElementName=ModuleItem, Path=DataContext.Name}" />
+                                        <TextBlock Foreground="#5f6368" TextTrimming="CharacterEllipsis"
+                                           Text="{Binding ElementName=ModuleItem, Path=DataContext.Description}" />
+                                    
+                                   
                                 </StackPanel>
+                                    <UserControl:MyButton x:Name="Button_Module_Run" Width="0" Text="运行" Grid.Column="2" Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.State,Converter={StaticResource ModuleState0ToVisible}}"></UserControl:MyButton>
+                                    <UserControl:MyButton Width="60" Text="停止" Grid.Column="2"  Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.State,Converter={StaticResource ModuleState1ToVisible}}" Background="#a32103" Background_MouseOver="#c12602" Background_Pressed="#a32103"></UserControl:MyButton>
+                                </Grid>
                             </Grid>
                         </Border>
                         <DataTemplate.Triggers>
+                            <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
+                                Value="True" >
+                                <Setter TargetName="Button_Module_Run" Property="Width"
+                                        Value="60" />
+                            </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -747,7 +775,8 @@
                     </GroupStyle>
                 </ListBox.GroupStyle>
                 <ListBox.ItemContainerStyle>
-                    <Style>
+                    <Style  TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                         <Setter Property="Control.Margin" Value="0" />
                         <Setter Property="Control.Padding" Value="10" />
                         <Setter Property="Control.BorderThickness" Value="0" />

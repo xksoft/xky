@@ -191,6 +191,10 @@ namespace Xky.Platform.Pages
                     }
                 });
                 RunningModules.ItemsSource = device.RunningModules;
+                foreach (var m in Client.Modules.ToList().FindAll(p => device.RunningModules.Contains(p))) {
+
+                    m.State = 1;
+                }
             }
             else
             {
