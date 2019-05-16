@@ -261,7 +261,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 _screenTickList.Clear();
-                _screenTickList.AddRange(Client.Devices.ToList()
+                _screenTickList.AddRange(Client.PanelDevices.ToList()
                     .GetRange(Convert.ToInt32(e.VerticalOffset), Convert.ToInt32(e.ViewportHeight)));
             }
 
@@ -269,21 +269,6 @@ namespace Xky.Platform.Pages
             Client.StartAction(SendScrccnTick);
         }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (DeviceListBox.SelectedItem is Device device)
-            {
-                //                var response1 = device.ScriptEngine.WriteBufferToFile("/sdcard/bbb.txt",
-                //                    Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
-                //                Console.WriteLine(response1.Json);
-
-                var response = device.ScriptEngine.ReadDir("/sdcard");
-                if (response.Result)
-                {
-                    Console.WriteLine(response.Json);
-                }
-            }
-        }
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
@@ -379,79 +364,92 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag = ((MenuItem)sender).Tag.ToString();
+            string tag = ((MenuItem) sender).Tag.ToString();
             switch (tag)
             {
                 case "EditInfo":
+                {
+                    string oldtag = "";
+                    if (DeviceListBox.SelectedItem is Device device)
                     {
-                        string oldtag = "";
-                        if (DeviceListBox.SelectedItem is Device device)
+                        ContentControl_EditInfo_Tags.ItemsSource =
+                            Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
+                        TextBox_DeviceName.Text = device.Name;
+                        if (device.Tags.Length > 0)
                         {
-                            ContentControl_EditInfo_Tags.ItemsSource = Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
-                            TextBox_DeviceName.Text = device.Name;
-                            if (device.Tags.Length > 0)
-                            {
-                                oldtag = device.Tags[0];
-                                TextBox_DeviceTag.Text = device.Tags[0];
-                            }
-                            else
-                            {
-                                TextBox_DeviceTag.Text = "";
-                            }
+                            oldtag = device.Tags[0];
+                            TextBox_DeviceTag.Text = device.Tags[0];
+                        }
+                        else
+                        {
+                            TextBox_DeviceTag.Text = "";
+                        }
 
-                            MyMessageBox msg =
-                                new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消") { MessageText = "" };
-                            ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content =
-                                ContentControl_EditInfo.Content;
-                            Common.ShowMessageControl(msg);
-                            if (msg.Result == MessageBoxResult.Yes)
+                        MyMessageBox msg =
+                            new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消")
+                                {MessageText = ""};
+                        ((ContentControl) ((Border) msg.Content).FindName("ContentControl")).Content =
+                            ContentControl_EditInfo.Content;
+                        Common.ShowMessageControl(msg);
+                        if (msg.Result == MessageBoxResult.Yes)
+                        {
+                            string DeviceName = TextBox_DeviceName.Text;
+                            string DeviceTag = TextBox_DeviceTag.Text;
+                            Client.StartAction(() =>
                             {
-                                string DeviceName = TextBox_DeviceName.Text;
-                                string DeviceTag = TextBox_DeviceTag.Text;
-                                Client.StartAction(() =>
+                                string[] tags = new string[0];
+                                if (DeviceTag.Length > 0)
                                 {
-                                    string[] tags = new string[0];
-                                    if (DeviceTag.Length > 0)
-                                    {
-                                        tags = new string[] { DeviceTag };
-                                    }
-                                    Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
-                                    if (response.Result)
-                                    {
+                                    tags = new string[] {DeviceTag};
+                                }
 
-                                        Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
-                                        device.Name = DeviceName;
+                                Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
+                                if (response.Result)
+                                {
+                                    Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
+                                    device.Name = DeviceName;
 
-                                        device.Tags = tags;
-                                        if (oldtag != DeviceTag)
+                                    device.Tags = tags;
+                                    if (oldtag != DeviceTag)
+                                    {
+                                        if (oldtag.Length > 0)
                                         {
-                                            if (oldtag.Length > 0) {
-                                                Client.RemoveTags(oldtag, device);
-                                                
-                                               
-                                            }
-                                            else
-                                            {
-                                                Client.RemoveTags("未分组设备", device);
-                                            }
-                                            if (DeviceTag.Length > 0) { Client.AddTags(DeviceTag, device); }
-                                            else { Client.AddTags("未分组设备", device); }
+                                            Client.RemoveTags(oldtag, device);
+                                        }
+                                        else
+                                        {
+                                            Client.RemoveTags("未分组设备", device);
                                         }
 
+                                        if (DeviceTag.Length > 0)
+                                        {
+                                            Client.AddTags(DeviceTag, device);
+                                        }
+                                        else
+                                        {
+                                            Client.AddTags("未分组设备", device);
+                                        }
                                     }
-                                    else { Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7)); }
-                                });
-                            }
+                                }
+                                else
+                                {
+                                    Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                                }
+                            });
                         }
-                        break;
                     }
+
+                    break;
+                }
             }
         }
+
         private void Label_EditInfo_Tags_Click(object sender, RoutedEventArgs e)
         {
-            TextBox_DeviceTag.Text = ((Label)sender).Content.ToString();
+            TextBox_DeviceTag.Text = ((Label) sender).Content.ToString();
         }
-            private void TagListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void TagListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (TagListBox.SelectedItem is Tag tag)
             {

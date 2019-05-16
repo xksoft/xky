@@ -62,7 +62,8 @@ namespace Xky.Core
         /// <summary>
         /// 标签信息
         /// </summary>
-        public static ObservableCollection<Tag> Tags = new ObservableCollection<Tag>(){new Tag(){Count = 0,Devices = new List<Device>(),Name = "所有设备"}};
+        public static ObservableCollection<Tag> Tags = new ObservableCollection<Tag>()
+            {new Tag() {Count = 0, Devices = new List<Device>(), Name = "所有设备"}};
 
         /// <summary>
         /// 节点标签信息
@@ -584,7 +585,7 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
-                    foreach (var json in (JArray)response.Json["list"])
+                    foreach (var json in (JArray) response.Json["list"])
                     {
                         PushDevice(json);
                     }
@@ -609,12 +610,12 @@ namespace Xky.Core
         /// <param name="keyword"></param>
         /// <param name="tag"></param>
         /// <param name="devices"></param>
-        public static void SearchDevices(string keyword,string tag,List<Device> devices)
+        public static void SearchDevices(string keyword, string tag, List<Device> devices)
         {
             _lastSearchKeyword = keyword;
             _lastSearchTag = tag;
             var list = (from d in devices
-                        where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
+                where _lastSearchKeyword == null || d.Id.ToString().Contains(keyword) || d.Sn.Contains(keyword) ||
                       d.Name.Contains(keyword) ||
                       d.Description.Contains(keyword)
                 orderby d.Name
@@ -650,6 +651,7 @@ namespace Xky.Core
 
             return !response.Result ? null : PushDevice(response.Json);
         }
+
         /// <summary>
         /// 修改设备信息
         /// </summary>
@@ -658,12 +660,13 @@ namespace Xky.Core
         /// <param name="desc"></param>
         /// <param name="tags"></param>
         /// <returns></returns>
-        public static Response SetDevice(string sn,string name,string desc,string[] tags)
+        public static Response SetDevice(string sn, string name, string desc, string[] tags)
         {
             var response = CallApi("set_device",
-                new JObject{ ["sn"] = sn, ["name"] = name, ["desc"] = desc, ["tags"] = JArray.FromObject( tags) });
+                new JObject {["sn"] = sn, ["name"] = name, ["desc"] = desc, ["tags"] = JArray.FromObject(tags)});
             return response;
         }
+
         /// <summary>
         ///     添加或更新Device
         /// </summary>
@@ -691,15 +694,14 @@ namespace Xky.Core
                     device.Sn = json["t_sn"]?.ToString();
                     device.Cpus = (int) json["t_cpus"];
                     device.Memory = (int) json["t_memory"];
-                    try {
-                        device.Tags = ((JArray)json["t_tags"]).ToObject<string[]>();
+                    try
+                    {
+                        device.Tags = ((JArray) json["t_tags"]).ToObject<string[]>();
                     }
                     catch
                     {
-                        device.Tags = new string[0] ;
+                        device.Tags = new string[0];
                     }
-                    
-
                 }
                 else
                 {
@@ -720,15 +722,16 @@ namespace Xky.Core
                         Sn = json["t_sn"]?.ToString(),
                         Cpus = (int) json["t_cpus"],
                         Memory = (int) json["t_memory"]
-                       
-                };
-                    try {
-                        device.Tags = ((JArray)json["t_tags"]).ToObject<string[]>();
+                    };
+                    try
+                    {
+                        device.Tags = ((JArray) json["t_tags"]).ToObject<string[]>();
                     }
                     catch
                     {
                         device.Tags = new string[0];
                     }
+
                     //初始化脚本引擎
                     device.ScriptEngine = new Script(device);
                     StartAction(() =>
@@ -819,10 +822,6 @@ namespace Xky.Core
             {
                 tag.Devices.Remove(device);
                 tag.Count--;
-                if (tag.Count == 0&&tag.Name!="所有设备"&&tag.Name!="未分组设备")
-                    MainWindow.Dispatcher.Invoke(() => {
-                        Tags.Remove(Tags.ToList().Find(p => p.Name == tag.Name));
-                    });
             }
         }
 
@@ -833,9 +832,10 @@ namespace Xky.Core
         /// <param name="isRemove"></param>
         private static void ParsePanelDevice(Device device, bool isRemove)
         {
-            if (_lastSearchKeyword == null||device.Id.ToString().Contains(_lastSearchKeyword) ||
+            if (_lastSearchKeyword == null || device.Id.ToString().Contains(_lastSearchKeyword) ||
                 device.Sn.Contains(_lastSearchKeyword) ||
-                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword)&&device.Tags.Contains(_lastSearchTag))
+                device.Name.Contains(_lastSearchKeyword) || device.Description.Contains(_lastSearchKeyword) &&
+                device.Tags.Contains(_lastSearchTag))
             {
                 var find = PanelDevices.ToList().Find(p => p.Id == device.Id);
                 if (isRemove)
@@ -867,7 +867,8 @@ namespace Xky.Core
                         {
                             RemoveTags(name, device);
                         }
-                        RemoveTags("所有设备",device);
+
+                        RemoveTags("所有设备", device);
 
 
                         Devices.Remove(device);
