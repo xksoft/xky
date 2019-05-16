@@ -765,14 +765,14 @@
                     <UserControl:MyTextBox x:Name="TextBox_DeviceName" WaterText="设备名称"  Width="300" Height="30"></UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                    <Label Foreground="#fff" Width="70" HorizontalAlignment="Left" Margin="0,0,0,5">分组</Label>
-                    <UserControl:MyTextBox x:Name="TextBox_DeviceTag" WaterText="分组"  Width="300" Height="30"></UserControl:MyTextBox>
+                    <Label Foreground="#fff" Width="70" HorizontalAlignment="Left" Margin="0,0,0,5">分组名称</Label>
+                    <UserControl:MyTextBox x:Name="TextBox_DeviceTag" WaterText="分组名称"  Width="300" Height="30"></UserControl:MyTextBox>
                 </StackPanel>
                 <StackPanel>
                     <ItemsControl x:Name="ContentControl_EditInfo_Tags" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <UserControl:MyButton Text="{Binding RelativeSource={RelativeSource Self}}" Margin="0,5,5,5"></UserControl:MyButton>
+                                <Label Content="{Binding Name}" MouseDown="Label_EditInfo_Tags_Click" Margin="0,5,5,5" Foreground="#fff" Cursor="Hand"></Label>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>

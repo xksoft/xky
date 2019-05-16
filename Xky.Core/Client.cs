@@ -584,7 +584,10 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
-                    foreach (var json in (JArray) response.Json["list"]) PushDevice(json);
+                    foreach (var json in (JArray)response.Json["list"])
+                    {
+                        PushDevice(json);
+                    }
                 }
 
                 return response;
@@ -647,7 +650,20 @@ namespace Xky.Core
 
             return !response.Result ? null : PushDevice(response.Json);
         }
-
+        /// <summary>
+        /// 修改设备信息
+        /// </summary>
+        /// <param name="sn"></param>
+        /// <param name="name"></param>
+        /// <param name="desc"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public static Response SetDevice(string sn,string name,string desc,string[] tags)
+        {
+            var response = CallApi("set_device",
+                new JObject{ ["sn"] = sn, ["name"] = name, ["desc"] = desc, ["tags"] = JArray.FromObject( tags) });
+            return response;
+        }
         /// <summary>
         ///     添加或更新Device
         /// </summary>
@@ -675,7 +691,15 @@ namespace Xky.Core
                     device.Sn = json["t_sn"]?.ToString();
                     device.Cpus = (int) json["t_cpus"];
                     device.Memory = (int) json["t_memory"];
-                    device.Tags = ((JArray) json["t_tags"]).ToObject<string[]>();
+                    try {
+                        device.Tags = ((JArray)json["t_tags"]).ToObject<string[]>();
+                    }
+                    catch
+                    {
+                        device.Tags = new string[0] ;
+                    }
+                    
+
                 }
                 else
                 {
@@ -695,9 +719,16 @@ namespace Xky.Core
                         Product = json["t_product"]?.ToString(),
                         Sn = json["t_sn"]?.ToString(),
                         Cpus = (int) json["t_cpus"],
-                        Memory = (int) json["t_memory"],
-                        Tags = ((JArray) json["t_tags"]).ToObject<string[]>()
-                    };
+                        Memory = (int) json["t_memory"]
+                       
+                };
+                    try {
+                        device.Tags = ((JArray)json["t_tags"]).ToObject<string[]>();
+                    }
+                    catch
+                    {
+                        device.Tags = new string[0];
+                    }
                     //初始化脚本引擎
                     device.ScriptEngine = new Script(device);
                     StartAction(() =>
@@ -723,7 +754,7 @@ namespace Xky.Core
 
                     if (device.Tags.Length == 0)
                     {
-                        device.Tags = new[] {"无标签设备"};
+                        device.Tags = new[] {"未分组设备"};
                     }
 
                     foreach (var name in device.Tags)
