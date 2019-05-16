@@ -819,8 +819,10 @@ namespace Xky.Core
             {
                 tag.Devices.Remove(device);
                 tag.Count--;
-//                if (tag.Count == 0)
-//                    MainWindow.Dispatcher.Invoke(() => { Tags.Remove(tag); });
+                if (tag.Count == 0&&tag.Name!="所有设备"&&tag.Name!="未分组设备")
+                    MainWindow.Dispatcher.Invoke(() => {
+                        Tags.Remove(Tags.ToList().Find(p => p.Name == tag.Name));
+                    });
             }
         }
 

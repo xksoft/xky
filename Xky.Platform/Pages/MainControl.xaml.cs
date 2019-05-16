@@ -425,12 +425,17 @@ namespace Xky.Platform.Pages
                                         device.Tags = tags;
                                         if (oldtag != DeviceTag)
                                         {
-                                            if (oldtag.Length > 0) { Client.RemoveTags(oldtag, device); }
+                                            if (oldtag.Length > 0) {
+                                                Client.RemoveTags(oldtag, device);
+                                                
+                                               
+                                            }
                                             else
                                             {
                                                 Client.RemoveTags("未分组设备", device);
                                             }
-                                            Client.AddTags(DeviceTag, device);
+                                            if (DeviceTag.Length > 0) { Client.AddTags(DeviceTag, device); }
+                                            else { Client.AddTags("未分组设备", device); }
                                         }
 
                                     }
