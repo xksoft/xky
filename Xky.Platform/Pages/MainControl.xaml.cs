@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -132,11 +133,14 @@ namespace Xky.Platform.Pages
                 {
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
                     view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+                   
                     ModuleListBox.ItemsSource = view;
+                   
                 });
             }, ApartmentState.STA);
         }
 
+      
         private void ScreenTick()
         {
             Client.StartAction(() =>
@@ -191,10 +195,20 @@ namespace Xky.Platform.Pages
                     }
                 });
                 RunningModules.ItemsSource = device.RunningModules;
-                foreach (var m in Client.Modules.ToList().FindAll(p => device.RunningModules.Contains(p))) {
-
-                    m.State = 1;
+                var rmmd5list = from rm in device.RunningModules select rm.Md5;
+                foreach (var m in Client.Modules)
+                {
+                    if (rmmd5list.Contains(m.Md5))
+                    {
+                        m.State = 1;
+                    }
+                    else
+                    {
+                        m.State = 0;
+                    }
                 }
+
+
             }
             else
             {
@@ -228,18 +242,8 @@ namespace Xky.Platform.Pages
             {
                 if (sender is Button button)
                 {
-                    string module_md5 = button.Tag.ToString();
-                    if (device.RunningThreads.ContainsKey(module_md5))
-                    {
-                        device.RunningThreads[module_md5].Abort();
-
-                        device.RunningThreads.Remove(module_md5);
-                        var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module_md5);
-                        if (runningmodule != null)
-                        {
-                            device.RunningModules.Remove(runningmodule);
-                        }
-                    }
+                    string modulemd5 = button.Tag.ToString();
+                    StopModule(device,modulemd5);
                 }
             }
         }
@@ -296,70 +300,10 @@ namespace Xky.Platform.Pages
             var module_select = (Module) ModuleListBox.SelectedItem;
             if (module_select != null)
             {
-                var module = (Module) module_select.Clone();
+               
                 if (DeviceListBox.SelectedItem is Device device)
                 {
-                    XModule xmodule = (XModule) module.XModule.Clone();
-                    var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
-                    if (runningmodule != null)
-                    {
-                        Common.ShowToast("该设备正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
-                        return;
-                    }
-
-                    if (!xmodule.IsBackground())
-                    {
-                        //如果是前台模块，同一时间只允许运行一个
-                        runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
-                        if (runningmodule != null)
-                        {
-                            Common.ShowToast("前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
-                                Color.FromRgb(239, 34, 7));
-                            return;
-                        }
-                    }
-
-                    var thread = Client.StartAction(() =>
-                    {
-                        xmodule.Device = device;
-                        //显示自定义控件
-                        var isContinue = false;
-                        Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); }, false);
-                        //是否继续
-                        if (isContinue)
-                        {
-                            Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
-                            xmodule.Start();
-                            Console.WriteLine("设备[" + device.Id + "]成功执行模块[" + module.Name + "]");
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                device.RunningModules.Remove(module);
-
-                                if (device.RunningThreads.ContainsKey(module.Md5))
-                                {
-                                    device.RunningThreads.Remove(module.Md5);
-                                }
-                            });
-                        }
-                        else
-                        {
-                            //参数设置过程中取消执行
-                            if (device.RunningThreads.ContainsKey(module.Md5))
-                            {
-                                device.RunningThreads.Remove(module.Md5);
-                            }
-                        }
-                    }, ApartmentState.STA);
-                    if (!device.RunningThreads.ContainsKey(module.Md5))
-                    {
-                        device.RunningThreads.Add(module.Md5, thread);
-                    }
-                    else
-                    {
-                        Common.ShowToast("模块[" + runningmodule.Name + "]已经在运行中！",
-                            Color.FromRgb(239, 34, 7));
-                    }
+                    RunModule(device, module_select);
                 }
             }
         }
@@ -458,6 +402,125 @@ namespace Xky.Platform.Pages
             if (TagListBox.SelectedItem is Tag tag)
             {
                 Client.SearchDevices(SearchText.Text, tag.Name, GetDevicesByTag());
+            }
+        }
+
+        private void RunModule(Device device, Module rmodule)
+        {
+            var module = (Module)rmodule.Clone();
+            XModule xmodule = (XModule)module.XModule.Clone();
+            var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+            if (runningmodule != null)
+            {
+                Common.ShowToast("设备["+device.Name+"]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                return;
+            }
+
+            if (!xmodule.IsBackground())
+            {
+                //如果是前台模块，同一时间只允许运行一个
+                runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
+                if (runningmodule != null)
+                {
+                    Common.ShowToast("设备[" + device.Name + "]前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
+                        Color.FromRgb(239, 34, 7));
+                    return;
+                }
+            }
+
+            var thread = Client.StartAction(() =>
+            {
+            xmodule.Device = device;
+            //显示自定义控件
+            var isContinue = false;
+            Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); }, false);
+            //是否继续
+            if (isContinue)
+            {
+                Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
+                xmodule.Start();
+
+                Console.WriteLine("设备[" + device.Name + "]成功执行模块[" + module.Name + "]");
+
+                Dispatcher.Invoke(() =>
+                {
+                    device.RunningModules.Remove(module);
+
+                    if (device.RunningThreads.ContainsKey(module.Md5))
+                    {
+                        device.RunningThreads.Remove(module.Md5);
+                    }
+                });
+            }
+            else
+            {
+                //参数设置过程中取消执行
+                if (device.RunningThreads.ContainsKey(module.Md5))
+                {
+                    device.RunningThreads.Remove(module.Md5);
+                }
+            }
+            Dispatcher.Invoke(() =>
+            {
+                if (DeviceListBox.SelectedItem is Device device_selected)
+                {
+                    if (device_selected.Id == device.Id)
+                    {
+                        rmodule.State = 0;
+                    }
+
+                }
+            });
+            }, ApartmentState.STA);
+            if (!device.RunningThreads.ContainsKey(module.Md5))
+            {
+                device.RunningThreads.Add(module.Md5, thread);
+                rmodule.State = 1;
+            }
+            else
+            {
+                Common.ShowToast("设备[" + device.Name + "]模块[" + runningmodule.Name + "]已经在运行中！",
+                    Color.FromRgb(239, 34, 7));
+            }
+        }
+        private void StopModule(Device device, string modulemd5) {
+            if (device.RunningThreads.ContainsKey(modulemd5))
+            {
+                device.RunningThreads[modulemd5].Abort();
+
+                device.RunningThreads.Remove(modulemd5);
+                var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == modulemd5);
+                if (runningmodule != null)
+                {
+                    device.RunningModules.Remove(runningmodule);
+                    Client.Modules.ToList().Find(p => p.Md5 == modulemd5).State = 0;
+                }
+            }
+
+        }
+        private void Button_Module_Run_Click(object sender, RoutedEventArgs e)
+        {
+            string modulemd5 = ((MyButton)sender).Tag.ToString();
+            var module =Client.Modules.ToList().Find(p=>p.Md5==modulemd5);
+            if (module != null)
+            {
+
+                if (DeviceListBox.SelectedItem is Device device)
+                {
+                    RunModule(device, module);
+                }
+            }
+        }
+
+        private void Button_Module_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            string modulemd5 = ((MyButton)sender).Tag.ToString();
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                
+                    
+                    StopModule(device, modulemd5);
+                
             }
         }
     }
