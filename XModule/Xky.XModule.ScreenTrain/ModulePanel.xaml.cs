@@ -32,56 +32,61 @@ namespace Xky.XModule.ScreenTrain
     /// ModulePanel.xaml 的交互逻辑
     /// </summary>
     public partial class ModulePanel : System.Windows.Controls.UserControl
-    {
-        public static Stopwatch sw = new Stopwatch();
+    { 
         public static string AppPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         string DataPath = AppPath + "\\data";
         public Device device;
-        bool isPaused = false;
-        bool isTrans = false;
         Rect rect_select;
-        long lasttrans = 0;
+        private bool _started;
+        private System.Windows.Point _downPoint;
         ImageSource imageSource;
         Queue transq = new Queue();
         int index = 0;
-        bool waite = false;
-        
         EncoderParameters eps = new EncoderParameters(1);
-        EncoderParameter ep_20 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality,20L);
-        EncoderParameter ep_60 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+        EncoderParameter ep_50 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 50L);
         EncoderParameter ep_100 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
         ImageCodecInfo jpsEncodeer = GetEncoder(ImageFormat.Jpeg);
+        public class FileTimeInfo
+        {
+            public string FileName;  //文件名
+            public DateTime FileCreateTime; //创建时间
+        }
+        static FileTimeInfo GetLatestFileTimeInfo(string dir, string ext)
+        {
+            List<FileTimeInfo> list = new List<FileTimeInfo>();
+            DirectoryInfo d = new DirectoryInfo(dir);
+            foreach (FileInfo file in d.GetFiles())
+            {
+                if (file.Extension.ToUpper() == ext.ToUpper())
+                {
+                    list.Add(new FileTimeInfo()
+                    {
+                        FileName = file.FullName,
+                        FileCreateTime = file.CreationTime
+                    });
+                }
+            }
+            var f = from x in list
+                    orderby x.FileCreateTime
+                    select x;
+            if (f == null) { return null; }
+            return f.LastOrDefault();
+        }
+        public static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                    return codec;
+            }
+            return null;
+        }
         public ModulePanel()
         {
             InitializeComponent();
         }
-        private string PostData(string postUrl, byte[] data)
-        {
-            string result = string.Empty;
-            try
-            {
-
-                HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(new Uri(postUrl));
-                webReq.Method = "POST";
-                webReq.ContentType = "application/x-www-form-urlencoded";
-
-                webReq.ContentLength = data.Length;
-                Stream newStream = webReq.GetRequestStream();
-                newStream.Write(data, 0, data.Length);//写入参数
-                newStream.Close();
-                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
-                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                result = sr.ReadToEnd();
-                sr.Close();
-                response.Close();
-                newStream.Close();
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine(ex.Message);
-            }
-            return result;
-        }
+      
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             Client.CloseDialogPanel();
@@ -89,46 +94,33 @@ namespace Xky.XModule.ScreenTrain
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            
-            Image_Screen.Source = device.ScreenShot;
-            Image_Screen.Source.Changed += Source_Changed;
-            StartTransQueue();
+
             if (!Directory.Exists(DataPath))
             {
 
                 Directory.CreateDirectory(DataPath);
 
             }
-            FileTimeInfo info= GetLatestFileTimeInfo(AppPath + "\\data", ".jpg");
+            FileTimeInfo info = GetLatestFileTimeInfo(AppPath + "\\data", ".jpg");
             if (info == null) { index = 1; }
-            else {     FileInfo finfo = new FileInfo(info.FileName);
+            else
+            {
+                FileInfo finfo = new FileInfo(info.FileName);
                 index = Convert.ToInt32(finfo.Name.Remove((finfo.Name.LastIndexOf("."))));
                 index++;
             }
-        
+            Image_Screen.Source = device.ScreenShot.Clone();
+
         }
 
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
-            if (isPaused)
-            {
-                Image_Screen.Source = device.ScreenShot;
-                isPaused = false;
-                Button_Pause.Text = "暂停";
-               
-            }
-            else
-            {
-                Image_Screen.Source = device.ScreenShot.Clone();
-                isPaused = true;
-                Button_Pause.Text = "继续";
-            }
+
+            Image_Screen.Source = device.ScreenShot.Clone();
+            index=index+2;
 
         }
-        private bool _started;
-
-        private System.Windows.Point _downPoint;
+ 
         private void Image_Screen_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -179,16 +171,7 @@ namespace Xky.XModule.ScreenTrain
             }
         }
 
-        public static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                    return codec;
-            }
-            return null;
-        }
+       
         private void Button_Train_Click(object sender, RoutedEventArgs e)
         {
             if (Image_Select.Source != null)
@@ -198,146 +181,18 @@ namespace Xky.XModule.ScreenTrain
                 eps.Param[0] = ep_100;
                 bitmap.Save(DataPath + "\\" + index + ".jpg",jpsEncodeer,eps);
                 File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-                index++;
-                eps.Param[0] = ep_60;
-                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-                index++;
-                eps.Param[0] = ep_20;
-                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-                index++;
+                
+                eps.Param[0] = ep_50;
+                bitmap.Save(DataPath + "\\" +(index+1) + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + (index+1) + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                
+                
 
                 Image_Select.Source = null;
                 
             }
         }
 
-        private void Button_Find_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (isTrans)
-            {
-                isTrans = false;
-                Button_Find.Text = "开始识别";
-            }
-            else
-            {
-                isTrans = true;
-                Button_Find.Text = "停止识别";
-
-            }
-
-
-
-        }
-
-        private void Source_Changed(object sender, EventArgs e)
-        {
-             if (DateTime.Now.Ticks - lasttrans >= 2000000 && isTrans)
-            {
-                eps.Param[0] = ep_100;
-                lasttrans = DateTime.Now.Ticks;
-                Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)Image_Screen.Source);
-                MemoryStream ms = new MemoryStream();
-                bitmap.Save(ms, jpsEncodeer, eps);
-                ms.Close();
-                transq.Enqueue(ms.GetBuffer());
-
-            }
-        }
-        public void StartTransQueue()
-        {
-            new Thread(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(1);
-                    if (transq.Count > 0)
-                    {
-                        object obj = transq.Dequeue();
-                        if (obj != null)
-                        {
-                            string result = "";
-                            //sw.Reset();
-                            //sw.Start();
-                            //result = PostData("http://192.168.1.197:5555/game/getaction", (byte[])obj);
-                            //sw.Stop();
-                            //Console.WriteLine(sw.Elapsed.TotalMilliseconds);
-                            //Console.WriteLine(result);
-                            //continue;
-                            result = PostData("http://192.168.1.8/api?action=getobject", (byte[])obj);
-                           Console.WriteLine(result);
-                            TransResult tr = JsonConvert.DeserializeObject<TransResult>(result);
-                            if (tr != null)
-                            {
-
-                                List<TransItem> tritems = JsonConvert.DeserializeObject<List<TransItem>>(tr.msg);
-                               
-                                //var items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶")&&i.Confidence>0.4 select i).ToList();
-                                //if (items.Count > 0)
-                                //{
-                                //    nodcount = 0;
-                                //    Console.WriteLine("后退");
-                                //    AiPlay_Back();
-
-                                //}
-                                //else
-                                //{
-                                //    items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.4 select i).ToList();
-                                //    if (items.Count > 0)
-                                //    {
-                                //        nodcount = 0;
-                                //        aistate = "攻击";
-                                //        Console.WriteLine("攻击");
-                                //        device.ScriptEngine.AdbShell("input tap 1260 600&&input tap 1043 632&&input tap 1089 501&&input tap 1239 416&&input tap 132 298&&input tap 145 377");
-
-
-                                //    }
-
-                                //}
-                                AiPlay(tritems); 
-
-                                //Console.WriteLine(tritems.Count);
-                               // Console.WriteLine("识别列队剩余：" + transq.Count);
-
-                                //for (int i = 0; i < 5; i++)
-                                //{
-
-                                //    this.Dispatcher.Invoke(new Action(() =>
-                                //    {
-                                //        var fo = Canvas_Main.FindName("Rectangle_" + i);
-                                //        if (fo != null)
-                                //        {
-                                //            System.Windows.Shapes.Rectangle rectangle = fo as System.Windows.Shapes.Rectangle;
-                                //            if (tritems.Count > i)
-                                //            {
-                                //                if (tritems[i].Width <= 500 && tritems[i].Height <= 500)
-                                //                {
-                                //                    rectangle.SetValue(Canvas.LeftProperty, (double)tritems[i].X);
-                                //                    rectangle.SetValue(Canvas.TopProperty, (double)tritems[i].Y);
-                                //                    rectangle.Width = tritems[i].Width;
-                                //                    rectangle.Height = tritems[i].Height;
-                                //                }
-                                //            }
-                                //            else
-                                //            {
-                                //                rectangle.Width = rectangle.Height = 0;
-                                //            }
-
-                                //        }
-                                //    }));
-                                //}
-
-
-
-                            }
-                        }
-                    }
-                }
-            })
-            { IsBackground = true }.Start();
-        }
         private void Image_Screen_SourceUpdated(object sender, DataTransferEventArgs e)
         {
            
@@ -355,32 +210,7 @@ namespace Xky.XModule.ScreenTrain
                 ComboBox_Names.ItemsSource = names;
             }
         }
-        public class FileTimeInfo
-        {
-            public string FileName;  //文件名
-            public DateTime FileCreateTime; //创建时间
-        }
-        static FileTimeInfo GetLatestFileTimeInfo(string dir, string ext)
-        {
-            List<FileTimeInfo> list = new List<FileTimeInfo>();
-            DirectoryInfo d = new DirectoryInfo(dir);
-            foreach (FileInfo file in d.GetFiles())
-            {
-                if (file.Extension.ToUpper() == ext.ToUpper())
-                {
-                    list.Add(new FileTimeInfo()
-                    {
-                        FileName = file.FullName,
-                        FileCreateTime = file.CreationTime
-                    });
-                }
-            }
-            var f = from x in list
-                    orderby x.FileCreateTime
-                    select x;
-            if (f==null) { return null; }
-            return f.LastOrDefault();
-        }
+     
         private void Button_OpenDir_Click(object sender, RoutedEventArgs e)
         {
            
@@ -388,162 +218,7 @@ namespace Xky.XModule.ScreenTrain
 
         }
 
-        private void Button_Pause_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-        string aistate = "在家";
-        int nodcount = 0;
-        public void AiPlay(List<TransItem> tritems)
-        {
-            var items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
-            if (items.Count > 0)
-            {
-                nodcount = 0;
-
-                Console.WriteLine("后退");
-                AiPlay_Back();
-                aistate = "攻击";
-                waite = false;
-                return;
-            }
-
-            items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
-            if (items.Count > 0)
-            {
-                nodcount = 0;
-                aistate = "攻击";
-                Console.WriteLine("攻击");
-                device.ScriptEngine.AdbShell("input tap 1260 600&&input tap 1043 632&&input tap 1089 501&&input tap 1239 416&&input tap 132 298&&input tap 145 377");
-
-                waite = false;
-                return;
-            }
-
-            items = (from i in tritems where (i.Type == "技能升级提示") && i.Confidence > 0.3 select i).ToList();
-            if (items.Count>0)
-            {
-                device.ScriptEngine.AdbShell("input tap 964 562&&input tap 1049 426&&input tap 1239 416&&input tap 1183 311");
-            }
-            lock ("aiplay")
-            {
-                if (waite)
-                {
-                    return;
-                }
-                new Thread(() =>
-                {
-                    waite = true;
-                    if (aistate == "在家")
-                    {
-
-                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
-                        if (items.Count > 0)
-                        {
-                            nodcount = 0;
-                            Console.WriteLine("后退");
-                            aistate = "攻击";
-                            AiPlay_Back();
-                            waite = false;
-                            return;
-                        }
-
-                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
-                        if (items.Count > 0)
-                        {
-                            nodcount = 0;
-                            aistate = "攻击";
-                            Console.WriteLine("攻击");
-                            device.ScriptEngine.AdbShell("input tap 1260 600");
-                            waite = false;
-                            return;
-
-                        }
-
-                        items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "我方防御塔" || i.Type == "老家") && i.Confidence > 0.5 select i).ToList();
-                        if (items.Count() > 0)
-                        {
-                        //Thread.Sleep(5000);
-                        Console.WriteLine("出门");
-                            AiPlay_Go();
-                        }
-                        else
-                        {
-
-                            Console.WriteLine("出门");
-                            AiPlay_Go();
-                        }
-
-                    }
-                    else if (aistate == "攻击")
-                    {
-
-                         items = (from i in tritems where (i.Type == "敌方防御塔" || i.Type == "敌方水晶") && i.Confidence > 0.5 select i).ToList();
-                        if (items.Count > 0)
-                        {
-                            nodcount = 0;
-
-                            Console.WriteLine("后退");
-                            AiPlay_Back();
-                            waite = false;
-                            return;
-                        }
-
-                        items = (from i in tritems where (i.Type == "敌方小兵" || i.Type == "敌人") && i.Confidence > 0.5 select i).ToList();
-                        if (items.Count > 0)
-                        {
-                            nodcount = 0;
-                            aistate = "攻击";
-                            Console.WriteLine("攻击");
-                            device.ScriptEngine.AdbShell("input tap 1260 600&&input tap 1043 632&&input tap 1089 501&&input tap 1239 416&&input tap 132 298&&input tap 145 377");
-
-
-                        }
-                        else
-                        {
-
-                            items = (from i in tritems where (i.Type == "我方水晶" || i.Type == "老家") && i.Confidence > 0.5 select i).ToList();
-                            if (items.Count > 0)
-                            {
-                                aistate = "在家";
-
-                            }
-                            else
-                            {
-                            // 
-                            //没有敌人了，前进
-                            nodcount++;
-                                Thread.Sleep(100);
-                                if (nodcount >= 20)
-                                {
-                                    Console.WriteLine("没有敌方单位了，前进");
-
-                                    device.ScriptEngine.AdbShell("input swipe 294 578 333 497 1000");
-                                    nodcount = 0;
-                                }
-
-                            }
-
-                        }
-
-
-                    }
-                    waite = false;
-                })
-                { IsBackground = true }.Start();
-            }
-        }
-        public void AiPlay_Go()
-        {
-         
-                device.ScriptEngine.AdbShell("input swipe 294 578 333 497 3000");
-          
-        }
-        public void AiPlay_Back()
-        {
-
-            device.ScriptEngine.AdbShell("input swipe 294 587 246 640 5000");
-
-        }
+      
+       
     }
 }
