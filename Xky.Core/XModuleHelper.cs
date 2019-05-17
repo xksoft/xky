@@ -21,12 +21,25 @@ namespace Xky.Core
         /// <returns></returns>
         public static List<XModule> LoadXModules(string path)
         {
-           
-                var a = Assembly.Load(File.ReadAllBytes(path));
-                var classes = a.GetTypes();
-                return classes.Select(item => a.CreateInstance(item.FullName ?? throw new InvalidOperationException()))
-                    .OfType<XModule>().ToList();
-           
+            List<XModule> list = new List<XModule>();
+            var assembly = Assembly.Load(File.ReadAllBytes(path));
+            var classes = assembly.GetTypes();
+            foreach (Type t in classes)
+            {
+                try
+                {
+
+                 
+                   list.Add((XModule)assembly.CreateInstance(t.FullName));
+                }
+                catch (Exception error)
+                {
+                   
+                }
+            }
+            //return classes.Select(item => a.CreateInstance(item.FullName ?? throw new InvalidOperationException()))
+            //    .OfType<XModule>().ToList();
+            return list;
         }
     }
 }
