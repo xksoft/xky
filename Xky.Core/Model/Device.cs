@@ -380,7 +380,7 @@ namespace Xky.Core.Model
         /// <summary>
         /// 当前正在执行的模块
         /// </summary>
-        public ObservableCollection<Module> RunningModules = new ObservableCollection<Module>();
+        public ObservableCollection<Module> RunningModules { get; set; }
 
         /// <summary>
         /// 当前正在执行的线程

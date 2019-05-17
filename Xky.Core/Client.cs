@@ -714,14 +714,15 @@ namespace Xky.Core
                         NodeSerial = json["t_node"]?.ToString(),
                         GpsLat = json["t_gps_lat"]?.ToString(),
                         GpsLng = json["t_gps_lng"]?.ToString(),
-                        Id = (int) json["t_id"],
+                        Id = (int)json["t_id"],
                         Model = json["t_model"]?.ToString(),
                         Name = json["t_name"]?.ToString(),
                         Node = json["t_node"]?.ToString(),
                         Product = json["t_product"]?.ToString(),
                         Sn = json["t_sn"]?.ToString(),
-                        Cpus = (int) json["t_cpus"],
-                        Memory = (int) json["t_memory"]
+                        Cpus = (int)json["t_cpus"],
+                        Memory = (int)json["t_memory"],
+                        RunningModules = new ObservableCollection<Module>()
                     };
                     try
                     {

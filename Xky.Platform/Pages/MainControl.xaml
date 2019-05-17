@@ -298,9 +298,19 @@
 
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-
-                                    <UserControl:MyTagLabel x:Name="RunStatus"
-                                                      Foreground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />
+                                    <ItemsControl ItemsSource="{Binding ElementName=MyBorder,Path=DataContext.RunningModules}" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding Icon}" Width="16" Height="16" ToolTip="{Binding Name}"></Image>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"></WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                    <!--<UserControl:MyTagLabel x:Name="RunStatus"   Text="正在执行的模块"   Foreground="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=-50}" />-->
 
                                 </StackPanel>
                             </StackPanel>
@@ -320,8 +330,8 @@
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="Foreground"
-                                        Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
+                                <!--<Setter TargetName="RunStatus" Property="Foreground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />-->
                             </DataTrigger>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
@@ -331,8 +341,8 @@
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                                 <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
-                                <Setter TargetName="RunStatus" Property="Foreground"
-                                        Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
+                                <!--<Setter TargetName="RunStatus" Property="Foreground"
+                                        Value="{Binding Source={StaticResource OnLine},Converter={lib:HoverColorConverter},ConverterParameter=0}" />-->
 
 
                             </DataTrigger>
