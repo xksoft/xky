@@ -1,11 +1,11 @@
-﻿<Window  x:Class="Xky.Platform.MainWindow"
+﻿<Window x:Class="Xky.Platform.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:platform="clr-namespace:Xky.Platform"
-         xmlns:userControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
-         mc:Ignorable="d"
+        xmlns:userControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+        mc:Ignorable="d"
         AllowsTransparency="True"
         RenderOptions.BitmapScalingMode="LowQuality"
         UseLayoutRounding="True"
@@ -21,12 +21,12 @@
     <Window.Resources>
         <platform:ButtonStatus x:Key="ButtonStatus" />
     </Window.Resources>
-    <Grid>
-        <Grid  x:Name="MainGrid" Margin="20" Background="{StaticResource BackgroundColor2}">
-            <!--<Grid.Background>
+
+    <Grid x:Name="MainGrid" Margin="20" Background="{StaticResource BackgroundColor2}">
+        <!--<Grid.Background>
                 --><!--<ImageBrush ImageSource="Resources/Icon/background.jpg" />--><!--
             </Grid.Background>-->
-            <Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="193" />
             <ColumnDefinition />
@@ -35,11 +35,7 @@
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.Effect>
-            <DropShadowEffect x:Name="DropShadowEffect" Color="#CC000000" Direction="320" BlurRadius="8"
-                              Opacity="0.35" />
-        </Grid.Effect>
-        
+
         <!-- 顶部导航 -->
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 
@@ -168,13 +164,13 @@
                 </Button>
             </VirtualizingStackPanel>
         </Grid>
-        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
+        <Border x:Name="MainBoard" BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
                 Grid.Column="0" Panel.ZIndex="999" />
 
         <!-- Toast -->
         <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0"
                                 Opacity="100"
-                                Grid.ColumnSpan="3"  VerticalAlignment="Bottom"  
+                                Grid.ColumnSpan="3" VerticalAlignment="Bottom"
                                 ZIndex="998"
                                 IsHitTestVisible="False">
             <VirtualizingStackPanel.Effect>
@@ -245,7 +241,6 @@
         </Border>
 
     </Grid>
-    </Grid>
-    
+
 
 </Window>

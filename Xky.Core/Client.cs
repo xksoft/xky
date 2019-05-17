@@ -982,6 +982,18 @@ namespace Xky.Core
             CloseDialogPanelEvent?.Invoke();
         }
 
+
+        /// <summary>
+        /// show toast
+        /// </summary>
+        /// <param name="toast"></param>
+        /// <param name="color"></param>
+        /// <param name="sound"></param>
+        public static void ShowToast(string toast, Color color, string sound = null)
+        {
+            ShowToastEvent?.Invoke(toast,color,sound);
+        }
+
         #endregion
 
         #region 全局事件
@@ -1006,6 +1018,16 @@ namespace Xky.Core
         /// 弹出面板
         /// </summary>
         public delegate void OnShowDialogPanel(System.Windows.Controls.UserControl control);
+
+        /// <summary>
+        /// 显示toast
+        /// </summary>
+        public static event OnShowToast ShowToastEvent;
+
+        /// <summary>
+        /// 显示toast
+        /// </summary>
+        public delegate void OnShowToast(string toast, Color color, string sound = null);
 
         #endregion
 

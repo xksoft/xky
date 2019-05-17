@@ -14,6 +14,9 @@ namespace Xky.Core.UserControl
         //用于判断选中状态
         private static readonly List<MyTabItem> ItemList = new List<MyTabItem>();
 
+        /// <summary>
+        /// 选项卡
+        /// </summary>
         public MyTabItem()
         {
             InitializeComponent();
@@ -22,13 +25,18 @@ namespace Xky.Core.UserControl
 
         #region 事件
 
+        /// <summary>
+        /// 点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ClickDown(object sender, MouseButtonEventArgs e)
         {
             if (e == null || e.LeftButton == MouseButtonState.Pressed)
             {
                 if (CheckLicense && Client.License == null)
                 {
-                   // Common.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255, 36, 50), "off");
+                    Client.ShowToast("需要先授权才能执行本操作", Color.FromRgb(255, 36, 50), "off");
                     return;
                 }
 
