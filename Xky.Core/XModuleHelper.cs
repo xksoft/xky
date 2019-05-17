@@ -28,8 +28,6 @@ namespace Xky.Core
             {
                 try
                 {
-
-                 
                    list.Add((XModule)assembly.CreateInstance(t.FullName));
                 }
                 catch (Exception error)
