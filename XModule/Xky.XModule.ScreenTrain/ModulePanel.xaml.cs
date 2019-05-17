@@ -25,6 +25,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xky.Core;
 using Xky.Core.Model;
+using Xky.Core.UserControl;
 
 namespace Xky.XModule.ScreenTrain
 {
@@ -174,31 +175,7 @@ namespace Xky.XModule.ScreenTrain
        
         private void Button_Train_Click(object sender, RoutedEventArgs e)
         {
-            if (Image_Select.Source != null)
-            {
-
-                Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
-                eps.Param[0] = ep_100;
-                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-
-                eps.Param[0] = ep_50;
-                bitmap.Save(DataPath + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + (index + 1) + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-
-
-
-
-                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-                img.Source = Image_Select.Source.Clone();
-                img.MinHeight = 100;
-                img.MaxWidth=180;
-                img.Stretch = Stretch.None;
-                img.Margin = new Thickness(0, 0, 10, 10);
-                WrapPanel_Main.Children.Add(img);
-                Image_Select.Source = null;
-
-            }
+           
         }
 
         private void Image_Screen_SourceUpdated(object sender, DataTransferEventArgs e)
@@ -215,10 +192,57 @@ namespace Xky.XModule.ScreenTrain
             if (result == DialogResult.OK)
             {
                 string[] names = File.ReadAllLines(openFileDialog.FileName,Encoding.UTF8);
-                ComboBox_Names.ItemsSource = names;
+                for (int i=0;i<names.Length;i++)
+                {
+
+                    MyButton button = new MyButton();
+                    button.Text = names[i];
+                    button.Tag = i;
+                    
+                    button.Margin = new Thickness(5,5,5,5);
+                    button.Click += Button_Name_Click;
+                    StackPanel_Names.Children.Add(button);
+                }
             }
         }
-     
+
+        private void Button_Name_Click(object sender, RoutedEventArgs e)
+        {
+            int i = Convert.ToInt32(((MyButton)sender).Tag);
+            if (Image_Select.Source != null)
+            {
+
+                Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
+                eps.Param[0] = ep_100;
+                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + index + ".txt", i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+
+                eps.Param[0] = ep_50;
+                bitmap.Save(DataPath + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + (index + 1) + ".txt",i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+
+
+
+
+                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                img.Source = Image_Select.Source.Clone();
+                img.MaxHeight = 100;
+                img.MaxWidth = 180;
+                img.Stretch = Stretch.None;
+                img.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                img.Margin = new Thickness(0, 0, 0, 5);
+                System.Windows.Controls.Label label = new System.Windows.Controls.Label();
+                label.Content = ((MyButton)sender).Text;
+                label.Foreground = System.Windows.Media.Brushes.White;
+                label.Margin = new Thickness(0, 0, 0, 20);
+                label.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                WrapPanel_Main.Children.Add(img);
+                WrapPanel_Main.Children.Add(label);
+                Image_Select.Source = null;
+
+            }
+        }
+
         private void Button_OpenDir_Click(object sender, RoutedEventArgs e)
         {
            
