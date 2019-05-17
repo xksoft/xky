@@ -118,7 +118,7 @@ namespace Xky.XModule.ScreenTrain
 
             Image_Screen.Source = device.ScreenShot.Clone();
             index=index+2;
-
+            WrapPanel_Main.Children.Clear();
         }
  
         private void Image_Screen_MouseDown(object sender, MouseButtonEventArgs e)
@@ -176,20 +176,28 @@ namespace Xky.XModule.ScreenTrain
         {
             if (Image_Select.Source != null)
             {
-               
+
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
                 eps.Param[0] = ep_100;
-                bitmap.Save(DataPath + "\\" + index + ".jpg",jpsEncodeer,eps);
+                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
                 File.AppendAllText(DataPath + "\\" + index + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-                
-                eps.Param[0] = ep_50;
-                bitmap.Save(DataPath + "\\" +(index+1) + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + (index+1) + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
-                
-                
 
+                eps.Param[0] = ep_50;
+                bitmap.Save(DataPath + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\" + (index + 1) + ".txt", ComboBox_Names.SelectedIndex + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+
+
+
+
+                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                img.Source = Image_Select.Source.Clone();
+                img.MinHeight = 100;
+                img.MaxWidth=180;
+                img.Stretch = Stretch.None;
+                img.Margin = new Thickness(0, 0, 10, 10);
+                WrapPanel_Main.Children.Add(img);
                 Image_Select.Source = null;
-                
+
             }
         }
 
