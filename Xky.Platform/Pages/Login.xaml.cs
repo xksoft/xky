@@ -47,7 +47,7 @@ namespace Xky.Platform.Pages
                    
                     Common.UiAction(() =>
                     {
-                       
+                        Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();
