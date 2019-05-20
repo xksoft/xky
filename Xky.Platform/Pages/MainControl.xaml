@@ -385,6 +385,7 @@
 
 
         <Grid Grid.Column="2" Background="{StaticResource  BackgroundColor4}">
+           
             <Border Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="Black">
                 <Border.Effect>
                     <DropShadowEffect Color="#CC000000" Direction="360" BlurRadius="4" ShadowDepth="1" Opacity="1" />
@@ -394,17 +395,11 @@
                 <VirtualizingStackPanel Orientation="Horizontal">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
                           Height="920">
-                        <VirtualizingStackPanel Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
+                        <VirtualizingStackPanel VerticalAlignment="Stretch" Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
                                                 Width="48" MaxHeight="768" Margin="0,0,10,0">
-
-                            <UserControl:MyImageButton Tag="VolumeUp" Click="DeviceMenuItem_OnClick" ToolTip="增加音量"
-                                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumeup-white.png"
-                                                 Height="48" Image_Height="24" Image_Width="24"
-                                                 Background_MouseOver="#404750" Background_Pressed="#32373d" />
-                            <UserControl:MyImageButton  Tag="VolumeDown"  Click="DeviceMenuItem_OnClick" ToolTip="降低音量"
-                                Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumedown-white.png"
-                                Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
-                                Background_Pressed="#32373d" />
+                           
+                           
+                          
                             <UserControl:MyImageButton  Tag="ShowInputMethod"  Click="DeviceMenuItem_OnClick" ToolTip="选择输入法"
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
@@ -417,7 +412,7 @@
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Height="48"
                                 Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                           
+                         
                             <ItemsControl x:Name="RunningModules">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -455,8 +450,9 @@
 
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
+                            
                         </VirtualizingStackPanel>
+                      
                     </Grid>
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
                           Height="920" Width="450">
@@ -571,6 +567,7 @@
                     </Grid>
                 </VirtualizingStackPanel>
             </Viewbox>
+           
         </Grid>
         <Grid Grid.Column="3" Background="#fff">
 

@@ -285,24 +285,7 @@ namespace Xky.Platform.Pages
                 string tag = ((MyImageButton)e.Source).Tag.ToString();
                 switch (tag)
                 {
-                    case "VolumeUp":
-                        {
-                            Client.StartAction(() =>
-                            {
-
-                                device.ScriptEngine.AdbShell("input keyevent 24");
-                            });
-                                break;
-                        }
-                    case "VolumeDown":
-                        {
-                            Client.StartAction(() =>
-                            {
-
-                                device.ScriptEngine.AdbShell("input keyevent 25");
-                            });
-                            break;
-                        }
+                   
                     case "ShowInputMethod":
                         {
                             device.ScriptEngine.ShowInputMethod();
@@ -322,7 +305,7 @@ namespace Xky.Platform.Pages
                             Client.StartAction(() =>
                             {
 
-                                device.ScriptEngine.AdbShell("input keyevent 187");
+                                device.ScriptEngine.PressKey(187);
                             });
                             break;
                         }
