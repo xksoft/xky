@@ -345,5 +345,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\device_disconnect.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\DeviceMenu\backgroundapps-white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

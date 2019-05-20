@@ -284,12 +284,12 @@
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.CpuUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
                                                          IndicatorBrush="#343c43" DangerBrush="#e30000"
-                                                         DangerValue="0.4" />
+                                                         DangerValue="0.8" />
                                     <UserControl:MyProgressbar Maximum="100"
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.MemoryUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
                                                          IndicatorBrush="#343c43" DangerBrush="#e30000"
-                                                         DangerValue="0.4" />
+                                                         DangerValue="0.7" />
                                     <UserControl:MyProgressbar Maximum="100"
                                                          Value="{Binding ElementName=MyBorder, Path=DataContext.DiskUseage}"
                                                          Margin="2" Height="5" Width="200" TrackBrush="#1b2025"
@@ -397,26 +397,27 @@
                         <VirtualizingStackPanel Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
                                                 Width="48" MaxHeight="768" Margin="0,0,10,0">
 
-                            <UserControl:MyImageButton Tag="volumeup" Click="DeviceMenuItem_OnClick"
+                            <UserControl:MyImageButton Tag="VolumeUp" Click="DeviceMenuItem_OnClick" ToolTip="增加音量"
                                                  Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumeup-white.png"
                                                  Height="48" Image_Height="24" Image_Width="24"
                                                  Background_MouseOver="#404750" Background_Pressed="#32373d" />
-                            <UserControl:MyImageButton
+                            <UserControl:MyImageButton  Tag="VolumeDown"  Click="DeviceMenuItem_OnClick" ToolTip="降低音量"
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/volumedown-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <UserControl:MyImageButton
+                            <UserControl:MyImageButton  Tag="ShowInputMethod"  Click="DeviceMenuItem_OnClick" ToolTip="选择输入法"
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <UserControl:MyImageButton
+                            <UserControl:MyImageButton Tag="BackgroundApps" Click="DeviceMenuItem_OnClick" ToolTip="APP切换"
+                                Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/backgroundapps-white.png" Height="48"
+                                Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
+                                Background_Pressed="#32373d" />
+                            <UserControl:MyImageButton Tag="StopAllModules" Click="DeviceMenuItem_OnClick" ToolTip="停止所有模块"
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Height="48"
                                 Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                            <UserControl:MyImageButton
-                                Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/setdebug-white.png"
-                                Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
-                                Background_Pressed="#32373d" />
+                           
                             <ItemsControl x:Name="RunningModules">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>

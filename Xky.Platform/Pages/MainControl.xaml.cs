@@ -280,8 +280,55 @@ namespace Xky.Platform.Pages
 
         private void DeviceMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            string tag = ((MyImageButton) e.Source).Tag.ToString();
-            MessageBox.Show(tag);
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                string tag = ((MyImageButton)e.Source).Tag.ToString();
+                switch (tag)
+                {
+                    case "VolumeUp":
+                        {
+                            Client.StartAction(() =>
+                            {
+
+                                device.ScriptEngine.AdbShell("input keyevent 24");
+                            });
+                                break;
+                        }
+                    case "VolumeDown":
+                        {
+                            Client.StartAction(() =>
+                            {
+
+                                device.ScriptEngine.AdbShell("input keyevent 25");
+                            });
+                            break;
+                        }
+                    case "ShowInputMethod":
+                        {
+                            device.ScriptEngine.ShowInputMethod();
+                            break;
+                        }
+                    case "StopAllModules":
+                        {
+                                var md5list = from m in device.RunningModules.ToList() select m.Md5;
+                                foreach (string md5 in md5list)
+                                {
+                                    StopModule(device, md5);
+                                }
+                                Client.ShowToast("成功停止设备["+device.Name+"]正在运行的所有模块！",Color.FromRgb(0, 188, 0));
+                            break;
+                        }
+                    case "BackgroundApps": {
+                            Client.StartAction(() =>
+                            {
+
+                                device.ScriptEngine.AdbShell("input keyevent 187");
+                            });
+                            break;
+                        }
+
+                }
+            }
         }
 
         private void MainControl_OnLoaded(object sender, RoutedEventArgs e)
