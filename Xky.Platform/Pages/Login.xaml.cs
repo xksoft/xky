@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Common;
@@ -47,7 +48,15 @@ namespace Xky.Platform.Pages
                    
                     Common.UiAction(() =>
                     {
-                        Common.MainWindow.LoginTabItem.Visibility = Visibility.Collapsed;
+                        Grid_Login.Visibility = Visibility.Collapsed;
+                        Grid_Info.Visibility = Visibility.Visible;
+                    Image_Avatar.Source = new BitmapImage(new Uri("https://static.xky.com/avatar/" + Client.License.Avatra , UriKind.RelativeOrAbsolute));
+                        Label_Email.Content = Client.License.Email;
+                       Label_Nickname.Content = Client.License.NickName;
+                        Label_Phone.Content = Client.License.Phone;
+                        Label_License_Name.Content = Client.License.LicenseName;
+                        Label_License_Key.Content = Client.License.LicenseKey;
+                        Label_License_Expiration_Time.Content = Client.License.LicenseExpiration.ToString("yyyy-MM-dd HH:mm:ss");
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();

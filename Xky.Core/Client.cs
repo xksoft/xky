@@ -34,6 +34,7 @@ namespace Xky.Core
 
         #region 公开属性
 
+      
         /// <summary>
         /// 授权信息
         /// </summary>
@@ -118,7 +119,8 @@ namespace Xky.Core
                         LicenseName = response.Json["license"]?["t_name"]?.ToString(),
                         Name = response.Json["user"]?["t_name"]?.ToString(),
                         Phone = response.Json["user"]?["t_phone"]?.ToString(),
-                        Session = response.Json["session"]?.ToString()
+                        Session = response.Json["session"]?.ToString(),
+                        NickName= response.Json["user"]?["t_nickname"]?.ToString()
                     };
 
                     //释放资源

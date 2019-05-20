@@ -14,6 +14,7 @@ namespace Xky.Core.Model
         private int _licenseLevel;
         private string _licenseName;
         private string _name;
+        private string _nickName;
         private string _phone;
         private string _session;
 
@@ -159,6 +160,8 @@ namespace Xky.Core.Model
                 }
             }
         }
+
+        public string NickName { get => _nickName; set => _nickName = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

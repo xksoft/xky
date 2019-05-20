@@ -6,7 +6,8 @@
     xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
     x:Class="Xky.Platform.Pages.Login"
     mc:Ignorable="d" d:DesignHeight="900" d:DesignWidth="1300">
-    <Grid Background="{StaticResource BackgroundColor4}">
+    <Grid>
+        <Grid x:Name="Grid_Login" Background="{StaticResource BackgroundColor4}" Visibility="Visible">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -19,4 +20,62 @@
         </StackPanel>
         <TextBlock Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Text="本开源程序为侠客SDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问https://www.xky.com免费申请"  Margin="0,20,0,0" />
     </Grid>
+        <Grid x:Name="Grid_Info"  Background="{StaticResource BackgroundColor4}" Margin="0" Visibility="Collapsed">
+            <Border Padding="20">
+            <StackPanel FlowDirection="LeftToRight" HorizontalAlignment="Stretch">
+                <Label FontSize="30" Foreground="White" Margin="0,0,0,20">个人中心</Label>
+
+                <Label FontSize="20" Foreground="White" Margin="0,0,0,0" >基本信息</Label>
+                <Grid Margin="0,20,0,20">
+                    <StackPanel Orientation="Vertical">
+                        <Image x:Name="Image_Avatar" Height="160"  HorizontalAlignment="Left" Margin="5,5,0,5"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80">昵称</Label>
+                            <Label  x:Name="Label_Nickname"  Foreground="#fff">侠客小侠</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80">手机号</Label>
+                            <Label  x:Name="Label_Phone"  Foreground="#fff">10000000000</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80">邮箱</Label>
+                            <Label   x:Name="Label_Email"  Foreground="#fff">10000@xky.com</Label>
+                        </StackPanel>
+                    </StackPanel>
+                   
+                </Grid>
+              
+              
+              
+
+                <Separator Margin="0,0,0,0" Background="{StaticResource BackgroundColor1}" />
+                <Label FontSize="20" Foreground="White" Margin="0,20,0,0">授权信息</Label>
+                <Grid Margin="0,20,0,20">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80">授权名称</Label>
+                            <Label   x:Name="Label_License_Name"  Foreground="#fff">标准版</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80"  VerticalAlignment="Center">授权码</Label>
+                            <Label  x:Name="Label_License_Key" Foreground="White" Content="-"></Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Foreground="#ccc" Width="80">过期时间</Label>
+                            <Label Foreground="#fff"   x:Name="Label_License_Expiration_Time">2099-1-1</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5"/>
+                    </StackPanel>
+
+                </Grid>
+                    <Separator Margin="0,0,0,0" Background="{StaticResource BackgroundColor1}" />
+                    <Grid Margin="0,20,0,20">
+                        <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
+                            <UserControl:MyButton Width="200" Text="退出登录"  Background_MouseOver="#e81123" Background_Pressed="#d20315"></UserControl:MyButton>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+</Grid>
 </UserControl>

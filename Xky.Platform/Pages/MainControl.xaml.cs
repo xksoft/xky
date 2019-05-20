@@ -345,6 +345,16 @@ namespace Xky.Platform.Pages
             string tag = ((MenuItem) sender).Tag.ToString();
             switch (tag)
             {
+                case "Reboot":{
+                        if (DeviceListBox.SelectedItem is Device device)
+                        {
+                            Client.StartAction(() =>
+                            {
+                                device.ScriptEngine.AdbShell("reboot");
+                            });
+                            }
+                            break;
+                    }
                 case "EditInfo":
                 {
                     string oldtag = "";

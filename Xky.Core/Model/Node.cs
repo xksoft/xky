@@ -2,6 +2,9 @@
 
 namespace Xky.Core.Model
 {
+    /// <summary>
+    /// 节点模型
+    /// </summary>
     public class Node : INotifyPropertyChanged
     {
         private int _id = 0;
@@ -17,6 +20,9 @@ namespace Xky.Core.Model
 
         public long LoadTick { get; set; }
 
+        /// <summary>
+        ///  编号
+        /// </summary>
         public int Id
         {
             get => _id;
@@ -29,7 +35,9 @@ namespace Xky.Core.Model
                 }
             }
         }
-
+        /// <summary>
+        /// 节点名称
+        /// </summary>
         public string Name
         {
             get => _name;
@@ -42,7 +50,9 @@ namespace Xky.Core.Model
                 }
             }
         }
-
+        /// <summary>
+        /// 序列号
+        /// </summary>
         public string Serial
         {
             get => _serial;
@@ -121,7 +131,9 @@ namespace Xky.Core.Model
             }
         }
 
-
+        /// <summary>
+        /// 连接状态 0：未连接 1：局域网连接 2：外网连接
+        /// </summary>
         public int ConnectStatus
         {
             get => _connectStatus;

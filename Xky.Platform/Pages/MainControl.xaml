@@ -211,7 +211,6 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator />
-                        <MenuItem Header="分享设备" Tag="Share" Click="MenuItem_Click"/>
                         <MenuItem Header="重启" Tag="Reboot" Click="MenuItem_Click"/>
                        
 
