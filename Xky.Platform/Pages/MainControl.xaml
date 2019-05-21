@@ -396,9 +396,12 @@
                           Height="920">
                         <VirtualizingStackPanel VerticalAlignment="Stretch" Orientation="Vertical" Background="{StaticResource BackgroundColor1}"
                                                 Width="48" MaxHeight="768" Margin="0,0,10,0">
-                           
-                           
-                          
+
+
+                            <UserControl:MyImageButton  Tag="GetDeviceDebug"  Click="DeviceMenuItem_OnClick" ToolTip="获取界面元素授权码"
+                                Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/setdebug-white.png"
+                                Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
+                                Background_Pressed="#32373d" />
                             <UserControl:MyImageButton  Tag="ShowInputMethod"  Click="DeviceMenuItem_OnClick" ToolTip="选择输入法"
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/selectinput-white.png"
                                 Height="48" Image_Height="24" Image_Width="24" Background_MouseOver="#404750"
