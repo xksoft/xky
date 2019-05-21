@@ -115,7 +115,7 @@ namespace Xky.Platform
                     bitspeed = bitcount + " bps";
 
                 StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count +
-                                  " 线程：" + Client.ThreadList.Count;
+                                  " 线程：" +Client.ThreadCount;
             });
         }
 
@@ -264,6 +264,7 @@ namespace Xky.Platform
                 e.Cancel = true;
             }
         }
+
     }
 
     #region 窗体按钮状态转换模型

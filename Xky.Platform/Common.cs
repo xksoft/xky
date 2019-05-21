@@ -26,7 +26,7 @@ namespace Xky.Platform
         public static void OpenUrl(string url)
         {
             try { Process.Start("explorer.exe", url); } catch {
-                var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "无法打开系统浏览器，请手动打开浏览器并输入："+url };
+                var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "无法调用系统浏览器，请手动打开浏览器并输入："+url };
                 Common.ShowMessageControl(msg);
             }
 

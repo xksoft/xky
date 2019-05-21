@@ -12,7 +12,7 @@
     <Grid Background="{StaticResource BackgroundColor4}">
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Foreground="#ccc" FontSize="20">即将开放</Label>
+            <Label Foreground="#ccc" FontSize="20">建设中，即将开放</Label>
         </StackPanel>
       
     </Grid>

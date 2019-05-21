@@ -53,7 +53,7 @@ namespace Xky.Core
         /// <summary>
         /// 并发线程列表
         /// </summary>
-        public static Dictionary<string,Thread> ThreadList=new Dictionary<string, Thread>();
+        public static int ThreadCount = 0;
 
         /// <summary>
         /// 节点信息
@@ -187,15 +187,15 @@ namespace Xky.Core
         /// <returns></returns>
         public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
         {
-            string ThreadName = Guid.NewGuid().ToString();
+          
             var thread = new Thread(() =>
                 {
                     try
                     {
-                        //lock ("thread_count")
-                        //{
-                        //    Threads++;
-                        //}
+                        lock ("thread_count")
+                        {
+                            ThreadCount++;
+                        }
 
                         action.Invoke();
                     }
@@ -205,17 +205,17 @@ namespace Xky.Core
                     }
                     finally
                     {
-                        //lock ("thread_count")
-                        //{
-                        //    Threads--;
-                        //}
-                        ThreadList.Remove(ThreadName);
+                        lock ("thread_count")
+                        {
+                            ThreadCount--;
+                        }
+                        
                     }
                 })
-            { IsBackground = true, Name = ThreadName };
+            { IsBackground = true};
             thread.SetApartmentState(state);
             thread.Start();
-            ThreadList.Add(thread.Name,thread);
+          
                
             return thread;
         }

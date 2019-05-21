@@ -150,7 +150,7 @@ namespace Xky.Platform.Pages
                 while (this.IsVisible)
                 {
                     SendScrccnTick();
-                    Thread.Sleep(5000);
+                    Thread.Sleep(10000);
                 }
             });
         }
@@ -287,7 +287,31 @@ namespace Xky.Platform.Pages
                 string tag = ((MyImageButton)e.Source).Tag.ToString();
                 switch (tag)
                 {
-                   
+                    case "GetDeviceDebug":
+                        {
+                            Client.StartAction(() =>
+                            {
+                                var response = Client.CallApi("get_device_debug", new JObject { ["sn"] = device.Sn });
+                                if (response.Result)
+                                {
+                                    Console.WriteLine("界面元素授权码："+response.Json["uispy_token"].ToString());
+                                    Client.ShowToast("成功获取界面元素授权码，粘贴到调试工具中即可使用！", Color.FromRgb(0, 188, 0));
+                                    try
+                                    {
+                                        System.Windows.Clipboard.SetDataObject(response.Json["uispy_token"].ToString(), true);
+                                    }
+                                    catch(Exception error) {
+                                        Common.ShowToast("无法将界面元素授权码复制到当前系统粘贴板中，请关闭软件使用右键管理员权限启动！", Color.FromRgb(239, 34, 7));
+
+                                    }
+                                }
+                                else
+                                {
+                                    Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                                }
+                            }, ApartmentState.STA);
+                            break;
+                        }
                     case "ShowInputMethod":
                         {
                             device.ScriptEngine.ShowInputMethod();
