@@ -115,7 +115,9 @@ namespace Xky.Platform.Pages
             Client.StartAction(() =>
             {
                 var response = Client.LoadNodes();
-                Client.SearchLocalNode();
+                 Client.SearchLocalNode();
+                
+                
             });
         }
 
@@ -133,7 +135,6 @@ namespace Xky.Platform.Pages
                 {
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
                     view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
-                   
                     ModuleListBox.ItemsSource = view;
                    
                 });
@@ -143,12 +144,13 @@ namespace Xky.Platform.Pages
       
         private void ScreenTick()
         {
+          
             Client.StartAction(() =>
             {
-                while (true)
+                while (this.IsVisible)
                 {
                     SendScrccnTick();
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
                 }
             });
         }

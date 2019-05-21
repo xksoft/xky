@@ -176,6 +176,10 @@
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
       <Name>Xky.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xky.Socket\Xky.Socket.csproj">
+      <Project>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</Project>
+      <Name>Xky.Socket</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\whatapps.png" />

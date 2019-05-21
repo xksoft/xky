@@ -28,7 +28,7 @@
                 <Label FontSize="20" Foreground="White" Margin="0,0,0,0" >基本信息</Label>
                 <Grid Margin="0,20,0,20">
                     <StackPanel Orientation="Vertical">
-                        <Image x:Name="Image_Avatar" Height="160"  HorizontalAlignment="Left" Margin="5,5,0,5"/>
+                        <Image x:Name="Image_Avatar" Width="160"  HorizontalAlignment="Left" Margin="5,5,0,5"/>
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                             <Label Foreground="#ccc" Width="80">昵称</Label>
                             <Label  x:Name="Label_Nickname"  Foreground="#fff">侠客小侠</Label>
@@ -41,7 +41,11 @@
                             <Label Foreground="#ccc" Width="80">邮箱</Label>
                             <Label   x:Name="Label_Email"  Foreground="#fff">10000@xky.com</Label>
                         </StackPanel>
-                    </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                               
+                                <UserControl:MyButton x:Name="Button_EditInfo" Click="Button_EditInfo_Click" Width="160" Text="修改信息"  ></UserControl:MyButton>
+                            </StackPanel>
+                        </StackPanel>
                    
                 </Grid>
               
@@ -71,7 +75,7 @@
                     <Separator Margin="0,0,0,0" Background="{StaticResource BackgroundColor1}" />
                     <Grid Margin="0,20,0,20">
                         <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
-                            <UserControl:MyButton Width="200" Text="退出登录"  Background_MouseOver="#e81123" Background_Pressed="#d20315"></UserControl:MyButton>
+                            <UserControl:MyButton x:Name="Button_LoginOut" Click="Button_LoginOut_Click" Width="160" Text="退出登录"  Background_MouseOver="#e81123" Background_Pressed="#d20315"></UserControl:MyButton>
                         </StackPanel>
                     </Grid>
                 </StackPanel>

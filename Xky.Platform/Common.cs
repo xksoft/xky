@@ -13,6 +13,8 @@ using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Platform.Properties;
 using Xky.Platform.Pages;
+using System.Diagnostics;
+using Xky.Core.UserControl;
 
 namespace Xky.Platform
 {
@@ -21,7 +23,14 @@ namespace Xky.Platform
         public static MainWindow MainWindow;
         public static MainControl MyMainControl;
 
+        public static void OpenUrl(string url)
+        {
+            try { Process.Start("explorer.exe", url); } catch {
+                var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "无法打开系统浏览器，请手动打开浏览器并输入："+url };
+                Common.ShowMessageControl(msg);
+            }
 
+        }
         public static void PlaySound(string name)
         {
             switch (name)
@@ -172,6 +181,15 @@ namespace Xky.Platform
             if (!Directory.Exists(specificFolder))
                 Directory.CreateDirectory(specificFolder);
             File.WriteAllText(Path.Combine(specificFolder, name), json.ToString(), Encoding.UTF8);
+        }
+        public static void DeleteJson(string name)
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var specificFolder = Path.Combine(folder, "xiakeyun");
+            if (File.Exists(Path.Combine(specificFolder, name)))
+            {
+                File.Delete(Path.Combine(specificFolder, name));
+            }
         }
 
         public static JObject LoadJson(string name)

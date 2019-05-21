@@ -51,9 +51,9 @@ namespace Xky.Core
         public static Window MainWindow;
 
         /// <summary>
-        /// 并发线程数
+        /// 并发线程列表
         /// </summary>
-        public static int Threads;
+        public static Dictionary<string,Thread> ThreadList=new Dictionary<string, Thread>();
 
         /// <summary>
         /// 节点信息
@@ -90,6 +90,11 @@ namespace Xky.Core
         /// 速率计数器
         /// </summary>
         public static AverageNumber BitAverageNumber = new AverageNumber(3);
+
+        /// <summary>
+        /// 局域网节点发现监听
+        /// </summary>
+        public static UdpClient UdpClient_SearchNode;
 
         #endregion
 
@@ -182,14 +187,15 @@ namespace Xky.Core
         /// <returns></returns>
         public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
         {
+            string ThreadName = Guid.NewGuid().ToString();
             var thread = new Thread(() =>
                 {
                     try
                     {
-                        lock ("thread_count")
-                        {
-                            Threads++;
-                        }
+                        //lock ("thread_count")
+                        //{
+                        //    Threads++;
+                        //}
 
                         action.Invoke();
                     }
@@ -199,15 +205,18 @@ namespace Xky.Core
                     }
                     finally
                     {
-                        lock ("thread_count")
-                        {
-                            Threads--;
-                        }
+                        //lock ("thread_count")
+                        //{
+                        //    Threads--;
+                        //}
+                        ThreadList.Remove(ThreadName);
                     }
                 })
-                {IsBackground = true};
+            { IsBackground = true, Name = ThreadName };
             thread.SetApartmentState(state);
             thread.Start();
+            ThreadList.Add(thread.Name,thread);
+               
             return thread;
         }
 
@@ -263,11 +272,11 @@ namespace Xky.Core
         {
             StartAction(() =>
             {
-                var udp = new UdpClient(18866);
+                UdpClient_SearchNode = new UdpClient(18866);
                 var ip = new IPEndPoint(IPAddress.Any, 18866);
                 while (true)
                 {
-                    var bytes = udp.Receive(ref ip);
+                    var bytes = UdpClient_SearchNode.Receive(ref ip);
                     var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
                     var serial = json["serial"]?.ToString();
                     if (serial != null)
@@ -282,16 +291,6 @@ namespace Xky.Core
 
 
                         PushNode(node, true);
-                        //lock ("nodes")
-                        //{
-                        //    var node = Nodes.ToList().Find(p => p.Serial == serial);
-                        //    if (node != null)
-                        //        ConnectToNode(node,
-                        //            "http://" + (string.IsNullOrEmpty(LocalNodes[serial].Ip)
-                        //                ? "127.0.0.1"
-                        //                : LocalNodes[serial].Ip) + ":8080",
-                        //            node.ConnectionHash);
-                        //}
                     }
                 }
             });
