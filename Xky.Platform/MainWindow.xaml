@@ -207,7 +207,7 @@
             <VirtualizingStackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
                 <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
                                        ImgSource="Resources/Icon/logo.png" PageName="Logo"
-                                       IsDarkStyle="True" />
+                                       IsDarkStyle="True" IsHitTestVisible="False"/>
 
                 <userControl:MyTabItem x:Name="LoginTabItem" ToolTip="授权" CheckLicense="False" IsSelected="True"
                                        ImgSource="Resources/Icon/authority.png" PageName="Login"
