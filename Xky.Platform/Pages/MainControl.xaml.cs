@@ -150,7 +150,7 @@ namespace Xky.Platform.Pages
                 while (this.IsVisible)
                 {
                     SendScrccnTick();
-                    Thread.Sleep(5000);
+                    Thread.Sleep(10000);
                 }
             });
         }

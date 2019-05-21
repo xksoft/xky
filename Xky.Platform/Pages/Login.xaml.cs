@@ -76,51 +76,7 @@ namespace Xky.Platform.Pages
             });
         }
 
-        private void Button_LoginOut_Click(object sender, RoutedEventArgs e)
-        {
-            var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "您确认要退出当前授权吗？" };
-            Common.ShowMessageControl(msg);
-
-            if (msg.Result != MessageBoxResult.Yes)
-            {
-                return;
-            }
-            Common.UiAction(() =>
-            {
-                Common.DeleteJson("license");
-                LicenseKey.Text = "";
-                Grid_Login.Visibility = Visibility.Visible;
-                Grid_Info.Visibility = Visibility.Collapsed;
-                Client.License = null;
-                Client.Modules = new System.Collections.ObjectModel.ObservableCollection<Core.Model.Module>();
-                Client.Devices.Clear();
-                Client.Tags.Clear();
-                Client.NodeTags.Clear();
-                Client.UdpClient_SearchNode.Close();
-                var NodeList = Client.Nodes.ToList().FindAll(n => n.NodeSocket != null);
-                
-                foreach (Core.Model.Node n in NodeList)
-                {
-                    try
-                    {
-                        n.NodeSocket.Disconnect();
-                        n.NodeSocket.Off();
-                        n.NodeSocket.Close();
-                    }
-                    catch { }
-                }
-                var ThreadNames= Client.ThreadList.Keys.ToList();
-                foreach (string name in ThreadNames)
-                {
-                    try
-                    {
-                        Client.ThreadList[name].Abort();
-                    }
-                    catch { }
-                }
-                Client.Nodes.Clear();
-            });
-        }
+      
 
         private void Button_EditInfo_Click(object sender, RoutedEventArgs e)
         {

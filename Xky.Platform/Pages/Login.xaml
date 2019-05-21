@@ -72,12 +72,8 @@
                     </StackPanel>
 
                 </Grid>
-                    <Separator Margin="0,0,0,0" Background="{StaticResource BackgroundColor1}" />
-                    <Grid Margin="0,20,0,20">
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
-                            <UserControl:MyButton x:Name="Button_LoginOut" Click="Button_LoginOut_Click" Width="160" Text="退出登录"  Background_MouseOver="#e81123" Background_Pressed="#d20315"></UserControl:MyButton>
-                        </StackPanel>
-                    </Grid>
+                   
+                   
                 </StackPanel>
             </Border>
         </Grid>
