@@ -42,7 +42,7 @@ namespace Xky.XModule.ScreenTrain
         private System.Windows.Point _downPoint;
         ImageSource imageSource;
         Queue transq = new Queue();
-        int index = 0;
+       
         EncoderParameters eps = new EncoderParameters(1);
         EncoderParameter ep_50 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 50L);
         EncoderParameter ep_100 = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
@@ -102,14 +102,7 @@ namespace Xky.XModule.ScreenTrain
                 Directory.CreateDirectory(DataPath);
 
             }
-            FileTimeInfo info = GetLatestFileTimeInfo(AppPath + "\\data", ".jpg");
-            if (info == null) { index = 1; }
-            else
-            {
-                FileInfo finfo = new FileInfo(info.FileName);
-                index = Convert.ToInt32(finfo.Name.Remove((finfo.Name.LastIndexOf("."))));
-                index++;
-            }
+           
             Image_Screen.Source = device.ScreenShot.Clone();
 
         }
@@ -118,7 +111,7 @@ namespace Xky.XModule.ScreenTrain
         {
 
             Image_Screen.Source = device.ScreenShot.Clone();
-            index=index+2;
+           
             WrapPanel_Main.Children.Clear();
         }
  
@@ -208,18 +201,34 @@ namespace Xky.XModule.ScreenTrain
 
         private void Button_Name_Click(object sender, RoutedEventArgs e)
         {
+            int index = 0;
             int i = Convert.ToInt32(((MyButton)sender).Tag);
+            string name = ((MyButton)sender).Text.ToString();
+            if (!Directory.Exists(DataPath+"\\"+name))
+            {
+                Directory.CreateDirectory(DataPath+"\\"+name);
+            }
+
+            FileTimeInfo info = GetLatestFileTimeInfo(DataPath + "\\" + name, ".jpg");
+            if (info == null) { index = 1; }
+            else
+            {
+                FileInfo finfo = new FileInfo(info.FileName);
+                index = Convert.ToInt32(finfo.Name.Remove((finfo.Name.LastIndexOf("."))));
+                index++;
+            }
+
             if (Image_Select.Source != null)
             {
 
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
                 eps.Param[0] = ep_100;
-                bitmap.Save(DataPath + "\\" + index + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + index + ".txt", i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                bitmap.Save(DataPath + "\\"+name+"\\" + index + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\"+name + "\\" + index + ".txt", i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
 
                 eps.Param[0] = ep_50;
-                bitmap.Save(DataPath + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\" + (index + 1) + ".txt",i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                bitmap.Save(DataPath + "\\"+ name + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\"+ name + "\\" + (index + 1) + ".txt",i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
 
 
 
