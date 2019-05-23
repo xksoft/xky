@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.AllApiDemo", "X
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.WangZhe", "XModule\Xky.XModule.WangZhe\Xky.XModule.WangZhe.csproj", "{021B14BA-C412-475F-BE90-4C9D356FA0E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.Test", "XModule\Xky.XModule.Test\Xky.XModule.Test.csproj", "{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,14 +123,6 @@ Global
 		{021B14BA-C412-475F-BE90-4C9D356FA0E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{021B14BA-C412-475F-BE90-4C9D356FA0E9}.Release|x64.ActiveCfg = Release|Any CPU
 		{021B14BA-C412-475F-BE90-4C9D356FA0E9}.Release|x64.Build.0 = Release|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Debug|x64.Build.0 = Debug|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Release|x64.ActiveCfg = Release|Any CPU
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,7 +136,6 @@ Global
 		{C3364FE4-43B0-41B1-93B3-4F2C9F9559BE} = {DC5868EF-9EB4-49D5-BE79-ECCB6905750C}
 		{5863965E-823B-408B-8F68-FAFF16EBF87C} = {DC5868EF-9EB4-49D5-BE79-ECCB6905750C}
 		{021B14BA-C412-475F-BE90-4C9D356FA0E9} = {DC5868EF-9EB4-49D5-BE79-ECCB6905750C}
-		{2534CD9F-E3CD-4F85-BA68-A170E9DCDC94} = {DC5868EF-9EB4-49D5-BE79-ECCB6905750C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {923A3787-852E-4615-A6B3-8FD537103D7C}
