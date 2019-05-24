@@ -187,9 +187,12 @@ namespace Xky.XModule.ScreenTrain
                 string[] names = File.ReadAllLines(openFileDialog.FileName,Encoding.UTF8);
                 for (int i=0;i<names.Length;i++)
                 {
-
+                    if (!Directory.Exists(DataPath + "\\" + i))
+                    {
+                        Directory.CreateDirectory(DataPath + "\\" + i);
+                    }
                     MyButton button = new MyButton();
-                    button.Text = names[i];
+                    button.Text = names[i]+"-"+(Directory.GetFiles(DataPath + "\\" + i ).Length/4);
                     button.Tag = i;
                     
                     button.Margin = new Thickness(5,5,5,5);
@@ -204,12 +207,10 @@ namespace Xky.XModule.ScreenTrain
             int index = 0;
             int i = Convert.ToInt32(((MyButton)sender).Tag);
             string name = ((MyButton)sender).Text.ToString();
-            if (!Directory.Exists(DataPath+"\\"+name))
-            {
-                Directory.CreateDirectory(DataPath+"\\"+name);
-            }
+            string nname = name.Remove(name.IndexOf("-"));
 
-            FileTimeInfo info = GetLatestFileTimeInfo(DataPath + "\\" + name, ".jpg");
+            ((MyButton)sender).Text=nname+"-"+ (Directory.GetFiles(DataPath + "\\" + i).Length / 4);
+            FileTimeInfo info = GetLatestFileTimeInfo(DataPath + "\\" + i, ".jpg");
             if (info == null) { index = 1; }
             else
             {
@@ -223,12 +224,12 @@ namespace Xky.XModule.ScreenTrain
 
                 Bitmap bitmap = ImageHelper.ImageSourceToBitmap((BitmapSource)imageSource);
                 eps.Param[0] = ep_100;
-                bitmap.Save(DataPath + "\\"+name+"\\" + index + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\"+name + "\\" + index + ".txt", i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                bitmap.Save(DataPath + "\\"+i+"\\" + index + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\"+i + "\\" + index + ".txt", i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
 
                 eps.Param[0] = ep_50;
-                bitmap.Save(DataPath + "\\"+ name + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
-                File.AppendAllText(DataPath + "\\"+ name + "\\" + (index + 1) + ".txt",i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
+                bitmap.Save(DataPath + "\\"+ i + "\\" + (index + 1) + ".jpg", jpsEncodeer, eps);
+                File.AppendAllText(DataPath + "\\"+ i + "\\" + (index + 1) + ".txt",i + " " + (rect_select.Left + (rect_select.Width / 2)) / bitmap.Width + " " + (rect_select.Top + (rect_select.Height / 2)) / bitmap.Height + " " + rect_select.Width / bitmap.Width + " " + rect_select.Height / bitmap.Height + "\r\n");
 
 
 
