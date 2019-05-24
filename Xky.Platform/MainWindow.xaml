@@ -9,11 +9,8 @@
         AllowsTransparency="True"
         RenderOptions.BitmapScalingMode="LowQuality"
         UseLayoutRounding="True"
-        TextOptions.TextFormattingMode="Display"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Background="Transparent"
-        FontFamily="SimSun"
         MinHeight="768"
         MinWidth="1024"
         Title="MainWindow" Height="972" Width="1500" Closing="MainWindow_OnClosing">
@@ -22,7 +19,7 @@
         <platform:ButtonStatus x:Key="ButtonStatus" />
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" Margin="20" Background="{StaticResource BackgroundColor2}">
+    <Grid x:Name="MainGrid"  Background="{StaticResource BackgroundColor2}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
             <ColumnDefinition Width="193" />
@@ -161,7 +158,8 @@
                 </Button>
             </VirtualizingStackPanel>
         </Grid>
-        <Border x:Name="MainBoard" BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
+        <Border x:Name="MainBoard" BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2"
+                Grid.ColumnSpan="3"
                 Grid.Column="0" Panel.ZIndex="999" />
 
         <!-- Toast -->
@@ -202,9 +200,9 @@
 
 
             <VirtualizingStackPanel VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True">
-                <userControl:MyTabItem  x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
+                <userControl:MyTabItem x:Name="LogoTabItem" ToolTip="侠客云" CheckLicense="False"
                                        ImgSource="Resources/Icon/logo.png" PageName="Logo"
-                                       IsDarkStyle="True" IsHitTestVisible="False"/>
+                                       IsDarkStyle="True" IsHitTestVisible="False" />
 
                 <userControl:MyTabItem x:Name="LoginTabItem" ToolTip="授权" CheckLicense="False" IsSelected="True"
                                        ImgSource="Resources/Icon/authority.png" PageName="Login"
