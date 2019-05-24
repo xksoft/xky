@@ -49,12 +49,12 @@
                                         <ColumnDefinition Width="7*" />
                                         <ColumnDefinition Width="3*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Foreground="#a0a4a7"
+                                    <TextBlock x:Name="TagName" Grid.Column="0" Foreground="{StaticResource DescriptionColor}"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left"
                                                Margin="10" Text="{Binding ElementName=MyBorder, Path=DataContext.Name}">
                                     </TextBlock>
-                                    <TextBlock Grid.Column="1"  Foreground="#a0a4a7"
+                                    <TextBlock x:Name="TagCount" Grid.Column="1"  Foreground="{StaticResource DescriptionColor}"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Right" Margin="10" Text="{Binding ElementName=MyBorder, Path=DataContext.Count}">
                                     </TextBlock>
@@ -64,12 +64,16 @@
                                 <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True" >
-                                    <Setter Property="Background" TargetName="MyBorder" Value="#41474f" />
+                                    <Setter Property="Background" TargetName="MyBorder" Value="{StaticResource BackgroundColor1}" />
+                                    <Setter Property="Foreground" TargetName="TagName" Value="{StaticResource White}" />
+                                    <Setter Property="Foreground" TargetName="TagCount" Value="{StaticResource White}" />
                                 </DataTrigger>
                                 <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
                                 Value="True" >
-                                    <Setter Property="Background" TargetName="MyBorder" Value="#373d45" />
+                                    <Setter Property="Background" TargetName="MyBorder" Value="{StaticResource BackgroundColor1}" />
+                                    <Setter Property="Foreground" TargetName="TagName" Value="{StaticResource White}" />
+                                    <Setter Property="Foreground" TargetName="TagCount" Value="{StaticResource White}" />
                                 </DataTrigger>
                                
                             </DataTemplate.Triggers>
@@ -259,12 +263,12 @@
 
                             <StackPanel Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-
-                                    <UserControl:MyTagLabel x:Name="DeviceId"
-                                                      Text="{Binding ElementName=MyBorder, Path=DataContext.Id}"
-                                                      Margin="0,0,3,0"
-
-                                                      Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" />
+                                    <!-- -->
+                                    <!-- <UserControl:MyTagLabel x:Name="DeviceId" -->
+                                    <!--                   Text="{Binding ElementName=MyBorder, Path=DataContext.Id}" -->
+                                    <!--                   Margin="0,0,3,0" -->
+                                    <!-- -->
+                                    <!--                   Foreground="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=-80}" /> -->
                                     <UserControl:MyTagLabel x:Name="DeviceName"
                                                       Text="{Binding ElementName=MyBorder, Path=DataContext.Name}"
                                                       Margin="0,0,3,0"
@@ -327,9 +331,9 @@
                                 <Setter TargetName="MyBlueLine" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="MyBorder" Property="Background"
                                         Value="{StaticResource BackgroundColor1}" />
-
-                                <Setter TargetName="DeviceId" Property="Foreground"
-                                        Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
+                                <!-- -->
+                                <!-- <Setter TargetName="DeviceId" Property="Foreground" -->
+                                <!--         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" /> -->
                                 <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                                 <!--<Setter TargetName="RunStatus" Property="Foreground"
@@ -339,8 +343,8 @@
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
                                 Value="True">
 
-                                <Setter TargetName="DeviceId" Property="Foreground"
-                                        Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
+                                <!-- <Setter TargetName="DeviceId" Property="Foreground" -->
+                                <!--         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" /> -->
                                 <Setter TargetName="DeviceName" Property="Foreground"
                                         Value="{Binding Source={StaticResource White},Converter={lib:HoverColorConverter},ConverterParameter=0}" />
                                 <!--<Setter TargetName="RunStatus" Property="Foreground"

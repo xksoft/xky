@@ -33,7 +33,7 @@ namespace Xky.Platform
                 GlassFrameThickness = new Thickness(0),
                 CornerRadius = new CornerRadius(0),
                 UseAeroCaptionButtons = false,
-                ResizeBorderThickness = new Thickness(25)
+                ResizeBorderThickness = new Thickness(5)
             };
             WindowChrome.SetWindowChrome(this, wc);
             Activated += MainWindow_Activated;
@@ -208,30 +208,11 @@ namespace Xky.Platform
                 MainGrid.Margin = new Thickness(left, top, right, bottom);
                 BtnRestore.Visibility = Visibility.Visible;
                 BtnMax.Visibility = Visibility.Collapsed;
-                var wc = new WindowChrome
-                {
-                    CaptionHeight = 30,
-                    GlassFrameThickness = new Thickness(0),
-                    CornerRadius = new CornerRadius(0),
-                    UseAeroCaptionButtons = false,
-                    ResizeBorderThickness = new Thickness(0)
-                };
-                WindowChrome.SetWindowChrome(this, wc);
             }
             else
             {
-                MainGrid.Margin = new Thickness(20);
-                BtnRestore.Visibility = Visibility.Collapsed;
-                BtnMax.Visibility = Visibility.Visible;
-                var wc = new WindowChrome
-                {
-                    CaptionHeight = 30,
-                    GlassFrameThickness = new Thickness(0),
-                    CornerRadius = new CornerRadius(0),
-                    UseAeroCaptionButtons = false,
-                    ResizeBorderThickness = new Thickness(25)
-                };
-                WindowChrome.SetWindowChrome(this, wc);
+                MainGrid.Margin = new Thickness(0);
+
             }
 
             Console.WriteLine(this.Height + " " + this.Width);
