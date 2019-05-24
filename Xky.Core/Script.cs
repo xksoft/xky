@@ -567,7 +567,7 @@ namespace Xky.Core
         public Response InsertContacts(JArray contacts)
         {
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "insertContacts",
-                new JArray(contacts));
+               contacts);
         }
 
         /// <summary>

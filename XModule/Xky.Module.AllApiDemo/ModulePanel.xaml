@@ -88,43 +88,34 @@
                 <UserControl:MyButton Click="MyButton_Click" Tag="ReadDir"  Text="读取设备上的目录信息" Margin="0,0,10,10"></UserControl:MyButton>
 
 
-          
 
 
-                <UserControl:MyButton Tag="CreateHardware" Text="创建一个新的硬件全息信息" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="RestoreHardware"  Text="还原一个硬件全息信息" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="GetHardwareKey"  Text="读取当前设备的硬件全息key" Margin="0,0,10,10"></UserControl:MyButton>
+
+                <UserControl:MyButton Tag="CreateHardware" Click="MyButton_Click"  Text="创建一个新的硬件全息信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="RestoreHardware"  Click="MyButton_Click"  Text="还原一个硬件全息信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="GetHardwareKey"  Click="MyButton_Click"  Text="读取当前设备的硬件全息key" Margin="0,0,10,10"></UserControl:MyButton>
 
 
-                <UserControl:MyButton Tag="GetCurrentAppSnapshot"  Text="获取当前设备的快照信息" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="CreateAppSnapshot"  Text="创建全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="SetAppSnapshot"  Text="切换全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="DelAppSnapshot"  Text="删除全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Tag="GetAppSnapshotList"  Text="获取全息快照插槽列表" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="GetCurrentAppSnapshot"  Click="MyButton_Click"  Text="获取当前设备的快照信息" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="CreateAppSnapshot"  Click="MyButton_Click"  Text="创建全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="SetAppSnapshot"  Click="MyButton_Click"  Text="切换全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="DelAppSnapshot" Click="MyButton_Click"   Text="删除全息快照插槽" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="GetAppSnapshotList"  Click="MyButton_Click"  Text="获取全息快照插槽列表" Margin="0,0,10,10"></UserControl:MyButton>
 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <UserControl:MyButton Text="执行输入法动作指令" Margin="0,0,10,10"></UserControl:MyButton>
-                      <UserControl:MyButton Click="MyButton_Click"   Text="调用第三方接口Api" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Click="MyButton_Click"   Text="通过输入法输入文本" Margin="0,0,10,10"></UserControl:MyButton>
-              
-                <UserControl:MyButton Text="将一个远程图片更新到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Text="基于文本生成一个二维码，并提交到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Text="将一个本地图片提交到摄像头" Margin="0,0,10,10"></UserControl:MyButton>
-              
-                <UserControl:MyButton Text="读取联系人" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Text="添加联系人" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Text="清空所有联系人" Margin="0,0,10,10"></UserControl:MyButton>
-                <UserControl:MyButton Text="添加图片到系统图库" Margin="0,0,10,10"></UserControl:MyButton>
-               
+
+                <UserControl:MyButton Tag="SetLocation" Click="MyButton_Click"  Text="设置定位坐标" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="GetLocation" Click="MyButton_Click"  Text="读取当前定位坐标" Margin="0,0,10,10"></UserControl:MyButton>
+
+
+                <UserControl:MyButton Tag="UpdateCameraFromUrl" Click="MyButton_Click"  Text="通过远程图片url更新摄像头内容" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="UpdateCameraFromFile"  Click="MyButton_Click"  Text="通过二进制图片数据更新摄像头内容" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="UpdateCameraFromText" Click="MyButton_Click"   Text="将文本内容保存为二维码更新摄像头内容" Margin="0,0,10,10"></UserControl:MyButton>
+
+                <UserControl:MyButton Tag="GetContacts" Click="MyButton_Click"  Text="获取联系人列表" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="InsertContacts"  Click="MyButton_Click"  Text="插入联系人列表" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton  Tag="ClearContacts" Click="MyButton_Click"  Text="清空联系人" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="InsertMedia"  Click="MyButton_Click"  Text="插入媒体库" Margin="0,0,10,10"></UserControl:MyButton>
+                <UserControl:MyButton Tag="ClearDcim"  Click="MyButton_Click"   Text="清空媒体库" Margin="0,0,10,10"></UserControl:MyButton>
             </WrapPanel>
          
                 <UserControl:MyTextBox  x:Name="TextBox_Result" Grid.Row="2"  LineHeight="20" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" WaterText=""></UserControl:MyTextBox>
