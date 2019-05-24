@@ -50,199 +50,6 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 写入文本到设备上
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public Response WriteStringToFile(string path, string str)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeStringToFile", new JArray(path, str));
-        }
-
-        /// <summary>
-        /// 把二进制数组写入设备
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public Response WriteBufferToFile(string path, byte[] data)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeBufferToFile2",
-                new JArray(path, data));
-        }
-
-        /// <summary>
-        /// 从设备读取二进制数据
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public Response ReadBufferFromFile(string path)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readBufferFromFile",
-                new JArray(path));
-        }
-
-        /// <summary>
-        /// 读书设备上的目录信息
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public Response ReadDir(string path)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readDir",
-                new JArray(path));
-        }
-
-        /// <summary>
-        /// 创建一个新的硬件信息
-        /// </summary>
-        /// <param name="model">指定型号</param>
-        /// <returns></returns>
-        public Response CreateHardware(string model = null)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "createHardware",
-                new JArray(model));
-        }
-
-        /// <summary>
-        /// 还原一个硬件信息
-        /// </summary>
-        /// <param name="key">硬件key</param>
-        /// <returns></returns>
-        public Response RestoreHardware(string key)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "restoreHardware",
-                new JArray(key));
-        }
-
-        /// <summary>
-        /// 读取当前设备的硬件key
-        /// </summary>
-        /// <returns></returns>
-        public Response GetHardwareKey()
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getHardwareKey",
-                new JArray());
-        }
-
-        /// <summary>
-        /// 获取当前的快照信息
-        /// </summary>
-        /// <param name="packagename">包名</param>
-        /// <returns></returns>
-        public Response GetCurrentAppSnapshot(string packagename)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getCurrentAppSnapshot",
-                new JArray(packagename));
-        }
-
-        /// <summary>
-        /// 创建全息快照插槽
-        /// </summary>
-        /// <param name="packageName">包名</param>
-        /// <param name="name">快照名</param>
-        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
-        /// <returns></returns>
-        public Response CreateAppSnapshot(string packageName, string name, string basepath = null)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "createAppSnapshot",
-                new JArray(packageName, name, basepath));
-        }
-
-        /// <summary>
-        /// 切换全息快照插槽
-        /// </summary>
-        /// <param name="packageName">包名</param>
-        /// <param name="name">快照名</param>
-        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
-        /// <returns></returns>
-        public Response SetAppSnapshot(string packageName, string name, string basepath = null)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "setAppSnapshot",
-                new JArray(packageName, name, basepath));
-        }
-
-        /// <summary>
-        /// 删除全息快照插槽
-        /// </summary>
-        /// <param name="packageName">包名</param>
-        /// <param name="name">快照名</param>
-        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
-        /// <returns></returns>
-        public Response DelAppSnapshot(string packageName, string name, string basepath = null)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "delAppSnapshot",
-                new JArray(packageName, name, basepath));
-        }
-
-        /// <summary>
-        /// 获取全息快照插槽列表
-        /// </summary>
-        /// <param name="packageName">包名</param>
-        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
-        /// <returns></returns>
-        public Response GetAppSnapshotList(string packageName, string basepath = null)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getAppSnapshotList",
-                new JArray(packageName, basepath));
-        }
-
-        /// <summary>
-        /// 设置定位坐标
-        /// </summary>
-        /// <param name="location">坐标，如：22.517631,114.071045</param>
-        /// <returns></returns>
-        public Response SetLocation(string location)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "setLocation",
-                new JArray(location));
-        }
-
-        /// <summary>
-        /// 读取当前定位坐标
-        /// </summary>
-        /// <returns></returns>
-        public Response GetLocation()
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getLocation",
-                new JArray());
-        }
-
-        /// <summary>
-        /// 通过远程图片url更新摄像头内容
-        /// </summary>
-        /// <param name="url">图片url地址</param>
-        /// <returns></returns>
-        public Response UpdateCameraFromUrl(string url)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromUrl",
-                new JArray(url));
-        }
-
-        /// <summary>
-        /// 通过二进制图片数据更新摄像头内容
-        /// </summary>
-        /// <param name="data">图片二进制</param>
-        /// <returns></returns>
-        public Response UpdateCameraFromFile(byte[] data)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromFile",
-                new JArray(Convert.ToBase64String(data)));
-        }
-
-        /// <summary>
-        /// 将文本内容保存为二维码更新摄像头内容
-        /// </summary>
-        /// <param name="text">二维码文本</param>
-        /// <returns></returns>
-        public Response UpdateCameraFromText(string text)
-        {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromText",
-                new JArray(text));
-        }
-
-        /// <summary>
         /// 查找当前设备
         /// </summary>
         /// <returns></returns>
@@ -273,6 +80,51 @@ namespace Xky.Core
         }
 
         /// <summary>
+        /// 重启app
+        /// </summary>
+        /// <param name="package">app包名</param>
+        /// <returns></returns>
+        public Response RestartApp(string package)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "restartApp",
+                new JArray(package));
+        }
+
+        /// <summary>
+        /// 结束app
+        /// </summary>
+        /// <param name="package">app包名</param>
+        /// <returns></returns>
+        public Response KillApp(string package)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "killApp",
+                new JArray(package));
+        }
+
+        /// <summary>
+        /// 清空app(相当于重装)
+        /// </summary>
+        /// <param name="package">app包名</param>
+        /// <returns></returns>
+        public Response ClearApp(string package)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "clearApp",
+                new JArray(package));
+        }
+
+        /// <summary>
+        /// 从url地址安装apk
+        /// </summary>
+        /// <param name="url">远程url地址</param>
+        /// <returns></returns>
+        public Response InstallApkFromUrl(string url)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "installApkFromUrl",
+                new JArray(url));
+        }
+
+
+        /// <summary>
         /// 查找所有UI元素
         /// </summary>
         /// <returns></returns>
@@ -280,6 +132,44 @@ namespace Xky.Core
         {
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAllUiObject",
                 new JArray());
+        }
+
+
+        /// <summary>
+        /// 查找界面元素
+        /// </summary>
+        /// <param name="name">查找条件</param>
+        /// <param name="option">可选条件：{"regex":false,"timeout":10}</param>
+        /// <returns></returns>
+        public Response FindUiObjects(string name, JObject option)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findUiObjects",
+                new JArray(name, option));
+        }
+
+        /// <summary>
+        /// 查找界面元素并点击它
+        /// </summary>
+        /// <param name="name">查找条件</param>
+        /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
+        /// <returns></returns>
+        public Response FindAndClick(string name, JObject option)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndClick",
+                new JArray(name, option));
+        }
+
+        /// <summary>
+        /// 查找界面元素并给它赋值
+        /// </summary>
+        /// <param name="name">查找条件</param>
+        /// <param name="value">赋值内容</param>
+        /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
+        /// <returns></returns>
+        public Response FindAndInput(string name, string value, JObject option)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndInput",
+                new JArray(name, value, option));
         }
 
         /// <summary>
@@ -292,6 +182,7 @@ namespace Xky.Core
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "input",
                 new JArray(text));
         }
+
 
         /// <summary>
         /// 点击指定位置
@@ -465,85 +356,198 @@ namespace Xky.Core
         }
 
         /// <summary>
-        /// 查找界面元素
+        /// 写入文本到设备上
         /// </summary>
-        /// <param name="name">查找条件</param>
-        /// <param name="option">可选条件：{"regex":false,"timeout":10}</param>
+        /// <param name="path"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public Response FindUiObjects(string name, JObject option)
+        public Response WriteStringToFile(string path, string str)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findUiObjects",
-                new JArray(name, option));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeStringToFile", new JArray(path, str));
         }
 
         /// <summary>
-        /// 查找界面元素并点击它
+        /// 把二进制数组写入设备
         /// </summary>
-        /// <param name="name">查找条件</param>
-        /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
+        /// <param name="path"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public Response FindAndClick(string name, JObject option)
+        public Response WriteBufferToFile(string path, byte[] data)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndClick",
-                new JArray(name, option));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "writeBufferToFile2",
+                new JArray(path, data));
         }
 
         /// <summary>
-        /// 查找界面元素并给它赋值
+        /// 从设备读取二进制数据
         /// </summary>
-        /// <param name="name">查找条件</param>
-        /// <param name="value">赋值内容</param>
-        /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public Response FindAndInput(string name, string value, JObject option)
+        public Response ReadBufferFromFile(string path)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndInput",
-                new JArray(name, value, option));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readBufferFromFile",
+                new JArray(path));
         }
 
         /// <summary>
-        /// 重启app
+        /// 读取设备上的目录信息
         /// </summary>
-        /// <param name="package">app包名</param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public Response RestartApp(string package)
+        public Response ReadDir(string path)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "restartApp",
-                new JArray(package));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "readDir",
+                new JArray(path));
         }
 
         /// <summary>
-        /// 结束app
+        /// 创建一个新的硬件全息信息
         /// </summary>
-        /// <param name="package">app包名</param>
+        /// <param name="model">指定型号</param>
         /// <returns></returns>
-        public Response KillApp(string package)
+        public Response CreateHardware(string model = null)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "killApp",
-                new JArray(package));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "createHardware",
+                new JArray(model));
         }
 
         /// <summary>
-        /// 清空app(相当于重装)
+        /// 还原一个硬件全息信息
         /// </summary>
-        /// <param name="package">app包名</param>
+        /// <param name="key">硬件key</param>
         /// <returns></returns>
-        public Response ClearApp(string package)
+        public Response RestoreHardware(string key)
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "clearApp",
-                new JArray(package));
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "restoreHardware",
+                new JArray(key));
         }
 
         /// <summary>
-        /// 从url地址安装apk
+        /// 读取当前设备的硬件全息key
         /// </summary>
-        /// <param name="url">远程url地址</param>
         /// <returns></returns>
-        public Response InstallApkFromUrl(string url)
+        public Response GetHardwareKey()
         {
-            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "installApkFromUrl",
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getHardwareKey",
+                new JArray());
+        }
+
+        /// <summary>
+        /// 获取当前设备的快照信息
+        /// </summary>
+        /// <param name="packagename">包名</param>
+        /// <returns></returns>
+        public Response GetCurrentAppSnapshot(string packagename)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getCurrentAppSnapshot",
+                new JArray(packagename));
+        }
+
+        /// <summary>
+        /// 创建全息快照插槽
+        /// </summary>
+        /// <param name="packageName">包名</param>
+        /// <param name="name">快照名</param>
+        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
+        /// <returns></returns>
+        public Response CreateAppSnapshot(string packageName, string name, string basepath = null)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "createAppSnapshot",
+                new JArray(packageName, name, basepath));
+        }
+
+        /// <summary>
+        /// 切换全息快照插槽
+        /// </summary>
+        /// <param name="packageName">包名</param>
+        /// <param name="name">快照名</param>
+        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
+        /// <returns></returns>
+        public Response SetAppSnapshot(string packageName, string name, string basepath = null)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "setAppSnapshot",
+                new JArray(packageName, name, basepath));
+        }
+
+        /// <summary>
+        /// 删除全息快照插槽
+        /// </summary>
+        /// <param name="packageName">包名</param>
+        /// <param name="name">快照名</param>
+        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
+        /// <returns></returns>
+        public Response DelAppSnapshot(string packageName, string name, string basepath = null)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "delAppSnapshot",
+                new JArray(packageName, name, basepath));
+        }
+
+        /// <summary>
+        /// 获取全息快照插槽列表
+        /// </summary>
+        /// <param name="packageName">包名</param>
+        /// <param name="basepath">基础地址（默认：/data/AppSnapshot/））</param>
+        /// <returns></returns>
+        public Response GetAppSnapshotList(string packageName, string basepath = null)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getAppSnapshotList",
+                new JArray(packageName, basepath));
+        }
+
+        /// <summary>
+        /// 设置定位坐标
+        /// </summary>
+        /// <param name="location">坐标，如：22.517631,114.071045</param>
+        /// <returns></returns>
+        public Response SetLocation(string location)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "setLocation",
+                new JArray(location));
+        }
+
+        /// <summary>
+        /// 读取当前定位坐标
+        /// </summary>
+        /// <returns></returns>
+        public Response GetLocation()
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getLocation",
+                new JArray());
+        }
+
+        /// <summary>
+        /// 通过远程图片url更新摄像头内容
+        /// </summary>
+        /// <param name="url">图片url地址</param>
+        /// <returns></returns>
+        public Response UpdateCameraFromUrl(string url)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromUrl",
                 new JArray(url));
         }
+
+        /// <summary>
+        /// 通过二进制图片数据更新摄像头内容
+        /// </summary>
+        /// <param name="data">图片二进制</param>
+        /// <returns></returns>
+        public Response UpdateCameraFromFile(byte[] data)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromFile",
+                new JArray(Convert.ToBase64String(data)));
+        }
+
+        /// <summary>
+        /// 将文本内容保存为二维码更新摄像头内容
+        /// </summary>
+        /// <param name="text">二维码文本</param>
+        /// <returns></returns>
+        public Response UpdateCameraFromText(string text)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromText",
+                new JArray(text));
+        }
+
 
         /// <summary>
         /// 获取联系人列表
