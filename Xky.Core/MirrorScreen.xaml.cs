@@ -34,7 +34,8 @@ namespace Xky.Core
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
             _fpsTimer = new Timer {Enabled = true, Interval = 1000};
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
-            Decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
+            if (Decoder != null)
+                Decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
         }
 
 
@@ -115,7 +116,10 @@ namespace Xky.Core
 
         #region 屏幕连接
 
-        public static  H264Decoder Decoder;
+        /// <summary>
+        /// 视频数据解码器
+        /// </summary>
+        public static H264Decoder Decoder = null;
 
         private Socket.Client.Socket _socket;
 
@@ -132,7 +136,6 @@ namespace Xky.Core
         /// <param name="model"></param>
         public void Connect(Device model)
         {
-
             if (CurrentDevice != null && model.Sn != CurrentDevice.Sn)
                 Dispatcher.Invoke(() =>
                 {
@@ -188,7 +191,7 @@ namespace Xky.Core
                 if (CurrentDevice.Sn == model.Sn)
                 {
                     Dispatcher.Invoke(() => { ScreenImage.Visibility = Visibility.Collapsed; });
-                    AddLabel(model.Name+" 已断开连接...", Colors.OrangeRed);
+                    AddLabel(model.Name + " 已断开连接...", Colors.OrangeRed);
                 }
             });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });

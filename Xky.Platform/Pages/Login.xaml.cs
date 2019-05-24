@@ -28,11 +28,11 @@ namespace Xky.Platform.Pages
                 {
                     LoadingTextBlock.Text = "正在检查系统更新...";
                 });
+                MirrorScreen.Decoder = new H264Decoder();
                 Thread.Sleep(500);
                 Common.UiAction(() =>
                 {
-                    LoadingTextBlock.Text = "正在初始化系统...";
-                    MirrorScreen.Decoder = new H264Decoder();
+
                     LoadingTextBlock.Text = "正在预热系统组件...";
                     GridLoading.Visibility = Visibility.Collapsed;
                     GridLogin.Visibility = Visibility.Visible;

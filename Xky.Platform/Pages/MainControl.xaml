@@ -478,7 +478,7 @@
                         </Grid.RowDefinitions>
 
                         <core:MirrorScreen x:Name="MyMirrorScreen" MaxWidth="432" Grid.ColumnSpan="5" Grid.RowSpan="2"
-                                           MaxHeight="768" IsShowArrow="False" IsShowFps="False"
+                                           MaxHeight="768" IsShowArrow="True" IsShowFps="True"
                                            OnShowLog="MyMirrorScreen_OnOnShowLog" />
                         <Button Click="Btn_back" Cursor="Hand" Focusable="False" Width="32" Height="32"
                                 Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center"
