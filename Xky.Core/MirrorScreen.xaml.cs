@@ -34,6 +34,7 @@ namespace Xky.Core
             RenderOptions.SetBitmapScalingMode(ScreenImage, BitmapScalingMode.LowQuality);
             _fpsTimer = new Timer {Enabled = true, Interval = 1000};
             _fpsTimer.Elapsed += FpsTimer_Elapsed;
+            Decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
         }
 
 
@@ -114,7 +115,7 @@ namespace Xky.Core
 
         #region 屏幕连接
 
-        private H264Decoder _decoder;
+        public static  H264Decoder Decoder;
 
         private Socket.Client.Socket _socket;
 
@@ -131,11 +132,6 @@ namespace Xky.Core
         /// <param name="model"></param>
         public void Connect(Device model)
         {
-            if (_decoder == null)
-            {
-                _decoder = new H264Decoder();
-                _decoder.OnDecodeBitmapSource += Decoder_OnDecodeBitmapSource;
-            }
 
             if (CurrentDevice != null && model.Sn != CurrentDevice.Sn)
                 Dispatcher.Invoke(() =>
@@ -197,7 +193,7 @@ namespace Xky.Core
             });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json => { Console.WriteLine(json); });
-            _socket.On("h264", data => { _decoder?.Decode((byte[]) data); });
+            _socket.On("h264", data => { Decoder?.Decode((byte[]) data); });
         }
 
         /// <summary>

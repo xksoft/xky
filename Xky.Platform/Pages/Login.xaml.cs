@@ -24,6 +24,19 @@ namespace Xky.Platform.Pages
             {
                 var json = Common.LoadJson("license");
                 if (json != null) Common.UiAction(() => { LicenseKey.Text = json["license"].ToString(); });
+                Common.UiAction(() =>
+                {
+                    LoadingTextBlock.Text = "正在检查系统更新...";
+                });
+                Thread.Sleep(500);
+                Common.UiAction(() =>
+                {
+                    LoadingTextBlock.Text = "正在初始化系统...";
+                    MirrorScreen.Decoder = new H264Decoder();
+                    LoadingTextBlock.Text = "正在预热系统组件...";
+                    GridLoading.Visibility = Visibility.Collapsed;
+                    GridLogin.Visibility = Visibility.Visible;
+                });
             });
         }
 
@@ -48,15 +61,17 @@ namespace Xky.Platform.Pages
 
                     Common.UiAction(() =>
                     {
-                        Grid_Login.Visibility = Visibility.Collapsed;
-                        Grid_Info.Visibility = Visibility.Visible;
-                        Image_Avatar.Source = new BitmapImage(new Uri("https://static.xky.com/avatar/" + Client.License.Avatra, UriKind.RelativeOrAbsolute));
+                        GridLogin.Visibility = Visibility.Collapsed;
+                        GridInfo.Visibility = Visibility.Visible;
+                        Image_Avatar.Source = new BitmapImage(new Uri(
+                            "https://static.xky.com/avatar/" + Client.License.Avatra, UriKind.RelativeOrAbsolute));
                         Label_Email.Content = Client.License.Email;
                         Label_Nickname.Content = Client.License.NickName;
                         Label_Phone.Content = Client.License.Phone;
                         Label_License_Name.Content = Client.License.LicenseName;
                         Label_License_Key.Content = Client.License.LicenseKey;
-                        Label_License_Expiration_Time.Content = Client.License.LicenseExpiration.ToString("yyyy-MM-dd HH:mm:ss");
+                        Label_License_Expiration_Time.Content =
+                            Client.License.LicenseExpiration.ToString("yyyy-MM-dd HH:mm:ss");
                         Common.MainWindow.MainControlTabItem.ClickDown(null, null);
                         Common.MyMainControl.LoadNodes();
                         Common.MyMainControl.LoadDevices();
@@ -76,7 +91,6 @@ namespace Xky.Platform.Pages
             });
         }
 
-      
 
         private void Button_EditInfo_Click(object sender, RoutedEventArgs e)
         {

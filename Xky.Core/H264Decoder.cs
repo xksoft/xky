@@ -6,7 +6,7 @@ using FFmpeg.AutoGen;
 
 namespace Xky.Core
 {
-    internal unsafe class H264Decoder
+    public unsafe class H264Decoder
     {
         private const string LdLibraryPath = "LD_LIBRARY_PATH";
         private readonly AVCodecContext* _pCodecCtx;
@@ -15,7 +15,7 @@ namespace Xky.Core
         internal bool Firstpacket = true;
 
 
-        internal H264Decoder()
+        public H264Decoder()
         {
             try
             {
