@@ -11,9 +11,9 @@
         UseLayoutRounding="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        MinHeight="768"
-        MinWidth="1024"
-        Title="MainWindow" Height="972" Width="1500" Closing="MainWindow_OnClosing">
+        MinHeight="934"
+        MinWidth="1395"
+        Title="MainWindow" Height="934" Width="1395" Closing="MainWindow_OnClosing">
 
     <Window.Resources>
         <platform:ButtonStatus x:Key="ButtonStatus" />
