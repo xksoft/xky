@@ -94,7 +94,7 @@ namespace Xky.Core
         /// <summary>
         /// 局域网节点发现监听
         /// </summary>
-        public static UdpClient UdpClient_SearchNode;
+        public static UdpClient UdpClientSearchNode;
 
         #endregion
 
@@ -272,11 +272,11 @@ namespace Xky.Core
         {
             StartAction(() =>
             {
-                UdpClient_SearchNode = new UdpClient(18866);
+                UdpClientSearchNode = new UdpClient(18866);
                 var ip = new IPEndPoint(IPAddress.Any, 18866);
                 while (true)
                 {
-                    var bytes = UdpClient_SearchNode.Receive(ref ip);
+                    var bytes = UdpClientSearchNode.Receive(ref ip);
                     var json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(bytes));
                     var serial = json["serial"]?.ToString();
                     if (serial != null)
@@ -312,7 +312,6 @@ namespace Xky.Core
                         Json = new JObject {["errcode"] = 1, ["msg"] = "未授权"}
                     };
 
-                var loadtick = DateTime.Now.Ticks;
                 var response = CallApi("get_node_list", new JObject());
 
                 if (response.Result)
@@ -320,7 +319,6 @@ namespace Xky.Core
                     Console.WriteLine(response);
                     foreach (var json in (JArray) response.Json["nodes"])
                     {
-                        var ts = json["t_serial"].ToString();
                         PushNode(GetNode(json["t_serial"].ToString()), false);
                     }
                 }
@@ -637,6 +635,7 @@ namespace Xky.Core
                     PanelDevices.Add(device);
                 }
             }
+
         }
 
         /// <summary>
