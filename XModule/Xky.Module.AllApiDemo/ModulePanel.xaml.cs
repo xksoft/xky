@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -150,6 +151,9 @@ namespace Xky.XModule.AllApiDemo
                     }
                 case "MouseUp":
                     {
+                        //长按屏幕中心2秒钟
+                        res = device.ScriptEngine.MouseDown(0.5, 0.5);
+                        Thread.Sleep(2000);
                         res = device.ScriptEngine.MouseUp(0.5, 0.5);
                         break;
                     }
