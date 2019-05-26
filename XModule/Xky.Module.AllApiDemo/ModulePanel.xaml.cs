@@ -373,6 +373,7 @@ namespace Xky.XModule.AllApiDemo
                         JArray jArray = new JArray();
                         jArray.Add(job1);
                         jArray.Add(job2);
+                        JObject jobContacts = new JObject {["contacts"]=jArray };
                         res = device.ScriptEngine.InsertContacts(jArray);
                         break;
                     }
