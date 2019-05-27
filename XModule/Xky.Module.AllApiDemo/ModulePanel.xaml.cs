@@ -306,17 +306,17 @@ namespace Xky.XModule.AllApiDemo
                     }
                 case "CreateAppSnapshot":
                     {
-                        res = device.ScriptEngine.CreateAppSnapshot("第三方应用包名", "快照名称");
+                        res = device.ScriptEngine.CreateAppSnapshot("第三方应用包名", "快照名称1");
                         break;
                     }
                 case "SetAppSnapshot":
                     {
-                        res = device.ScriptEngine.SetAppSnapshot("第三方应用包名", "创建过的快照名称");
+                        res = device.ScriptEngine.SetAppSnapshot("第三方应用包名", "快照名称");
                         break;
                     }
                 case "DelAppSnapshot":
                     {
-                        res = device.ScriptEngine.DelAppSnapshot("第三方应用包名", "创建过的快照名称");
+                        res = device.ScriptEngine.DelAppSnapshot("第三方应用包名", "快照名称");
                         break;
                     }
                 case "GetAppSnapshotList":
@@ -341,7 +341,7 @@ namespace Xky.XModule.AllApiDemo
                     }
                 case "UpdateCameraFromFile":
                     {
-                        res = device.ScriptEngine.UpdateCameraFromFile(File.ReadAllBytes("本地电脑上的二维码图片路径"));
+                        res = device.ScriptEngine.UpdateCameraFromFile(File.ReadAllBytes(@"C:\Users\xiaoyi\Downloads\bg_wechat.jpg"));
                         break;
                     }
                 case "UpdateCameraFromText":
