@@ -31,10 +31,12 @@ namespace Xky.Core
 
         private static string _lastSearchKeyword;
         private static string _lastSearchTag;
-
+        public static string ModulePath = "";
+        public static bool BatchControl = false;
+        public static Tag BatchControlTag = null;
         #region 公开属性
 
-      
+
         /// <summary>
         /// 授权信息
         /// </summary>
@@ -226,9 +228,9 @@ namespace Xky.Core
         public static void LoadModules()
         {
             var currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
-            var modulepath = currentfilename?.Remove(currentfilename.LastIndexOf("\\", StringComparison.Ordinal)) +
+            ModulePath = currentfilename?.Remove(currentfilename.LastIndexOf("\\", StringComparison.Ordinal)) +
                              "\\Modules";
-            var groupnamepaths = Directory.GetDirectories(modulepath);
+            var groupnamepaths = Directory.GetDirectories(ModulePath);
             foreach (var groupnamepath in groupnamepaths)
             {
                 var groupname = new DirectoryInfo(groupnamepath).Name;
@@ -1385,6 +1387,25 @@ namespace Xky.Core
             return response;
         }
 
+        #endregion
+        #region 批量控制方法
+
+        /// <summary>
+        /// 根据标签发送批量控制命令
+        /// </summary>
+        /// <param name="json"></param>
+        public static void CallBatchControlEnvent(JObject json)
+        {
+            if (BatchControlTag != null)
+            {
+                var nodeSerialList = (from d in BatchControlTag.Devices select d.NodeSerial).Distinct();
+                foreach (string nodeSerial in nodeSerialList)
+                {
+                    Response res = Client.CallNodeEvent(nodeSerial, new JArray() { (from device in BatchControlTag.Devices.FindAll(d => d.NodeSerial == nodeSerial) select device.Sn).ToList() },json);
+                    Console.WriteLine(res.Json.ToString());
+                }
+            }
+        }
         #endregion
     }
 }

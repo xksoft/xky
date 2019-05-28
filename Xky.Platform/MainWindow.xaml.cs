@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -114,7 +115,7 @@ namespace Xky.Platform
                 else
                     bitspeed = bitcount + " bps";
 
-                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.Count + " 设备：" + Client.Devices.Count +
+                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.ToList().FindAll(n=>n.ConnectStatus==1||n.ConnectStatus==2).Count + " 设备：" + Client.Devices.Count +
                                   " 线程：" +Client.ThreadCount;
             });
         }

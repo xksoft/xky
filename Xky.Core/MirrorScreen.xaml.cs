@@ -293,13 +293,24 @@ namespace Xky.Core
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 if (IsShowArrow) Tap.Fill = new SolidColorBrush(Color.FromArgb(126, 255, 182, 0));
-
-                EmitEvent(
-                    new JObject
-                    {
+                if (Client.BatchControl)
+                {
+                    Client.CallBatchControlEnvent(new JObject
+                 {
                         {"type", "device_button"},
                         {"name", "back"}
-                    });
+                 });
+                }
+                else
+                {
+                    EmitEvent(
+                 new JObject
+                 {
+                        {"type", "device_button"},
+                        {"name", "back"}
+                 });
+                }
+
             }
             else if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -313,7 +324,12 @@ namespace Xky.Core
                 };
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     json.Add("zoom", true);
-                EmitEvent(json);
+                if (Client.BatchControl)
+                {
+                    Client.CallBatchControlEnvent(json);
+                }
+                else { EmitEvent(json); }
+
                 MyInput.Focus();
             }
 
@@ -338,7 +354,11 @@ namespace Xky.Core
                 };
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                     json.Add("zoom", true);
-                EmitEvent(json);
+                if (Client.BatchControl)
+                {
+                    Client.CallBatchControlEnvent(json);
+                }
+                else { EmitEvent(json); }
                 if (IsShowArrow)
                 {
                     Tap.SetValue(Window.TopProperty, postion.Y - 15);
@@ -358,7 +378,11 @@ namespace Xky.Core
             };
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
-            EmitEvent(json);
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent(json);
+            }
+            else { EmitEvent(json); }
             if (IsShowArrow) Tap.Visibility = Visibility.Collapsed;
         }
 
@@ -373,7 +397,11 @@ namespace Xky.Core
             };
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 json.Add("zoom", true);
-            EmitEvent(json);
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent(json);
+            }
+            else { EmitEvent(json); }
         }
 
         private void ScreenImage_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -387,7 +415,11 @@ namespace Xky.Core
                 {"dx", e.Delta / 100},
                 {"dy", e.Delta / 100}
             };
-            EmitEvent(json);
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent(json);
+            }
+            else { EmitEvent(json); }
         }
 
         private void MyInput_LostFocus(object sender, RoutedEventArgs e)
@@ -402,11 +434,18 @@ namespace Xky.Core
 
         private void MyInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            EmitEvent(new JObject
+            var jObject = new JObject
             {
                 {"text", e.Text},
                 {"type", "input"}
-            });
+            };
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent(jObject);
+            }
+            else { EmitEvent(jObject); }
+
+          
         }
 
         private void MyInput_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -414,85 +453,137 @@ namespace Xky.Core
             switch (e.Key)
             {
                 case Key.Back:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 67},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+                    }
                 case Key.Return:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 66},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+
+
+                    }
                 case Key.Space:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 62},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+
+
+                    }
                 case Key.Up:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 19},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+
+
+
+                    }
                 case Key.Down:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 20},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+                    }
                 case Key.Left:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 21},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+                    }
                 case Key.Right:
-                {
-                    EmitEvent(new JObject
+                    {
+                        var jObject = new JObject
                     {
                         {"key", 22},
                         {"name", "code"},
                         {"type", "device_button"}
-                    });
-                    return;
-                }
+                    };
+                        if (Client.BatchControl)
+                        {
+                            Client.CallBatchControlEnvent(jObject);
+                        }
+                        else { EmitEvent(jObject); }
+                        return;
+
+                    }
             }
 
             if (e.Key != Key.V || (Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.Control) return;
             var text = Clipboard.GetText();
             if (!string.IsNullOrEmpty(text))
-                EmitEvent(new JObject
-                {
-                    {"text", text},
+            {
+
+                var jObject = new JObject
+                    {
+                       {"text", text},
                     {"type", "input"}
-                });
+                    };
+                if (Client.BatchControl)
+                {
+                    Client.CallBatchControlEnvent(jObject);
+                }
+                else { EmitEvent(jObject); }
+            }
+
         }
 
         #endregion

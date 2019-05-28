@@ -225,17 +225,42 @@ namespace Xky.Platform.Pages
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+            }
+            else
+            {
+                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+            }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
+           
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+            }
+            else
+            {
+                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+            }
+
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-            MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
+           
+            if (Client.BatchControl)
+            {
+                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+            }
+            else
+            {
+
+                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+            }
         }
 
         private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
@@ -467,6 +492,7 @@ namespace Xky.Platform.Pages
         {
             if (TagListBox.SelectedItem is Tag tag)
             {
+                Client.BatchControlTag = tag;
                 Client.SearchDevices(SearchText.Text, tag.Name, GetDevicesByTag());
             }
         }
@@ -588,6 +614,27 @@ namespace Xky.Platform.Pages
                     StopModule(device, modulemd5);
                 
             }
+        }
+
+       
+        private void TextBlock_ModulePanelNoData_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (((TextBlock)sender).Name == "TextBlock_OpenModulePath")
+            {
+                System.Diagnostics.Process.Start(Client.ModulePath);
+            }
+            else
+            {
+                Common.OpenUrl("http://doc.xky.com");
+            }
+
+        }
+
+        private void CheckBox_QK_Checked(object sender, RoutedEventArgs e)
+        {
+           
+                Client.BatchControl = CheckBox_QK.IsChecked.Value;
+            
         }
     }
 }
