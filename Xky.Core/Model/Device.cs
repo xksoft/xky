@@ -10,7 +10,7 @@ namespace Xky.Core.Model
     /// <summary>
     /// 设备模型
     /// </summary>
-    public class Device : INotifyPropertyChanged
+    public class Device : INotifyPropertyChanged , ICloneable
     {
         private string _connectionHash;
         private int _cpus;
@@ -395,6 +395,9 @@ namespace Xky.Core.Model
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

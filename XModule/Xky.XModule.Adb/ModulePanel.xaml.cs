@@ -28,9 +28,14 @@ namespace Xky.XModule.Adb
         {
             InitializeComponent();
         }
-        public Device device;
+        public List<Adb> xmodules;
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
+
+            for (int i=0;i<xmodules.Count;i++)
+            {
+                xmodules[i].id = i;
+            }
             Client.CloseDialogPanel();
         }
         private void Button_Cmd_Click(object sender, RoutedEventArgs e) {
@@ -53,24 +58,24 @@ namespace Xky.XModule.Adb
         }
         public void RunCmd(string cmd)
         {
-            Response res;
-            if (CheckBox_Shell.IsChecked.Value)
-            {
-                res= device.ScriptEngine.AdbShell(cmd);
-            }
-            else
-            {
-                 res  = device.ScriptEngine.AdbCommand(cmd);
-            }
-            if (res != null && res.Result&&res.Json!=null&&res.Json["result"]!=null)
-            {
-                TextBox_Result.Text = res.Json["result"].ToString();
-            }
-            else
-            {
-                TextBox_Result.Text = "执行失败！";
+            //Response res;
+            //if (CheckBox_Shell.IsChecked.Value)
+            //{
+            //    res= device.ScriptEngine.AdbShell(cmd);
+            //}
+            //else
+            //{
+            //     res  = device.ScriptEngine.AdbCommand(cmd);
+            //}
+            //if (res != null && res.Result&&res.Json!=null&&res.Json["result"]!=null)
+            //{
+            //    TextBox_Result.Text = res.Json["result"].ToString();
+            //}
+            //else
+            //{
+            //    TextBox_Result.Text = "执行失败！";
 
-            }
+            //}
 
         }
 

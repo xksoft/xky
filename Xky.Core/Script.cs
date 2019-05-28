@@ -11,6 +11,7 @@ namespace Xky.Core
 {
     public class Script
     {
+        
         private readonly Device _device;
 
         public Script(Device device)

@@ -5,11 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Xky.Core;
 
 namespace Xky.XModule.Adb
 {
     public class Adb : Core.XModule
     {
+       
+        public int id = 0;
         public override string Name()
         {
             return "执行Adb命令";
@@ -34,18 +37,27 @@ namespace Xky.XModule.Adb
 
         public override void Start()
         {
-
+            Device.ScriptEngine.Toast();
             
 
             
         }
-
+        
+       
 
 
         public override bool ShowUserControl()
         {
+            
+            foreach (var device in base.Devices)
+            {
+                var xmodule = (Adb)base.Clone();
+                xmodule.Device = device;
+               
+                list.Add(xmodule);
+            }
             var panel = new ModulePanel();
-            panel.device = Device;
+            panel.xmodules = list;
             Core.Client.ShowDialogPanel(panel);
             return true;
 

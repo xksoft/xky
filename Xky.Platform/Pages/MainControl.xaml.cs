@@ -115,9 +115,9 @@ namespace Xky.Platform.Pages
             Client.StartAction(() =>
             {
                 var response = Client.LoadNodes();
-                 Client.SearchLocalNode();
-                
-                
+                Client.SearchLocalNode();
+
+
             });
         }
 
@@ -136,15 +136,15 @@ namespace Xky.Platform.Pages
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
                     view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
                     ModuleListBox.ItemsSource = view;
-                   
+
                 });
             }, ApartmentState.STA);
         }
 
-      
+
         private void ScreenTick()
         {
-          
+
             Client.StartAction(() =>
             {
                 while (this.IsVisible)
@@ -161,7 +161,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 nodeGroup = from device in _screenTickList
-                    group device by device.NodeSerial;
+                            group device by device.NodeSerial;
             }
 
             foreach (var group in nodeGroup)
@@ -175,7 +175,7 @@ namespace Xky.Platform.Pages
                 }
 
                 Client.CallNodeEvent(group.First().NodeSerial, jarray,
-                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30});
+                    new JObject { ["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
             }
         }
 
@@ -227,7 +227,7 @@ namespace Xky.Platform.Pages
         {
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
             }
             else
             {
@@ -237,10 +237,10 @@ namespace Xky.Platform.Pages
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-           
+
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
             }
             else
             {
@@ -251,10 +251,10 @@ namespace Xky.Platform.Pages
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-           
+
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent( new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
             }
             else
             {
@@ -270,7 +270,7 @@ namespace Xky.Platform.Pages
                 if (sender is Button button)
                 {
                     string modulemd5 = button.Tag.ToString();
-                    StopModule(device,modulemd5);
+                    StopModule(device, modulemd5);
                 }
             }
         }
@@ -281,7 +281,7 @@ namespace Xky.Platform.Pages
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
+            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -319,13 +319,13 @@ namespace Xky.Platform.Pages
                                 var response = Client.CallApi("get_device_debug", new JObject { ["sn"] = device.Sn });
                                 if (response.Result)
                                 {
-                                    Console.WriteLine("界面元素授权码："+response.Json["uispy_token"].ToString());
+                                    Console.WriteLine("界面元素授权码：" + response.Json["uispy_token"].ToString());
                                     Client.ShowToast("成功获取界面元素授权码，粘贴到调试工具中即可使用！", Color.FromRgb(0, 188, 0));
                                     try
                                     {
                                         System.Windows.Clipboard.SetDataObject(response.Json["uispy_token"].ToString(), true);
                                     }
-                                    catch(Exception error) {
+                                    catch (Exception error) {
                                         Common.ShowToast("无法将界面元素授权码复制到当前系统粘贴板中，请关闭软件使用右键管理员权限启动！", Color.FromRgb(239, 34, 7));
 
                                     }
@@ -344,12 +344,12 @@ namespace Xky.Platform.Pages
                         }
                     case "StopAllModules":
                         {
-                                var md5list = from m in device.RunningModules.ToList() select m.Md5;
-                                foreach (string md5 in md5list)
-                                {
-                                    StopModule(device, md5);
-                                }
-                                Client.ShowToast("成功停止设备["+device.Name+"]正在运行的所有模块！",Color.FromRgb(0, 188, 0));
+                            var md5list = from m in device.RunningModules.ToList() select m.Md5;
+                            foreach (string md5 in md5list)
+                            {
+                                StopModule(device, md5);
+                            }
+                            Client.ShowToast("成功停止设备[" + device.Name + "]正在运行的所有模块！", Color.FromRgb(0, 188, 0));
                             break;
                         }
                     case "BackgroundApps": {
@@ -378,10 +378,10 @@ namespace Xky.Platform.Pages
                 return;
             }
 
-            var module_select = (Module) ModuleListBox.SelectedItem;
+            var module_select = (Module)ModuleListBox.SelectedItem;
             if (module_select != null)
             {
-               
+
                 if (DeviceListBox.SelectedItem is Device device)
                 {
                     RunModule(device, module_select);
@@ -393,99 +393,99 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag = ((MenuItem) sender).Tag.ToString();
+            string tag = ((MenuItem)sender).Tag.ToString();
             switch (tag)
             {
-                case "Reboot":{
+                case "Reboot": {
                         if (DeviceListBox.SelectedItem is Device device)
                         {
                             Client.StartAction(() =>
                             {
                                 device.ScriptEngine.AdbShell("reboot");
                             });
-                            }
-                            break;
+                        }
+                        break;
                     }
                 case "EditInfo":
-                {
-                    string oldtag = "";
-                    if (DeviceListBox.SelectedItem is Device device)
                     {
-                        ContentControl_EditInfo_Tags.ItemsSource =
-                            Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
-                        TextBox_DeviceName.Text = device.Name;
-                        if (device.Tags.Length > 0)
+                        string oldtag = "";
+                        if (DeviceListBox.SelectedItem is Device device)
                         {
-                            oldtag = device.Tags[0];
-                            TextBox_DeviceTag.Text = device.Tags[0];
-                        }
-                        else
-                        {
-                            TextBox_DeviceTag.Text = "";
-                        }
-
-                        MyMessageBox msg =
-                            new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消")
-                                {MessageText = ""};
-                        ((ContentControl) ((Border) msg.Content).FindName("ContentControl")).Content =
-                            ContentControl_EditInfo.Content;
-                        Common.ShowMessageControl(msg);
-                        if (msg.Result == MessageBoxResult.Yes)
-                        {
-                            string DeviceName = TextBox_DeviceName.Text;
-                            string DeviceTag = TextBox_DeviceTag.Text;
-                            Client.StartAction(() =>
+                            ContentControl_EditInfo_Tags.ItemsSource =
+                                Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
+                            TextBox_DeviceName.Text = device.Name;
+                            if (device.Tags.Length > 0)
                             {
-                                string[] tags = new string[0];
-                                if (DeviceTag.Length > 0)
-                                {
-                                    tags = new string[] {DeviceTag};
-                                }
+                                oldtag = device.Tags[0];
+                                TextBox_DeviceTag.Text = device.Tags[0];
+                            }
+                            else
+                            {
+                                TextBox_DeviceTag.Text = "";
+                            }
 
-                                Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
-                                if (response.Result)
+                            MyMessageBox msg =
+                                new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消")
+                                { MessageText = "" };
+                            ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content =
+                                ContentControl_EditInfo.Content;
+                            Common.ShowMessageControl(msg);
+                            if (msg.Result == MessageBoxResult.Yes)
+                            {
+                                string DeviceName = TextBox_DeviceName.Text;
+                                string DeviceTag = TextBox_DeviceTag.Text;
+                                Client.StartAction(() =>
                                 {
-                                    Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
-                                    device.Name = DeviceName;
-
-                                    device.Tags = tags;
-                                    if (oldtag != DeviceTag)
+                                    string[] tags = new string[0];
+                                    if (DeviceTag.Length > 0)
                                     {
-                                        if (oldtag.Length > 0)
-                                        {
-                                            Client.RemoveTags(oldtag, device);
-                                        }
-                                        else
-                                        {
-                                            Client.RemoveTags("未分组设备", device);
-                                        }
+                                        tags = new string[] { DeviceTag };
+                                    }
 
-                                        if (DeviceTag.Length > 0)
+                                    Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
+                                    if (response.Result)
+                                    {
+                                        Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
+                                        device.Name = DeviceName;
+
+                                        device.Tags = tags;
+                                        if (oldtag != DeviceTag)
                                         {
-                                            Client.AddTags(DeviceTag, device);
-                                        }
-                                        else
-                                        {
-                                            Client.AddTags("未分组设备", device);
+                                            if (oldtag.Length > 0)
+                                            {
+                                                Client.RemoveTags(oldtag, device);
+                                            }
+                                            else
+                                            {
+                                                Client.RemoveTags("未分组设备", device);
+                                            }
+
+                                            if (DeviceTag.Length > 0)
+                                            {
+                                                Client.AddTags(DeviceTag, device);
+                                            }
+                                            else
+                                            {
+                                                Client.AddTags("未分组设备", device);
+                                            }
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
-                                }
-                            });
+                                    else
+                                    {
+                                        Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                                    }
+                                });
+                            }
                         }
-                    }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
         private void Label_EditInfo_Tags_Click(object sender, RoutedEventArgs e)
         {
-            TextBox_DeviceTag.Text = ((Label) sender).Content.ToString();
+            TextBox_DeviceTag.Text = ((Label)sender).Content.ToString();
         }
 
         private void TagListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -499,81 +499,96 @@ namespace Xky.Platform.Pages
 
         private void RunModule(Device device, Module rmodule)
         {
+
             var module = (Module)rmodule.Clone();
             XModule xmodule = (XModule)module.XModule.Clone();
-            var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
-            if (runningmodule != null)
+            if (Client.BatchControl)
             {
-                Common.ShowToast("设备["+device.Name+"]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
-                return;
+                xmodule.Devices = Client.BatchControlTag.Devices;
             }
+            //var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+            //if (runningmodule != null)
+            //{
+            //    Common.ShowToast("设备["+device.Name+"]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+            //    return;
+            //}
 
-            if (!xmodule.IsBackground())
-            {
-                //如果是前台模块，同一时间只允许运行一个
-                runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
-                if (runningmodule != null)
-                {
-                    Common.ShowToast("设备[" + device.Name + "]前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
-                        Color.FromRgb(239, 34, 7));
-                    return;
-                }
-            }
+            //if (!xmodule.IsBackground())
+            //{
+            //    //如果是前台模块，同一时间只允许运行一个
+            //    runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
+            //    if (runningmodule != null)
+            //    {
+            //        Common.ShowToast("设备[" + device.Name + "]前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
+            //            Color.FromRgb(239, 34, 7));
+            //        return;
+            //    }
+            //}
 
             var thread = Client.StartAction(() =>
             {
-            xmodule.Device = device;
-            //显示自定义控件
-            var isContinue = false;
-            Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); }, false);
-            //是否继续
-            if (isContinue)
-            {
-                Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
-                xmodule.Start();
+                //xmodule.Device = device;
+                //显示自定义控件
+                var isContinue = false;
+                Common.UiAction(() => { isContinue = xmodule.ShowUserControl(); }, false);
 
-                Console.WriteLine("设备[" + device.Name + "]成功执行模块[" + module.Name + "]");
-
-                Dispatcher.Invoke(() =>
+                //是否继续
+                if (isContinue)
                 {
-                    device.RunningModules.Remove(module);
-
-                    if (device.RunningThreads.ContainsKey(module.Md5))
+                    var xmodules = xmodule.GetXModules();
+                    foreach (var runmodule in xmodules)
                     {
-                        device.RunningThreads.Remove(module.Md5);
+                        Client.StartAction(() =>
+                                          {
+                                              runmodule.Start();
+                                          });
                     }
-                });
-            }
-            else
-            {
+
+                    //Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
+                    //xmodule.Start();
+
+                    //Console.WriteLine("设备[" + device.Name + "]成功执行模块[" + module.Name + "]");
+
+                    //Dispatcher.Invoke(() =>
+                    //{
+                    //    device.RunningModules.Remove(module);
+
+                    //    if (device.RunningThreads.ContainsKey(module.Md5))
+                    //    {
+                    //        device.RunningThreads.Remove(module.Md5);
+                    //    }
+                    //});
+                }
+                //else
+                //{
                 //参数设置过程中取消执行
-                if (device.RunningThreads.ContainsKey(module.Md5))
-                {
-                    device.RunningThreads.Remove(module.Md5);
-                }
-            }
-            Dispatcher.Invoke(() =>
-            {
-                if (DeviceListBox.SelectedItem is Device device_selected)
-                {
-                    if (device_selected.Id == device.Id)
-                    {
-                        rmodule.State = 0;
-                    }
+                //if (device.RunningThreads.ContainsKey(module.Md5))
+                //{
+                //    device.RunningThreads.Remove(module.Md5);
+                //}
+                // }
+                //Dispatcher.Invoke(() =>
+                //{
+                //    if (DeviceListBox.SelectedItem is Device device_selected)
+                //    {
+                //        if (device_selected.Id == device.Id)
+                //        {
+                //            rmodule.State = 0;
+                //        }
 
-                }
-            });
+                //    }
+                //});
             }, ApartmentState.STA);
-            if (!device.RunningThreads.ContainsKey(module.Md5))
-            {
-                device.RunningThreads.Add(module.Md5, thread);
-                rmodule.State = 1;
-            }
-            else
-            {
-                Common.ShowToast("设备[" + device.Name + "]模块[" + runningmodule.Name + "]已经在运行中！",
-                    Color.FromRgb(239, 34, 7));
-            }
+            //if (!device.RunningThreads.ContainsKey(module.Md5))
+            //{
+            //    device.RunningThreads.Add(module.Md5, thread);
+            //    rmodule.State = 1;
+            //}
+            //else
+            //{
+            //    Common.ShowToast("设备[" + device.Name + "]模块[" + runningmodule.Name + "]已经在运行中！",
+            //        Color.FromRgb(239, 34, 7));
+            //}
         }
         private void StopModule(Device device, string modulemd5) {
             if (device.RunningThreads.ContainsKey(modulemd5))
