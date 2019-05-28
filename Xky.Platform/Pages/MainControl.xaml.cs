@@ -265,13 +265,21 @@ namespace Xky.Platform.Pages
 
         private void Btn_RunningModule_Stop(object sender, RoutedEventArgs e)
         {
+            string modulemd5 = "";
+            if (sender is Button button)
+            {
+                modulemd5 = button.Tag.ToString();
+            }
             if (DeviceListBox.SelectedItem is Device device)
             {
-                if (sender is Button button)
-                {
-                    string modulemd5 = button.Tag.ToString();
-                    StopModule(device, modulemd5);
-                }
+
+
+                StopModule(device, modulemd5);
+
+            }
+            else if (Client.BatchControl)
+            {
+                StopModule(null, modulemd5);
             }
         }
 
@@ -344,6 +352,15 @@ namespace Xky.Platform.Pages
                         }
                     case "StopAllModules":
                         {
+                            if (Client.BatchControl) {
+                                var msg = new MyMessageBox(MessageBoxButton.YesNo,text_yes:"确定",text_no:"取消") { MessageText = "当前处于群控模式，该操作会停止所有群控设备正在运行的模块，确定要停止吗？" };
+                                Common.ShowMessageControl(msg);
+
+                                if (msg.Result != MessageBoxResult.Yes)
+                                {
+                                    return;
+                                }
+                            }
                             var md5list = from m in device.RunningModules.ToList() select m.Md5;
                             foreach (string md5 in md5list)
                             {
@@ -603,19 +620,34 @@ namespace Xky.Platform.Pages
             }, ApartmentState.STA);
 
         }
-        private void StopModule(Device device, string modulemd5) {
-            if (device.RunningThreads.ContainsKey(modulemd5))
-            {
-                device.RunningThreads[modulemd5].Abort();
-
-                device.RunningThreads.Remove(modulemd5);
-                var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == modulemd5);
-                if (runningmodule != null)
+        private void StopModule(Device device, string modulemd5)
+        {
+           
+                var devices = new List<Device>();
+                if (Client.BatchControl)
                 {
-                    device.RunningModules.Remove(runningmodule);
-                    Client.Modules.ToList().Find(p => p.Md5 == modulemd5).State = 0;
+                    devices = Client.BatchControlTag.Devices;
                 }
-            }
+                else
+                {
+                    devices = new List<Device>() { device };
+                }
+                foreach (var rdevice in devices)
+                {
+                    if (rdevice.RunningThreads.ContainsKey(modulemd5))
+                    {
+                        rdevice.RunningThreads[modulemd5].Abort();
+
+                        rdevice.RunningThreads.Remove(modulemd5);
+                        var runningmodule = rdevice.RunningModules.ToList().Find(p => p.Md5 == modulemd5);
+                        if (runningmodule != null)
+                        {
+                            rdevice.RunningModules.Remove(runningmodule);
+                            Client.Modules.ToList().Find(p => p.Md5 == modulemd5).State = 0;
+                        }
+                    }
+                }
+           
 
         }
         private void Button_Module_Run_Click(object sender, RoutedEventArgs e)

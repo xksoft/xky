@@ -28,6 +28,11 @@ namespace Xky.Core.UserControl
                     BtnYes.Focusable = true;
                     BtnOk.Visibility = Visibility.Collapsed;
                     break;
+                case MessageBoxButton.OKCancel:
+                    BtnOk.Focusable = true;
+                    BtnYes.Visibility = Visibility.Collapsed;
+               
+                    break;
             }
 
             DataContext = this;
