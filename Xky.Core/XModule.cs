@@ -16,8 +16,14 @@ namespace Xky.Core
     /// </summary>
     public abstract class XModule : Object, ICloneable
     {
-
+        /// <summary>
+        /// 设备列表
+        /// </summary>
         public List<Device> Devices = new List<Device>();
+
+        /// <summary>
+        /// 每台设备的模块实例列表
+        /// </summary>
         private List<Core.XModule> XModules = new List<Core.XModule>();
         /// <summary>
         /// 当前设备
@@ -30,31 +36,43 @@ namespace Xky.Core
         /// <returns></returns>
         public object Clone()
         {
+          
             return MemberwiseClone();
         }
 
 
         /// <summary>
-        /// 显示用户赋值界面
+        /// 初始化每台设备对应的模块实例
         /// </summary>
-        /// <returns>是否继续</returns>
-        public virtual bool Init()
+        public bool Init()
         {
+            XModules.Clear();
             foreach (var device in Devices)
             {
-                var xmodule = (XModule)this.Clone();
-                xmodule.Device = device;
-                XModules.Add(xmodule);
+               
+                    var xmodule = (XModule)this.Clone();
+                    xmodule.Device = device;
+                    XModules.Add(xmodule);
+              
+
             }
             return true;
         }
 
+        /// <summary>
+        /// 显示用户自定义面板
+        /// </summary>
+        /// <returns></returns>
         public virtual bool ShowUserControl()
         {
             
             return true;
         }
       
+        /// <summary>
+        /// 获取每台设备对应的模块实例列表
+        /// </summary>
+        /// <returns></returns>
         public List<Core.XModule> GetXModules()
         {
             return XModules;

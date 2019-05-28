@@ -386,6 +386,10 @@ namespace Xky.Platform.Pages
                 {
                     RunModule(device, module_select);
                 }
+                else if (Client.BatchControl)
+                {
+                    RunModule(null,module_select);
+                }
             }
         }
 
@@ -499,33 +503,42 @@ namespace Xky.Platform.Pages
 
         private void RunModule(Device device, Module rmodule)
         {
-
+            var Devices = new List<Device>();
             var module = (Module)rmodule.Clone();
             XModule xmodule = (XModule)module.XModule.Clone();
+            xmodule.Devices = new List<Device>();
             if (Client.BatchControl)
             {
-                xmodule.Devices = Client.BatchControlTag.Devices;
+                Devices = Client.BatchControlTag.Devices;
+            }
+            else
+            {
+                Devices = new List<Device>() { device };
+            }
+
+            foreach (Device rdevice in Devices)
+            {
+                var runningmodule = rdevice.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
+                if (runningmodule != null)
+                {
+                    Common.ShowToast("设备[" + rdevice.Name + "]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                    continue;
+                }
+
+                if (!xmodule.IsBackground())
+                {
+                    //如果是前台模块，同一时间只允许运行一个
+                    runningmodule = rdevice.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
+                    if (runningmodule != null)
+                    {
+                        Common.ShowToast("设备[" + rdevice.Name + "]前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
+                            Color.FromRgb(239, 34, 7));
+                        continue;
+                    }
+                }
+                xmodule.Devices.Add(rdevice);
             }
             xmodule.Init();
-            //var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
-            //if (runningmodule != null)
-            //{
-            //    Common.ShowToast("设备["+device.Name+"]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
-            //    return;
-            //}
-
-            //if (!xmodule.IsBackground())
-            //{
-            //    //如果是前台模块，同一时间只允许运行一个
-            //    runningmodule = device.RunningModules.ToList().Find(p => p.XModule.IsBackground() == false);
-            //    if (runningmodule != null)
-            //    {
-            //        Common.ShowToast("设备[" + device.Name + "]前台模块[" + runningmodule.Name + "]正在运行中，无法同时执行两个前台模块！",
-            //            Color.FromRgb(239, 34, 7));
-            //        return;
-            //    }
-            //}
-
             var thread = Client.StartAction(() =>
             {
                 //xmodule.Device = device;
@@ -539,57 +552,56 @@ namespace Xky.Platform.Pages
                     var xmodules = xmodule.GetXModules();
                     foreach (var runmodule in xmodules)
                     {
-                        Client.StartAction(() =>
-                                          {
-                                              runmodule.Start();
-                                          });
+                        var thread_module = Client.StartAction(() =>
+                                             {
+                                                 Dispatcher.Invoke(() =>
+                                                 {
+
+                                                     runmodule.Device.RunningModules.Add(module);
+                                                 });
+                                                 runmodule.Start();
+                                                 Console.WriteLine("设备[" + runmodule.Device.Name + "]成功执行模块[" + module.Name + "]");
+
+                                                 Dispatcher.Invoke(() =>
+                                                 {
+                                                     if (DeviceListBox.SelectedItem is Device device_selected)
+                                                     {
+                                                         if (device_selected.Id == runmodule.Device.Id)
+                                                         {
+                                                             rmodule.State = 0;
+                                                         }
+
+                                                     }
+                                                     runmodule.Device.RunningModules.Remove(module);
+
+                                                     if (runmodule.Device.RunningThreads.ContainsKey(module.Md5))
+                                                     {
+                                                         runmodule.Device.RunningThreads.Remove(module.Md5);
+                                                     }
+                                                 });
+                                             });
+                        if (!runmodule.Device.RunningThreads.ContainsKey(module.Md5))
+                        {
+                            runmodule.Device.RunningThreads.Add(module.Md5, thread_module);
+                            rmodule.State = 1;
+                        }
+                        else
+                        {
+                            Common.ShowToast("设备[" + runmodule.Device.Name + "]模块[" + module.Name + "]已经在运行中！",
+                                Color.FromRgb(239, 34, 7));
+                        }
                     }
 
-                    //Dispatcher.Invoke(() => { device.RunningModules.Add(module); });
-                    //xmodule.Start();
 
-                    //Console.WriteLine("设备[" + device.Name + "]成功执行模块[" + module.Name + "]");
 
-                    //Dispatcher.Invoke(() =>
-                    //{
-                    //    device.RunningModules.Remove(module);
 
-                    //    if (device.RunningThreads.ContainsKey(module.Md5))
-                    //    {
-                    //        device.RunningThreads.Remove(module.Md5);
-                    //    }
-                    //});
+
                 }
-                //else
-                //{
-                //参数设置过程中取消执行
-                //if (device.RunningThreads.ContainsKey(module.Md5))
-                //{
-                //    device.RunningThreads.Remove(module.Md5);
-                //}
-                // }
-                //Dispatcher.Invoke(() =>
-                //{
-                //    if (DeviceListBox.SelectedItem is Device device_selected)
-                //    {
-                //        if (device_selected.Id == device.Id)
-                //        {
-                //            rmodule.State = 0;
-                //        }
 
-                //    }
-                //});
+
+
             }, ApartmentState.STA);
-            //if (!device.RunningThreads.ContainsKey(module.Md5))
-            //{
-            //    device.RunningThreads.Add(module.Md5, thread);
-            //    rmodule.State = 1;
-            //}
-            //else
-            //{
-            //    Common.ShowToast("设备[" + device.Name + "]模块[" + runningmodule.Name + "]已经在运行中！",
-            //        Color.FromRgb(239, 34, 7));
-            //}
+
         }
         private void StopModule(Device device, string modulemd5) {
             if (device.RunningThreads.ContainsKey(modulemd5))
@@ -616,6 +628,10 @@ namespace Xky.Platform.Pages
                 if (DeviceListBox.SelectedItem is Device device)
                 {
                     RunModule(device, module);
+                }
+                else if(Client.BatchControl)
+                {
+                    RunModule(null,module);
                 }
             }
         }

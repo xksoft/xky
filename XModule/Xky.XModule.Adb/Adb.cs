@@ -37,27 +37,14 @@ namespace Xky.XModule.Adb
 
         public override void Start()
         {
-            Device.ScriptEngine.Toast();
-            
-
-            
+   
         }
         
-       
-
-
         public override bool ShowUserControl()
         {
             
-            foreach (var device in base.Devices)
-            {
-                var xmodule = (Adb)base.Clone();
-                xmodule.Device = device;
-               
-                list.Add(xmodule);
-            }
+           
             var panel = new ModulePanel();
-            panel.xmodules = list;
             Core.Client.ShowDialogPanel(panel);
             return true;
 

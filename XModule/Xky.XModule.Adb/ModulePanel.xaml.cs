@@ -28,14 +28,9 @@ namespace Xky.XModule.Adb
         {
             InitializeComponent();
         }
-        public List<Adb> xmodules;
+
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
-
-            for (int i=0;i<xmodules.Count;i++)
-            {
-                xmodules[i].id = i;
-            }
             Client.CloseDialogPanel();
         }
         private void Button_Cmd_Click(object sender, RoutedEventArgs e) {
