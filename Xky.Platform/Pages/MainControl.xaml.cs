@@ -506,6 +506,7 @@ namespace Xky.Platform.Pages
             {
                 xmodule.Devices = Client.BatchControlTag.Devices;
             }
+            xmodule.Init();
             //var runningmodule = device.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
             //if (runningmodule != null)
             //{

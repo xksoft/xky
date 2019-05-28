@@ -34,7 +34,7 @@ namespace Xky.XModule.Demo
        
         public override bool ShowUserControl()
         {
-            Init();
+            
             ModulePanel mp = new ModulePanel();
             mp.xmodules = GetXModules();
             Core.Client.ShowDialogPanel(mp);
