@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -116,8 +117,6 @@ namespace Xky.Platform.Pages
             {
                 var response = Client.LoadNodes();
                 Client.SearchLocalNode();
-
-
             });
         }
 
@@ -136,7 +135,6 @@ namespace Xky.Platform.Pages
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
                     view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
                     ModuleListBox.ItemsSource = view;
-
                 });
             }, ApartmentState.STA);
         }
@@ -144,7 +142,6 @@ namespace Xky.Platform.Pages
 
         private void ScreenTick()
         {
-
             Client.StartAction(() =>
             {
                 while (this.IsVisible)
@@ -161,7 +158,7 @@ namespace Xky.Platform.Pages
             lock ("getNodeGroup")
             {
                 nodeGroup = from device in _screenTickList
-                            group device by device.NodeSerial;
+                    group device by device.NodeSerial;
             }
 
             foreach (var group in nodeGroup)
@@ -175,7 +172,7 @@ namespace Xky.Platform.Pages
                 }
 
                 Client.CallNodeEvent(group.First().NodeSerial, jarray,
-                    new JObject { ["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30 });
+                    new JObject {["type"] = "send_screen", ["size"] = 0.3f, ["fps"] = 30});
             }
         }
 
@@ -209,8 +206,6 @@ namespace Xky.Platform.Pages
                         m.State = 0;
                     }
                 }
-
-
             }
             else
             {
@@ -227,39 +222,36 @@ namespace Xky.Platform.Pages
         {
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+                Client.CallBatchControlEnvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
             }
             else
             {
-                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 4 });
+                MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 4});
             }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
         {
-
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+                Client.CallBatchControlEnvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
             }
             else
             {
-                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 3 });
+                MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 3});
             }
-
         }
 
         private void Btn_task(object sender, RoutedEventArgs e)
         {
-
             if (Client.BatchControl)
             {
-                Client.CallBatchControlEnvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+                Client.CallBatchControlEnvent(
+                    new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
             }
             else
             {
-
-                MyMirrorScreen.EmitEvent(new JObject { ["type"] = "device_button", ["name"] = "code", ["key"] = 187 });
+                MyMirrorScreen.EmitEvent(new JObject {["type"] = "device_button", ["name"] = "code", ["key"] = 187});
             }
         }
 
@@ -270,12 +262,10 @@ namespace Xky.Platform.Pages
             {
                 modulemd5 = button.Tag.ToString();
             }
+
             if (DeviceListBox.SelectedItem is Device device)
             {
-
-
                 StopModule(device, modulemd5);
-
             }
             else if (Client.BatchControl)
             {
@@ -289,7 +279,7 @@ namespace Xky.Platform.Pages
 
         private void MyModuleItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = (MyModuleItem)((Border)e.Source).TemplatedParent;
+            var item = (MyModuleItem) ((Border) e.Source).TemplatedParent;
             item.IsRunning = true;
             Client.StartAction(() =>
             {
@@ -317,67 +307,69 @@ namespace Xky.Platform.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                string tag = ((MyImageButton)e.Source).Tag.ToString();
+                string tag = ((MyImageButton) e.Source).Tag.ToString();
                 switch (tag)
                 {
                     case "GetDeviceDebug":
+                    {
+                        Client.StartAction(() =>
                         {
-                            Client.StartAction(() =>
+                            var response = Client.CallApi("get_device_debug", new JObject {["sn"] = device.Sn});
+                            if (response.Result)
                             {
-                                var response = Client.CallApi("get_device_debug", new JObject { ["sn"] = device.Sn });
-                                if (response.Result)
+                                Console.WriteLine("界面元素授权码：" + response.Json["uispy_token"].ToString());
+                                Client.ShowToast("成功获取界面元素授权码，粘贴到调试工具中即可使用！", Color.FromRgb(0, 188, 0));
+                                try
                                 {
-                                    Console.WriteLine("界面元素授权码：" + response.Json["uispy_token"].ToString());
-                                    Client.ShowToast("成功获取界面元素授权码，粘贴到调试工具中即可使用！", Color.FromRgb(0, 188, 0));
-                                    try
-                                    {
-                                        System.Windows.Clipboard.SetDataObject(response.Json["uispy_token"].ToString(), true);
-                                    }
-                                    catch (Exception error) {
-                                        Common.ShowToast("无法将界面元素授权码复制到当前系统粘贴板中，请关闭软件使用右键管理员权限启动！", Color.FromRgb(239, 34, 7));
-
-                                    }
+                                    System.Windows.Clipboard.SetDataObject(response.Json["uispy_token"].ToString(),
+                                        true);
                                 }
-                                else
+                                catch (Exception error)
                                 {
-                                    Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                                    Common.ShowToast("无法将界面元素授权码复制到当前系统粘贴板中，请关闭软件使用右键管理员权限启动！",
+                                        Color.FromRgb(239, 34, 7));
                                 }
-                            }, ApartmentState.STA);
-                            break;
-                        }
+                            }
+                            else
+                            {
+                                Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                            }
+                        }, ApartmentState.STA);
+                        break;
+                    }
                     case "ShowInputMethod":
-                        {
-                            device.ScriptEngine.ShowInputMethod();
-                            break;
-                        }
+                    {
+                        device.ScriptEngine.ShowInputMethod();
+                        break;
+                    }
                     case "StopAllModules":
+                    {
+                        if (Client.BatchControl)
                         {
-                            if (Client.BatchControl) {
-                                var msg = new MyMessageBox(MessageBoxButton.YesNo,text_yes:"确定",text_no:"取消") { MessageText = "当前处于群控模式，该操作会停止所有群控设备正在运行的模块，确定要停止吗？" };
-                                Common.ShowMessageControl(msg);
+                            var msg = new MyMessageBox(MessageBoxButton.YesNo, text_yes: "确定", text_no: "取消")
+                                {MessageText = "当前处于群控模式，该操作会停止所有群控设备正在运行的模块，确定要停止吗？"};
+                            Common.ShowMessageControl(msg);
 
-                                if (msg.Result != MessageBoxResult.Yes)
-                                {
-                                    return;
-                                }
-                            }
-                            var md5list = from m in device.RunningModules.ToList() select m.Md5;
-                            foreach (string md5 in md5list)
+                            if (msg.Result != MessageBoxResult.Yes)
                             {
-                                StopModule(device, md5);
+                                return;
                             }
-                            Client.ShowToast("成功停止设备[" + device.Name + "]正在运行的所有模块！", Color.FromRgb(0, 188, 0));
-                            break;
-                        }
-                    case "BackgroundApps": {
-                            Client.StartAction(() =>
-                            {
-
-                                device.ScriptEngine.PressKey(187);
-                            });
-                            break;
                         }
 
+                        var md5list = from m in device.RunningModules.ToList() select m.Md5;
+                        foreach (string md5 in md5list)
+                        {
+                            StopModule(device, md5);
+                        }
+
+                        Client.ShowToast("成功停止设备[" + device.Name + "]正在运行的所有模块！", Color.FromRgb(0, 188, 0));
+                        break;
+                    }
+                    case "BackgroundApps":
+                    {
+                        Client.StartAction(() => { device.ScriptEngine.PressKey(187); });
+                        break;
+                    }
                 }
             }
         }
@@ -395,17 +387,16 @@ namespace Xky.Platform.Pages
                 return;
             }
 
-            var module_select = (Module)ModuleListBox.SelectedItem;
+            var module_select = (Module) ModuleListBox.SelectedItem;
             if (module_select != null)
             {
-
                 if (DeviceListBox.SelectedItem is Device device)
                 {
                     RunModule(device, module_select);
                 }
                 else if (Client.BatchControl)
                 {
-                    RunModule(null,module_select);
+                    RunModule(null, module_select);
                 }
             }
         }
@@ -414,99 +405,98 @@ namespace Xky.Platform.Pages
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag = ((MenuItem)sender).Tag.ToString();
+            string tag = ((MenuItem) sender).Tag.ToString();
             switch (tag)
             {
-                case "Reboot": {
-                        if (DeviceListBox.SelectedItem is Device device)
+                case "Reboot":
+                {
+                    if (DeviceListBox.SelectedItem is Device device)
+                    {
+                        Client.StartAction(() => { device.ScriptEngine.AdbShell("reboot"); });
+                    }
+
+                    break;
+                }
+                case "EditInfo":
+                {
+                    string oldtag = "";
+                    if (DeviceListBox.SelectedItem is Device device)
+                    {
+                        ContentControl_EditInfo_Tags.ItemsSource =
+                            Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
+                        TextBox_DeviceName.Text = device.Name;
+                        if (device.Tags.Length > 0)
                         {
+                            oldtag = device.Tags[0];
+                            TextBox_DeviceTag.Text = device.Tags[0];
+                        }
+                        else
+                        {
+                            TextBox_DeviceTag.Text = "";
+                        }
+
+                        MyMessageBox msg =
+                            new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消")
+                                {MessageText = ""};
+                        ((ContentControl) ((Border) msg.Content).FindName("ContentControl")).Content =
+                            ContentControl_EditInfo.Content;
+                        Common.ShowMessageControl(msg);
+                        if (msg.Result == MessageBoxResult.Yes)
+                        {
+                            string DeviceName = TextBox_DeviceName.Text;
+                            string DeviceTag = TextBox_DeviceTag.Text;
                             Client.StartAction(() =>
                             {
-                                device.ScriptEngine.AdbShell("reboot");
-                            });
-                        }
-                        break;
-                    }
-                case "EditInfo":
-                    {
-                        string oldtag = "";
-                        if (DeviceListBox.SelectedItem is Device device)
-                        {
-                            ContentControl_EditInfo_Tags.ItemsSource =
-                                Client.Tags.ToList().FindAll(p => p.Name != "所有设备" && p.Name != "未分组设备");
-                            TextBox_DeviceName.Text = device.Name;
-                            if (device.Tags.Length > 0)
-                            {
-                                oldtag = device.Tags[0];
-                                TextBox_DeviceTag.Text = device.Tags[0];
-                            }
-                            else
-                            {
-                                TextBox_DeviceTag.Text = "";
-                            }
-
-                            MyMessageBox msg =
-                                new MyMessageBox(MessageBoxButton.YesNo, text_yes: "保存修改", text_no: "取消")
-                                { MessageText = "" };
-                            ((ContentControl)((Border)msg.Content).FindName("ContentControl")).Content =
-                                ContentControl_EditInfo.Content;
-                            Common.ShowMessageControl(msg);
-                            if (msg.Result == MessageBoxResult.Yes)
-                            {
-                                string DeviceName = TextBox_DeviceName.Text;
-                                string DeviceTag = TextBox_DeviceTag.Text;
-                                Client.StartAction(() =>
+                                string[] tags = new string[0];
+                                if (DeviceTag.Length > 0)
                                 {
-                                    string[] tags = new string[0];
-                                    if (DeviceTag.Length > 0)
-                                    {
-                                        tags = new string[] { DeviceTag };
-                                    }
+                                    tags = new string[] {DeviceTag};
+                                }
 
-                                    Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
-                                    if (response.Result)
-                                    {
-                                        Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
-                                        device.Name = DeviceName;
+                                Response response = Client.SetDevice(device.Sn, DeviceName, device.Description, tags);
+                                if (response.Result)
+                                {
+                                    Common.ShowToast(response.Message, Color.FromRgb(0, 188, 0));
+                                    device.Name = DeviceName;
 
-                                        device.Tags = tags;
-                                        if (oldtag != DeviceTag)
+                                    device.Tags = tags;
+                                    if (oldtag != DeviceTag)
+                                    {
+                                        if (oldtag.Length > 0)
                                         {
-                                            if (oldtag.Length > 0)
-                                            {
-                                                Client.RemoveTags(oldtag, device);
-                                            }
-                                            else
-                                            {
-                                                Client.RemoveTags("未分组设备", device);
-                                            }
+                                            Client.RemoveTags(oldtag, device);
+                                        }
+                                        else
+                                        {
+                                            Client.RemoveTags("未分组设备", device);
+                                        }
 
-                                            if (DeviceTag.Length > 0)
-                                            {
-                                                Client.AddTags(DeviceTag, device);
-                                            }
-                                            else
-                                            {
-                                                Client.AddTags("未分组设备", device);
-                                            }
+                                        if (DeviceTag.Length > 0)
+                                        {
+                                            Client.AddTags(DeviceTag, device);
+                                        }
+                                        else
+                                        {
+                                            Client.AddTags("未分组设备", device);
                                         }
                                     }
-                                    else
-                                    {
-                                        Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
-                                    }
-                                });
-                            }
+                                }
+                                else
+                                {
+                                    Common.ShowToast(response.Message, Color.FromRgb(239, 34, 7));
+                                }
+                            });
                         }
-
-                        break;
                     }
+
+                    break;
+                }
             }
         }
 
         private void Label_EditInfo_Tags_Click(object sender, RoutedEventArgs e)
         {
-            TextBox_DeviceTag.Text = ((Label)sender).Content.ToString();
+            TextBox_DeviceTag.Text = ((Label) sender).Content.ToString();
         }
 
         private void TagListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -521,8 +511,8 @@ namespace Xky.Platform.Pages
         private void RunModule(Device device, Module rmodule)
         {
             var Devices = new List<Device>();
-            var module = (Module)rmodule.Clone();
-            XModule xmodule = (XModule)module.XModule.Clone();
+            var module = (Module) rmodule.Clone();
+            XModule xmodule = (XModule) module.XModule.Clone();
             xmodule.Devices = new List<Device>();
             if (Client.BatchControl)
             {
@@ -530,7 +520,7 @@ namespace Xky.Platform.Pages
             }
             else
             {
-                Devices = new List<Device>() { device };
+                Devices = new List<Device>() {device};
             }
 
             foreach (Device rdevice in Devices)
@@ -538,7 +528,8 @@ namespace Xky.Platform.Pages
                 var runningmodule = rdevice.RunningModules.ToList().Find(p => p.Md5 == module.Md5);
                 if (runningmodule != null)
                 {
-                    Common.ShowToast("设备[" + rdevice.Name + "]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！", Color.FromRgb(239, 34, 7));
+                    Common.ShowToast("设备[" + rdevice.Name + "]正在执行模块[" + runningmodule.Name + "]中，无法重复运行！",
+                        Color.FromRgb(239, 34, 7));
                     continue;
                 }
 
@@ -553,8 +544,10 @@ namespace Xky.Platform.Pages
                         continue;
                     }
                 }
+
                 xmodule.Devices.Add(rdevice);
             }
+
             xmodule.Init();
             var thread = Client.StartAction(() =>
             {
@@ -570,33 +563,29 @@ namespace Xky.Platform.Pages
                     foreach (var runmodule in xmodules)
                     {
                         var thread_module = Client.StartAction(() =>
-                                             {
-                                                 Dispatcher.Invoke(() =>
-                                                 {
+                        {
+                            Dispatcher.Invoke(() => { runmodule.Device.RunningModules.Add(module); });
+                            runmodule.Start();
+                            Console.WriteLine("设备[" + runmodule.Device.Name + "]成功执行模块[" + module.Name + "]");
 
-                                                     runmodule.Device.RunningModules.Add(module);
-                                                 });
-                                                 runmodule.Start();
-                                                 Console.WriteLine("设备[" + runmodule.Device.Name + "]成功执行模块[" + module.Name + "]");
+                            Dispatcher.Invoke(() =>
+                            {
+                                if (DeviceListBox.SelectedItem is Device device_selected)
+                                {
+                                    if (device_selected.Id == runmodule.Device.Id)
+                                    {
+                                        rmodule.State = 0;
+                                    }
+                                }
 
-                                                 Dispatcher.Invoke(() =>
-                                                 {
-                                                     if (DeviceListBox.SelectedItem is Device device_selected)
-                                                     {
-                                                         if (device_selected.Id == runmodule.Device.Id)
-                                                         {
-                                                             rmodule.State = 0;
-                                                         }
+                                runmodule.Device.RunningModules.Remove(module);
 
-                                                     }
-                                                     runmodule.Device.RunningModules.Remove(module);
-
-                                                     if (runmodule.Device.RunningThreads.ContainsKey(module.Md5))
-                                                     {
-                                                         runmodule.Device.RunningThreads.Remove(module.Md5);
-                                                     }
-                                                 });
-                                             });
+                                if (runmodule.Device.RunningThreads.ContainsKey(module.Md5))
+                                {
+                                    runmodule.Device.RunningThreads.Remove(module.Md5);
+                                }
+                            });
+                        });
                         if (!runmodule.Device.RunningThreads.ContainsKey(module.Md5))
                         {
                             runmodule.Device.RunningThreads.Add(module.Md5, thread_module);
@@ -608,82 +597,69 @@ namespace Xky.Platform.Pages
                                 Color.FromRgb(239, 34, 7));
                         }
                     }
-
-
-
-
-
                 }
-
-
-
             }, ApartmentState.STA);
-
         }
+
         private void StopModule(Device device, string modulemd5)
         {
-           
-                var devices = new List<Device>();
-                if (Client.BatchControl)
-                {
-                    devices = Client.BatchControlTag.Devices;
-                }
-                else
-                {
-                    devices = new List<Device>() { device };
-                }
-                foreach (var rdevice in devices)
-                {
-                    if (rdevice.RunningThreads.ContainsKey(modulemd5))
-                    {
-                        rdevice.RunningThreads[modulemd5].Abort();
+            var devices = new List<Device>();
+            if (Client.BatchControl)
+            {
+                devices = Client.BatchControlTag.Devices;
+            }
+            else
+            {
+                devices = new List<Device>() {device};
+            }
 
-                        rdevice.RunningThreads.Remove(modulemd5);
-                        var runningmodule = rdevice.RunningModules.ToList().Find(p => p.Md5 == modulemd5);
-                        if (runningmodule != null)
-                        {
-                            rdevice.RunningModules.Remove(runningmodule);
-                            Client.Modules.ToList().Find(p => p.Md5 == modulemd5).State = 0;
-                        }
+            foreach (var rdevice in devices)
+            {
+                if (rdevice.RunningThreads.ContainsKey(modulemd5))
+                {
+                    rdevice.RunningThreads[modulemd5].Abort();
+
+                    rdevice.RunningThreads.Remove(modulemd5);
+                    var runningmodule = rdevice.RunningModules.ToList().Find(p => p.Md5 == modulemd5);
+                    if (runningmodule != null)
+                    {
+                        rdevice.RunningModules.Remove(runningmodule);
+                        Client.Modules.ToList().Find(p => p.Md5 == modulemd5).State = 0;
                     }
                 }
-           
-
+            }
         }
+
         private void Button_Module_Run_Click(object sender, RoutedEventArgs e)
         {
-            string modulemd5 = ((MyButton)sender).Tag.ToString();
-            var module =Client.Modules.ToList().Find(p=>p.Md5==modulemd5);
+            string modulemd5 = ((MyButton) sender).Tag.ToString();
+            var module = Client.Modules.ToList().Find(p => p.Md5 == modulemd5);
             if (module != null)
             {
-
                 if (DeviceListBox.SelectedItem is Device device)
                 {
                     RunModule(device, module);
                 }
-                else if(Client.BatchControl)
+                else if (Client.BatchControl)
                 {
-                    RunModule(null,module);
+                    RunModule(null, module);
                 }
             }
         }
 
         private void Button_Module_Stop_Click(object sender, RoutedEventArgs e)
         {
-            string modulemd5 = ((MyButton)sender).Tag.ToString();
+            string modulemd5 = ((MyButton) sender).Tag.ToString();
             if (DeviceListBox.SelectedItem is Device device)
             {
-                
-                    
-                    StopModule(device, modulemd5);
-                
+                StopModule(device, modulemd5);
             }
         }
 
-       
+
         private void TextBlock_ModulePanelNoData_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (((TextBlock)sender).Name == "TextBlock_OpenModulePath")
+            if (((TextBlock) sender).Name == "TextBlock_OpenModulePath")
             {
                 System.Diagnostics.Process.Start(Client.ModulePath);
             }
@@ -691,14 +667,20 @@ namespace Xky.Platform.Pages
             {
                 Common.OpenUrl("http://doc.xky.com");
             }
-
         }
 
         private void CheckBox_QK_Checked(object sender, RoutedEventArgs e)
         {
-           
-                Client.BatchControl = CheckBox_QK.IsChecked.Value;
-            
+            Client.BatchControl = CheckBox_QK.IsChecked.Value;
+        }
+
+        private void MenuItem_Test(object sender, RoutedEventArgs e)
+        {
+            if (DeviceListBox.SelectedItem is Device device)
+            {
+                var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.jpg"));
+                Console.WriteLine(response.Json);
+            }
         }
     }
 }

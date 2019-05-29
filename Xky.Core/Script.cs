@@ -11,7 +11,6 @@ namespace Xky.Core
 {
     public class Script
     {
-        
         private readonly Device _device;
 
         public Script(Device device)
@@ -547,6 +546,17 @@ namespace Xky.Core
         {
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCameraFromText",
                 new JArray(text));
+        }
+
+        /// <summary>
+        /// 更新摄像头
+        /// </summary>
+        /// <param name="data">图片数据</param>
+        /// <returns></returns>
+        public Response UpdateCamera(byte[] data)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "updateCamera",
+                new JArray(data));
         }
 
 

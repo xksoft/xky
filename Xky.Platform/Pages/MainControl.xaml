@@ -219,7 +219,7 @@
                         </MenuItem>
                         <Separator />
                         <MenuItem Header="重启" Tag="Reboot" Click="MenuItem_Click"/>
-                       
+                        <MenuItem Header="测试用" Tag="Test" Click="MenuItem_Test"/>
 
                     </ContextMenu>
                 </ListBox.ContextMenu>
