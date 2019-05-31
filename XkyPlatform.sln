@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.Socket", "Xky.Socket\Xk
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xmodule", "Xmodule", "{DC5868EF-9EB4-49D5-BE79-ECCB6905750C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.Demo", "XModule\Xky.XModule.Demo\Xky.XModule.Demo.csproj", "{7B9AEBBF-F5F5-450C-8106-910F2B3DCE06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.ContactManager", "XModule\Xky.XModule.Demo\Xky.XModule.ContactManager.csproj", "{7B9AEBBF-F5F5-450C-8106-910F2B3DCE06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xky.XModule.System", "XModule\Xky.XModule.System\Xky.XModule.System.csproj", "{549A063A-CDE7-478F-9A96-A8520C5E602D}"
 EndProject
