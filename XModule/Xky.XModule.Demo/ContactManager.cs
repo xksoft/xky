@@ -3,14 +3,14 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 
-namespace Xky.XModule.Demo
+namespace Xky.XModule.ContactManager
 {
-    public class Demo : Core.XModule
+    public class ContactManager : Core.XModule
     {
         public int t = 0;
         public override string Description()
         {
-            return "描述";
+            return "[支持群控]清空、导入联系人";
         }
 
         public override byte[] Icon()
@@ -29,7 +29,7 @@ namespace Xky.XModule.Demo
 
         public override string Name()
         {
-            return "模块名称";
+            return "联系人管理";
         }
        
         public override bool ShowUserControl()

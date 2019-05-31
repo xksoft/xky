@@ -12,7 +12,7 @@ namespace Xky.XModule.AppManager
     {
         public override string Description()
         {
-            return "管理手机上的应用";
+            return "[支持群控]管理手机上的应用";
         }
 
         public override byte[] Icon()

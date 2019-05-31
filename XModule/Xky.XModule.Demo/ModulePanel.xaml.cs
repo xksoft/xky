@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xky.Core;
 
-namespace Xky.XModule.Demo
+namespace Xky.XModule.ContactManager
 {
     /// <summary>
     /// ModulePanel.xaml 的交互逻辑
@@ -31,7 +31,7 @@ namespace Xky.XModule.Demo
 
             for (int i = 0; i < xmodules.Count; i++)
             {
-                ((Demo)xmodules[i]).t = i;
+                ((ContactManager)xmodules[i]).t = i;
             }
             Client.CloseDialogPanel();
         }

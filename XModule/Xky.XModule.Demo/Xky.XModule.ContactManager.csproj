@@ -49,7 +49,7 @@
       <DependentUpon>ModulePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Demo.cs" />
+    <Compile Include="ContactManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="icon.png" />
@@ -68,6 +68,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\测试\demo\ /y</PostBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\2-系统工具\联系人管理\ /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
