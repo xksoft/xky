@@ -679,7 +679,7 @@ namespace Xky.Platform.Pages
             if (DeviceListBox.SelectedItem is Device device)
             {
                 //var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.png"));
-                var response = device.ScriptEngine.CallApi("aa",new JObject() { });
+                var response = device.ScriptEngine.CallApi("sendMsg", new JObject() { ["uid"] = "10000", ["msg"] = "你好" });
                 Console.WriteLine(response.Json);
             }
         }
