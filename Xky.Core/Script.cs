@@ -612,5 +612,16 @@ namespace Xky.Core
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "clearDCIM",
                 new JArray(path));
         }
+        /// <summary>
+        /// 调用第三方接口
+        /// </summary>
+        /// <param name="name">接口名称</param>
+        /// <param name="option">参数</param>
+        /// <returns></returns>
+        public Response CallApi(string name, JObject option)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "callEvent",
+                new JArray(name, option));
+        }
     }
 }

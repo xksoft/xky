@@ -7,8 +7,8 @@
     <ProjectGuid>{7B9AEBBF-F5F5-450C-8106-910F2B3DCE06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xky.XModule.Demo</RootNamespace>
-    <AssemblyName>Xky.XModule.Demo</AssemblyName>
+    <RootNamespace>Xky.XModule.ContactManager</RootNamespace>
+    <AssemblyName>Xky.XModule.ContactManager</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

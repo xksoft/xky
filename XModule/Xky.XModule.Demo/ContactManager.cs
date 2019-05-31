@@ -16,7 +16,7 @@ namespace Xky.XModule.ContactManager
         public override byte[] Icon()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
-            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.Demo.icon.png");
+            Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.ContactManager.icon.png");
             byte[] bytes = new byte[myStream.Length];
             myStream.Read(bytes, 0, bytes.Length);
             return bytes;
