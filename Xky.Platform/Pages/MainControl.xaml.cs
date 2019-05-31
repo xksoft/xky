@@ -678,7 +678,7 @@ namespace Xky.Platform.Pages
         {
             if (DeviceListBox.SelectedItem is Device device)
             {
-                var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.jpg"));
+                var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.png"));
                 Console.WriteLine(response.Json);
             }
         }
