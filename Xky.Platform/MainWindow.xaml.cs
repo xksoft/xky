@@ -27,6 +27,7 @@ namespace Xky.Platform
     {
         public MainWindow()
         {
+            WinConsole.ShowConsole();
             InitializeComponent();
             var wc = new WindowChrome
             {
@@ -43,7 +44,7 @@ namespace Xky.Platform
             Client.CloseDialogPanelEvent += Client_CloseDialogPanelEvent;
             Client.ShowDialogPanelEvent += Client_ShowDialogPanelEvent;
             Client.ShowToastEvent += Client_ShowToastEvent;
-            ;
+
 
             //基于dip决定高分屏字体
             try
@@ -115,8 +116,10 @@ namespace Xky.Platform
                 else
                     bitspeed = bitcount + " bps";
 
-                StatusText.Text = "速率：" + bitspeed + " 节点：" + Client.Nodes.ToList().FindAll(n=>n.ConnectStatus==1||n.ConnectStatus==2).Count + " 设备：" + Client.Devices.Count +
-                                  " 线程：" +Client.ThreadCount;
+                StatusText.Text = "速率：" + bitspeed + " 节点：" +
+                                  Client.Nodes.ToList().FindAll(n => n.ConnectStatus == 1 || n.ConnectStatus == 2)
+                                      .Count + " 设备：" + Client.Devices.Count +
+                                  " 线程：" + Client.ThreadCount;
             });
         }
 
@@ -213,7 +216,6 @@ namespace Xky.Platform
             else
             {
                 MainGrid.Margin = new Thickness(0);
-
             }
 
             Console.WriteLine(this.Height + " " + this.Width);
@@ -246,7 +248,6 @@ namespace Xky.Platform
                 e.Cancel = true;
             }
         }
-
     }
 
     #region 窗体按钮状态转换模型

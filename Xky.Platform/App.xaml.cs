@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace Xky.Platform
@@ -23,7 +24,15 @@ namespace Xky.Platform
                 Environment.Exit(0);
             }
 
-            Console.Title = "侠客SDK调试日志";
+            try
+            {
+                Console.Title = "侠客云SDK调试";
+            }
+            catch
+            {
+                // ignored
+            }
+
 
             //最多512个并发
             ServicePointManager.DefaultConnectionLimit = 512;
