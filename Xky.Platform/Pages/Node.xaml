@@ -129,11 +129,12 @@
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">IP地址</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=Ip}"></Label>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" >
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60" >在线设备</Label>
-                                                <Label Foreground="#fff" Content="{Binding  Path=DeviceCount}"></Label>
+                                                <Label Foreground="#fff" Content="{Binding  Path=DeviceCount}" Visibility="{Binding Path=DataContext.NodeUrl,ElementName=DataGrid,Converter={StaticResource NodeUrlToHidden}}"></Label>
+                                                <Label Foreground="#fff" Content="-" Visibility="{Binding Path=DataContext.NodeUrl,ElementName=DataGrid,Converter={StaticResource NodeUrlToVisible}}"></Label>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                                                 <Label Foreground="#999"  HorizontalContentAlignment="Left" Width="60">上线时间</Label>
                                                 <Label Foreground="#fff" Content="{Binding  Path=LoadTick}"></Label>
                                             </StackPanel>

@@ -43,10 +43,12 @@ namespace Xky.Platform.Pages
             {
                 if (url.ToString().StartsWith("http"))
                 {
-                    Process.Start(url.ToString());
+                    Common.OpenUrl(url.ToString());
+                   
                 }
                 else {
-                    Process.Start("http://"+url.ToString()+":8080");
+                    Common.OpenUrl("http://" + url.ToString() + ":8080");
+               
                 }
             }
 
