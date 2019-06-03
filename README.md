@@ -27,9 +27,9 @@ http://doc.xky.com/
 
 ## 工具
 
-** windows节点服务器：**https://github.com/xksoft/xky/releases/download/0.02/node-server-win.rar
+**windows节点服务器：** https://github.com/xksoft/xky/releases/download/0.02/node-server-win.rar
 
-** 界面元素获取工具：**https://github.com/xksoft/xky/releases/download/0.02/UISpy.zip
+**界面元素获取工具：** https://github.com/xksoft/xky/releases/download/0.02/UISpy.zip
 
 
 ## Copyright and license
