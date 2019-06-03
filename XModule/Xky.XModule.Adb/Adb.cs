@@ -45,6 +45,7 @@ namespace Xky.XModule.Adb
             
            
             var panel = new ModulePanel();
+            panel.device = Devices[0];
             Core.Client.ShowDialogPanel(panel);
             return true;
 

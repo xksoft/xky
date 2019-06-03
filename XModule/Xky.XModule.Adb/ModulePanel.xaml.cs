@@ -24,6 +24,7 @@ namespace Xky.XModule.Adb
     /// </summary>
     public partial class ModulePanel : UserControl
     {
+        public Device device;
         public ModulePanel()
         {
             InitializeComponent();
@@ -53,24 +54,24 @@ namespace Xky.XModule.Adb
         }
         public void RunCmd(string cmd)
         {
-            //Response res;
-            //if (CheckBox_Shell.IsChecked.Value)
-            //{
-            //    res= device.ScriptEngine.AdbShell(cmd);
-            //}
-            //else
-            //{
-            //     res  = device.ScriptEngine.AdbCommand(cmd);
-            //}
-            //if (res != null && res.Result&&res.Json!=null&&res.Json["result"]!=null)
-            //{
-            //    TextBox_Result.Text = res.Json["result"].ToString();
-            //}
-            //else
-            //{
-            //    TextBox_Result.Text = "执行失败！";
+            Response res;
+            if (CheckBox_Shell.IsChecked.Value)
+            {
+                res = device.ScriptEngine.AdbShell(cmd);
+            }
+            else
+            {
+                res = device.ScriptEngine.AdbCommand(cmd);
+            }
+            if (res != null && res.Result && res.Json != null && res.Json["result"] != null)
+            {
+                TextBox_Result.Text = res.Json["result"].ToString();
+            }
+            else
+            {
+                TextBox_Result.Text = "执行失败！";
 
-            //}
+            }
 
         }
 

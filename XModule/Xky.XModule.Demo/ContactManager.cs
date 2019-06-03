@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -7,10 +8,10 @@ namespace Xky.XModule.ContactManager
 {
     public class ContactManager : Core.XModule
     {
-        public int t = 0;
+        public string username = "小明";
         public override string Description()
         {
-            return "[支持群控]清空、导入联系人";
+            return "[支持群控]添加好友";
         }
 
         public override byte[] Icon()
@@ -29,24 +30,32 @@ namespace Xky.XModule.ContactManager
 
         public override string Name()
         {
-            return "联系人管理";
+            return "添加好友";
         }
        
         public override bool ShowUserControl()
         {
+            List<string> userlist = new List<string>() { "小明","小红","二狗"};
+            //获取到将要在每台设备上执行的模块实例
+            List<Core.XModule> modulelist = GetXModules();
+            for (int i=0;i<userlist.Count;i++)
+            {
+                if (modulelist.Count > i)
+                {
+                    //将模块实例强制转换为当前模块实例
+                    ContactManager cm = (ContactManager)modulelist[i];
+                    //修改全局变量的值
+                    cm.username = userlist[i];
+
+                  
+                }
+            }
             
-            ModulePanel mp = new ModulePanel();
-            mp.xmodules = GetXModules();
-            Core.Client.ShowDialogPanel(mp);
-            return true;
+             return true;
         }
         public override void Start()
         {
-            for (int i = 0; i < 20; i++)
-            {
-                Device.ScriptEngine.Toast(t.ToString() + "-" + i);
-                Thread.Sleep(1000);
-            }
+            Device.ScriptEngine.Toast(username);
 
         }
     }

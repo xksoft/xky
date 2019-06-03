@@ -33,7 +33,7 @@ namespace Xky.XModule.FileManager
         {
             InitializeComponent();
         }
-        public Device device;
+        public List<Device> devices;
         public string CurrentDirectory = "/storage/emulated/0";
         public static List<FileInformation> FileList = new List<FileInformation>();
         public static List<DeviceFile> FileList_Device = new List<DeviceFile>();
@@ -94,8 +94,15 @@ namespace Xky.XModule.FileManager
             {
                 if (DirectoryName.Length > 0)
                 {
-                    Response res = device.ScriptEngine.AdbShell("cd " + CurrentDirectory + "&&mkdir -m 0777 " + DirectoryName);
-                    Ls(CurrentDirectory);
+                    for (int index = 0; index < devices.Count; index++)
+                    {
+                        if (devices.Count > index)
+                        {
+                            var device = devices[index];
+                            Response res = device.ScriptEngine.AdbShell("cd " + CurrentDirectory + "&&mkdir -m 0777 " + DirectoryName);
+                        }
+                    }
+                        Ls(CurrentDirectory);
                 }
                 Grid_MessageBox.Visibility = Visibility.Hidden;
             }
@@ -146,7 +153,7 @@ namespace Xky.XModule.FileManager
 
 
 
-            Response res = device.ScriptEngine.ReadDir(dir);
+            Response res = devices[0].ScriptEngine.ReadDir(dir);
             if (res.Json["list"] != null)
             {
                 this.Dispatcher.Invoke(new Action(() =>
@@ -179,7 +186,7 @@ namespace Xky.XModule.FileManager
         }
         public void GetAllDeviceFilesAndDirectory(string dir)
         {
-            Response res = device.ScriptEngine.ReadDir(dir);
+            Response res = devices[0].ScriptEngine.ReadDir(dir);
             if (res.Json["result"] != null)
             {
                 List<DeviceFile> list = GetDeviceFilesFromLs(dir, (JArray)res.Json["list"]);
@@ -295,46 +302,55 @@ namespace Xky.XModule.FileManager
             if (filename_new.Length>50) {
                 filename_new.Remove(50);
             }
-            if (fi.Length > 10485760)
+
+            for (int index = 0; index < devices.Count; index++)
             {
-                //大于10M的文件采用分段上传
-
-                FileStream fs = new FileStream(filename, FileMode.Open);
-
-                string tempdir = filename_new + "_temp";
-                int i = 1;
-                byte[] bytes = new byte[10485760];
-                string catf = "";
-                int readlength = fs.Read(bytes, 0, 10485760);
-                while (readlength > 0)
+                if (devices.Count > index)
                 {
-                    ShowLoading("使用大文件上传模式，预计还需" + ((fi.Length / 10485760) - i + 1) + "秒钟...");
-                    if (readlength < 10485760)
+                    var device = devices[index];
+                    ShowLoading("正在上传文件[" + filename + "]到设备[" + device.Name + "]...");
+                    if (fi.Length > 10485760)
                     {
-                        device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes.Take(readlength).ToArray());
+                        //大于10M的文件采用分段上传
+
+                        FileStream fs = new FileStream(filename, FileMode.Open);
+
+                        string tempdir = filename_new + "_temp";
+                        int i = 1;
+                        byte[] bytes = new byte[10485760];
+                        string catf = "";
+                        int readlength = fs.Read(bytes, 0, 10485760);
+                        while (readlength > 0)
+                        {
+                            ShowLoading("设备[" + device.Name + "]使用大文件上传模式，预计还需" + ((fi.Length / 10485760) - i + 1) + "秒钟...");
+                            if (readlength < 10485760)
+                            {
+                                device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes.Take(readlength).ToArray());
+
+                            }
+                            else { device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes); }
+                            Console.WriteLine("正在上传第" + i + "个拆分文件，大小" + readlength + "...");
+                            catf += i + ".tmp  ";
+
+                            i++;
+                            readlength = fs.Read(bytes, 0, 10485760);
+                        }
+                        fs.Close();
+
+                        for (int w = i / 2; w > 0; w--)
+                        {
+                            ShowLoading("设备[" + device.Name + "]正在合并文件，预计还需" + w + "秒钟...");
+                            Thread.Sleep(1000);
+                        }
+                        Response res = device.ScriptEngine.AdbShell("cd " + dir + "/" + tempdir + "&&cat " + catf + " > ../" + filename_new + fi.Extension + "&&rm -r -f " + dir + "/" + tempdir);
+
 
                     }
-                    else { device.ScriptEngine.WriteBufferToFile(dir + "/" + tempdir + "/" + i + ".tmp", bytes); }
-                    Console.WriteLine("正在上传第" + i + "个拆分文件，大小" + readlength + "...");
-                    catf += i + ".tmp  ";
-
-                    i++;
-                    readlength = fs.Read(bytes, 0, 10485760);
+                    else
+                    {
+                        Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + filename_new + fi.Extension, File.ReadAllBytes(filename));
+                    }
                 }
-                fs.Close();
-
-                for (int w = i / 2; w > 0; w--)
-                {
-                    ShowLoading("正在合并文件，预计还需" + w + "秒钟...");
-                    Thread.Sleep(1000);
-                }
-                Response res = device.ScriptEngine.AdbShell("cd " + dir + "/" + tempdir + "&&cat " + catf + " > ../" + filename_new + fi.Extension + "&&rm -r -f " + dir + "/" + tempdir);
-
-
-            }
-            else
-            {
-                Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + filename_new+fi.Extension, File.ReadAllBytes(filename));
             }
 
           RescanningMedia( dir + "/" + filename_new + fi.Extension,false);
@@ -349,8 +365,15 @@ namespace Xky.XModule.FileManager
             //开始创建目录
             foreach (FileInformation fi in dirs)
             {
-                ShowLoading("正在创建目录[" + fi.RelativePath + "]...");
-                Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&mkdir -m 0777 -p " + fi.RelativePath);
+                for (int index = 0; index < devices.Count; index++)
+                {
+                    if (devices.Count > index)
+                    {
+                        var device = devices[index];
+                        ShowLoading("设备["+device.Name+"]正在创建目录[" + fi.RelativePath + "]...");
+                        Response res = device.ScriptEngine.AdbShell("cd " + dir + "&&mkdir -m 0777 -p " + fi.RelativePath);
+                    }
+                }
             }
             foreach (FileInformation fi in files)
             {
@@ -374,15 +397,22 @@ namespace Xky.XModule.FileManager
                         {
                             continue;
                         }
-                        ShowLoading("正在删除[" + deviceFile.Name + "]...");
-                        Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
-                        if (deviceFile.Type == "file")
+                        for (int index = 0; index < devices.Count; index++)
                         {
-                            RescanningMedia(deviceFile.FullName, false);
-                        }
-                        else
-                        {
-                            RescanningMedia(deviceFile.FullName, true);
+                            if (devices.Count > index)
+                            {
+                                var device = devices[index];
+                                ShowLoading("正在删除[" + deviceFile.Name + "]...");
+                                Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
+                                if (deviceFile.Type == "file")
+                                {
+                                    RescanningMedia(deviceFile.FullName, false);
+                                }
+                                else
+                                {
+                                    RescanningMedia(deviceFile.FullName, true);
+                                }
+                            }
                         }
                     }
                    
@@ -397,15 +427,29 @@ namespace Xky.XModule.FileManager
 
             if (path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".mp4"))
             {
-                Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://" + path);
-                Console.WriteLine(res_reload.Json);
-                res_reload = device.ScriptEngine.InsertMedia(path);
-                Console.WriteLine(res_reload.Json);
+                for (int index = 0; index < devices.Count; index++)
+                {
+                    if (devices.Count > index)
+                    {
+                        var device = devices[index];
+                        Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://" + path);
+                        Console.WriteLine(res_reload.Json);
+                        res_reload = device.ScriptEngine.InsertMedia(path);
+                        Console.WriteLine(res_reload.Json);
+                    }
+                }
             }
             else if (isdir)
             {
-                Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://" + CurrentDirectory);
-                Console.WriteLine(res_reload.Json);
+                for (int index = 0; index < devices.Count; index++)
+                {
+                    if (devices.Count > index)
+                    {
+                        var device = devices[index];
+                        Response res_reload = device.ScriptEngine.AdbShell("am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://" + CurrentDirectory);
+                        Console.WriteLine(res_reload.Json);
+                    }
+                }
             }
            
 
@@ -492,7 +536,7 @@ namespace Xky.XModule.FileManager
                 RelativePath = RelativePath.Substring(1);
             }
 
-            var response = device.ScriptEngine.ReadBufferFromFile(file.FullName);
+            var response = devices[0].ScriptEngine.ReadBufferFromFile(file.FullName);
             if (response.Result)
             {
                 string filename = path + "\\" + RelativePath;

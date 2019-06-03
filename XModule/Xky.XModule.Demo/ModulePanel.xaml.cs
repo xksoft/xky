@@ -31,7 +31,7 @@ namespace Xky.XModule.ContactManager
 
             for (int i = 0; i < xmodules.Count; i++)
             {
-                ((ContactManager)xmodules[i]).t = i;
+                //(ContactManager)xmodules[i]).t = i;
             }
             Client.CloseDialogPanel();
         }
