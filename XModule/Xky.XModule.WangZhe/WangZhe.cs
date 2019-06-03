@@ -43,7 +43,7 @@ namespace Xky.XModule.WangZhe
         {
             panel = new ModulePanel();
 
-            panel.device = Device;
+            panel.device = Devices[0];
             Core.Client.ShowDialogPanel(panel);
             return true;
         }

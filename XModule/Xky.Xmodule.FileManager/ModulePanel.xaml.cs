@@ -402,7 +402,7 @@ namespace Xky.XModule.FileManager
                             if (devices.Count > index)
                             {
                                 var device = devices[index];
-                                ShowLoading("正在删除[" + deviceFile.Name + "]...");
+                                ShowLoading("设备["+device.Name+"]正在删除[" + deviceFile.Name + "]...");
                                 Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
                                 if (deviceFile.Type == "file")
                                 {
