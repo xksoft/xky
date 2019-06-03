@@ -15,7 +15,11 @@ https://github.com/xksoft/xky/releases/latest
 ## ffmpeg库
 https://static.xky.com/download/ffmbeg_libs.rar
 
+## 快速安装设备接入教程
+http://www.xky.com/topic/detail/j71x
 
+## 模块开发教程
+http://doc.xky.com/
 
 ## Copyright and license
 
