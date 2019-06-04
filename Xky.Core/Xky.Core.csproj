@@ -104,6 +104,7 @@
     <Compile Include="MirrorScreen.xaml.cs">
       <DependentUpon>MirrorScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Log.cs" />
     <Compile Include="Model\Module.cs" />
     <Compile Include="Model\Tag.cs" />
     <Compile Include="Model\License.cs" />

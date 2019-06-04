@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Common;
@@ -98,6 +99,8 @@ namespace Xky.Core
         /// </summary>
         public static UdpClient UdpClientSearchNode;
 
+
+        public static ObservableCollection<Log> Logs = new ObservableCollection<Log>();
         #endregion
 
         #region 全局方法
@@ -265,6 +268,18 @@ namespace Xky.Core
             }
         }
 
+        public static void Log(string content,string title="系统", int type=0)
+        {
+            lock("Log"){
+               
+                    if (Client.Logs.Count > 2000)
+                    {
+                        Client.Logs.RemoveAt(0);
+                    }
+                    Client.Logs.Add(new Core.Model.Log() { Content = content, Type = type, Title = title, Date = DateTime.Now.Ticks });
+               
+            }
+        }
         #endregion
 
         #region  节点相关
@@ -922,11 +937,13 @@ namespace Xky.Core
                     {
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
+                        Log( "成功连接到节点服务器[" + node.Name + "][" + node.Serial + "]["+ url + "]");
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
+                        Log("节点服务器["+node.Name+"]["+node.Serial+"]下线");
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
@@ -995,6 +1012,7 @@ namespace Xky.Core
         /// <param name="sound"></param>
         public static void ShowToast(string toast, Color color, string sound = null)
         {
+            Client.Log("系统提示",toast);
             ShowToastEvent?.Invoke(toast,color,sound);
         }
 

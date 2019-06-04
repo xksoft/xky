@@ -404,6 +404,7 @@ namespace Xky.XModule.FileManager
                                 var device = devices[index];
                                 ShowLoading("设备["+device.Name+"]正在删除[" + deviceFile.Name + "]...");
                                 Response res = device.ScriptEngine.AdbShell("rm -r -f " + deviceFile.FullName);
+                               
                                 if (deviceFile.Type == "file")
                                 {
                                     RescanningMedia(deviceFile.FullName, false);
