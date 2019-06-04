@@ -239,13 +239,14 @@ namespace Xky.Core
                 {
                     try
                     {
+                        FileInfo fi = new FileInfo(modulefile);
                         var xmodulelist = XModuleHelper.LoadXModules(modulefile);
                         foreach (var xmodule in xmodulelist)
                         {
                             var modulecontent = (XModule) xmodule.Clone();
                             var module = new Module
                             {
-                                Md5 = StrHelper.Md5(groupnamepath + modulecontent.GetType().FullName, false),
+                                Md5 = StrHelper.Md5(modulecontent.GetType().FullName+fi.FullName, false),
                                 Name = modulecontent.Name(),
                                 GroupName = groupname,
                                 Description = modulecontent.Description(),
