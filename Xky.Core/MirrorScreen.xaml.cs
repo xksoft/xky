@@ -195,7 +195,9 @@ namespace Xky.Core
                 }
             });
             _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
-            _socket.On("event", json => { Console.WriteLine(json); });
+            _socket.On("event", json => {
+                //Console.WriteLine(json);
+            });
             _socket.On("h264", data => { Decoder?.Decode((byte[]) data); });
         }
 

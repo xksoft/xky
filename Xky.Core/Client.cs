@@ -1083,13 +1083,9 @@ namespace Xky.Core
                             Id = json["node"]["t_id"] == null ? 0 : Convert.ToInt32(json["node"]["t_id"]),
                             NodeUrl = json["node"]["t_nodeurl"]?.ToString()
                         };
-                        //var oldnode= Nodes.ToList().Find(p => p.Serial == node.Serial);
-                        //if (oldnode != null) {
-                        //    oldnode = node;
-                        //}
-                        //else {
+                       
                         PushNode(node, false);
-                        // }
+                       
                     }
 
                     else
@@ -1105,7 +1101,7 @@ namespace Xky.Core
                 }
                 case "ime_status":
                 {
-                    Console.WriteLine("输入法状态改变事件:" + json["enable"]);
+                    //Console.WriteLine("输入法状态改变事件:" + json["enable"]);
                     lock ("devices")
                     {
                         var device = Devices.ToList().Find(p => p.Sn == (string) json["sn"]);

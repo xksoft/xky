@@ -94,7 +94,7 @@ namespace Xky.Platform.Pages
 
         private void Button_EditInfo_Click(object sender, RoutedEventArgs e)
         {
-            Common.OpenUrl("https://www.xky.com/user-setting");
+            Common.OpenUrl("https://www.xky.com/user");
         }
     }
 }
