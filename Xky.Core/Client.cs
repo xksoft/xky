@@ -253,14 +253,15 @@ namespace Xky.Core
                                 XModule = modulecontent,
                                 Icon = modulecontent.Icon()
                             };
+                           
                             Client.Modules.Add(module);
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("模块加载失败：" + e);
-                    }
                 }
+                    catch (Exception e)
+                {
+                    Console.WriteLine("模块加载失败：" + e);
+                }
+            }
             }
         }
 
@@ -319,7 +320,7 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
-                    Console.WriteLine(response);
+                   
                     foreach (var json in (JArray) response.Json["nodes"])
                     {
                         PushNode(GetNode(json["t_serial"].ToString()), false);
@@ -898,7 +899,7 @@ namespace Xky.Core
                 {
                     node.NodeUrl = url;
 
-
+                    Console.WriteLine("断开");
                     node.NodeSocket?.Close();
 
 

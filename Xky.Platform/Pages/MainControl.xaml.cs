@@ -163,7 +163,7 @@ namespace Xky.Platform.Pages
 
             foreach (var group in nodeGroup)
             {
-                Console.WriteLine("组:" + group.First().NodeSerial + " 量:" + group.Count());
+               
                 var sns = group.Select(device => device.Sn).ToList();
                 var jarray = new JArray();
                 foreach (var sn in sns)

@@ -19,9 +19,17 @@ namespace Xky.XModule.ScreenTrain
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
             Stream myStream = myAssembly.GetManifestResourceStream("Xky.XModule.ScreenTrain.icon.png");
-            byte[] bytes = new byte[myStream.Length];
-            myStream.Read(bytes, 0, bytes.Length);
-            return bytes;
+            if (myStream != null)
+            {
+                byte[] bytes = new byte[myStream.Length];
+                myStream.Read(bytes, 0, bytes.Length);
+                return bytes;
+            }
+            else
+            {
+                Console.WriteLine("模块图标路径有误，无法加载！");
+                return null;
+            }
         }
 
         public override bool IsBackground()
