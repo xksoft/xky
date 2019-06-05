@@ -130,7 +130,7 @@ namespace Xky.Platform.Pages
                 Client.LoadModules();
 
                 Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
-                Client.Log( "成功加载模块：" + Client.Modules.Count + "个");
+                Client.Log( "成功加载模块：" + Client.Modules.Count + "个","系统",1);
                 Common.UiAction(() =>
                 {
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
@@ -566,8 +566,9 @@ namespace Xky.Platform.Pages
                         var thread_module = Client.StartAction(() =>
                         {
                             Dispatcher.Invoke(() => { runmodule.Device.RunningModules.Add(module); });
+                            Client.Log( "开始执行模块[" + module.Name + "]","设备[" + runmodule.Device.Name + "]", 0);
                             runmodule.Start();
-                            Console.WriteLine("设备[" + runmodule.Device.Name + "]成功执行模块[" + module.Name + "]");
+                           Client.Log("成功执行模块[" + module.Name + "]","设备[" + runmodule.Device.Name + "]",1);
 
                             Dispatcher.Invoke(() =>
                             {

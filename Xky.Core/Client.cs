@@ -100,7 +100,7 @@ namespace Xky.Core
         public static UdpClient UdpClientSearchNode;
 
 
-        public static ObservableCollection<Log> Logs = new ObservableCollection<Log>();
+        public static List<Log> Logs = new List<Log>();
         #endregion
 
         #region 全局方法
@@ -270,14 +270,15 @@ namespace Xky.Core
 
         public static void Log(string content,string title="系统", int type=0)
         {
-            lock("Log"){
-               
-                    if (Client.Logs.Count > 2000)
-                    {
-                        Client.Logs.RemoveAt(0);
-                    }
-                    Client.Logs.Add(new Core.Model.Log() { Content = content, Type = type, Title = title, Date = DateTime.Now.Ticks });
-               
+            lock ("Log")
+            {
+
+                if (Client.Logs.Count > 2000)
+                {
+                    Client.Logs.RemoveAt(0);
+                }
+                Client.Logs.Add(new Core.Model.Log() { Content = content, Type = type, Title = title, Date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") });
+
             }
         }
         #endregion
@@ -914,7 +915,7 @@ namespace Xky.Core
                 {
                     node.NodeUrl = url;
 
-                    Console.WriteLine("断开");
+                   
                     node.NodeSocket?.Close();
 
 
@@ -937,13 +938,14 @@ namespace Xky.Core
                     {
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
-                        Log( "成功连接到节点服务器[" + node.Name + "][" + node.Serial + "]["+ url + "]");
+                        Log( "成功连接到节点服务器[" + node.Name + "][" + node.Serial + "]["+ url + "]","系统",1);
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
-                        Log("节点服务器["+node.Name+"]["+node.Serial+"]下线");
+                        Log("节点服务器["+node.Name+"]["+node.Serial+"]下线","系统",3);
+                       
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });

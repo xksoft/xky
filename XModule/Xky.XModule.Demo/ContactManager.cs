@@ -8,7 +8,8 @@ namespace Xky.XModule.ContactManager
 {
     public class ContactManager : Core.XModule
     {
-      
+        public List<string> list = new List<string>();
+        string username = "";
         public override string Description()
         {
             return "[支持群控]通讯录管理";
@@ -46,11 +47,17 @@ namespace Xky.XModule.ContactManager
             ModulePanel panel = new ModulePanel();
             List<Core.XModule> modulelist = GetXModules();
             panel.xmodules = modulelist;
+            
+            panel.list = list;
+            
             Core.Client.ShowDialogPanel(panel);
+            username = panel.username;
             return true;
         }
         public override void Start()
         {
+            Console.WriteLine(list.Count);
+            Console.WriteLine(username);
           
 
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,8 +25,29 @@ namespace Xky.Platform.Pages
         public Log()
         {
             InitializeComponent();
-            LogListBox.ItemsSource =Client.Logs;
-            DataContext = this;
+           
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<Core.Model.Log> list = new List<Core.Model.Log>();
+            Client.StartAction(() =>
+            {
+                while (this.IsVisible)
+                {
+                    lock ("Log")
+                    {
+                        list = (from l in Client.Logs select l).ToList();
+                    }
+                    Common.UiAction(() =>
+                    {
+                        LogListBox.ItemsSource = list;
+                    });
+                    Thread.Sleep(2000);
+                }
+                
+            });
+
         }
     }
 }

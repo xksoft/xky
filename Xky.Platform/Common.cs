@@ -77,7 +77,7 @@ namespace Xky.Platform
 
                 UiAction(() =>
                 {
-                    Client.Log(toast);
+                    Client.Log(toast,"系统提示");
                     PlaySound(sound);
                     border = new Border
                     {

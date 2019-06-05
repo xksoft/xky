@@ -11,7 +11,7 @@ namespace Xky.Core.Model
     {
         private int _type = 0;
         private string _content = "";
-        private long _date = 0;
+        private string _date = "";
         private string _title = "";
        
 
@@ -37,7 +37,7 @@ namespace Xky.Core.Model
                 }
             }
         }
-        public long Date { get => _date;
+        public string Date { get => _date;
             set
             {
                 if (_date != value)

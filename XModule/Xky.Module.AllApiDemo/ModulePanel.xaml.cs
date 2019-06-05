@@ -54,6 +54,14 @@ namespace Xky.XModule.AllApiDemo
                         res = device.ScriptEngine.Toast("提示内容");
                         break;
                     }
+                case "Log":
+                    {
+                        Client.Log("测试普通日志内容", "设备[" + device.Name + "]", 0);
+                        Client.Log("测试成功日志内容", "设备[" + device.Name + "]", 1);
+                        Client.Log("测试警告日志内容", "设备[" + device.Name + "]", 2);
+                        Client.Log("测试错误日志内容", "设备[" + device.Name + "]", 3);
+                        break;
+                    }
                 case "FindMe":
                     {
                         res = device.ScriptEngine.FindMe();

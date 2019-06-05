@@ -22,6 +22,8 @@ namespace Xky.XModule.ContactManager
     public partial class ModulePanel : UserControl
     {
         public List<Core.XModule> xmodules;
+        public List<string> list = new List<string>();
+        public string username = "";
         public ModulePanel()
         {
             InitializeComponent();
@@ -33,6 +35,8 @@ namespace Xky.XModule.ContactManager
             {
                 //(ContactManager)xmodules[i]).t = i;
             }
+            list = new List<string>() { "aaaa","bbbbbb"};
+            username = "aaaaaaaaaaaaa";
             Client.CloseDialogPanel();
         }
 

@@ -37,10 +37,10 @@
         </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Orientation="Horizontal">
 
-               
+            
                 <UserControl:MyButton Click="MyButton_Click"  Text="执行adb shell指令" Tag="AdbShell" Margin="0,0,10,10"></UserControl:MyButton>
                 <UserControl:MyButton Click="MyButton_Click" Tag="Toast"  Text="在手机上弹出的提示信息" Margin="0,0,10,10"></UserControl:MyButton>
-               
+                <UserControl:MyButton Click="MyButton_Click" Tag="Log"  Text="记录日志到系统日志中" Margin="0,0,10,10"></UserControl:MyButton>
 
                 <UserControl:MyButton Click="MyButton_Click" Tag="FindMe"  Text="查找当前设备" Margin="0,0,10,10"></UserControl:MyButton>
                 <UserControl:MyButton Click="MyButton_Click" Tag="WakeUp"  Text="唤醒当前设备" Margin="0,0,10,10"></UserControl:MyButton>

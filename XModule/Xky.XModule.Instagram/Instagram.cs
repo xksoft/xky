@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xky.Core;
 
 namespace Xky.XModule.Instagram
 {
@@ -43,6 +44,7 @@ namespace Xky.XModule.Instagram
 
         public override void Start()
         {
+            Client.Log("打开大萨达所大撒大","dsa",1);
           
             Device.ScriptEngine.AdbShell("am start com.instagram.android/com.instagram.android.activity.MainTabActivity");
            

@@ -5,12 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Xky.Platform.Pages"
              xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <lib:SwitchConverter x:Key="TypeToBursh">
+            <lib:SwitchConverterCase When="0" Then="#afafaf" />
+            <lib:SwitchConverterCase When="1" Then="#01c201" />
+            <lib:SwitchConverterCase When="2" Then="#ffff00" />
+            <lib:SwitchConverterCase When="3" Then="#e41300" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="TypeInfoToVisible">
+            <lib:SwitchConverterCase When="0" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="TypeSuccessToVisible">
+            <lib:SwitchConverterCase When="1" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="TypeWarningToVisible">
+            <lib:SwitchConverterCase When="2" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="TypeErrorToVisible">
+            <lib:SwitchConverterCase When="3" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+    </UserControl.Resources>
     <Grid Background="{StaticResource BackgroundColor4}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
@@ -18,27 +45,62 @@
             <UserControl:MyButton  Text="停止刷新"  VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
             <UserControl:MyButton  Text="清空"  VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
         </StackPanel>
-        <ListBox x:Name="LogListBox" Margin="26" Grid.Row="1" HorizontalContentAlignment="Stretch"
+        <Border Grid.Row="1" Margin="20,10,20,0" Padding="5" Background="{StaticResource BackgroundColor2}" CornerRadius="5,5,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label VerticalAlignment="Center" Grid.Column="0" Foreground="#a1a0a0" Content="类型" ></Label>
+                <Label VerticalAlignment="Center"  Grid.Column="1" Foreground="#a1a0a0" Content="标题"></Label>
+                <Label VerticalAlignment="Center"  Grid.Column="2"  Foreground="#a1a0a0"  Content="内容" ></Label>
+                <Label VerticalAlignment="Center"  Grid.Column="3"  Foreground="#a1a0a0"  Content="日期"></Label>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Background="{StaticResource BackgroundColor2}" Margin="20,0,20,65" Padding="0,5" CornerRadius="0,0,5,5">
+        <ListBox x:Name="LogListBox"  HorizontalContentAlignment="Stretch"
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
                      >
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <Border x:Name="MyBorder" Margin="5,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="36"></ColumnDefinition>
                             <ColumnDefinition Width="200"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition Width="200"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Foreground="#fff" Content="{Binding Path=Type}" ></Label>
-                        <Label Grid.Column="1" Foreground="#fff" Content="{Binding Path=Title}"></Label>
-                        <Label Grid.Column="2" Foreground="#fff" Content="{Binding Path=Content}" ></Label>
-                        <Label Grid.Column="3" Foreground="#fff" Content="{Binding Path=Date}"></Label>
+                                <Image Visibility="{Binding  Path=Type,Converter={StaticResource TypeInfoToVisible}}" Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/Log/info.png" Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"></Image>
+                                <Image  Visibility="{Binding  Path=Type,Converter={StaticResource TypeSuccessToVisible}}"  Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/Log/success.png" Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"></Image>
+                                <Image  Visibility="{Binding  Path=Type,Converter={StaticResource TypeWarningToVisible}}" Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/Log/warning.png" Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"></Image>
+                                <Image  Visibility="{Binding  Path=Type,Converter={StaticResource TypeErrorToVisible}}" Grid.Column="0" Source="/Xky.Platform;component/Resources/Icon/Log/error.png" Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"></Image>
+                                <Label Grid.Column="1" Foreground="{Binding  Path=Type,Converter={StaticResource TypeToBursh}}" Content="{Binding Path=Title}"></Label>
+                            <Label Grid.Column="2"  Foreground="{Binding  Path=Type,Converter={StaticResource TypeToBursh}}"  Content="{Binding Path=Content}" ></Label>
+                            <Label Grid.Column="3"  Foreground="{Binding  Path=Type,Converter={StaticResource TypeToBursh}}"  Content="{Binding Path=Date}"></Label>
                     </Grid>
-                   
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
+                                Value="True" >
+                            <Setter Property="Background" TargetName="MyBorder" Value="{StaticResource BackgroundColor1}" />
+                          
+                        </DataTrigger>
+                        <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                Value="True" >
+                            <Setter Property="Background" TargetName="MyBorder" Value="{StaticResource BackgroundColor3}" />
+                         
+                        </DataTrigger>
+
+                    </DataTemplate.Triggers>
                 </DataTemplate>
+                
             </ListBox.ItemTemplate>
 
             <ListBox.ItemsPanel>
@@ -48,8 +110,16 @@
             </ListBox.ItemsPanel>
 
             <ListBox.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Control.Margin" Value="0" />
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Background="Transparent" >
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="Control.Padding" Value="0" />
                     <Setter Property="Control.BorderThickness" Value="0" />
                 </Style>
@@ -68,5 +138,6 @@
                 </ControlTemplate>
             </ListBox.Template>
         </ListBox>
+        </Border>
     </Grid>
 </UserControl>

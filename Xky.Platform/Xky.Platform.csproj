@@ -370,5 +370,11 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\DeviceMenu\backgroundapps-white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Log\error.png" />
+    <Resource Include="Resources\Icon\Log\info.png" />
+    <Resource Include="Resources\Icon\Log\success.png" />
+    <Resource Include="Resources\Icon\Log\warning.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
