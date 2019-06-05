@@ -103,12 +103,17 @@ namespace Xky.XModule.AppBackup
                 BDevice bDevice = new BDevice();
                 bDevice.Device_Name = module.Device.Name;
                 Response res= module.Device.ScriptEngine.GetSlotList(packagename);
+                Response res_current= module.Device.ScriptEngine.GetSlot(packagename);
                 if (res.Json["list"]!=null)
                 {
                     foreach (var b in res.Json["list"])
                     {
                         Backup backup = new Backup();
                         backup.Name = b["name"].ToString();
+                        if (res_current.Json["name"]!=null&& res_current.Json["name"].ToString()== backup.Name)
+                        {
+                            backup.IsCurrent = true;
+                        }
                         bDevice.Backups.Add(backup);
                     }
                 }

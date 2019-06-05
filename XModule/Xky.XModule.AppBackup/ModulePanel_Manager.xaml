@@ -5,11 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Xky.XModule.AppBackup"
              xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <ResourceDictionary>
+
+       
+            <ResourceDictionary> 
+                <lib:SwitchConverter x:Key="IsCurrentToHidden">
+                <lib:SwitchConverterCase When="true" Then="Collapsed" />
+                <lib:SwitchConverterCase  Then="Visible" />
+                </lib:SwitchConverter>
+            <lib:SwitchConverter x:Key="IsCurrentToVisible">
+                <lib:SwitchConverterCase When="true" Then="Visible" />
+                <lib:SwitchConverterCase  Then="Collapsed" />
+            </lib:SwitchConverter>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
@@ -25,7 +36,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#1d232a"  MaxHeight="800" MinHeight="600">
+    <Grid Background="#1d232a"  MaxHeight="800" MinHeight="600" >
         <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
             <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         </Canvas>
@@ -87,12 +98,18 @@
                                                                 <Grid>
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                                                <ColumnDefinition Width="45"></ColumnDefinition>
                                                             </Grid.ColumnDefinitions>
                                                             <Label Grid.Column="0" Foreground="#fff"  Content="{Binding ElementName=MyBorder, Path=DataContext.Name}">
                                                             </Label>
-                                                            <UserControl:MyImageButton ToolTip="切换到当前快照" VerticalAlignment="Center" HorizontalAlignment="Center"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="set.png" Image_Height="14" Image_Width="14" Grid.Column="1"  CornerRadius="2"></UserControl:MyImageButton>
-                                                       </Grid>
+                                                            <StackPanel Orientation="Horizontal"  Grid.Column="1">
+                                                                
+                                                            
+                                                            <UserControl:MyImageButton Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="切换到当前快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="set.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
+                                                            <UserControl:MyImageButton Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToVisible}}"  ToolTip="正在使用中"   IsEnabled="False" Width="20" Height="20" Image="current.png" Image_Height="14" Image_Width="14"   CornerRadius="2"></UserControl:MyImageButton>
+                                                                <UserControl:MyImageButton   Margin="5,0,0,0"  Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="删除快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="delete.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
+                                                               </StackPanel> 
+                                                                </Grid>
                                                        
                                                             </Border>
                                                             <DataTemplate.Triggers>

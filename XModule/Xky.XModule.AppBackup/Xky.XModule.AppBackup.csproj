@@ -79,6 +79,12 @@
   <ItemGroup>
     <Resource Include="set.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="current.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="delete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)Xky.Platform\bin\$(ConfigurationName)\Modules\2-系统工具\APP备份管理\ /y</PostBuildEvent>
