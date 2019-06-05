@@ -35,16 +35,16 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Foreground="#fff" Margin="0,0,0,10">要创建备份的APP包名</Label>
+                <Label Foreground="#fff" Margin="0,0,0,10">要创建快照的APP包名</Label>
                 <ComboBox x:Name="ComboBox_List" Height="20" Margin="0,0,0,0"  Grid.Row="0" Width="200"  HorizontalAlignment="Center">
                     
                 </ComboBox>
-                <Label Visibility="Hidden" x:Name="Label_Loading" Foreground="#fff" Margin="0,10,0,0">正在加载APP列表，请稍后...</Label>
+               
             </StackPanel>
            
             <StackPanel Grid.Row="1" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
-                <UserControl:MyButton x:Name="Button_OK" Text="开始创建" Width="100" Margin="0,0,20,0"></UserControl:MyButton>
-                <UserControl:MyButton x:Name="Button_Cancel" Text="取消" Width="60"></UserControl:MyButton>
+                <UserControl:MyButton x:Name="Button_OK" Click="Button_OK_Click" Text="开始创建" Width="100" Margin="0,0,20,0"></UserControl:MyButton>
+                <UserControl:MyButton x:Name="Button_Cancel" Click="Button_Cancel_Click" Text="取消" Width="60"></UserControl:MyButton>
             </StackPanel>
         </Grid>
     </Grid>

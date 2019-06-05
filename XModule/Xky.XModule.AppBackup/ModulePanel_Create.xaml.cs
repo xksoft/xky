@@ -23,7 +23,7 @@ namespace Xky.XModule.AppBackup
     /// </summary>
     public partial class ModulePanel_Create : UserControl
     {
-        public Device device;
+        public List<Core.XModule> xmodules = new List<Core.XModule>();
         public ModulePanel_Create()
         {
             InitializeComponent();
@@ -37,11 +37,13 @@ namespace Xky.XModule.AppBackup
 
             this.Dispatcher.Invoke(new Action(() =>
             {
+                ComboBox_List.Items.Add("正在加载APP列表...");
+                ComboBox_List.SelectedIndex=0;
                 Button_OK.IsEnabled = Button_Cancel.IsEnabled =ComboBox_List.IsEnabled= false;
-                Label_Loading.Visibility = Visibility.Visible;
+                
             }));
                 List<string> list = new List<string>();
-            Response res_system  = device.ScriptEngine.AdbShell("pm list package -3");
+            Response res_system  = xmodules[0].Device.ScriptEngine.AdbShell("pm list package -3");
             if (res_system.Json["result"] != null)
             {
                 List<string> res = res_system.Json["result"].ToString().Split('\n').ToList();
@@ -61,7 +63,8 @@ namespace Xky.XModule.AppBackup
            
             this.Dispatcher.Invoke(new Action(() =>
             {
-                Label_Loading.Visibility = Visibility.Hidden;
+                ComboBox_List.Items.Clear();
+               
                 ComboBox_List.ItemsSource = list;
                 if (ComboBox_List.Items.Count>0) { ComboBox_List.SelectedIndex = 0; }
                 Button_OK.IsEnabled = Button_Cancel.IsEnabled = ComboBox_List.IsEnabled = true;
@@ -79,6 +82,23 @@ namespace Xky.XModule.AppBackup
                 
             })
             { IsBackground = true }.Start();
+        }
+
+        private void Button_OK_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBox_List.SelectedItem != null) {
+                foreach (var module in xmodules)
+                {
+
+                    ((AppBackup_Create)module).PackageName = ComboBox_List.SelectedItem.ToString();
+                }
+            }
+            Client.CloseDialogPanel();
+        }
+
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Client.CloseDialogPanel();
         }
     }
 }
