@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Xky.Core;
+using Xky.Core.Common;
 using Xky.Core.UserControl;
 using Xky.Platform;
 using Xky.Platform.Pages;
