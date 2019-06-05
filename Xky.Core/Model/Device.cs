@@ -399,5 +399,6 @@ namespace Xky.Core.Model
         {
             return MemberwiseClone();
         }
+       
     }
 }

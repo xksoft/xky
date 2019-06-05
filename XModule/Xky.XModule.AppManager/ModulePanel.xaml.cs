@@ -185,9 +185,41 @@ namespace Xky.XModule.AppManager
 
 
         }
-        private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
+
+
+        private void ContextMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
+            System.Windows.Controls.MenuItem menuItem = (System.Windows.Controls.MenuItem)sender;
+            DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
+            switch (menuItem.Tag)
+            {
+                case "Open":
+                    {
+                        break;
+                        
+                    }
+                case "Stop":
+                    {
+                        break;
+
+                    }
+                case "Install":
+                    {
+                        break;
+
+                    }
+                case "Clear":
+                    {
+                        break;
+
+                    }
+                case "Uninstall":
+                    {
+                        break;
+
+                    }
+
+            }
             //Console.WriteLine(deviceApp.PackageName);
             //Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
 
@@ -196,22 +228,7 @@ namespace Xky.XModule.AppManager
         {
 
         }
-        private void MenuItem_Clear_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MenuItem_Install_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
-        {
-            //DeviceFile deviceFile = (DeviceFile)((MenuItem)sender).DataContext;
-            //Console.WriteLine(deviceFile.FullName);
-            //Response res = device.ScriptEngine.AdbShell("rm -r -f "+deviceFile.FullName);
-            //Ls(CurrentDirectory);
-        }
+   
 
         private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

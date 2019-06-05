@@ -5,7 +5,7 @@
 https://github.com/xksoft/xky/releases/latest
 
 
-测试授权码：9275ff760f46cd6a0db482d49ec546e2（没有在线设备或不能使用请联系我们）
+测试授权码：9275ff760f46cd6a0db482d49ec546e2
 
 
 ## 如何编译

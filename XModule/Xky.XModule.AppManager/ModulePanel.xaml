@@ -73,13 +73,13 @@
                      VirtualizingPanel.ScrollUnit="Item">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="打开应用" Click="MenuItem_Open_Click"></MenuItem>
-                        <MenuItem Header="停止应用" Click="MenuItem_Stop_Click"></MenuItem>
+                        <MenuItem Header="打开应用" Tag="Open" Click="ContextMenuItem_Click"></MenuItem>
+                        <MenuItem Header="停止应用" Tag="Stop" Click="ContextMenuItem_Click"></MenuItem>
                         <Separator />
-                        <MenuItem Header="安装APK" Click="MenuItem_Install_Click"></MenuItem>
+                        <MenuItem Header="安装APK"  Tag="Install" Click="ContextMenuItem_Click"></MenuItem>
                         <Separator />
-                        <MenuItem Header="清空数据" Click="MenuItem_Clear_Click"></MenuItem>
-                        <MenuItem Header="卸载" Click="MenuItem_Delete_Click"></MenuItem>
+                        <MenuItem Header="清空数据" Tag="Clear" Click="ContextMenuItem_Click"></MenuItem>
+                        <MenuItem Header="卸载" Tag="Uninstall" Click="ContextMenuItem_Click"></MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>

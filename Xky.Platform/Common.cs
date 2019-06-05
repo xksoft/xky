@@ -70,12 +70,14 @@ namespace Xky.Platform
 
         public static void ShowToast(string toast, Color color, string sound = null)
         {
+           
             Client.StartAction(() =>
             {
                 Border border = null;
 
                 UiAction(() =>
                 {
+                    Client.Log(toast);
                     PlaySound(sound);
                     border = new Border
                     {

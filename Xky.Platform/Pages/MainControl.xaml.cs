@@ -130,6 +130,7 @@ namespace Xky.Platform.Pages
                 Client.LoadModules();
 
                 Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
+                Client.Log( "成功加载模块：" + Client.Modules.Count + "个");
                 Common.UiAction(() =>
                 {
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);

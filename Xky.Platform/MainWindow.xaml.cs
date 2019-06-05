@@ -172,6 +172,13 @@ namespace Xky.Platform
                         MainContent.Content = page;
                         break;
                     }
+                    case "Log":
+                        {
+                            var page = new Log();
+                            _userControlDic.Add(pagename, page);
+                            MainContent.Content = page;
+                            break;
+                        }
                 }
         }
 
