@@ -9,10 +9,17 @@ using Xky.Core.Model;
 
 namespace Xky.Core
 {
+    /// <summary>
+    /// 脚本引擎
+    /// </summary>
     public class Script
     {
         private readonly Device _device;
 
+        /// <summary>
+        /// 脚本引擎
+        /// </summary>
+        /// <param name="device"></param>
         public Script(Device device)
         {
             _device = device;
@@ -612,6 +619,7 @@ namespace Xky.Core
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "clearDCIM",
                 new JArray(path));
         }
+
         /// <summary>
         /// 调用第三方接口
         /// </summary>
@@ -623,5 +631,72 @@ namespace Xky.Core
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "callEvent",
                 new JArray(name, option));
         }
+
+
+        #region 插槽相关
+
+        /// <summary>
+        /// 获取插槽信息
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <returns></returns>
+        public Response GetSlot(string packageName)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getSlot",
+                new JArray(packageName));
+        }
+
+        /// <summary>
+        /// 创建插槽
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <param name="name"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        public Response CreateSlot(string packageName, string name, string basePath = "/data/AppSlot/")
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "createSlot",
+                new JArray(packageName, name, basePath));
+        }
+
+        /// <summary>
+        /// 设置切换插槽
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <param name="name"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        public Response SetSlot(string packageName, string name, string basePath = "/data/AppSlot/")
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "setSlot",
+                new JArray(packageName, name, basePath));
+        }
+
+        /// <summary>
+        /// 删除插槽
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <param name="name"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        public Response DelSlot(string packageName, string name, string basePath = "/data/AppSlot/")
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "delSlot",
+                new JArray(packageName, name, basePath));
+        }
+
+        /// <summary>
+        /// 获取插槽列表
+        /// </summary>
+        /// <param name="packageName">包名</param>
+        /// <param name="basePath">原始路径</param>
+        /// <returns></returns>
+        public Response GetSlotList(string packageName, string basePath = "/data/AppSlot/")
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getSlotList",
+                new JArray(packageName, basePath));
+        }
+
+        #endregion
     }
 }
