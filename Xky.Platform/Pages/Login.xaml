@@ -31,7 +31,7 @@
         <Grid x:Name="GridInfo" Background="{StaticResource BackgroundColor4}" Margin="0" Visibility="Collapsed">
             <Border Padding="20">
                 <StackPanel FlowDirection="LeftToRight" HorizontalAlignment="Stretch">
-                    <Label FontSize="30" Foreground="White" Margin="0,0,0,20">个人中心</Label>
+                    <Label FontFamily="Microsoft YaHei" FontSize="30" Foreground="White" Margin="0,0,0,20">个人中心</Label>
 
                     <Label FontSize="20" Foreground="White" Margin="0,0,0,0">基本信息</Label>
                     <Grid Margin="0,20,0,20">

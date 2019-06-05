@@ -27,27 +27,54 @@ namespace Xky.Platform.Pages
             InitializeComponent();
            
         }
-
+        public bool Stop = false;
+        List<Core.Model.Log> LogList = new List<Core.Model.Log>();
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Core.Model.Log> list = new List<Core.Model.Log>();
+            LogListBox.ItemsSource = LogList;
+
             Client.StartAction(() =>
             {
                 while (this.IsVisible)
                 {
-                    lock ("Log")
+                   
+                    if (!Stop)
                     {
-                        list = (from l in Client.Logs select l).ToList();
+                      
+                        lock ("Log")
+                        {
+                            LogList = (from l in Client.Logs select l).ToList();
+                        }
+                        Common.UiAction(() =>
+                        {
+                            LogListBox.ItemsSource = LogList;
+                        });
+
                     }
-                    Common.UiAction(() =>
-                    {
-                        LogListBox.ItemsSource = list;
-                    });
                     Thread.Sleep(2000);
                 }
                 
             });
 
+        }
+
+        private void Button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            if (Stop) { Stop = false; Button_Stop.Text = "停止刷新"; }
+            else { Stop = true;
+
+                Button_Stop.Text = "继续刷新";
+            }
+        }
+
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            lock ("Log")
+            {
+                Client.Logs.Clear();
+                LogList.Clear();
+                LogListBox.ItemsSource=null;
+            }
         }
     }
 }

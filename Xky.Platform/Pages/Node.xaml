@@ -47,7 +47,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-            <Label Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>
+            <Label FontFamily="Microsoft YaHei"  Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>
             <UserControl:MyButton  Text="手动添加节点"  Click="Btn_AddToCloud_Click" VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
             <UserControl:MyTagLabel Text="正在为您持续查找当前局域网内节点设备..."   Foreground="#999" Background="#303740" Padding="6">
                 <UserControl.Triggers>
