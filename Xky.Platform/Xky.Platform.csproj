@@ -100,7 +100,6 @@
     <Compile Include="Pages\Task.xaml.cs">
       <DependentUpon>Task.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WinConsole.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

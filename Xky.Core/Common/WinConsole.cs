@@ -2,8 +2,11 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Xky.Platform
+namespace Xky.Core.Common
 {
+    /// <summary>
+    /// 控制台管理类
+    /// </summary>
     public static class WinConsole
     {
         [DllImport("kernel32")]
@@ -13,15 +16,16 @@ namespace Xky.Platform
         private static extern bool FreeConsole();
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr GetStdHandle(int nStdHandle);
+        private static extern IntPtr GetStdHandle(int nStdHandle);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetStdHandle(int nStdHandle, IntPtr hHandle);
+        private static extern bool SetStdHandle(int nStdHandle, IntPtr hHandle);
 
-        public const int StdOutputHandle = -11;
+        private const int StdOutputHandle = -11;
+        private static IntPtr _hRealOut;
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr CreateFile([MarshalAs(UnmanagedType.LPTStr)] string filename,
+        private static extern IntPtr CreateFile([MarshalAs(UnmanagedType.LPTStr)] string filename,
             [MarshalAs(UnmanagedType.U4)] uint access,
             [MarshalAs(UnmanagedType.U4)] FileShare share,
             IntPtr securityAttributes,
@@ -29,17 +33,21 @@ namespace Xky.Platform
             [MarshalAs(UnmanagedType.U4)] FileAttributes flagsAndAttributes,
             IntPtr templateFile);
 
-        public const uint GenericWrite = 0x40000000;
-        public const uint GenericRead = 0x80000000;
+        [DllImport("kernel32", SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr handle);
+
+        private const uint GenericWrite = 0x40000000;
+        private const uint GenericRead = 0x80000000;
+
 
         private static void OverrideRedirection()
         {
             var hOut = GetStdHandle(StdOutputHandle);
-            var hRealOut = CreateFile("CONOUT$", GenericRead | GenericWrite, FileShare.Write, IntPtr.Zero,
+            _hRealOut = CreateFile("CONOUT$", GenericRead | GenericWrite, FileShare.Write, IntPtr.Zero,
                 FileMode.OpenOrCreate, 0, IntPtr.Zero);
-            if (hRealOut != hOut)
+            if (_hRealOut != hOut)
             {
-                SetStdHandle(StdOutputHandle, hRealOut);
+                SetStdHandle(StdOutputHandle, _hRealOut);
                 Console.SetOut(
                     new StreamWriter(Console.OpenStandardOutput(), Console.OutputEncoding) {AutoFlush = true});
             }
@@ -50,18 +58,26 @@ namespace Xky.Platform
         /// </summary>
         public static void ShowConsole()
         {
-            FreeConsole();
+            //释放句柄，不然无法关闭控制台
+            if (_hRealOut != (IntPtr) 0)
+            {
+                CloseHandle(_hRealOut);
+                FreeConsole();
+            }
+
             AllocConsole();
             OverrideRedirection();
         }
+
         /// <summary>
         /// 关闭控制台
         /// </summary>
         public static void CloseConsole()
         {
+            //释放句柄，不然无法关闭控制台
+            CloseHandle(_hRealOut);
+            _hRealOut = (IntPtr) 0;
             FreeConsole();
         }
-
-
     }
 }
