@@ -15,7 +15,7 @@ namespace Xky.XModule.AppBackup
         public string BackupName = "";
         public override string Description()
         {
-            return "[群控][root]新建一个空的APP备份";
+            return "[群控][root]新建一个空的APP快照";
         }
 
         public override byte[] Icon()
@@ -42,7 +42,7 @@ namespace Xky.XModule.AppBackup
 
         public override string Name()
         {
-            return "创建APP备份";
+            return "创建APP快照";
         }
         public override bool ShowUserControl()
         {
@@ -61,7 +61,7 @@ namespace Xky.XModule.AppBackup
                     BackupName= DateTime.Now.ToString("yyMMddHHmmss");
                 }
                 Response res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
-                Console.WriteLine("APP备份创建结果：" + res.Json);
+                Console.WriteLine("APP快照创建结果：" + res.Json);
             }
 
         }
@@ -70,7 +70,7 @@ namespace Xky.XModule.AppBackup
     {
         public override string Description()
         {
-            return "[群控][root]管理设备上的APP备份";
+            return "[群控][root]管理设备上的APP快照";
         }
 
         public override byte[] Icon()
@@ -97,7 +97,7 @@ namespace Xky.XModule.AppBackup
 
         public override string Name()
         {
-            return "APP备份管理";
+            return "APP快照管理";
         }
         public override bool ShowUserControl()
         {
