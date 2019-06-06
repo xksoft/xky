@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBackup.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="ModulePanel_Create.xaml.cs">
       <DependentUpon>ModulePanel_Create.xaml</DependentUpon>
     </Compile>

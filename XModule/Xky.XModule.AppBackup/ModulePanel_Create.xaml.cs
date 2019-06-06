@@ -72,9 +72,38 @@ namespace Xky.XModule.AppBackup
 
 
         }
-
+        public void LoadBackups(string packagename)
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                Label_Backups_Loading.Content = "正在加载现有快照信息，请稍后...";
+            }));
+            List<Model.Backup> list = new List<Model.Backup>();
+            Response res = xmodules[0].Device.ScriptEngine.GetSlotList(packagename);
+            Response res_current = xmodules[0].Device.ScriptEngine.GetSlot(packagename);
+            if (res.Json["list"] != null)
+            {
+                foreach (var b in res.Json["list"])
+                {
+                    Model.Backup backup = new Model.Backup();
+                    backup.Name = b["name"].ToString();
+                    if (res_current.Json["name"] != null && res_current.Json["name"].ToString() == backup.Name)
+                    {
+                        backup.IsCurrent = true;
+                    
+                    }
+                    list.Add(backup);
+                }
+            }
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                BackupListBox.ItemsSource = list;
+                Label_Backups_Loading.Content = "当前设备上存在该APP的" + list.Count + "个快照";
+            }));
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            Label_Tip.Text = "提示：创建快照会占用设备存储空间，当前设备["+ xmodules[0].Device.Name+ "]存储空间剩余["+(100-xmodules[0].Device.DiskUseage)+"%"+"]";
             new Thread(() =>
             {
                
@@ -91,6 +120,7 @@ namespace Xky.XModule.AppBackup
                 {
 
                     ((AppBackup_Create)module).PackageName = ComboBox_List.SelectedItem.ToString();
+                    ((AppBackup_Create)module).BackupName = TextBox_Name.Text;
                 }
             }
             Client.CloseDialogPanel();
@@ -99,6 +129,21 @@ namespace Xky.XModule.AppBackup
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             Client.CloseDialogPanel();
+        }
+
+        private void ComboBox_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboBox_List.SelectedItem != null&&ComboBox_List.SelectedItem.ToString()!= "正在加载APP列表...")
+            {
+                string pn = ComboBox_List.SelectedItem.ToString();
+                new Thread(() =>
+                {
+
+                    LoadBackups(pn);
+
+                })
+                { IsBackground = true }.Start();
+            }
         }
     }
 }

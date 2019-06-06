@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Xky.XModule.AppBackup"
              xmlns:UserControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+             xmlns:lib="clr-namespace:Xky.Core.UserControl.Lib;assembly=Xky.Core"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
+            <lib:SwitchConverter x:Key="IsCurrentToVisible">
+                <lib:SwitchConverterCase When="true" Then="Visible" />
+                <lib:SwitchConverterCase  Then="Collapsed" />
+            </lib:SwitchConverter>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Colors.xaml"/>
                 <ResourceDictionary Source="/Xky.Core;component/UserControl/Styles/Strings.xaml" />
@@ -25,24 +30,87 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#1d232a"   Height="300" >
+    <Grid Background="#1d232a"   Height="600" >
         <Canvas  Panel.ZIndex="3"  Margin="0,0,0,0"  HorizontalAlignment="Right">
             <UserControl:MyButton x:Name="Button_Close" Background="#454c56" Canvas.Right="20" Canvas.Top="20" Background_MouseOver="#e81123" Background_Pressed="#d20315"  Height="32" Margin="0" Text="关闭" Click="Button_Close_Click" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         </Canvas>
         <Grid  Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="Label_Tip" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Grid.Row="0"  Foreground="#fff" Margin="0,0,0,10">提示：创建快照会占用设备存储空间</TextBlock>
+            <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                
                 <Label Foreground="#fff" Margin="0,0,0,10">要创建快照的APP包名</Label>
-                <ComboBox x:Name="ComboBox_List" Height="20" Margin="0,0,0,0"  Grid.Row="0" Width="200"  HorizontalAlignment="Center">
-                    
+                <ComboBox x:Name="ComboBox_List" Height="20" Margin="0,0,0,0" SelectionChanged="ComboBox_List_SelectionChanged"  Width="460"  HorizontalAlignment="Center">
+
                 </ComboBox>
-               
+                <Label Foreground="#fff" Margin="0,20,0,10">快照名称(部分设备只支持英文或数字，不填则随机生成)</Label>
+                <UserControl:MyTextBox x:Name="TextBox_Name" Height="30" Width="460" WaterText="请输入快照名称"></UserControl:MyTextBox>
+
+
             </StackPanel>
-           
-            <StackPanel Grid.Row="1" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" Background="#292f37" Margin="0,0,0,20">
+                <Label x:Name="Label_Backups_Loading" Foreground="#fff" Margin="0,10,0,10" HorizontalAlignment="Center">已经存在的快照</Label>
+                <ListBox  x:Name="BackupListBox"   HorizontalContentAlignment="Stretch"
+                     ScrollViewer.CanContentScroll="True"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.ScrollUnit="Item"
+                          Width="460" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="MyBorder" Margin="5" Background="#373d45" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Foreground="#fff"  Content="{Binding ElementName=MyBorder, Path=DataContext.Name}">
+                                    </Label>
+                                    <UserControl:MyImageButton Margin="0" Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToVisible}}"  ToolTip="正在使用中"   IsEnabled="False" Width="20" Height="20" Image="current.png" Image_Height="14" Image_Width="14"   CornerRadius="2"></UserControl:MyImageButton>
+                                </StackPanel>
+
+                            </Border>
+                        </DataTemplate>
+
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border Background="Transparent" >
+                                            <ContentPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Control.Padding" Value="0" />
+                            <Setter Property="Control.BorderThickness" Value="0" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+
+                            <ScrollViewer
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                                <WrapPanel
+                                IsItemsHost="True" HorizontalAlignment="Stretch" Orientation="Horizontal"
+                                VerticalAlignment="Center" />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
                 <UserControl:MyButton x:Name="Button_OK" Click="Button_OK_Click" Text="开始创建" Width="100" Margin="0,0,20,0"></UserControl:MyButton>
                 <UserControl:MyButton x:Name="Button_Cancel" Click="Button_Cancel_Click" Text="取消" Width="60"></UserControl:MyButton>
             </StackPanel>

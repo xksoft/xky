@@ -87,7 +87,7 @@
 
 
 
-                                        <ListBox Grid.Row="1" x:Name="BackupListBox"  ItemsSource="{Binding ElementName=DataGrid,Path=DataContext.Backups}" HorizontalContentAlignment="Stretch"
+                                        <ListBox Grid.Row="1" x:Name="BackupListBox"  ItemsSource="{Binding ElementName=DataGrid,Path=DataContext.Backups, Mode=TwoWay}" HorizontalContentAlignment="Stretch"
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
@@ -103,11 +103,11 @@
                                                             <Label Grid.Column="0" Foreground="#fff"  Content="{Binding ElementName=MyBorder, Path=DataContext.Name}">
                                                             </Label>
                                                             <StackPanel Orientation="Horizontal"  Grid.Column="1">
-                                                                
-                                                            
-                                                            <UserControl:MyImageButton Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="切换到当前快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="set.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
+
+
+                                                                <UserControl:MyImageButton Tag="{Binding  ElementName=MyBorder, Path=DataContext}" x:Name="Button_SetSlot" Click="Button_SetSlot_Click" Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="切换到当前快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="set.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
                                                             <UserControl:MyImageButton Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToVisible}}"  ToolTip="正在使用中"   IsEnabled="False" Width="20" Height="20" Image="current.png" Image_Height="14" Image_Width="14"   CornerRadius="2"></UserControl:MyImageButton>
-                                                                <UserControl:MyImageButton   Margin="5,0,0,0"  Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="删除快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="delete.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
+                                                                <UserControl:MyImageButton Tag="{Binding  ElementName=MyBorder, Path=DataContext}" x:Name="Button_DeleteSlot" Click="Button_DeleteSlot_Click"   Margin="5,0,0,0"  Visibility="{Binding  ElementName=MyBorder, Path=DataContext.IsCurrent,Converter={StaticResource IsCurrentToHidden}}"  ToolTip="删除快照"  Background_MouseOver="#444e57" Background_Pressed="#3b444c" Width="20" Height="20" Image="delete.png" Image_Height="14" Image_Width="14"  CornerRadius="2"></UserControl:MyImageButton>
                                                                </StackPanel> 
                                                                 </Grid>
                                                        
@@ -180,6 +180,18 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Border>
+            <ContentControl  x:Name="ContentControl_Delete"   Visibility="Collapsed" >
+                <StackPanel Orientation="Vertical" >
+
+                    <StackPanel Orientation="Vertical"  Margin="0">
+                        <Label x:Name="Label_Tip_Delete" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10">删除快照将会删除当前快照内的所有APP数据且无法恢复，确定要删除吗？</Label>
+                    </StackPanel>
+                    <StackPanel Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <UserControl:MyButton x:Name="Button_Delete_Cancel"  Click="Button_Delete_Cancel_Click" Background="#454c56"  Height="32" Margin="0,0,20,0" Text="取消"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <UserControl:MyButton  x:Name="Button_Delete_Ok" Click="Button_Delete_Ok_Click"  Width="100" Height="32" Margin="0,0,0,0" Text="确定"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </StackPanel>
+            </ContentControl>
             <ContentControl  x:Name="ContentControl_Loading"  Visibility="Collapsed" >
                 <Label x:Name="Label_Loading" Foreground="#fff">正在加载中，请稍后...</Label>
             </ContentControl>

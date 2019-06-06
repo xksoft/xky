@@ -166,7 +166,7 @@
         <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0"
                                 Opacity="100"
                                 Grid.ColumnSpan="3" VerticalAlignment="Bottom"
-                                ZIndex="998"
+                                ZIndex="9999"
                                 IsHitTestVisible="False">
             <VirtualizingStackPanel.Effect>
                 <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"
@@ -229,7 +229,7 @@
 
         <!-- 弹窗内容 -->
         <Border x:Name="MessageContentBorader" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
-                Background="#81000000" Panel.ZIndex="9999" Visibility="Collapsed">
+                Background="#81000000" Panel.ZIndex="9998" Visibility="Collapsed">
             <ContentPresenter x:Name="MessageContent">
                 <ContentPresenter.Effect>
                     <DropShadowEffect Color="#CC000000" Direction="320" BlurRadius="8"

@@ -12,6 +12,7 @@ namespace Xky.XModule.AppBackup
     public class AppBackup_Create : Core.XModule
     {
         public string PackageName = "";
+        public string BackupName = "";
         public override string Description()
         {
             return "[群控][root]新建一个空的APP备份";
@@ -55,7 +56,11 @@ namespace Xky.XModule.AppBackup
         {
             if (PackageName.Length > 0)
             {
-                Response res = Device.ScriptEngine.CreateSlot(PackageName, DateTime.Now.ToString("yyMMddHHmmss"));
+                if (BackupName.Trim().Length == 0)
+                {
+                    BackupName= DateTime.Now.ToString("yyMMddHHmmss");
+                }
+                Response res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
                 Console.WriteLine("APP备份创建结果：" + res.Json);
             }
 
