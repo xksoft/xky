@@ -8,9 +8,16 @@
     mc:Ignorable="d" d:DesignHeight="900" d:DesignWidth="1300">
     <Grid>
         <Grid x:Name="GridLoading" Background="{StaticResource BackgroundColor4}" Visibility="Visible">
-
-            <TextBlock x:Name="LoadingTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"
-                       Foreground="{StaticResource White}" Text="Loading..." Margin="0,20,0,0" />
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="800">
+                <TextBlock x:Name="LoadingTextBlock" HorizontalAlignment="Center"
+                           Foreground="{StaticResource White}" Text="Loading..." />
+                <UserControl:MyProgressbar x:Name="LoadingBar" Maximum="1" Visibility="Collapsed"
+                                           Value="0"
+                                           Width="500"
+                                           Margin="10" Height="10" TrackBrush="#1b2025"
+                                           DangerBrush="{StaticResource BlueLine}"
+                                           DangerValue="0" />
+            </StackPanel>
         </Grid>
         <Grid x:Name="GridLogin" Background="{StaticResource BackgroundColor4}" Visibility="Collapsed">
             <Grid.RowDefinitions>

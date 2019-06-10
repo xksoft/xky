@@ -1,18 +1,16 @@
 ﻿using System;
-using System.CodeDom;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Common;
-using Xky.Core.UserControl;
+using Path = System.IO.Path;
 
 namespace Xky.Platform.Pages
 {
@@ -21,6 +19,9 @@ namespace Xky.Platform.Pages
     /// </summary>
     public partial class Login
     {
+        private long _allLength;
+        private long _downLength;
+
         public Login()
         {
             InitializeComponent();
@@ -51,7 +52,13 @@ namespace Xky.Platform.Pages
             {
                 if (File.Exists("noupgrade.txt"))
                     return;
-                var updateJson = HttpHelper.Get("https://static.xky.com/upgrade/x/update.json?tick="+DateTime.Now.Millisecond);
+                var oldfiles = FileHelper.GetFileList(".\\", "*.old", true);
+                foreach (var oldfile in oldfiles)
+                {
+                    File.Delete(oldfile);
+                }
+                var updateJson =
+                    HttpHelper.Get("https://static.xky.com/upgrade/x/update.json?tick=" + DateTime.Now.Millisecond);
                 var jarray = JsonConvert.DeserializeObject<JArray>(updateJson);
                 var needUpgrade = new JArray();
                 foreach (var t in jarray)
@@ -62,10 +69,33 @@ namespace Xky.Platform.Pages
                     if (json["md5"].ToString() !=
                         FileHelper.GetFileHash(System.IO.Path.Combine(".\\", json["file"].ToString())))
                     {
+                        _allLength += long.Parse(json["length"].ToString());
                         needUpgrade.Add(json);
                     }
                 }
-                Console.WriteLine(needUpgrade);
+
+                if (needUpgrade.Count == 0)
+                    return;
+                Common.UiAction(() => { LoadingBar.Visibility = Visibility.Visible; });
+                for (var index = 0; index < needUpgrade.Count; index++)
+                {
+                    var json = needUpgrade[index];
+                    DownFile(json["file"].ToString(),
+                        "正在更新 " + json["file"] + " (" + (index + 1) + "/" + needUpgrade.Count + ") $1");
+                }
+
+                Common.UiAction(() => { LoadingTextBlock.Text = "全部更新完毕，正在重启本系统以完成更新！"; });
+                Thread.Sleep(1000);
+                var p = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "xky.platform.exe",
+                        UseShellExecute = false
+                    }
+                };
+                p.Start();
+                Environment.Exit(0);
             }
             catch (Exception e)
             {
@@ -73,56 +103,63 @@ namespace Xky.Platform.Pages
             }
         }
 
-        private  void DownFile(string filename, string softkey, string path, string msg)
+
+        private void DownFile(string filename, string msg)
         {
-//            try
-//            {
-//                path = path.TrimStart('\\');
-//                var url = "http://upgrade.xksoft.com/" + softkey + "/" + path.Replace("\\", "/") + filename + "?tick=" +
-//                          DateTime.Now.Ticks;
-//                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-//                httpWebRequest.Proxy = null;
-//
-//                httpWebRequest.ContentType = "text/xml";
-//                httpWebRequest.Method = "GET";
-//                httpWebRequest.Timeout = 60 * 1000;
-//                var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-//                var sm = httpWebResponse.GetResponseStream();
-//                var l = httpWebResponse.ContentLength;
-//                var msTemp = new MemoryStream();
-//                int len;
-//                var buff = new byte[4096];
-//                while ((len = sm.Read(buff, 0, 4096)) > 0)
-//                {
-//                    msTemp.Write(buff, 0, len);
-//
-//                    Loading.UpdateState(msg.Replace("$1",
-//                        (msTemp.Length / (decimal)1024).ToString("F2") + "KB/" + (l / (decimal)1024).ToString("F2") +
-//                        "KB"));
-//                    _downLength += len;
-//                    Loading.Progress((double)_downLength / _allLength);
-//                }
-//
-//                if (path != "")
-//                {
-//                    if (!Directory.Exists(path))
-//                        Directory.CreateDirectory(path);
-//                }
-//
-//                if (filename.EndsWith(".exe") || filename.EndsWith(".dll"))
-//                {
-//                    if (File.Exists(Path.GetFullPath(FolderPath + path + filename)))
-//                        File.Move(Path.GetFullPath(FolderPath + path + filename),
-//                            Path.GetFullPath(FolderPath + path + filename + DateTime.Now.Ticks) + ".old");
-//                }
-//
-//                File.WriteAllBytes(Path.GetFullPath(FolderPath + path + filename), msTemp.ToArray());
-//            }
-//            catch (Exception ex)
-//            {
-//                //MessageBox.Show("抱歉，下载更新程序时出错：" + ex.Message + " " + ex.StackTrace + " " + ex.Source, "引导出错",
-//                //    MessageBoxButton.OK, MessageBoxImage.Error);
-//            }
+            try
+            {
+                var url = "https://static.xky.com/upgrade/x/" + filename + "?tick=" +
+                          DateTime.Now.Ticks;
+                var httpWebRequest = (HttpWebRequest) WebRequest.Create(url);
+                httpWebRequest.Proxy = null;
+
+                httpWebRequest.ContentType = "text/xml";
+                httpWebRequest.Method = "GET";
+                httpWebRequest.Timeout = 60 * 1000;
+                var httpWebResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                var sm = httpWebResponse.GetResponseStream();
+                var l = httpWebResponse.ContentLength;
+                var msTemp = new MemoryStream();
+                int len;
+                var buff = new byte[4096];
+                while ((len = sm.Read(buff, 0, 4096)) > 0)
+                {
+                    msTemp.Write(buff, 0, len);
+                    _downLength += len;
+
+
+                    Common.UiAction(() =>
+                    {
+                        LoadingTextBlock.Text = msg.Replace("$1",
+                            (msTemp.Length / (decimal) 1024).ToString("F2") + "KB/" +
+                            (l / (decimal) 1024).ToString("F2") +
+                            "KB");
+                        LoadingBar.Value = (double) _downLength / _allLength;
+                    });
+                }
+
+                var fileInfo = new FileInfo(Path.Combine(".\\", filename));
+
+
+                if (!Directory.Exists(fileInfo.DirectoryName))
+                    Directory.CreateDirectory(fileInfo.DirectoryName ?? throw new InvalidOperationException());
+
+
+                if (filename.EndsWith(".exe") || filename.EndsWith(".dll"))
+                {
+                    if (fileInfo.Exists)
+                        File.Move(fileInfo.FullName,
+                            fileInfo.FullName + ".old");
+                }
+
+
+                File.WriteAllBytes(fileInfo.FullName, msTemp.ToArray());
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("抱歉，下载更新程序时出错：" + ex.Message + " " + ex.StackTrace + " " + ex.Source, "引导出错",
+                //    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
