@@ -98,6 +98,17 @@ namespace Xky.Core
         }
 
         /// <summary>
+        /// 获取版本号
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        public Response GetAppVersion(string package)
+        {
+            return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "getAppVersion",
+                new JArray(package));
+        }
+
+        /// <summary>
         /// 结束app
         /// </summary>
         /// <param name="package">app包名</param>

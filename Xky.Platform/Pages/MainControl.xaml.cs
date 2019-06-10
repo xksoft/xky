@@ -130,7 +130,7 @@ namespace Xky.Platform.Pages
                 Client.LoadModules();
 
                 Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
-                Client.Log( "成功加载模块：" + Client.Modules.Count + "个","系统",1);
+                Client.Log("成功加载模块：" + Client.Modules.Count + "个", "系统", 1);
                 Common.UiAction(() =>
                 {
                     var view = CollectionViewSource.GetDefaultView(Client.Modules);
@@ -164,7 +164,6 @@ namespace Xky.Platform.Pages
 
             foreach (var group in nodeGroup)
             {
-               
                 var sns = group.Select(device => device.Sn).ToList();
                 var jarray = new JArray();
                 foreach (var sn in sns)
@@ -566,9 +565,9 @@ namespace Xky.Platform.Pages
                         var thread_module = Client.StartAction(() =>
                         {
                             Dispatcher.Invoke(() => { runmodule.Device.RunningModules.Add(module); });
-                            Client.Log( "开始执行模块[" + module.Name + "]","设备[" + runmodule.Device.Name + "]", 0);
+                            Client.Log("开始执行模块[" + module.Name + "]", "设备[" + runmodule.Device.Name + "]", 0);
                             runmodule.Start();
-                           Client.Log("成功执行模块[" + module.Name + "]","设备[" + runmodule.Device.Name + "]",1);
+                            Client.Log("成功执行模块[" + module.Name + "]", "设备[" + runmodule.Device.Name + "]", 1);
 
                             Dispatcher.Invoke(() =>
                             {
@@ -682,7 +681,9 @@ namespace Xky.Platform.Pages
             {
                 //var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.png"));
                 //  var response = device.ScriptEngine.CallApi("sendMsg", new JObject() { ["uid"] = "10000", ["msg"] = "你好" });
-                var response = device.ScriptEngine.CreateSlot("com.ss.android.ugc.aweme","01");
+                //  var response = device.ScriptEngine.CreateSlot("com.ss.android.ugc.aweme","01");
+
+                var response = device.ScriptEngine.GetAppVersion("com.tencent.mm");
                 Console.WriteLine(response.Json);
             }
         }
