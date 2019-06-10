@@ -1,9 +1,14 @@
 ﻿using System;
+using System.CodeDom;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core;
 using Xky.Core.Common;
@@ -24,21 +29,102 @@ namespace Xky.Platform.Pages
             {
                 var json = Common.LoadJson("license");
                 if (json != null) Common.UiAction(() => { LicenseKey.Text = json["license"].ToString(); });
-                Common.UiAction(() =>
-                {
-                    LoadingTextBlock.Text = "正在检查系统更新...";
-                });
+                Common.UiAction(() => { LoadingTextBlock.Text = "正在检查系统更新..."; });
+#if publish
+                //正式版则检查更新
+                Upgrade();
+#endif
                 MirrorScreen.Decoder = new H264Decoder();
                 Thread.Sleep(500);
                 Common.UiAction(() =>
                 {
-
                     LoadingTextBlock.Text = "正在预热系统组件...";
                     GridLoading.Visibility = Visibility.Collapsed;
                     GridLogin.Visibility = Visibility.Visible;
                 });
             });
         }
+
+        private void Upgrade()
+        {
+            try
+            {
+                if (File.Exists("noupgrade.txt"))
+                    return;
+                var updateJson = HttpHelper.Get("https://static.xky.com/upgrade/x/update.json?tick="+DateTime.Now.Millisecond);
+                var jarray = JsonConvert.DeserializeObject<JArray>(updateJson);
+                var needUpgrade = new JArray();
+                foreach (var t in jarray)
+                {
+                    var json = (JObject) t;
+                    if (File.Exists(System.IO.Path.Combine(".\\", json["file"].ToString()) + ".noupgrade"))
+                        continue;
+                    if (json["md5"].ToString() !=
+                        FileHelper.GetFileHash(System.IO.Path.Combine(".\\", json["file"].ToString())))
+                    {
+                        needUpgrade.Add(json);
+                    }
+                }
+                Console.WriteLine(needUpgrade);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private  void DownFile(string filename, string softkey, string path, string msg)
+        {
+//            try
+//            {
+//                path = path.TrimStart('\\');
+//                var url = "http://upgrade.xksoft.com/" + softkey + "/" + path.Replace("\\", "/") + filename + "?tick=" +
+//                          DateTime.Now.Ticks;
+//                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+//                httpWebRequest.Proxy = null;
+//
+//                httpWebRequest.ContentType = "text/xml";
+//                httpWebRequest.Method = "GET";
+//                httpWebRequest.Timeout = 60 * 1000;
+//                var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+//                var sm = httpWebResponse.GetResponseStream();
+//                var l = httpWebResponse.ContentLength;
+//                var msTemp = new MemoryStream();
+//                int len;
+//                var buff = new byte[4096];
+//                while ((len = sm.Read(buff, 0, 4096)) > 0)
+//                {
+//                    msTemp.Write(buff, 0, len);
+//
+//                    Loading.UpdateState(msg.Replace("$1",
+//                        (msTemp.Length / (decimal)1024).ToString("F2") + "KB/" + (l / (decimal)1024).ToString("F2") +
+//                        "KB"));
+//                    _downLength += len;
+//                    Loading.Progress((double)_downLength / _allLength);
+//                }
+//
+//                if (path != "")
+//                {
+//                    if (!Directory.Exists(path))
+//                        Directory.CreateDirectory(path);
+//                }
+//
+//                if (filename.EndsWith(".exe") || filename.EndsWith(".dll"))
+//                {
+//                    if (File.Exists(Path.GetFullPath(FolderPath + path + filename)))
+//                        File.Move(Path.GetFullPath(FolderPath + path + filename),
+//                            Path.GetFullPath(FolderPath + path + filename + DateTime.Now.Ticks) + ".old");
+//                }
+//
+//                File.WriteAllBytes(Path.GetFullPath(FolderPath + path + filename), msTemp.ToArray());
+//            }
+//            catch (Exception ex)
+//            {
+//                //MessageBox.Show("抱歉，下载更新程序时出错：" + ex.Message + " " + ex.StackTrace + " " + ex.Source, "引导出错",
+//                //    MessageBoxButton.OK, MessageBoxImage.Error);
+//            }
+        }
+
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
@@ -57,7 +143,7 @@ namespace Xky.Platform.Pages
                 {
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
                     Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
-                   
+
                     Thread.Sleep(500);
 
                     Common.UiAction(() =>

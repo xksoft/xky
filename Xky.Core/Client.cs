@@ -35,6 +35,7 @@ namespace Xky.Core
         public static string ModulePath = "";
         public static bool BatchControl = false;
         public static Tag BatchControlTag = null;
+
         #region 公开属性
 
 
@@ -1406,6 +1407,7 @@ namespace Xky.Core
         }
 
         #endregion
+
         #region 批量控制方法
 
         /// <summary>

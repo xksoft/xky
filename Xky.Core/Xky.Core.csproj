@@ -97,6 +97,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Common\AverageNumber.cs" />
     <Compile Include="Common\FileHelper.cs" />
+    <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\ObjectHelper.cs" />
     <Compile Include="Common\StrHelper.cs" />
     <Compile Include="Common\WinConsole.cs" />

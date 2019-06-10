@@ -159,8 +159,10 @@ namespace Xky.Core
         /// <param name="name">查找条件</param>
         /// <param name="option">可选条件：{"regex":false,"timeout":10}</param>
         /// <returns></returns>
-        public Response FindUiObjects(string name, JObject option)
+        public Response FindUiObjects(string name, JObject option=null)
         {
+            if(option==null)
+                option=new JObject();
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findUiObjects",
                 new JArray(name, option));
         }
@@ -171,8 +173,10 @@ namespace Xky.Core
         /// <param name="name">查找条件</param>
         /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
         /// <returns></returns>
-        public Response FindAndClick(string name, JObject option)
+        public Response FindAndClick(string name, JObject option=null)
         {
+            if (option == null)
+                option = new JObject();
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndClick",
                 new JArray(name, option));
         }
@@ -184,8 +188,10 @@ namespace Xky.Core
         /// <param name="value">赋值内容</param>
         /// <param name="option">可选条件：{"regex":false,"timeout":10,"index":0}</param>
         /// <returns></returns>
-        public Response FindAndInput(string name, string value, JObject option)
+        public Response FindAndInput(string name, string value, JObject option=null)
         {
+            if (option == null)
+                option = new JObject();
             return Client.CallNodeApi(_device.NodeSerial, _device.Sn, "findAndInput",
                 new JArray(name, value, option));
         }
