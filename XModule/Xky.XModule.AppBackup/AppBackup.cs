@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using Xky.Core;
 using Xky.Core.Model;
 
 namespace Xky.XModule.AppBackup
@@ -61,6 +63,12 @@ namespace Xky.XModule.AppBackup
                     BackupName= DateTime.Now.ToString("yyMMddHHmmss");
                 }
                 Response res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
+                if (!res.Result)
+                {
+
+                    Client.ShowToast("设备[" + Device.Name + "]无法创建快照[" + BackupName + "]" + res.Message, Color.FromRgb(239, 34, 7));
+
+                }
                 Console.WriteLine("APP快照创建结果：" + res.Json);
             }
 
