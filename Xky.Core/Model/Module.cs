@@ -18,7 +18,8 @@ namespace Xky.Core.Model
         private XModule _xmodule;
         private int _state = 0;
         private byte[] icon;
-
+        private string _path = "";
+     
         public string Md5 { get => _md5; set => _md5 = value; }
         public string Name { get => _name; set => _name = value; }
         public string Description { get => _description; set => _description = value; }
@@ -31,6 +32,8 @@ namespace Xky.Core.Model
             }
         }
         public byte[] Icon { get => icon; set => icon = value; }
+        public string Path { get => _path; set => _path = value; }
+   
 
         /// <summary>
         /// 克隆这个对象
