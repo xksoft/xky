@@ -52,11 +52,14 @@ namespace Xky.Platform.Pages
             {
                 if (File.Exists("noupgrade.txt"))
                     return;
+                //等一秒再删，不然上个进程没结束，删不了
+                Thread.Sleep(1000);
                 var oldfiles = FileHelper.GetFileList(".\\", "*.old", true);
                 foreach (var oldfile in oldfiles)
                 {
                     File.Delete(oldfile);
                 }
+
                 var updateJson =
                     HttpHelper.Get("https://static.xky.com/upgrade/x/update.json?tick=" + DateTime.Now.Millisecond);
                 var jarray = JsonConvert.DeserializeObject<JArray>(updateJson);
