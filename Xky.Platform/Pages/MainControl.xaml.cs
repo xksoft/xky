@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -25,6 +26,7 @@ namespace Xky.Platform.Pages
     public partial class MainControl : System.Windows.Controls.UserControl
     {
         private Thread _lastConnectThread;
+        private ICollectionView collectionView_Modules;
         private readonly List<Device> _screenTickList = new List<Device>();
 
         public MainControl()
@@ -129,14 +131,24 @@ namespace Xky.Platform.Pages
             {
                 Client.LoadModules();
 
-                Console.WriteLine("成功加载模块：" + Client.Modules.Count + "个");
-                Client.Log("成功加载模块：" + Client.Modules.Count + "个", "系统", 1);
-                Common.UiAction(() =>
+                Common.ShowToast("成功加载模块：" + Client.Modules.Count + "个",Colors.Lime);
+                if (collectionView_Modules == null)
                 {
-                    var view = CollectionViewSource.GetDefaultView(Client.Modules);
-                    view.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
-                    ModuleListBox.ItemsSource = view;
-                });
+                    Common.UiAction(() =>
+                    {
+                        collectionView_Modules = CollectionViewSource.GetDefaultView(Client.Modules);
+                        collectionView_Modules.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+                        ModuleListBox.ItemsSource = collectionView_Modules;
+                    });
+                }
+                else
+                {
+                    Common.UiAction(() =>
+                    {
+                        collectionView_Modules.Refresh();
+                        ModuleListBox.ItemsSource = collectionView_Modules;
+                    });
+                }
             }, ApartmentState.STA);
         }
 
@@ -697,6 +709,57 @@ namespace Xky.Platform.Pages
 
                 Console.WriteLine(response.Json);
             }
+        }
+
+        private void MenuItem_Modules_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = ((MenuItem)sender).Tag.ToString();
+            var module = ModuleListBox.SelectedItem as Core.Model.Module;
+            switch (tag) {
+
+                case "Reload":
+                    {
+                        LoadModules();
+                        break;
+                    }
+                case "Hide":
+                    {
+                        var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "隐藏后如需显示请删除模块目录下的配置文件，确定要隐藏模块["+module.Name+"]吗？" };
+                        Common.ShowMessageControl(msg);
+
+                        if (msg.Result == MessageBoxResult.Yes)
+                        {
+                            Client.StartAction(() =>
+                        {
+                            File.WriteAllText(module.Path + "\\" + module.Name + "_" + module.Md5 + ".txt", "如需显示模块请删除该文件", Encoding.UTF8);
+                            Common.UiAction(() =>
+                            {
+                                Client.Modules.Remove(module);
+                            });
+                        });
+                        }
+                        break;
+                    }
+                case "Delete":
+                    {
+                        var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "删除模块会直接删除模块所属的DLL文件，若该文件内包含其他模块也将被删除，确定要删除模块[" + module.Name + "]吗？" };
+                        Common.ShowMessageControl(msg);
+
+                        if (msg.Result == MessageBoxResult.Yes)
+                        {
+                            Client.StartAction(() =>
+                        {
+                            Directory.Delete(module.Path, true);
+                            Common.UiAction(() =>
+                            {
+                                Client.Modules.Remove(module);
+                            });
+                        });
+                        }
+                        break;
+                    }
+            }
+            
         }
     }
 }

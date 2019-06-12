@@ -184,7 +184,6 @@ namespace Xky.Platform.Pages
                     Common.SaveJson("license", new JObject {["license"] = licensekey});
                     Common.ShowToast("授权成功:" + Client.License.LicenseName, Colors.Lime, "on");
 
-                    Thread.Sleep(500);
 
                     Common.UiAction(() =>
                     {
@@ -198,11 +197,20 @@ namespace Xky.Platform.Pages
                         Label_License_Name.Content = Client.License.LicenseName;
                         Label_License_Key.Content = Client.License.LicenseKey;
                         Label_License_Expiration_Time.Content =
-                            Client.License.LicenseExpiration.ToString("yyyy-MM-dd HH:mm:ss");
-                        Common.MainWindow.MainControlTabItem.ClickDown(null, null);
-                        Common.MyMainControl.LoadNodes();
-                        Common.MyMainControl.LoadDevices();
-                        Common.MyMainControl.LoadModules();
+                        Client.License.LicenseExpiration.ToString("yyyy-MM-dd HH:mm:ss");
+                        while (true)
+                        {
+                            if (Client.CoreConnected)
+                            {   Common.MainWindow.MainControlTabItem.ClickDown(null, null);
+                                Common.MyMainControl.LoadNodes();
+                                Common.MyMainControl.LoadDevices();
+                                Common.MyMainControl.LoadModules();
+                             
+                                break;
+                            }
+                            else { Thread.Sleep(500); }
+
+                        }
                     });
                 }
                 else

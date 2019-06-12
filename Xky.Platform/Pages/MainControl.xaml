@@ -590,11 +590,24 @@
                      VirtualizingPanel.IsVirtualizingWhenGrouping='True'>
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="不显示模块" Tag="EditInfo" >
+                        <MenuItem Header="重新加载所有模块" Tag="Reload" Click="MenuItem_Modules_Click">
                             <MenuItem.Icon>
-                                <ImageBrush ImageSource="/Xky.Platform;component/Resources/Icon/edit.png" />
+
+                                <ImageBrush Stretch="Uniform" ImageSource="/Xky.Platform;component/Resources/Icon/reload.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="隐藏该模块" Tag="Hide"  Click="MenuItem_Modules_Click">
+                            <MenuItem.Icon>
+                                <ImageBrush Stretch="Uniform"  ImageSource="/Xky.Platform;component/Resources/Icon/hide.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="删除该模块" Tag="Delete"  Click="MenuItem_Modules_Click">
+                            <MenuItem.Icon>
+                                <ImageBrush Stretch="Uniform"  ImageSource="/Xky.Platform;component/Resources/Icon/delete.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.Style>
@@ -667,6 +680,11 @@
                         <DataTemplate.Triggers>
                             <DataTrigger
                                 Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}"
+                                Value="True" >
+                                <Setter Property="Background" TargetName="Border_ModuleItem" Value="#e5f3fb" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
                                 Value="True" >
                                 <Setter Property="Background" TargetName="Border_ModuleItem" Value="#e5f3fb" />
                             </DataTrigger>

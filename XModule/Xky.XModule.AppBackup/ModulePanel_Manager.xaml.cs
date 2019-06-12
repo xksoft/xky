@@ -98,7 +98,7 @@ namespace Xky.XModule.AppBackup
                     foreach (var b in res.Json["list"])
                     {
                         Model.Backup backup = new Model.Backup();
-                        backup.Name = b["name"].ToString();
+                        backup.Name = b.ToString();
                         if (res_current.Json["name"] != null && res_current.Json["name"].ToString() == backup.Name)
                         {
                             backup.IsCurrent = true;

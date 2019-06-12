@@ -52,7 +52,7 @@
                                 <!--文字部分-->
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <!--图标部分 要搞成画刷-->
+                            <!--图标部分-->
                             <Rectangle Fill="{TemplateBinding Icon}" Margin="0,-1" Height="16" Width="16" />
                             <!--IsChecked 状态勾-->
                             <Path Margin="5,-2,0,0"

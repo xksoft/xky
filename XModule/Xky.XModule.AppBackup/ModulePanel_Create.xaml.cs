@@ -81,25 +81,36 @@ namespace Xky.XModule.AppBackup
             List<Model.Backup> list = new List<Model.Backup>();
             Response res = xmodules[0].Device.ScriptEngine.GetSlotList(packagename);
             Response res_current = xmodules[0].Device.ScriptEngine.GetSlot(packagename);
-            if (res.Json["list"] != null)
+            if (res.Result)
             {
-                foreach (var b in res.Json["list"])
+
+                if (res.Json["list"] != null)
                 {
-                    Model.Backup backup = new Model.Backup();
-                    backup.Name = b["name"].ToString();
-                    if (res_current.Json["name"] != null && res_current.Json["name"].ToString() == backup.Name)
+                    foreach (var b in res.Json["list"])
                     {
-                        backup.IsCurrent = true;
-                    
+                        Model.Backup backup = new Model.Backup();
+                        backup.Name = b.ToString();
+                        if (res_current.Json["name"] != null && res_current.Json["name"].ToString() == backup.Name)
+                        {
+                            backup.IsCurrent = true;
+
+                        }
+                        list.Add(backup);
                     }
-                    list.Add(backup);
                 }
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    BackupListBox.ItemsSource = list;
+                    Label_Backups_Loading.Content = "当前设备上存在该APP的" + list.Count + "个快照";
+                }));
             }
-            this.Dispatcher.Invoke(new Action(() =>
+            else
             {
-                BackupListBox.ItemsSource = list;
-                Label_Backups_Loading.Content = "当前设备上存在该APP的" + list.Count + "个快照";
-            }));
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    Label_Backups_Loading.Content = res.Message;
+                }));
+            }
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

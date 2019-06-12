@@ -241,6 +241,7 @@ namespace Xky.Core
                 var modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
                 foreach (var modulefile in modulefilelist)
                 {
+                 
                     try
                     {
                         FileInfo fi = new FileInfo(modulefile);
@@ -248,17 +249,34 @@ namespace Xky.Core
                         foreach (var xmodule in xmodulelist)
                         {
                             var modulecontent = (XModule) xmodule.Clone();
+                            string md5 = StrHelper.Md5(modulecontent.GetType().FullName + fi.FullName, false);
+                            if (File.Exists(fi.DirectoryName+"\\"+modulecontent.Name()+"_"+md5+".txt"))
+                            {
+                                continue;
+                            }
                             var module = new Module
                             {
-                                Md5 = StrHelper.Md5(modulecontent.GetType().FullName+fi.FullName, false),
+                                Md5 = md5,
                                 Name = modulecontent.Name(),
                                 GroupName = groupname,
                                 Description = modulecontent.Description(),
                                 XModule = modulecontent,
-                                Icon = modulecontent.Icon()
+                                Icon = modulecontent.Icon(),
+                                Path = fi.DirectoryName
+                                
                             };
-                           
-                            Client.Modules.Add(module);
+                            var cmodule = Client.Modules.ToList().Find(p=>p.Md5==module.Md5);
+                            if (cmodule != null)
+                            {
+                                cmodule.Name = module.Name;
+                                cmodule.GroupName = module.GroupName;
+                                cmodule.Description = modulecontent.Description();
+                                cmodule.XModule = modulecontent;
+                                cmodule.Icon = modulecontent.Icon();
+                            }
+                            else
+                            { MainWindow.Dispatcher.Invoke(() => { Client.Modules.Add(module); }); }
+                            
                         }
                 }
                     catch (Exception e)
@@ -337,11 +355,14 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
-                   
-                    foreach (var json in (JArray) response.Json["nodes"])
+
+                    foreach (var json in (JArray)response.Json["nodes"])
                     {
                         PushNode(GetNode(json["t_serial"].ToString()), false);
                     }
+                }
+                else {
+
                 }
 
 
