@@ -42,7 +42,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
             <Label Grid.Row="0" Padding="0" FontSize="30"  Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center" FontFamily="Microsoft YaHei">日志</Label>
-            <UserControl:MyButton x:Name="Button_Stop" Click="Button_Stop_Click" Text="停止刷新"  VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Image_Height="14" Image_Width="14"/>
+            <UserControl:MyButton x:Name="Button_Stop" Click="Button_Stop_Click" Text="停止刷新"  VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Image_Height="16" Image_Width="16"/>
             <UserControl:MyButton x:Name="Button_Clear" Click="Button_Clear_Click" Text="清空"  VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/delete.png"/>
         </StackPanel>
         <Border Grid.Row="1" Margin="20,10,20,0" Padding="5" Background="{StaticResource BackgroundColor2}" CornerRadius="5,5,0,0">

@@ -48,7 +48,7 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
             <Label FontFamily="Microsoft YaHei"  Grid.Row="0" Padding="0" FontSize="30" Foreground="White" Margin="20,0,40,0" VerticalAlignment="Center" VerticalContentAlignment="Center">节点管理</Label>
-            <UserControl:MyButton  Text="手动添加节点"  Click="Btn_AddToCloud_Click" VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png"/>
+            <UserControl:MyButton  Text="手动添加节点"  Click="Btn_AddToCloud_Click" VerticalAlignment="Center" Margin="0,0,20,0" Image="/Xky.Platform;component/Resources/Icon/add.png" Image_Height="16" Image_Width="16"/>
             <UserControl:MyTagLabel Text="正在为您持续查找当前局域网内节点设备..."   Foreground="#999" Background="#303740" Padding="6">
                 <UserControl.Triggers>
                     <EventTrigger RoutedEvent="Loaded">
@@ -116,7 +116,7 @@
                                         </Border.BorderBrush>
                                         <StackPanel Margin="10,5,10,5">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}" Width="23" Height="23" VerticalAlignment="Center"  Source="/Xky.Platform;component/Resources/Icon/newnode.png"/>
+                                                <Image Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToHidden}}" Width="16" Height="16" VerticalAlignment="Center"  Source="/Xky.Platform;component/Resources/Icon/newnode.png"/>
                                                 <Ellipse Visibility="{Binding  Path=ConnectionHash,Converter={StaticResource ConnectionHashToVisible}}" Margin="5" Width="12" Height="12" VerticalAlignment="Center" Fill="{Binding  Path=ConnectStatus,Converter={StaticResource ConnectStatusToBursh}}"></Ellipse>
                                                 <Label Grid.Row="0"  VerticalAlignment="Center"  Foreground="#fff" Width="200" FontSize="18" Margin="0,5,0,5" Content="{Binding  Path=Name}"></Label>
                                             </StackPanel>
