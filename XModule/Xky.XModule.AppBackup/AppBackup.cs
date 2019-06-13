@@ -62,14 +62,32 @@ namespace Xky.XModule.AppBackup
                 {
                     BackupName= DateTime.Now.ToString("yyMMddHHmmss");
                 }
-                Response res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
+                //结束正在运行的app
+                Device.ScriptEngine.KillApp(PackageName);
+
+                //创建新的机型
+                Response res = Device.ScriptEngine.CreateHardware();
+                string hardwarekey = "";
+                if (res.Result)
+                {
+                    //创建成功
+                    hardwarekey = res.Json["key"].ToString();
+                }
+                res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
+                Console.WriteLine("APP快照创建结果：" + res.Json);
                 if (!res.Result)
                 {
 
                     Client.ShowToast("设备[" + Device.Name + "]无法创建快照[" + BackupName + "]" + res.Message, Color.FromRgb(239, 34, 7));
 
                 }
-                Console.WriteLine("APP快照创建结果：" + res.Json);
+                else
+                {
+                    //保存硬件信息
+                    res = Device.ScriptEngine.WriteStringToFile("/data/AppSlot/" + PackageName + "/" + BackupName + "/hardwarekey.txt", hardwarekey);
+                    Console.WriteLine("硬件信息保存结果：" + res.Json);
+                }
+               
             }
 
         }
