@@ -109,7 +109,7 @@
             </ListBox>
 
             <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center">
-                <TextBlock LineHeight="20" VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动APK文件到列表中可快速安装，右键可卸载、停止、清除APP数据，双击在设备中打开APP。</TextBlock>
+                <TextBlock LineHeight="20" VerticalAlignment="Center" Foreground="#ccc" TextWrapping="Wrap">使用说明：按住Shift或Ctrl键可进行多选，拖动APK文件到列表中可快速安装，右键可卸载、停止、清除APP数据。</TextBlock>
                 <TextBlock Margin="0,5,0,0" Foreground="Red">注意：操作系统APP请慎重。</TextBlock>
             </StackPanel>
         </Grid>
