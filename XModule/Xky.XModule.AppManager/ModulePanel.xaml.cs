@@ -318,7 +318,7 @@ namespace Xky.XModule.AppManager
                 }
                 else
                 {
-                    Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
+                    Response res = device.ScriptEngine.WriteBufferToFile(dir + "/" + filename_new + fi.Extension, File.ReadAllBytes(filename));
                 }
             }
         }

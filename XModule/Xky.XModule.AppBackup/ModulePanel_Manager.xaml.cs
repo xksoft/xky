@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -181,8 +182,39 @@ namespace Xky.XModule.AppBackup
                     Device dc = (Device)device.First();
                     new Thread(() =>
                     {
+                        ShowLoading("设备[" + dc.Name + "]正在结束当前APP...");
+                        //结束正在运行的app
+                        Response res= dc.ScriptEngine.KillApp(packagename);
+                       
+                        res= dc.ScriptEngine.ReadBufferFromFile("/data/AppSlot/" + packagename + "/" + backup.Name + "/hardwarekey.txt");
+                        if (res.Result)
+                        {
+                            ShowLoading("设备[" + dc.Name + "]正在还原硬件信息，请稍后...");
+                            if (res.Json["buffer"] != null)
+                            {
+                                string hardwarekey = "";
+                                JArray buffer = res.Json["buffer"] as JArray;
+                                //如果文件过大可能会分段读取
+                                for (int i = 0; i < buffer.Count; i++)
+                                {
+                                    byte[] bs = (byte[])buffer[i];
+                                    hardwarekey+=(Encoding.UTF8.GetString(bs));
+                                }
+                                if (hardwarekey.Length > 0)
+                                {
+                                    res = dc.ScriptEngine.RestoreHardware(hardwarekey);
+                                    Console.WriteLine(res.Json.ToString());
+                                    if (!res.Result)
+                                    {
+                                        Client.ShowToast("设备[" + dc.Name + "]无法还原硬件信息" + res.Message, Color.FromRgb(239, 34, 7));
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                      
                         ShowLoading("设备[" + dc.Name + "]正在切换到快照[" + backup.Name + "]，请稍后...");
-                        Response res = dc.ScriptEngine.SetSlot(packagename, backup.Name);
+                         res = dc.ScriptEngine.SetSlot(packagename, backup.Name);
                         if (res.Result)
                         {
                             Client.ShowToast("设备[" + dc.Name + "]成功切换到快照[" + backup.Name + "]", Color.FromRgb(0, 188, 0));
