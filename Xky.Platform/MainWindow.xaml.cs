@@ -199,12 +199,12 @@ namespace Xky.Platform
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {
-            MainBoard.BorderBrush = new SolidColorBrush(Color.FromArgb(204, 54, 54, 54));
+           BorderBrush = new SolidColorBrush(Color.FromArgb(204, 54, 54, 54));
         }
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
-            MainBoard.BorderBrush = new SolidColorBrush(Colors.Black);
+            BorderBrush = new SolidColorBrush(Colors.Black);
         }
 
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)

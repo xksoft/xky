@@ -13,6 +13,8 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="934"
         MinWidth="1395"
+        BorderBrush="Black"
+        BorderThickness="1"
         Title="MainWindow" Height="934" Width="1395" Closing="MainWindow_OnClosing">
 
     <Window.Resources>
@@ -158,9 +160,7 @@
                 </Button>
             </VirtualizingStackPanel>
         </Grid>
-        <Border x:Name="MainBoard" BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2"
-                Grid.ColumnSpan="3"
-                Grid.Column="0" Panel.ZIndex="999" />
+
 
         <!-- Toast -->
         <VirtualizingStackPanel x:Name="ToastPanel" Grid.Row="0" Margin="0,0,0,100" Grid.RowSpan="2" Grid.Column="0"
