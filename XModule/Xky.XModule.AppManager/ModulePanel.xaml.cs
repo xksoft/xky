@@ -31,7 +31,7 @@ namespace Xky.XModule.AppManager
         {
             InitializeComponent();
         }
-        public List<Device> devices;
+        public List<Core.XModule> xmodules;
         public string CurrentDirectory = "/";
         public ObservableCollection<DeviceApp> DeviceApps = new ObservableCollection<DeviceApp>();
         public Dictionary<string, string> PackageNames = new Dictionary<string, string>();
@@ -85,7 +85,7 @@ namespace Xky.XModule.AppManager
 
 
             List<DeviceApp> list = new List<DeviceApp>();
-            Response res_system = devices[0].ScriptEngine.AdbShell("pm list package -s");
+            Response res_system = xmodules[0].Device.ScriptEngine.AdbShell("pm list package -s");
             if (res_system.Json["result"] != null)
             {
                 List<string> res = res_system.Json["result"].ToString().Split('\n').ToList();
@@ -110,7 +110,7 @@ namespace Xky.XModule.AppManager
                 }
 
             }
-            res_system = devices[0].ScriptEngine.AdbShell("pm list package -3");
+            res_system = xmodules[0].Device.ScriptEngine.AdbShell("pm list package -3");
             if (res_system.Json["result"] != null)
             {
                 List<string> res = res_system.Json["result"].ToString().Split('\n').ToList();
@@ -170,11 +170,11 @@ namespace Xky.XModule.AppManager
                 foreach (var obj in arr)
                 {
                     string filename = obj.ToString();
-                    for (int i = 0; i < devices.Count; i++)
+                    for (int i = 0; i < xmodules.Count; i++)
                     {
-                        if (devices.Count > i)
+                        if (xmodules.Count > i)
                         {
-                            devices[i].ScriptEngine.WriteBufferToFile(CurrentDirectory + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
+                            xmodules[i].Device.ScriptEngine.WriteBufferToFile(CurrentDirectory + "/" + new FileInfo(filename).Name, File.ReadAllBytes(filename));
                             Console.WriteLine("文件上传完毕");
                         }
                     }
@@ -190,38 +190,117 @@ namespace Xky.XModule.AppManager
         private void ContextMenuItem_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.MenuItem menuItem = (System.Windows.Controls.MenuItem)sender;
-            DeviceApp deviceApp = (DeviceApp)((System.Windows.Controls.MenuItem)sender).DataContext;
+            DeviceApp deviceApp=null;
+
+            if (ItemListBox.SelectedItem!=null) {deviceApp= (DeviceApp)ItemListBox.SelectedItem; } 
             switch (menuItem.Tag)
             {
                 case "Open":
                     {
+                        if (deviceApp==null) { break; }
+                        new Thread(() =>
+                        {
+
+                            ShowLoading("正在打开app...");
+                            for (int index = 0; index < xmodules.Count; index++)
+                            {
+                                if (xmodules.Count > index)
+                                {
+                                    var device = xmodules[index].Device;
+                                    ShowLoading("正在打开设备[" + device.Name + "]上的APP["+deviceApp.Name+"]...");
+                                    Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
+                                  
+                                }
+                            }
+                           
+                            CloseLoading();
+                        })
+                        { IsBackground = true }.Start();
                         break;
                         
                     }
                 case "Stop":
                     {
+                        if (deviceApp == null) { break; }
+                        new Thread(() =>
+                        {
+
+                            ShowLoading("正在结束app...");
+                            for (int index = 0; index < xmodules.Count; index++)
+                            {
+                                if (xmodules.Count > index)
+                                {
+                                    var device = xmodules[index].Device;
+                                    ShowLoading("正在结束设备[" + device.Name + "]上的APP[" + deviceApp.Name + "]...");
+                                    Response res = device.ScriptEngine.KillApp(deviceApp.PackageName);
+
+                                }
+                            }
+
+                            CloseLoading();
+                        })
+                        { IsBackground = true }.Start();
                         break;
+                       
 
                     }
                 case "Install":
                     {
+                        Button_InstallAPK_Click(null,null);
                         break;
 
                     }
                 case "Clear":
                     {
+                        if (deviceApp == null) { break; }
+                        new Thread(() =>
+                        {
+
+                            ShowLoading("正在清空app数据...");
+                            for (int index = 0; index < xmodules.Count; index++)
+                            {
+                                if (xmodules.Count > index)
+                                {
+                                    var device = xmodules[index].Device;
+                                    ShowLoading("正在清空设备[" + device.Name + "]上的APP[" + deviceApp.Name + "]数据...");
+                                    Response res = device.ScriptEngine.ClearApp(deviceApp.PackageName);
+
+                                }
+                            }
+
+                            CloseLoading();
+                        })
+                        { IsBackground = true }.Start();
                         break;
 
                     }
                 case "Uninstall":
                     {
+                        if (deviceApp == null) { break; }
+                        new Thread(() =>
+                        {
+
+                            ShowLoading("正在卸载app...");
+                            for (int index = 0; index < xmodules.Count; index++)
+                            {
+                                if (xmodules.Count > index)
+                                {
+                                    var device = xmodules[index].Device;
+                                    ShowLoading("正在卸载设备[" + device.Name + "]上的APP[" + deviceApp.Name + "]...");
+                                    Response res = device.ScriptEngine.AdbShell("pm uninstall "+deviceApp.PackageName);
+
+                                }
+                            }
+
+                            CloseLoading();
+                        })
+                        { IsBackground = true }.Start();
                         break;
 
                     }
 
             }
-            //Console.WriteLine(deviceApp.PackageName);
-            //Response res = device.ScriptEngine.RestartApp(deviceApp.PackageName);
+         
 
         }
         private void MenuItem_Stop_Click(object sender, RoutedEventArgs e)
@@ -241,6 +320,7 @@ namespace Xky.XModule.AppManager
         }
         public void ShowLoading(string text)
         {
+            Client.Log(text, "模块[应用管理器]");
             if (Grid_MessageBox.Visibility == Visibility.Visible)
             {
                 this.Dispatcher.Invoke(new Action(() =>
@@ -274,11 +354,11 @@ namespace Xky.XModule.AppManager
             {
                 filename_new.Remove(50);
             }//大于10M的文件采用分段上传
-            for (int index = 0; index < devices.Count; index++)
+            for (int index = 0; index < xmodules.Count; index++)
             {
-                if (devices.Count > index)
+                if (xmodules.Count > index)
                 {
-                    var device = devices[index];
+                    var device = xmodules[index].Device;
                     ShowLoading("正在上传文件[" + filename + "]到设备["+device.Name+"]...");
                     if (fi.Length > 10485760)
                     {
@@ -348,11 +428,11 @@ namespace Xky.XModule.AppManager
                     UploadFile("/sdcard", filename);
               
                    
-                    for (int index = 0; index < devices.Count; index++)
+                    for (int index = 0; index < xmodules.Count; index++)
                     {
-                        if (devices.Count > index)
+                        if (xmodules.Count > index)
                         {
-                            var device = devices[index];
+                            var device = xmodules[index].Device;
                             ShowLoading("正在安装应用到设备["+device.Name+"]...");
                             Response res = device.ScriptEngine.AdbShell("pm install -g -r -i -d /sdcard/" + new FileInfo(filename).Name + "&");
                             Console.WriteLine("设备["+device.Name+"]安装结果："+res.Json.ToString());

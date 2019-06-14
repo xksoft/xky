@@ -50,7 +50,7 @@ namespace Xky.XModule.AppManager
         {
 
             var panel = new ModulePanel();
-            panel.devices = Devices;
+            panel.xmodules = GetXModules();
             Core.Client.ShowDialogPanel(panel);
             return true;
         }
