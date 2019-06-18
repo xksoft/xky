@@ -22,11 +22,19 @@
             <Ellipse x:Name="Tap" Fill="#7E00FF00" Width="30" Height="30" IsHitTestVisible="False"
                      Visibility="Collapsed" />
         </Canvas>
-        <Label x:Name="FpsLabel" Foreground="Lime" IsHitTestVisible="False" Style="{x:Null}">
-            <Label.Effect>
-                <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
-            </Label.Effect>
-        </Label>
+        <StackPanel>
+            <Label x:Name="FpsLabel" Foreground="Lime" IsHitTestVisible="False" Style="{x:Null}">
+                <Label.Effect>
+                    <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
+                </Label.Effect>
+            </Label>
+            <Label x:Name="StatusLabel" Foreground="Lime" IsHitTestVisible="False" Style="{x:Null}" >
+                <Label.Effect>
+                    <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="#FF000001" Direction="300" />
+                </Label.Effect>
+            </Label>
+        </StackPanel>
+
     </Grid>
 
 </UserControl>

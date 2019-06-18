@@ -94,7 +94,7 @@ namespace Xky.XModule.AllApiDemo
                     }
                 case "ClearApp":
                     {
-                        res = device.ScriptEngine.ClearApp("com.android.settings");
+                        res = device.ScriptEngine.ClearApp("com.android.launcher3");
                         break;
                     }
                 case "FindAllUiObject":

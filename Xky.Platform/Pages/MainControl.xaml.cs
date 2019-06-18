@@ -693,7 +693,7 @@ namespace Xky.Platform.Pages
             {
                 //var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.png"));
                 //  var response = device.ScriptEngine.CallApi("sendMsg", new JObject() { ["uid"] = "10000", ["msg"] = "你好" });
-                 var response = device.ScriptEngine.GetSlotList("com.tencent.mm");
+                 var response = device.ScriptEngine.ClearApp("com.android.launcher3");
 
 //                var response = device.ScriptEngine.FindUiObjects("微信");
 //                Console.WriteLine(response.Json);
