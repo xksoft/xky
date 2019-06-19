@@ -102,6 +102,10 @@ namespace Xky.Platform.Pages
                             TagListBox.ItemsSource = Client.Tags;
                             NodeTagListBox.ItemsSource = Client.NodeTags;
                             TagListBox.SelectedIndex = 0;
+                            if (DeviceListBox.Items.Count>0)
+                            {
+                                DeviceListBox.SelectedIndex = 0;
+                            }
                         });
                         Common.ShowToast("设备加载成功");
                         break;
