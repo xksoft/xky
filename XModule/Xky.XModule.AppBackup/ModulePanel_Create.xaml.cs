@@ -53,7 +53,7 @@ namespace Xky.XModule.AppBackup
                     {
                        
                        int index = s.IndexOf("package:") + 8;
-                       string PackageName = s.Substring(index, s.Length - index);
+                       string PackageName = s.Substring(index, s.Length - index).Trim();
                        
                         list.Add(PackageName);
                     }
