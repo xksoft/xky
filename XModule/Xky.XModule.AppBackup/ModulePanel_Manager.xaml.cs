@@ -57,7 +57,7 @@ namespace Xky.XModule.AppBackup
                     {
 
                         int index = s.IndexOf("package:") + 8;
-                        string PackageName = s.Substring(index, s.Length - index);
+                        string PackageName = s.Substring(index, s.Length - index).Trim();
 
                         list.Add(PackageName);
                     }
@@ -215,6 +215,7 @@ namespace Xky.XModule.AppBackup
                       
                         ShowLoading("设备[" + dc.Name + "]正在切换到快照[" + backup.Name + "]，请稍后...");
                          res = dc.ScriptEngine.SetSlot(packagename, backup.Name);
+                        Console.WriteLine(res.Json);
                         if (res.Result)
                         {
                             Client.ShowToast("设备[" + dc.Name + "]成功切换到快照[" + backup.Name + "]", Color.FromRgb(0, 188, 0));
