@@ -262,7 +262,9 @@ namespace Xky.Core
                                 Description = modulecontent.Description(),
                                 XModule = modulecontent,
                                 Icon = modulecontent.Icon(),
-                                Path = fi.DirectoryName
+                                Path = fi.DirectoryName,
+                                SupportBatchControl=modulecontent.SupportBatchControl(),
+                                NeedRoot=modulecontent.NeedRoot()
                                 
                             };
                             var cmodule = Client.Modules.ToList().Find(p=>p.Md5==module.Md5);
@@ -273,6 +275,8 @@ namespace Xky.Core
                                 cmodule.Description = modulecontent.Description();
                                 cmodule.XModule = modulecontent;
                                 cmodule.Icon = modulecontent.Icon();
+                                cmodule.SupportBatchControl = modulecontent.SupportBatchControl();
+                                cmodule.NeedRoot = modulecontent.NeedRoot();
                             }
                             else
                             { MainWindow.Dispatcher.Invoke(() => { Client.Modules.Add(module); }); }

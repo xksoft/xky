@@ -31,7 +31,10 @@ namespace Xky.XModule.ScreenTrain
                 return null;
             }
         }
-
+        public override bool SupportBatchControl()
+        {
+            return false;
+        }
         public override bool IsBackground()
         {
             return false;

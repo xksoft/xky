@@ -68,7 +68,26 @@ namespace Xky.Core
             
             return true;
         }
-      
+
+        /// <summary>
+        /// 是否支持群控
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool SupportBatchControl()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 是否需要root权限
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool NeedRoot()
+        {
+
+            return false;
+        }
+
         /// <summary>
         /// 获取每台设备对应的模块实例列表
         /// </summary>

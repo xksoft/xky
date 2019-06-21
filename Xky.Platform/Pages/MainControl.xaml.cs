@@ -765,5 +765,10 @@ namespace Xky.Platform.Pages
             }
             
         }
+
+        private void MyMirrorScreen_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

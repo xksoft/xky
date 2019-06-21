@@ -17,6 +17,14 @@
             <lib:SwitchConverterCase When="0" Then="Visible" />
             <lib:SwitchConverterCase  Then="Collapsed" />
         </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ModuleSupportBatchControlToVisible">
+            <lib:SwitchConverterCase When="true" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
+        <lib:SwitchConverter x:Key="ModuleNeedRootControlToVisible">
+            <lib:SwitchConverterCase When="true" Then="Visible" />
+            <lib:SwitchConverterCase  Then="Collapsed" />
+        </lib:SwitchConverter>
         <Style x:Key="ModulePanelNoDataTextBlockStyle" TargetType="TextBlock">
             <EventSetter Event="MouseDown" Handler="TextBlock_ModulePanelNoData_MouseDown"></EventSetter>
         </Style>
@@ -423,7 +431,7 @@
                                 Image="/Xky.Platform;component/Resources/Icon/DeviceMenu/stop-white.png" Height="48"
                                 Image_Height="32" Image_Width="32" Background_MouseOver="#404750"
                                 Background_Pressed="#32373d" />
-                         
+                           
                             <ItemsControl x:Name="RunningModules">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -484,7 +492,7 @@
 
                         <core:MirrorScreen x:Name="MyMirrorScreen" MaxWidth="432" Grid.ColumnSpan="5" Grid.RowSpan="2"
                                            MaxHeight="768" IsShowArrow="True" IsShowFps="True"
-                                           OnShowLog="MyMirrorScreen_OnOnShowLog" />
+                                           OnShowLog="MyMirrorScreen_OnOnShowLog" Loaded="MyMirrorScreen_Loaded" />
                         <Button Click="Btn_back" Cursor="Hand" Focusable="False" Width="32" Height="32"
                                 Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center"
                                 Margin="0,30,0,0">
@@ -665,8 +673,18 @@
                                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
                                             Margin="5,0,0,0">
 
-                                        <TextBlock Foreground="#25272a" TextTrimming="CharacterEllipsis" Margin="0,0,0,10"
-                                           Text="{Binding ElementName=ModuleItem, Path=DataContext.Name}" />
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                            <Border BorderBrush="#ff4200" Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.SupportBatchControl,Converter={StaticResource ModuleSupportBatchControlToVisible}}" BorderThickness="1" Width="18" Height="18" Margin="0,0,2,0">
+                                                <TextBlock FontSize="12"     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2,1,0,0" Padding="0"  Foreground="#ff4200">群</TextBlock>
+                                            </Border>
+                                            <Border BorderBrush="#1e00ff"  Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.NeedRoot,Converter={StaticResource ModuleNeedRootControlToVisible}}" BorderThickness="1" Width="18" Height="18" Margin="0,0,2,0">
+                                                <TextBlock FontSize="12"    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,1,0,0" Padding="0"  Foreground="#1e00ff">R</TextBlock>
+                                            </Border>
+                                          
+                                            <TextBlock Foreground="#25272a" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="0,0,0,0"
+                                           Text="{Binding ElementName=ModuleItem, Path=DataContext.Name}" /> 
+                                        </StackPanel>
+                                        
                                         <TextBlock Foreground="#5f6368" TextTrimming="CharacterEllipsis"
                                            Text="{Binding ElementName=ModuleItem, Path=DataContext.Description}" />
                                     

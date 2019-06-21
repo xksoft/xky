@@ -96,7 +96,7 @@ namespace Xky.XModule.AppManager
                         DeviceApp deviceApp = new DeviceApp();
                         deviceApp.Type = "system";
                         int index = s.IndexOf("package:") + 8;
-                        deviceApp.PackageName = s.Substring(index, s.Length - index);
+                        deviceApp.PackageName = s.Substring(index, s.Length - index).Trim();
                         if (PackageNames.ContainsKey(deviceApp.PackageName))
                         {
                             deviceApp.Name = PackageNames[deviceApp.PackageName];
@@ -121,7 +121,7 @@ namespace Xky.XModule.AppManager
                         DeviceApp deviceApp = new DeviceApp();
                         deviceApp.Type = "user";
                         int index = s.IndexOf("package:") + 8;
-                        deviceApp.PackageName = s.Substring(index, s.Length - index);
+                        deviceApp.PackageName = s.Substring(index, s.Length - index).Trim();
                         if (PackageNames.ContainsKey(deviceApp.PackageName))
                         {
                             deviceApp.Name = PackageNames[deviceApp.PackageName];

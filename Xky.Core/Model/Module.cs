@@ -19,7 +19,9 @@ namespace Xky.Core.Model
         private int _state = 0;
         private byte[] icon;
         private string _path = "";
-     
+        private bool supportBatchControl = true;
+        private bool needRoot = false;
+
         public string Md5 { get => _md5; set => _md5 = value; }
         public string Name { get => _name; set => _name = value; }
         public string Description { get => _description; set => _description = value; }
@@ -33,7 +35,9 @@ namespace Xky.Core.Model
         }
         public byte[] Icon { get => icon; set => icon = value; }
         public string Path { get => _path; set => _path = value; }
-   
+        public bool SupportBatchControl { get => supportBatchControl; set => supportBatchControl = value; }
+        public bool NeedRoot { get => needRoot; set => needRoot = value; }
+
 
         /// <summary>
         /// 克隆这个对象

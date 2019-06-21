@@ -36,6 +36,10 @@ namespace Xky.XModule.AllApiDemo
             }
 
         }
+        public override bool SupportBatchControl()
+        {
+            return false;
+        }
         public override string Description()
         {
             return "所有模块支持的API调用演示";

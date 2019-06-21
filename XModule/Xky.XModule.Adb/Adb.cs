@@ -47,7 +47,10 @@ namespace Xky.XModule.Adb
         {
    
         }
-        
+        public override bool SupportBatchControl()
+        {
+            return false;
+        }
         public override bool ShowUserControl()
         {
             

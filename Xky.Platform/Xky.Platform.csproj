@@ -369,9 +369,5 @@
     <Resource Include="Resources\Icon\hide.png" />
     <Resource Include="Resources\Icon\reload.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icon\multiple-control.png" />
-    <Resource Include="Resources\Icon\root.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -36,7 +36,10 @@ namespace Xky.XModule.AppBackup
                 return null;
             }
         }
-
+        public override bool NeedRoot()
+        {
+            return true;
+        }
         public override bool IsBackground()
         {
             return true;
@@ -115,7 +118,10 @@ namespace Xky.XModule.AppBackup
                 return null;
             }
         }
-
+        public override bool NeedRoot()
+        {
+            return true;
+        }
         public override bool IsBackground()
         {
             return true;
