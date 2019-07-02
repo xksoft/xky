@@ -595,7 +595,7 @@
                      ScrollViewer.CanContentScroll="True"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.ScrollUnit="Item"
-                     VirtualizingPanel.IsVirtualizingWhenGrouping='True'>
+                     VirtualizingPanel.IsVirtualizingWhenGrouping='True' SelectionChanged="ModuleListBox_SelectionChanged">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="重新加载所有模块" Tag="Reload" Click="MenuItem_Modules_Click">
@@ -675,10 +675,10 @@
 
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                             <Border BorderBrush="#ff4200" Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.SupportBatchControl,Converter={StaticResource ModuleSupportBatchControlToVisible}}" BorderThickness="1" Width="18" Height="18" Margin="0,0,2,0">
-                                                <TextBlock FontSize="12"     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2,1,0,0" Padding="0"  Foreground="#ff4200">群</TextBlock>
+                                                <TextBlock FontSize="12"     VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Padding="0"  Foreground="#ff4200">群</TextBlock>
                                             </Border>
                                             <Border BorderBrush="#1e00ff"  Visibility="{Binding  ElementName=ModuleItem, Path=DataContext.NeedRoot,Converter={StaticResource ModuleNeedRootControlToVisible}}" BorderThickness="1" Width="18" Height="18" Margin="0,0,2,0">
-                                                <TextBlock FontSize="12"    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,1,0,0" Padding="0"  Foreground="#1e00ff">R</TextBlock>
+                                                <TextBlock FontSize="12"    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Padding="0"  Foreground="#1e00ff">R</TextBlock>
                                             </Border>
                                           
                                             <TextBlock Foreground="#25272a" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="0,0,0,0"

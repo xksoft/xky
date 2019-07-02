@@ -426,7 +426,7 @@ namespace Xky.XModule.AppManager
                    
                     string filename = openFileDialog.FileName.ToString();
                     UploadFile("/sdcard", filename);
-              
+                    Thread.Sleep(5000);
                    
                     for (int index = 0; index < xmodules.Count; index++)
                     {
@@ -434,7 +434,7 @@ namespace Xky.XModule.AppManager
                         {
                             var device = xmodules[index].Device;
                             ShowLoading("正在安装应用到设备["+device.Name+"]...");
-                            Response res = device.ScriptEngine.AdbShell("pm install -g -r -i -d /sdcard/" + new FileInfo(filename).Name + "&");
+                            Response res = device.ScriptEngine.AdbShell("pm install /sdcard/" + new FileInfo(filename).Name + "&");
                             Console.WriteLine("设备["+device.Name+"]安装结果："+res.Json.ToString());
                         }
                     }

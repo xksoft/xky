@@ -69,14 +69,14 @@ namespace Xky.XModule.AppBackup
                 Device.ScriptEngine.KillApp(PackageName);
 
                 //创建新的机型
-                Response res = Device.ScriptEngine.CreateHardware();
-                string hardwarekey = "";
-                if (res.Result)
-                {
-                    //创建成功
-                    hardwarekey = res.Json["key"].ToString();
-                }
-                res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
+                //Response res = Device.ScriptEngine.CreateHardware();
+                //string hardwarekey = "";
+                //if (res.Result)
+                //{
+                //    //创建成功
+                //    hardwarekey = res.Json["key"].ToString();
+                //}
+                Response res = Device.ScriptEngine.CreateSlot(PackageName, BackupName);
                 Console.WriteLine("APP快照创建结果：" + res.Json);
                 if (!res.Result)
                 {
@@ -87,8 +87,8 @@ namespace Xky.XModule.AppBackup
                 else
                 {
                     //保存硬件信息
-                    res = Device.ScriptEngine.WriteStringToFile("/data/AppSlot/" + PackageName + "/" + BackupName + "/hardwarekey.txt", hardwarekey);
-                    Console.WriteLine("硬件信息保存结果：" + res.Json);
+                    //res = Device.ScriptEngine.WriteStringToFile("/data/AppSlot/" + PackageName + "/" + BackupName + "/hardwarekey.txt", hardwarekey);
+                    //Console.WriteLine("硬件信息保存结果：" + res.Json);
                 }
                
             }

@@ -770,5 +770,10 @@ namespace Xky.Platform.Pages
         {
 
         }
+
+        private void ModuleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
