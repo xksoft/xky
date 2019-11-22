@@ -45,7 +45,7 @@ namespace Xky.Platform
             Client.CloseDialogPanelEvent += Client_CloseDialogPanelEvent;
             Client.ShowDialogPanelEvent += Client_ShowDialogPanelEvent;
             Client.ShowToastEvent += Client_ShowToastEvent;
-
+            Client.CustomEvent += ClientCustomEvent;
 
             //基于dip决定高分屏字体
             try
@@ -82,6 +82,14 @@ namespace Xky.Platform
 
             //启动状态定时器
             new Timer {Interval = 1000, Enabled = true}.Elapsed += MainWindow_Elapsed;
+        }
+
+        private void ClientCustomEvent(string name, string value)
+        {
+            if (MirrorScreen.CurrentDevice?.NodeSerial == value)
+            {
+                Common.MyMainControl.MyMirrorScreen.Connect(MirrorScreen.CurrentDevice);
+            }
         }
 
         private void Client_ShowToastEvent(string toast, Color color, string sound = null)
@@ -173,12 +181,12 @@ namespace Xky.Platform
                         break;
                     }
                     case "Log":
-                        {
-                            var page = new Log();
-                            _userControlDic.Add(pagename, page);
-                            MainContent.Content = page;
-                            break;
-                        }
+                    {
+                        var page = new Log();
+                        _userControlDic.Add(pagename, page);
+                        MainContent.Content = page;
+                        break;
+                    }
                 }
         }
 
@@ -199,7 +207,7 @@ namespace Xky.Platform
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {
-           BorderBrush = new SolidColorBrush(Color.FromArgb(204, 54, 54, 54));
+            BorderBrush = new SolidColorBrush(Color.FromArgb(204, 54, 54, 54));
         }
 
         private void MainWindow_Activated(object sender, EventArgs e)

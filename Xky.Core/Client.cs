@@ -38,7 +38,6 @@ namespace Xky.Core
 
         #region 公开属性
 
-
         /// <summary>
         /// 授权信息
         /// </summary>
@@ -102,6 +101,7 @@ namespace Xky.Core
 
 
         public static List<Log> Logs = new List<Log>();
+
         #endregion
 
         #region 全局方法
@@ -131,7 +131,7 @@ namespace Xky.Core
                         Name = response.Json["user"]?["t_name"]?.ToString(),
                         Phone = response.Json["user"]?["t_phone"]?.ToString(),
                         Session = response.Json["session"]?.ToString(),
-                        NickName= response.Json["user"]?["t_nickname"]?.ToString()
+                        NickName = response.Json["user"]?["t_nickname"]?.ToString()
                     };
 
                     //释放资源
@@ -193,7 +193,6 @@ namespace Xky.Core
         /// <returns></returns>
         public static Thread StartAction(Action action, ApartmentState state = ApartmentState.MTA)
         {
-          
             var thread = new Thread(() =>
                 {
                     try
@@ -215,14 +214,13 @@ namespace Xky.Core
                         {
                             ThreadCount--;
                         }
-                        
                     }
                 })
-            { IsBackground = true};
+                {IsBackground = true};
             thread.SetApartmentState(state);
             thread.Start();
-          
-               
+
+
             return thread;
         }
 
@@ -233,7 +231,7 @@ namespace Xky.Core
         {
             var currentfilename = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
             ModulePath = currentfilename?.Remove(currentfilename.LastIndexOf("\\", StringComparison.Ordinal)) +
-                             "\\Modules";
+                         "\\Modules";
             var groupnamepaths = Directory.GetDirectories(ModulePath);
             foreach (var groupnamepath in groupnamepaths)
             {
@@ -241,7 +239,6 @@ namespace Xky.Core
                 var modulefilelist = FileHelper.GetFileList(groupnamepath, "*.dll", true);
                 foreach (var modulefile in modulefilelist)
                 {
-                 
                     try
                     {
                         FileInfo fi = new FileInfo(modulefile);
@@ -250,10 +247,11 @@ namespace Xky.Core
                         {
                             var modulecontent = (XModule) xmodule.Clone();
                             string md5 = StrHelper.Md5(modulecontent.GetType().FullName + fi.FullName, false);
-                            if (File.Exists(fi.DirectoryName+"\\"+modulecontent.Name()+"_"+md5+".txt"))
+                            if (File.Exists(fi.DirectoryName + "\\" + modulecontent.Name() + "_" + md5 + ".txt"))
                             {
                                 continue;
                             }
+
                             var module = new Module
                             {
                                 Md5 = md5,
@@ -263,11 +261,10 @@ namespace Xky.Core
                                 XModule = modulecontent,
                                 Icon = modulecontent.Icon(),
                                 Path = fi.DirectoryName,
-                                SupportBatchControl=modulecontent.SupportBatchControl(),
-                                NeedRoot=modulecontent.NeedRoot()
-                                
+                                SupportBatchControl = modulecontent.SupportBatchControl(),
+                                NeedRoot = modulecontent.NeedRoot()
                             };
-                            var cmodule = Client.Modules.ToList().Find(p=>p.Md5==module.Md5);
+                            var cmodule = Client.Modules.ToList().Find(p => p.Md5 == module.Md5);
                             if (cmodule != null)
                             {
                                 cmodule.Name = module.Name;
@@ -279,31 +276,35 @@ namespace Xky.Core
                                 cmodule.NeedRoot = modulecontent.NeedRoot();
                             }
                             else
-                            { MainWindow.Dispatcher.Invoke(() => { Client.Modules.Add(module); }); }
-                            
+                            {
+                                MainWindow.Dispatcher.Invoke(() => { Client.Modules.Add(module); });
+                            }
                         }
-                }
+                    }
                     catch (Exception e)
-                {
-                    Console.WriteLine("模块加载失败：" + e);
+                    {
+                        Console.WriteLine("模块加载失败：" + e);
+                    }
                 }
-            }
             }
         }
 
-        public static void Log(string content,string title="系统", int type=0)
+        public static void Log(string content, string title = "系统", int type = 0)
         {
             lock ("Log")
             {
-
                 if (Client.Logs.Count > 2000)
                 {
                     Client.Logs.RemoveAt(0);
                 }
-                Client.Logs.Add(new Core.Model.Log() { Content = content, Type = type, Title = title, Date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") });
 
+                Client.Logs.Add(new Core.Model.Log()
+                {
+                    Content = content, Type = type, Title = title, Date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
+                });
             }
         }
+
         #endregion
 
         #region  节点相关
@@ -359,14 +360,13 @@ namespace Xky.Core
 
                 if (response.Result)
                 {
-
-                    foreach (var json in (JArray)response.Json["nodes"])
+                    foreach (var json in (JArray) response.Json["nodes"])
                     {
                         PushNode(GetNode(json["t_serial"].ToString()), false);
                     }
                 }
-                else {
-
+                else
+                {
                 }
 
 
@@ -681,7 +681,6 @@ namespace Xky.Core
                     PanelDevices.Add(device);
                 }
             }
-
         }
 
         /// <summary>
@@ -760,14 +759,14 @@ namespace Xky.Core
                         NodeSerial = json["t_node"]?.ToString(),
                         GpsLat = json["t_gps_lat"]?.ToString(),
                         GpsLng = json["t_gps_lng"]?.ToString(),
-                        Id = (int)json["t_id"],
+                        Id = (int) json["t_id"],
                         Model = json["t_model"]?.ToString(),
                         Name = json["t_name"]?.ToString(),
                         Node = json["t_node"]?.ToString(),
                         Product = json["t_product"]?.ToString(),
                         Sn = json["t_sn"]?.ToString(),
-                        Cpus = (int)json["t_cpus"],
-                        Memory = (int)json["t_memory"],
+                        Cpus = (int) json["t_cpus"],
+                        Memory = (int) json["t_memory"],
                         RunningModules = new ObservableCollection<Module>()
                     };
                     try
@@ -941,7 +940,7 @@ namespace Xky.Core
                 {
                     node.NodeUrl = url;
 
-                   
+
                     node.NodeSocket?.Close();
 
 
@@ -964,14 +963,15 @@ namespace Xky.Core
                     {
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
-                        Log( "成功连接到节点服务器[" + node.Name + "][" + node.Serial + "]["+ url + "]","系统",1);
+                        Log("成功连接到节点服务器[" + node.Name + "][" + node.Serial + "][" + url + "]", "系统", 1);
+
+                        CustomEvent?.Invoke("node_connected", node.Serial);
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventDisconnect, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
-                        Log("节点服务器["+node.Name+"]["+node.Serial+"]下线","系统",3);
-                       
+                        Log("节点服务器[" + node.Name + "][" + node.Serial + "]下线", "系统", 3);
                     });
                     node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
@@ -1040,8 +1040,8 @@ namespace Xky.Core
         /// <param name="sound"></param>
         public static void ShowToast(string toast, Color color, string sound = null)
         {
-            Client.Log("系统提示",toast);
-            ShowToastEvent?.Invoke(toast,color,sound);
+            Client.Log("系统提示", toast);
+            ShowToastEvent?.Invoke(toast, color, sound);
         }
 
         #endregion
@@ -1078,6 +1078,16 @@ namespace Xky.Core
         /// 显示toast
         /// </summary>
         public delegate void OnShowToast(string toast, Color color, string sound = null);
+
+        /// <summary>
+        /// 显示toast
+        /// </summary>
+        public static event OnCustomEvent CustomEvent;
+
+        /// <summary>
+        /// 显示toast
+        /// </summary>
+        public delegate void OnCustomEvent(string name, string value);
 
         #endregion
 
@@ -1129,9 +1139,8 @@ namespace Xky.Core
                             Id = json["node"]["t_id"] == null ? 0 : Convert.ToInt32(json["node"]["t_id"]),
                             NodeUrl = json["node"]["t_nodeurl"]?.ToString()
                         };
-                       
+
                         PushNode(node, false);
-                       
                     }
 
                     else
@@ -1446,11 +1455,17 @@ namespace Xky.Core
                 var nodeSerialList = (from d in BatchControlTag.Devices select d.NodeSerial).Distinct();
                 foreach (string nodeSerial in nodeSerialList)
                 {
-                    Response res = Client.CallNodeEvent(nodeSerial, new JArray() { (from device in BatchControlTag.Devices.FindAll(d => d.NodeSerial == nodeSerial) select device.Sn).ToList() },json);
+                    Response res = Client.CallNodeEvent(nodeSerial,
+                        new JArray()
+                        {
+                            (from device in BatchControlTag.Devices.FindAll(d => d.NodeSerial == nodeSerial)
+                                select device.Sn).ToList()
+                        }, json);
                     Console.WriteLine(res.Json.ToString());
                 }
             }
         }
+
         #endregion
     }
 }
