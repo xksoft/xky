@@ -5,11 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Xky.Core;
+using XCore;
 
 namespace Xky.XModule.Adb
 {
-    public class Adb : Core.XModule
+    public class Adb : XCore.XModule
     {
        
         public int id = 0;
@@ -57,7 +57,7 @@ namespace Xky.XModule.Adb
            
             var panel = new ModulePanel();
             panel.device = Devices[0];
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
 
         }

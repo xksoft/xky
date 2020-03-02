@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
+using XCore;
+
 
 namespace Xky.Platform.Pages
 {
@@ -28,7 +29,7 @@ namespace Xky.Platform.Pages
            
         }
         public bool Stop = false;
-        List<Core.Model.Log> LogList = new List<Core.Model.Log>();
+        List<XCore.Model.Log> LogList = new List<XCore.Model.Log>();
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LogListBox.ItemsSource = LogList;

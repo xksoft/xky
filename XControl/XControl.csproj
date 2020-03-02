@@ -191,16 +191,6 @@
     <Resource Include="Resources\Icon\ControlBox\default\min_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\XCore.csproj">
-      <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
-      <Name>XCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Socket\XSocket.csproj">
-      <Project>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</Project>
-      <Name>XSocket</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Icon\whatapps.png" />
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +362,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="app128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XCore\XCore.csproj">
+      <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
+      <Name>XCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XSocket\XSocket.csproj">
+      <Project>{b4c79cee-4b09-428a-bfe9-b276df4f57fa}</Project>
+      <Name>XSocket</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:platform="clr-namespace:Xky.Platform"
-        xmlns:userControl="clr-namespace:Xky.Core.UserControl;assembly=Xky.Core"
+        xmlns:userControl="clr-namespace:XCore.UserControl;assembly=XCore"
         mc:Ignorable="d"
         AllowsTransparency="True"
         RenderOptions.BitmapScalingMode="LowQuality"

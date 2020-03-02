@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Xky.XModule.WangZhe
 {
-    public class WangZhe : Core.XModule
+    public class WangZhe : XCore.XModule
     {
         ModulePanel panel = null;
         public override string Name()
@@ -52,7 +52,7 @@ namespace Xky.XModule.WangZhe
             panel = new ModulePanel();
 
             panel.device = Devices[0];
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
         }
     }

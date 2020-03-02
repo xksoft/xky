@@ -15,9 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
-using Xky.Core.Model;
-using Xky.Core.UserControl;
+using XCore;
+using XCore.Model;
+using XCore.UserControl;
 
 namespace Xky.Platform.Pages
 {
@@ -38,7 +38,7 @@ namespace Xky.Platform.Pages
 
         private void Btn_Setting_Click(object sender, RoutedEventArgs e)
         {
-            var url = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            var url = ((XCore.UserControl.MyImageButton)sender).Tag;
             if (url != null)
             {
                 if (url.ToString().StartsWith("http"))
@@ -55,7 +55,7 @@ namespace Xky.Platform.Pages
         }
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            var id = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+            var id = ((XCore.UserControl.MyImageButton)sender).Tag;
             if (id != null)
             {
                 var msg = new MyMessageBox(MessageBoxButton.YesNo) { MessageText = "您确认要删除该节点吗？" };
@@ -92,7 +92,7 @@ namespace Xky.Platform.Pages
             TextBox_Serial.IsEnabled = true;
             if (e.OriginalSource.GetType().Name.Contains("MyImageButton"))
             {
-                var Serial = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+                var Serial = ((XCore.UserControl.MyImageButton)sender).Tag;
                 if (Serial != null)
                 {
 
@@ -148,7 +148,7 @@ namespace Xky.Platform.Pages
             TextBox_Serial.Text = "";
             TextBox_Serial.IsEnabled = false;
            
-                var Serial = ((Xky.Core.UserControl.MyImageButton)sender).Tag;
+                var Serial = ((XCore.UserControl.MyImageButton)sender).Tag;
             if (Serial != null)
             {
 

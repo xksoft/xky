@@ -9,7 +9,7 @@ using Xky.XModule.AllApiDemo;
 
 namespace Xky.XModule.AllApiDemo 
 {
-    public class AllApiDemo: Core.XModule
+    public class AllApiDemo: XCore.XModule
     {
         public override string Name()
         {
@@ -59,7 +59,7 @@ namespace Xky.XModule.AllApiDemo
         {
             var panel = new ModulePanel();
             panel.device = Devices[0];
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
 
         }

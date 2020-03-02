@@ -14,16 +14,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Newtonsoft.Json.Linq;
-using Xky.Core;
-using Xky.Core.Model;
-using Xky.Core.UserControl;
+using XCore;
+using XCore.Model;
+using XCore.UserControl;
 
 namespace Xky.Platform.Pages
 {
     /// <summary>
     ///     MyMainControl.xaml 的交互逻辑
     /// </summary>
-    public partial class MainControl : System.Windows.Controls.UserControl
+    public partial class MainControl : UserControl
     {
         private Thread _lastConnectThread;
         private ICollectionView collectionView_Modules;
@@ -161,7 +161,7 @@ namespace Xky.Platform.Pages
         {
             Client.StartAction(() =>
             {
-                while (this.IsVisible)
+                while (IsVisible)
                 {
                     SendScrccnTick();
                     Thread.Sleep(10000);
@@ -337,7 +337,7 @@ namespace Xky.Platform.Pages
                                 Client.ShowToast("成功获取界面元素授权码，粘贴到调试工具中即可使用！", Color.FromRgb(0, 188, 0));
                                 try
                                 {
-                                    System.Windows.Clipboard.SetDataObject(response.Json["uispy_token"].ToString(),
+                                    Clipboard.SetDataObject(response.Json["uispy_token"].ToString(),
                                         true);
                                 }
                                 catch (Exception error)
@@ -718,7 +718,7 @@ namespace Xky.Platform.Pages
         private void MenuItem_Modules_Click(object sender, RoutedEventArgs e)
         {
             string tag = ((MenuItem)sender).Tag.ToString();
-            var module = ModuleListBox.SelectedItem as Core.Model.Module;
+            var module = ModuleListBox.SelectedItem as Module;
             switch (tag) {
 
                 case "Reload":

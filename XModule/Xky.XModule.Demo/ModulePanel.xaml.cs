@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
+using XCore;
 
 namespace Xky.XModule.ContactManager
 {
@@ -21,7 +21,7 @@ namespace Xky.XModule.ContactManager
     /// </summary>
     public partial class ModulePanel : UserControl
     {
-        public List<Core.XModule> xmodules;
+        public List<XCore.XModule> xmodules;
         public List<string> list = new List<string>();
         public string username = "";
         public ModulePanel()

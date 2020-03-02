@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Xky.Core;
-using Xky.Core.Model;
+using XCore;
+using XCore.Model;
 
 namespace Xky.XModule.AppBackup
 {

@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace Xky.XModule.System
 {
-    public class System_Locked : Core.XModule
+    public class System_Locked : XCore.XModule
     {
         public override string Name()
         {
@@ -58,7 +58,7 @@ namespace Xky.XModule.System
 
         }
     }
-    public class System_UnLocked : Core.XModule
+    public class System_UnLocked : XCore.XModule
     {
         public override string Name()
         {
@@ -104,7 +104,7 @@ namespace Xky.XModule.System
 
 
     }
-    public class System_FastReboot : Core.XModule
+    public class System_FastReboot : XCore.XModule
     {
         public override string Name()
         {
@@ -167,7 +167,7 @@ namespace Xky.XModule.System
 
 
     }
-    public class System_Reboot : Core.XModule
+    public class System_Reboot : XCore.XModule
     {
         public override string Name()
         {

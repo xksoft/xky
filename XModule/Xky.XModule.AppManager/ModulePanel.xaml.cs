@@ -17,8 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
-using Xky.Core.Model;
+using XCore;
+using XCore.Model;
 
 namespace Xky.XModule.AppManager
 {
@@ -31,7 +31,7 @@ namespace Xky.XModule.AppManager
         {
             InitializeComponent();
         }
-        public List<Core.XModule> xmodules;
+        public List<XCore.XModule> xmodules;
         public string CurrentDirectory = "/";
         public ObservableCollection<DeviceApp> DeviceApps = new ObservableCollection<DeviceApp>();
         public Dictionary<string, string> PackageNames = new Dictionary<string, string>();

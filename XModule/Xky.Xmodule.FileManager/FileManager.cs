@@ -5,11 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Xky.Core.Model;
+using XCore.Model;
 
 namespace Xky.XModule.FileManager
 {
-    class FileManager : Core.XModule
+    class FileManager : XCore.XModule
     {
        
         public override string Description()
@@ -53,7 +53,7 @@ namespace Xky.XModule.FileManager
            
             var panel = new ModulePanel();
             panel.devices = Devices;
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Xky.XModule.AppManager
 {
-    public class AppManager : Core.XModule
+    public class AppManager : XCore.XModule
     {
         public override string Description()
         {
@@ -51,7 +51,7 @@ namespace Xky.XModule.AppManager
 
             var panel = new ModulePanel();
             panel.xmodules = GetXModules();
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
         }
     }

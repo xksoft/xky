@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xky.Core;
+using XCore;
 using Xky.Platform.Properties;
 using Xky.Platform.Pages;
 using System.Diagnostics;
-using Xky.Core.UserControl;
+using XCore.UserControl;
 
 namespace Xky.Platform
 {

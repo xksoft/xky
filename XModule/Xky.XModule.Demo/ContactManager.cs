@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Xky.XModule.ContactManager
 {
-    public class ContactManager : Core.XModule
+    public class ContactManager : XCore.XModule
     {
         public List<string> list = new List<string>();
         string username = "";
@@ -45,12 +45,12 @@ namespace Xky.XModule.ContactManager
         public override bool ShowUserControl()
         {
             ModulePanel panel = new ModulePanel();
-            List<Core.XModule> modulelist = GetXModules();
+            List<XCore.XModule> modulelist = GetXModules();
             panel.xmodules = modulelist;
             
             panel.list = list;
-            
-            Core.Client.ShowDialogPanel(panel);
+
+            XCore.Client.ShowDialogPanel(panel);
             username = panel.username;
             return true;
         }

@@ -24,8 +24,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
-using Xky.Core.Model;
+using XCore;
+using XCore.Model;
 
 namespace Xky.XModule.WangZhe
 {

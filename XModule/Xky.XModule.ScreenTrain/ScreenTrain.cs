@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Xky.XModule.ScreenTrain
 {
-    public class ScreenTrain : Core.XModule
+    public class ScreenTrain : XCore.XModule
     {
         public override string Description()
         {
@@ -54,7 +54,7 @@ namespace Xky.XModule.ScreenTrain
 
             var panel = new ModulePanel();
             panel.device = Devices[0];
-            Core.Client.ShowDialogPanel(panel);
+            XCore.Client.ShowDialogPanel(panel);
             return true;
         }
     }

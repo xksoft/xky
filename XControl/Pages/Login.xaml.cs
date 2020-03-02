@@ -8,8 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Xky.Core;
-using Xky.Core.Common;
+using XCore;
+using XCore.Common;
 using Path = System.IO.Path;
 
 namespace Xky.Platform.Pages

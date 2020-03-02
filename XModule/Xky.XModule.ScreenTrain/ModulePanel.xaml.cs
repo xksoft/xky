@@ -23,9 +23,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xky.Core;
-using Xky.Core.Model;
-using Xky.Core.UserControl;
+using XCore;
+using XCore.Model;
+using XCore.UserControl;
 
 namespace Xky.XModule.ScreenTrain
 {
