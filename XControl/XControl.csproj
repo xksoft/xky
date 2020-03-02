@@ -49,7 +49,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>xky.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>XControl.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Publish|AnyCPU'">
     <OutputPath>bin\Release_Publish\</OutputPath>
@@ -161,6 +161,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="XControl.snk" />
     <None Include="xky.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -190,13 +191,13 @@
     <Resource Include="Resources\Icon\ControlBox\default\min_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xky.Core\Xky.Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
-      <Name>Xky.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xky.Socket\Xky.Socket.csproj">
+    <ProjectReference Include="..\Socket\Socket.csproj">
       <Project>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</Project>
-      <Name>Xky.Socket</Name>
+      <Name>Socket</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

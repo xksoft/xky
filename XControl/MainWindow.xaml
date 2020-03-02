@@ -33,7 +33,7 @@
         </Grid.RowDefinitions>
         <Border Background="White" Grid.RowSpan="2" Grid.ColumnSpan="3">
             <Border.Effect>
-                <DropShadowEffect Color="#7F000000" BlurRadius="10" Opacity="0.7"/>
+                <DropShadowEffect Color="#7F000000" BlurRadius="15" Opacity="0.6" ShadowDepth="3"/>
             </Border.Effect>
         </Border>
         <!-- 顶部导航 -->

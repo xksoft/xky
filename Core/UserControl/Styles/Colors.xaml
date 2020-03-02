@@ -21,4 +21,7 @@
 
     <SolidColorBrush x:Key="OnLine">Lime</SolidColorBrush>
 
+    <SolidColorBrush x:Key="Fount1">#303030</SolidColorBrush>
+    <SolidColorBrush x:Key="Fount2">#797979</SolidColorBrush>
+
 </ResourceDictionary>
