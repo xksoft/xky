@@ -48,6 +48,7 @@ namespace Xky.Platform.Pages
 
         private void Upgrade()
         {
+            return;
             try
             {
                 if (File.Exists("noupgrade.txt"))
@@ -229,6 +230,7 @@ namespace Xky.Platform.Pages
 
         private void Button_EditInfo_Click(object sender, RoutedEventArgs e)
         {
+            return;
             Common.OpenUrl("https://www.xky.com/user");
         }
     }

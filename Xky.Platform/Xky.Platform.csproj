@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9BC11E1A-7D11-461B-824E-AC1894EE7F5B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Xky.Platform</RootNamespace>
     <AssemblyName>Xky.Platform</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -43,7 +43,7 @@
     <StartupObject>Xky.Platform.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icon\myico.ico</ApplicationIcon>
+    <ApplicationIcon>app128.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -368,6 +368,9 @@
   <ItemGroup>
     <Resource Include="Resources\Icon\hide.png" />
     <Resource Include="Resources\Icon\reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="app128.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

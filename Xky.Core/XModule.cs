@@ -12,7 +12,7 @@ namespace Xky.Core
 {
     /// <inheritdoc />
     /// <summary>
-    /// 侠客模块基础类
+    /// XXX模块基础类
     /// </summary>
     public abstract class XModule : Object, ICloneable
     {

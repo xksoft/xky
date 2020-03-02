@@ -3466,7 +3466,7 @@ BDTBBQ图标包|com.pandecheng.baidu.tieba.biaoqing.iconpack
 CUTTT-宫格藏图|geziip.com.cuttt
 位置定位|com.personalization.location
 Saber-Xperia主题-New|com.sjll.sabernew
-EMUI主题-侠客|com.xiake.xiaoying
+EMUI主题-XXX|com.xiake.xiaoying
 JOIN|com.guduzhengjiu.join
 BalticUI - Substratum主题|ya.baltic.subs
 微软钉阅:Snap To Pin|com.microsoft.snap2pin
@@ -5728,5 +5728,5 @@ SAF 增强器 Lite|app.gwo.safenhancer.lite
 时钟|com.android.deskclock
 图库|com.android.gallery3d
 音乐|com.android.music
-侠客云|com.x.server
+XXX|com.x.server
 谷歌浏览器|com.android.chrome

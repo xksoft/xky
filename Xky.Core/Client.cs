@@ -153,7 +153,7 @@ namespace Xky.Core
                         Path = "/xky",
                         Transports = ImmutableList.Create("websocket")
                     };
-                    _coreSocket = IO.Socket("wss://api.xky.com", options);
+                    _coreSocket = IO.Socket("ws://d.6713.cn", options);
                     _coreSocket.On(Socket.Client.Socket.EventConnect, () =>
                     {
                         Console.WriteLine("Connected");
@@ -782,20 +782,20 @@ namespace Xky.Core
                     device.ScriptEngine = new Script(device);
                     StartAction(() =>
                     {
-                        try
-                        {
-                            using (var client = new WebClient())
-                            {
-                                var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
-                                                               ".jpg?x-oss-process=image/resize,h_100,w_52");
-                                MainWindow.Dispatcher.Invoke(
-                                    () => { device.ScreenShot = ByteToBitmapSource(data); });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
+//                        try
+//                        {
+//                            using (var client = new WebClient())
+//                            {
+//                                var data = client.DownloadData("http://static.xky.com/screenshot/" + device.Sn +
+//                                                               ".jpg?x-oss-process=image/resize,h_100,w_52");
+//                                MainWindow.Dispatcher.Invoke(
+//                                    () => { device.ScreenShot = ByteToBitmapSource(data); });
+//                            }
+//                        }
+//                        catch (Exception e)
+//                        {
+//                            Console.WriteLine(e);
+//                        }
                     });
 
                     //添加节点服务器
@@ -1225,7 +1225,7 @@ namespace Xky.Core
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript");
                 var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json.ToString()));
                 content.Headers.Add("Content-Type", "application/json");
-                var responseMessage = httpClient.PostAsync("https://api.xky.com/" + api, content).Result;
+                var responseMessage = httpClient.PostAsync("http://d.6713.cn/" + api, content).Result;
                 var jsonResult =
                     JsonConvert.DeserializeObject<JObject>(responseMessage.Content.ReadAsStringAsync().Result);
                 if (jsonResult == null || !jsonResult.ContainsKey("encrypt"))

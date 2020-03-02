@@ -682,7 +682,7 @@ namespace Xky.Platform.Pages
             }
             else
             {
-                Common.OpenUrl("http://doc.xky.com");
+                Common.OpenUrl("http://d.6713.cn");
             }
         }
 
@@ -697,7 +697,7 @@ namespace Xky.Platform.Pages
             {
                 //var response = device.ScriptEngine.UpdateCamera(System.IO.File.ReadAllBytes("D:\\1.png"));
                 //  var response = device.ScriptEngine.CallApi("sendMsg", new JObject() { ["uid"] = "10000", ["msg"] = "你好" });
-                 var response = device.ScriptEngine.ClearApp("com.android.launcher3");
+                var response = device.ScriptEngine.FindAndClick("com.ss.android.ugc.aweme:id/aek");
 
 //                var response = device.ScriptEngine.FindUiObjects("微信");
 //                Console.WriteLine(response.Json);

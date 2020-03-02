@@ -225,12 +225,14 @@ namespace Xky.Platform
                             SystemParameters.PrimaryScreenWidth - SystemParameters.WorkArea.Right;
                 var bottom = (e.NewSize.Height - SystemParameters.PrimaryScreenHeight) / 2 +
                              SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Bottom;
-                MainGrid.Margin = new Thickness(left, top, right, bottom);
+                MainGrid.Margin = new Thickness(left-1, top-1, right-1, bottom-1);
                 BtnRestore.Visibility = Visibility.Visible;
                 BtnMax.Visibility = Visibility.Collapsed;
             }
             else
             {
+                BtnRestore.Visibility = Visibility.Collapsed;
+                BtnMax.Visibility = Visibility.Visible;
                 MainGrid.Margin = new Thickness(0);
             }
 

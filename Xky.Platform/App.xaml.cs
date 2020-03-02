@@ -17,16 +17,16 @@ namespace Xky.Platform
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            if (!Directory.Exists("x86") || !Directory.Exists("x64"))
-            {
-                MessageBox.Show("缺少ffmpeg库文件，请先下载解压到程序目录下！\r\n下载地址：https://static.xky.com/download/ffmbeg_libs.rar",
-                    "缺少ffmepg库文件", MessageBoxButton.OK, MessageBoxImage.Stop);
-                Environment.Exit(0);
-            }
+//            if (!Directory.Exists("x86") || !Directory.Exists("x64"))
+//            {
+//                MessageBox.Show("缺少ffmpeg库文件，请先下载解压到程序目录下！\r\n下载地址：https://static.xky.com/download/ffmbeg_libs.rar",
+//                    "缺少ffmepg库文件", MessageBoxButton.OK, MessageBoxImage.Stop);
+//                Environment.Exit(0);
+//            }
 
             try
             {
-                Console.Title = "侠客云SDK调试";
+                Console.Title = "XXXSDK调试";
             }
             catch
             {

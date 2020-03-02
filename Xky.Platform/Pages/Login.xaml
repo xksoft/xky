@@ -33,7 +33,7 @@
                                       Image_Width="12" />
             </StackPanel>
             <TextBlock Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White"
-                       Text="本开源程序为侠客SDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问https://www.xky.com免费申请" Margin="0,20,0,0" />
+                       Text="本开源程序为XXXSDK演示DEMO，需要先获取开发授权码才能使用，授权码请访问http://d.6713.cn免费申请" Margin="0,20,0,0" />
         </Grid>
         <Grid x:Name="GridInfo" Background="{StaticResource BackgroundColor4}" Margin="0" Visibility="Collapsed">
             <Border Padding="20">
@@ -46,7 +46,7 @@
                             <Image x:Name="Image_Avatar" Width="160" HorizontalAlignment="Left" Margin="5,5,0,5" />
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                                 <Label Foreground="#ccc" Width="80">昵称</Label>
-                                <Label x:Name="Label_Nickname" Foreground="#fff">侠客小侠</Label>
+                                <Label x:Name="Label_Nickname" Foreground="#fff">XXX小侠</Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                                 <Label Foreground="#ccc" Width="80">手机号</Label>
@@ -54,7 +54,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                                 <Label Foreground="#ccc" Width="80">邮箱</Label>
-                                <Label x:Name="Label_Email" Foreground="#fff">10000@xky.com</Label>
+                                <Label x:Name="Label_Email" Foreground="#fff">10000@d.6713.cn</Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
 

@@ -2,6 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="Title">侠客云DEMO</system:String>
+    <system:String x:Key="Title">XXXDEMO</system:String>
 
 </ResourceDictionary>

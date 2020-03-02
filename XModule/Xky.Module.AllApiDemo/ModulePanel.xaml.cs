@@ -138,13 +138,13 @@ namespace Xky.XModule.AllApiDemo
                     }
                 case "FindAndInput":
                     {
-                        res = device.ScriptEngine.FindAndInput("com.android.messaging:id/recipient_text_view", "侠客云SDK", new Newtonsoft.Json.Linq.JObject());
-                        res = device.ScriptEngine.FindAndInput("com.android.messaging:id/recipient_text_view", "侠客云SDK", new Newtonsoft.Json.Linq.JObject() { ["regex"] = false, ["timeout"] = 1000, ["index"] = 0 });
+                        res = device.ScriptEngine.FindAndInput("com.android.messaging:id/recipient_text_view", "XXXSDK", new Newtonsoft.Json.Linq.JObject());
+                        res = device.ScriptEngine.FindAndInput("com.android.messaging:id/recipient_text_view", "XXXSDK", new Newtonsoft.Json.Linq.JObject() { ["regex"] = false, ["timeout"] = 1000, ["index"] = 0 });
                         break;
                     }
                 case "Input":
                     {
-                        res = device.ScriptEngine.Input("侠客云SDK");
+                        res = device.ScriptEngine.Input("XXXSDK");
                         break;
                     }
                 case "Click":
