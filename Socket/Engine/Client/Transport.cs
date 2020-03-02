@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Security.Authentication;
 using System.Text;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
 
-namespace Xky.Socket.Engine.Client
+namespace XSocket.Engine.Client
 {
     public abstract class Transport : Emitter
     {

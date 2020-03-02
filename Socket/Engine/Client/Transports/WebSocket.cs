@@ -5,10 +5,10 @@ using System.Net;
 using SuperSocket.ClientEngine;
 using SuperSocket.ClientEngine.Proxy;
 using WebSocket4Net;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
 
-namespace Xky.Socket.Engine.Client.Transports
+namespace XSocket.Engine.Client.Transports
 {
     public class WebSocket : Transport
     {

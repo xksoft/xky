@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xky.Socket.Engine.Modules
+namespace XSocket.Engine.Modules
 {
     /// <remarks>
     ///     Provides methods for parsing a query string into an object, and vice versa.

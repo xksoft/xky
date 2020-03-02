@@ -4,12 +4,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Modules;
-using Xky.Socket.Parser;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Modules;
+using XSocket.Parser;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class Socket : Emitter
     {

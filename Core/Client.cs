@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Common;
 using Xky.Core.Model;
-using Xky.Socket.Client;
+using XSocket.Client;
 
 namespace Xky.Core
 {
@@ -28,7 +28,7 @@ namespace Xky.Core
     /// </summary>
     public static class Client
     {
-        private static Socket.Client.Socket _coreSocket;
+        private static XSocket.Client.Socket _coreSocket;
 
         private static string _lastSearchKeyword;
         private static string _lastSearchTag;
@@ -154,17 +154,17 @@ namespace Xky.Core
                         Transports = ImmutableList.Create("websocket")
                     };
                     _coreSocket = IO.Socket("ws://d.6713.cn", options);
-                    _coreSocket.On(Socket.Client.Socket.EventConnect, () =>
+                    _coreSocket.On(XSocket.Client.Socket.EventConnect, () =>
                     {
                         Console.WriteLine("Connected");
                         CoreConnected = true;
                     });
-                    _coreSocket.On(Socket.Client.Socket.EventDisconnect, () =>
+                    _coreSocket.On(XSocket.Client.Socket.EventDisconnect, () =>
                     {
                         Console.WriteLine("Disconnected");
                         CoreConnected = false;
                     });
-                    _coreSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
+                    _coreSocket.On(XSocket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
                     _coreSocket.On("event", json => { CoreEvent((JObject) json); });
                 }
                 else
@@ -959,7 +959,7 @@ namespace Xky.Core
                     };
 
                     node.NodeSocket = IO.Socket(url, options);
-                    node.NodeSocket.On(Socket.Client.Socket.EventConnect, () =>
+                    node.NodeSocket.On(XSocket.Client.Socket.EventConnect, () =>
                     {
                         node.ConnectStatus = url.Contains("xxapi.org") ? 1 : 2;
                         Console.WriteLine("node Connected " + url);
@@ -967,13 +967,13 @@ namespace Xky.Core
 
                         CustomEvent?.Invoke("node_connected", node.Serial);
                     });
-                    node.NodeSocket.On(Socket.Client.Socket.EventDisconnect, () =>
+                    node.NodeSocket.On(XSocket.Client.Socket.EventDisconnect, () =>
                     {
                         node.ConnectStatus = 0;
                         Console.WriteLine("node Disconnected");
                         Log("节点服务器[" + node.Name + "][" + node.Serial + "]下线", "系统", 3);
                     });
-                    node.NodeSocket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
+                    node.NodeSocket.On(XSocket.Client.Socket.EventError, () => { Console.WriteLine("node ERROR"); });
                     node.NodeSocket.On("event", json => { Console.WriteLine(json); });
                     node.NodeSocket.On("tick", new MyListenerImpl((sn, json) =>
                     {

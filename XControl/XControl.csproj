@@ -191,13 +191,13 @@
     <Resource Include="Resources\Icon\ControlBox\default\min_btn3.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\XCore.csproj">
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
-      <Name>Core</Name>
+      <Name>XCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Socket\Socket.csproj">
+    <ProjectReference Include="..\Socket\XSocket.csproj">
       <Project>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</Project>
-      <Name>Socket</Name>
+      <Name>XSocket</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

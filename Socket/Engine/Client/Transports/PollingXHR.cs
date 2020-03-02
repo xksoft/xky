@@ -5,10 +5,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
 
-namespace Xky.Socket.Engine.Client.Transports
+namespace XSocket.Engine.Client.Transports
 {
     public class PollingXHR : Polling
     {

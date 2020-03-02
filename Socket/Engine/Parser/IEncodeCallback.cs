@@ -1,4 +1,4 @@
-﻿namespace Xky.Socket.Engine.Parser
+﻿namespace XSocket.Engine.Parser
 {
     public interface IEncodeCallback
     {

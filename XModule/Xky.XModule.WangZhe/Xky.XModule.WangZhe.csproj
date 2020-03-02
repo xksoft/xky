@@ -69,9 +69,9 @@
     <EmbeddedResource Include="logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.csproj">
+    <ProjectReference Include="..\..\Core\XCore.csproj">
       <Project>{f16de544-b643-4655-8318-ba53d9d34bdc}</Project>
-      <Name>Core</Name>
+      <Name>XCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

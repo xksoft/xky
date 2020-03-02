@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xky.Socket.Engine.Client
+namespace XSocket.Engine.Client
 {
     public class EngineIOException : Exception
     {

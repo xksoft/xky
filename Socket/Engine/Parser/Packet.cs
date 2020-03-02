@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Xky.Socket.Engine.Modules;
+using XSocket.Engine.Modules;
 
-namespace Xky.Socket.Engine.Parser
+namespace XSocket.Engine.Parser
 {
     /// <remarks>
     ///     Packet type which is ported from the JavaScript module.

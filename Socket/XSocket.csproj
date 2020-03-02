@@ -7,8 +7,8 @@
     <ProjectGuid>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xky.Socket</RootNamespace>
-    <AssemblyName>Xky.Socket</AssemblyName>
+    <RootNamespace>XSocket</RootNamespace>
+    <AssemblyName>XSocket</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

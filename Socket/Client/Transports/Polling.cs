@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Xky.Socket.Engine.Client;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
+using XSocket.Engine.Client;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
 
-namespace Xky.Socket.Client.Transports
+namespace XSocket.Client.Transports
 {
     public class Polling : Transport
     {
@@ -101,8 +101,8 @@ namespace Xky.Socket.Client.Transports
             log.Info(string.Format("polling got data {0}", data));
             var callback = new DecodePayloadCallback(this);
             if (data is string)
-                Xky.Socket.Engine.Parser.Parser.DecodePayload((string) data, callback);
-            else if (data is byte[]) Xky.Socket.Engine.Parser.Parser.DecodePayload((byte[]) data, callback);
+                XSocket.Engine.Parser.Parser.DecodePayload((string) data, callback);
+            else if (data is byte[]) XSocket.Engine.Parser.Parser.DecodePayload((byte[]) data, callback);
 
             if (ReadyState != ReadyStateEnum.Closed)
             {
@@ -146,7 +146,7 @@ namespace Xky.Socket.Client.Transports
             Writable = false;
 
             var callback = new SendEncodeCallback(this);
-            Xky.Socket.Engine.Parser.Parser.EncodePayload(packets.ToArray(), callback);
+            XSocket.Engine.Parser.Parser.EncodePayload(packets.ToArray(), callback);
         }
 
         public string Uri()

@@ -14,7 +14,7 @@ namespace Xky.Core.Model
         private string _forward;
         private string _ip;
         private string _name;
-        private Socket.Client.Socket _nodeSocket;
+        private XSocket.Client.Socket _nodeSocket;
         private string _nodeUrl;
         private string _serial;
 
@@ -147,7 +147,7 @@ namespace Xky.Core.Model
             }
         }
 
-        public Socket.Client.Socket NodeSocket
+        public XSocket.Client.Socket NodeSocket
         {
             get => _nodeSocket;
             set

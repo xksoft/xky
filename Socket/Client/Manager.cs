@@ -2,12 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Thread;
-using Xky.Socket.Parser;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Thread;
+using XSocket.Parser;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class Manager : Emitter
     {
@@ -34,7 +34,7 @@ namespace Xky.Socket.Client
         private readonly Parser.Parser.Decoder Decoder;
         private readonly Parser.Parser.Encoder Encoder;
         private readonly HashSet<Socket> OpeningSockets;
-        private readonly Xky.Socket.Engine.Client.Socket.Options Opts;
+        private readonly XSocket.Engine.Client.Socket.Options Opts;
         private readonly List<Packet> PacketBuffer;
         private readonly ConcurrentQueue<On.IHandle> Subs;
         private readonly Uri Uri;
@@ -49,7 +49,7 @@ namespace Xky.Socket.Client
         private bool Encoding;
         /*package*/
 
-        public Xky.Socket.Engine.Client.Socket EngineSocket;
+        public XSocket.Engine.Client.Socket EngineSocket;
 
         /**
          * This ImmutableDictionary can be accessed from outside of EventThread.
@@ -190,13 +190,13 @@ namespace Xky.Socket.Client
             OpeningSockets.Add(Socket(Uri.AbsolutePath));
             SkipReconnect = false;
 
-            var openSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventOpen, new ListenerImpl(() =>
+            var openSub = Client.On.Create(socket, XSocket.Engine.Client.Socket.EventOpen, new ListenerImpl(() =>
             {
                 OnOpen();
                 if (fn != null) fn.Call(null);
             }));
 
-            var errorSub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventError, new ListenerImpl(
+            var errorSub = Client.On.Create(socket, XSocket.Engine.Client.Socket.EventError, new ListenerImpl(
                 data =>
                 {
                     log.Info("connect_error");
@@ -225,7 +225,7 @@ namespace Xky.Socket.Client
                     log2.Info(string.Format("connect attempt timed out after {0}", timeout));
                     openSub.Destroy();
                     socket.Close();
-                    socket.Emit(Xky.Socket.Engine.Client.Socket.EventError, new Exception("TimeOout"));
+                    socket.Emit(XSocket.Engine.Client.Socket.EventError, new Exception("TimeOout"));
                     EmitAll(EVENT_CONNECT_TIMEOUT, timeout);
                     log2.Info("Manager Open finish");
                 }, timeout);
@@ -253,7 +253,7 @@ namespace Xky.Socket.Client
 
             var socket = EngineSocket;
 
-            var sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventData, new ListenerImpl(data =>
+            var sub = Client.On.Create(socket, XSocket.Engine.Client.Socket.EventData, new ListenerImpl(data =>
             {
                 if (data is string)
                     OnData((string) data);
@@ -265,11 +265,11 @@ namespace Xky.Socket.Client
                 new ListenerImpl(data => { OnDecoded((Packet) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventError,
+            sub = Client.On.Create(socket, XSocket.Engine.Client.Socket.EventError,
                 new ListenerImpl(data => { OnError((Exception) data); }));
             Subs.Enqueue(sub);
 
-            sub = Client.On.Create(socket, Xky.Socket.Engine.Client.Socket.EventClose,
+            sub = Client.On.Create(socket, XSocket.Engine.Client.Socket.EventClose,
                 new ListenerImpl(data => { OnClose((string) data); }));
             Subs.Enqueue(sub);
         }
@@ -460,7 +460,7 @@ namespace Xky.Socket.Client
     }
 
 
-    public class Engine : Xky.Socket.Engine.Client.Socket
+    public class Engine : XSocket.Engine.Client.Socket
     {
         public Engine(Uri uri, Options opts) : base(uri, opts)
         {
@@ -468,7 +468,7 @@ namespace Xky.Socket.Client
     }
 
 
-    public class Options : Xky.Socket.Engine.Client.Socket.Options
+    public class Options : XSocket.Engine.Client.Socket.Options
     {
         public bool AutoConnect = true;
 

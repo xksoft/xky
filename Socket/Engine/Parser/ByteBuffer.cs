@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Xky.Socket.Engine.Parser
+namespace XSocket.Engine.Parser
 {
     public class ByteBuffer
     {

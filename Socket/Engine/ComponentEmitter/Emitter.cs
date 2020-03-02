@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
-using Xky.Socket.Engine.Modules;
+using XSocket.Engine.Modules;
 
-namespace Xky.Socket.Engine.ComponentEmitter
+namespace XSocket.Engine.ComponentEmitter
 {
     /// <remarks>
     ///     The event emitter which is ported from the JavaScript module.

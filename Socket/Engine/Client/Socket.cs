@@ -4,13 +4,13 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using Xky.Socket.Engine.Client.Transports;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
-using Xky.Socket.Engine.Thread;
+using XSocket.Engine.Client.Transports;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
+using XSocket.Engine.Thread;
 
-namespace Xky.Socket.Engine.Client
+namespace XSocket.Engine.Client
 {
     public class Socket : Emitter
     {

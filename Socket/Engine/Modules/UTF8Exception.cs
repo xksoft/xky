@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xky.Socket.Engine.Modules
+namespace XSocket.Engine.Modules
 {
     public class UTF8Exception : Exception
     {

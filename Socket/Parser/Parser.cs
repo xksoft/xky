@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json.Linq;
-using Xky.Socket.Client;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
+using XSocket.Client;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
 
-namespace Xky.Socket.Parser
+namespace XSocket.Parser
 {
     public class Parser
     {

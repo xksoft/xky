@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Xky.Socket.Engine.ComponentEmitter;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
+using XSocket.Engine.ComponentEmitter;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
 
-namespace Xky.Socket.Engine.Client.Transports
+namespace XSocket.Engine.Client.Transports
 {
     public class Polling : Transport
     {

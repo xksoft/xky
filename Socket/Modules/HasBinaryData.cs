@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace Xky.Socket.Modules
+namespace XSocket.Modules
 {
     public static class HasBinaryData
     {

@@ -241,9 +241,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Socket\Socket.csproj">
+    <ProjectReference Include="..\Socket\XSocket.csproj">
       <Project>{b4c79cee-4b09-428a-bfe9-b276df4f57fa}</Project>
-      <Name>Socket</Name>
+      <Name>XSocket</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

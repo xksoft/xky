@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Newtonsoft.Json.Linq;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class HandshakeData
     {

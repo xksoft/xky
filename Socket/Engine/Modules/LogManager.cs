@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Xky.Socket.Engine.Modules
+namespace XSocket.Engine.Modules
 {
     public class LogManager
     {

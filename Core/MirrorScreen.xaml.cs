@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using Newtonsoft.Json.Linq;
 using Xky.Core.Common;
 using Xky.Core.Model;
-using Xky.Socket.Client;
+using XSocket.Client;
 using Timer = System.Timers.Timer;
 
 namespace Xky.Core
@@ -167,7 +167,7 @@ namespace Xky.Core
         /// </summary>
         public static H264Decoder Decoder = null;
 
-        private Socket.Client.Socket _socket;
+        private XSocket.Client.Socket _socket;
 
         /// <summary>
         /// 当前连接的设备模型
@@ -231,8 +231,8 @@ namespace Xky.Core
                 Transports = ImmutableList.Create("websocket")
             };
             _socket = IO.Socket(CurrentDevice.NodeUrl, options);
-            _socket.On(Socket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
-            _socket.On(Socket.Client.Socket.EventDisconnect, () =>
+            _socket.On(XSocket.Client.Socket.EventConnect, () => { Console.WriteLine("Connected"); });
+            _socket.On(XSocket.Client.Socket.EventDisconnect, () =>
             {
                 if (CurrentDevice.Sn == model.Sn)
                 {
@@ -240,7 +240,7 @@ namespace Xky.Core
                     AddLabel(model.Name + " 已断开连接...", Colors.OrangeRed, false);
                 }
             });
-            _socket.On(Socket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
+            _socket.On(XSocket.Client.Socket.EventError, () => { Console.WriteLine("ERROR"); });
             _socket.On("event", json =>
             {
                 //Console.WriteLine(json);

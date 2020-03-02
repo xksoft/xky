@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class Url
     {

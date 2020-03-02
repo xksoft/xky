@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Xky.Socket.Engine.Modules
+namespace XSocket.Engine.Modules
 {
     public class ServerCertificate
     {

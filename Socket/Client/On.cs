@@ -1,7 +1,7 @@
 ﻿using System;
-using Xky.Socket.Engine.ComponentEmitter;
+using XSocket.Engine.ComponentEmitter;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class On
     {

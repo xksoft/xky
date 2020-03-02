@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace Xky.Socket.Engine.Modules
+namespace XSocket.Engine.Modules
 {
     public static class Global
     {

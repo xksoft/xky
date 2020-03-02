@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
-using Xky.Socket.Engine.Modules;
+using XSocket.Engine.Modules;
 
-namespace Xky.Socket.Client
+namespace XSocket.Client
 {
     public class IO
     {

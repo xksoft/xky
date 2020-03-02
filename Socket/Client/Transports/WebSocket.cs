@@ -5,11 +5,11 @@ using System.Net;
 using SuperSocket.ClientEngine;
 using SuperSocket.ClientEngine.Proxy;
 using WebSocket4Net;
-using Xky.Socket.Engine.Client;
-using Xky.Socket.Engine.Modules;
-using Xky.Socket.Engine.Parser;
+using XSocket.Engine.Client;
+using XSocket.Engine.Modules;
+using XSocket.Engine.Parser;
 
-namespace Xky.Socket.Client.Transports
+namespace XSocket.Client.Transports
 {
     public class WebSocket : Transport
     {
@@ -115,7 +115,7 @@ namespace Xky.Socket.Client.Transports
         {
             Writable = false;
             foreach (var packet in packets)
-                Xky.Socket.Engine.Parser.Parser.EncodePacket(packet, new WriteEncodeCallback(this));
+                XSocket.Engine.Parser.Parser.EncodePacket(packet, new WriteEncodeCallback(this));
 
             // fake drain
             // defer to next tick to allow Socket to clear writeBuffer

@@ -1,5 +1,5 @@
 ﻿using System;
-using Xky.Socket.Engine.ComponentEmitter;
+using XSocket.Engine.ComponentEmitter;
 
 namespace Xky.Core
 {

@@ -1,4 +1,4 @@
-﻿namespace Xky.Socket.Engine.Parser
+﻿namespace XSocket.Engine.Parser
 {
     /// <remarks>
     ///     This is the JavaScript parser for the engine.io protocol encoding,

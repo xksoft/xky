@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Xky.Socket.Engine.Thread
+namespace XSocket.Engine.Thread
 {
     public class EasyTimer
     {

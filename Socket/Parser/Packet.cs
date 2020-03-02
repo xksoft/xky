@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace Xky.Socket.Parser
+namespace XSocket.Parser
 {
     public class Packet<T>
     {
