@@ -13,8 +13,8 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="934"
         MinWidth="1395"
-        BorderBrush="Black"
-        BorderThickness="1"
+        Background="Transparent"
+
         Title="MainWindow" Height="934" Width="1395" Closing="MainWindow_OnClosing">
 
     <Window.Resources>
@@ -31,7 +31,11 @@
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
+        <Border Background="White" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <Border.Effect>
+                <DropShadowEffect Color="#7F000000" BlurRadius="10" Opacity="0.7"/>
+            </Border.Effect>
+        </Border>
         <!-- 顶部导航 -->
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" ClipToBounds="True" Panel.ZIndex="998">
 

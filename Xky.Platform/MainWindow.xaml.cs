@@ -32,7 +32,7 @@ namespace Xky.Platform
             InitializeComponent();
             var wc = new WindowChrome
             {
-                CaptionHeight = 30,
+                CaptionHeight = 40,
                 GlassFrameThickness = new Thickness(0),
                 CornerRadius = new CornerRadius(0),
                 UseAeroCaptionButtons = false,
@@ -233,10 +233,8 @@ namespace Xky.Platform
             {
                 BtnRestore.Visibility = Visibility.Collapsed;
                 BtnMax.Visibility = Visibility.Visible;
-                MainGrid.Margin = new Thickness(0);
+                MainGrid.Margin = new Thickness(20);
             }
-
-            Console.WriteLine(this.Height + " " + this.Width);
         }
 
         private void Btn_close(object sender, RoutedEventArgs e)
